@@ -1,0 +1,28 @@
+name: Validar titulo do PR
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  validate-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validar titulo com Conventional Commits
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TITLE="${{ github.event.pull_request.title }}"
+          PATTERN='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9._/-]+\))?!?: .{1,}$'
+
+          echo "Titulo recebido: $TITLE"
+
+          if ! [[ "$TITLE" =~ $PATTERN ]]; then
+            echo "Titulo de PR invalido."
+            echo "Use o padrao: tipo(escopo-opcional): descricao em portugues"
+            echo "Exemplo: feat(favoritos): bloquear remocao sem autenticacao"
+            exit 1
+          fi
+
+          echo "Titulo do PR valido."

@@ -1,0 +1,64 @@
+name: Validar Conventional Commits
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Definir intervalo de commits
+        id: range
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "from=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
+            echo "to=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "from=${{ github.event.before }}" >> "$GITHUB_OUTPUT"
+            echo "to=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validar mensagens de commit
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          RANGE_FROM="${{ steps.range.outputs.from }}"
+          RANGE_TO="${{ steps.range.outputs.to }}"
+
+          # Regex de Conventional Commits:
+          # tipo(escopo-opcional)!: descricao
+          PATTERN='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9._/-]+\))?!?: .{1,}$'
+
+          echo "Validando commits entre $RANGE_FROM..$RANGE_TO"
+
+          FAILED=0
+          while IFS= read -r MSG; do
+            if [[ -z "$MSG" ]]; then
+              continue
+            fi
+
+            if ! [[ "$MSG" =~ $PATTERN ]]; then
+              echo "Mensagem invalida: $MSG"
+              echo "Padrao esperado: tipo(escopo-opcional): descricao em portugues"
+              FAILED=1
+            fi
+          done < <(git log --format=%s "$RANGE_FROM..$RANGE_TO")
+
+          if [[ $FAILED -ne 0 ]]; then
+            echo "Falha na validacao de Conventional Commits."
+            exit 1
+          fi
+
+          echo "Todas as mensagens estao no padrao Conventional Commits."
