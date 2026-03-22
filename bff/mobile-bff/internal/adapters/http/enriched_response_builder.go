@@ -7,14 +7,14 @@ import (
 	"pokedex-platform/bff/mobile-bff/internal/ports"
 )
 
-// EnrichedResponseBuilder builds enriched responses with favorites and additional info
+// EnrichedResponseBuilder constrói respostas enriquecidas com favoritos e informações adicionais
 type EnrichedResponseBuilder struct {
 	responseBuilder *ResponseBuilder
 	favoriteRepo    ports.FavoriteRepository
 	pokemonRepo     ports.PokemonRepository
 }
 
-// NewEnrichedResponseBuilder creates a new enriched response builder
+// NewEnrichedResponseBuilder cria um novo construtor de respostas enriquecidas
 func NewEnrichedResponseBuilder(
 	favoriteRepo ports.FavoriteRepository,
 	pokemonRepo ports.PokemonRepository,
@@ -26,7 +26,7 @@ func NewEnrichedResponseBuilder(
 	}
 }
 
-// BuildEnrichedPokemonDetail builds a detail response with favorites info
+// BuildEnrichedPokemonDetail constrói uma resposta de detalhe com informação de favoritos
 func (b *EnrichedResponseBuilder) BuildEnrichedPokemonDetail(
 	ctx context.Context,
 	detail *domain.PokemonDetail,
@@ -34,7 +34,6 @@ func (b *EnrichedResponseBuilder) BuildEnrichedPokemonDetail(
 ) *dto.PokemonDetailDTO {
 	response := b.responseBuilder.BuildPokemonDetailDTO(detail)
 
-	// Check if favorite
 	if userID != "" && b.favoriteRepo != nil {
 		isFav, err := b.favoriteRepo.IsFavorite(ctx, userID, detail.Number)
 		if err == nil {
@@ -45,7 +44,7 @@ func (b *EnrichedResponseBuilder) BuildEnrichedPokemonDetail(
 	return response
 }
 
-// BuildEnrichedListResponse builds a list response with favorite counts
+// BuildEnrichedListResponse constrói uma resposta de lista com contagem de favoritos
 func (b *EnrichedResponseBuilder) BuildEnrichedListResponse(
 	ctx context.Context,
 	page *domain.PokemonPage,
@@ -53,7 +52,6 @@ func (b *EnrichedResponseBuilder) BuildEnrichedListResponse(
 ) *dto.RichPokemonListResponse {
 	response := b.responseBuilder.BuildRichPokemonListResponse(page)
 
-	// Enrich each pokemon with favorite status if user is logged in
 	if userID != "" && b.favoriteRepo != nil {
 		for i := range response.Content {
 			isFav, err := b.favoriteRepo.IsFavorite(ctx, userID, response.Content[i].Number)
@@ -66,7 +64,7 @@ func (b *EnrichedResponseBuilder) BuildEnrichedListResponse(
 	return response
 }
 
-// BuildHomePageResponse builds home page with featured and trending Pokemon
+// BuildHomePageResponse constrói página home com Pokémons em destaque e em alta
 func (b *EnrichedResponseBuilder) BuildHomePageResponse(
 	ctx context.Context,
 	page *domain.PokemonPage,
@@ -85,7 +83,7 @@ func (b *EnrichedResponseBuilder) BuildHomePageResponse(
 	return homeResponse
 }
 
-// BuildFavoritePokemonResponse builds response for favorite operations
+// BuildFavoritePokemonResponse constrói resposta para operações de favoritos
 func (b *EnrichedResponseBuilder) BuildFavoritePokemonResponse(
 	ctx context.Context,
 	pokemonID string,

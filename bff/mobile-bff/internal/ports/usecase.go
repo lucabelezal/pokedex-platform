@@ -6,7 +6,7 @@ import (
 	"pokedex-platform/bff/mobile-bff/internal/domain"
 )
 
-// PokemonUseCase defines use cases for Pokémon operations
+// PokemonUseCase define casos de uso para operações de Pokémon
 type PokemonUseCase interface {
 	ListPokemons(ctx context.Context, page, pageSize int, userID string) (*domain.PokemonPage, error)
 	GetPokemonDetails(ctx context.Context, pokemonID, userID string) (*domain.PokemonDetail, error)
@@ -15,7 +15,7 @@ type PokemonUseCase interface {
 	GetHomeData(ctx context.Context, page, pageSize int, userID string) (*domain.PokemonPage, error)
 }
 
-// FavoriteUseCase defines use cases for Favorite operations
+// FavoriteUseCase define casos de uso para operações de Favorito
 type FavoriteUseCase interface {
 	AddFavorite(ctx context.Context, userID, pokemonID string) error
 	RemoveFavorite(ctx context.Context, userID, pokemonID string) error

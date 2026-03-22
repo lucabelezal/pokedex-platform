@@ -8,6 +8,7 @@ type Config struct {
 	Port              string
 	DatabaseURL       string
 	PokedexServiceURL string
+	AuthServiceURL    string
 	RedisURL          string
 }
 
@@ -21,6 +22,7 @@ func LoadConfig() *Config {
 		Port:              port,
 		DatabaseURL:       os.Getenv("DATABASE_URL"),
 		PokedexServiceURL: os.Getenv("POKEDEX_SERVICE_URL"),
+		AuthServiceURL:    os.Getenv("AUTH_SERVICE_URL"),
 		RedisURL:          os.Getenv("REDIS_URL"),
 	}
 }

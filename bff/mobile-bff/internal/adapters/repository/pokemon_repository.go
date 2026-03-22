@@ -9,17 +9,17 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// PostgresPokemonRepository implements the PokemonRepository port using PostgreSQL
+// PostgresPokemonRepository implementa a interface PokemonRepository usando PostgreSQL
 type PostgresPokemonRepository struct {
 	db *pgxpool.Pool
 }
 
-// NewPostgresPokemonRepository creates a new PostgreSQL repository
+// NewPostgresPokemonRepository cria um novo repositório PostgreSQL
 func NewPostgresPokemonRepository(db *pgxpool.Pool) *PostgresPokemonRepository {
 	return &PostgresPokemonRepository{db: db}
 }
 
-// GetByID retrieves a single Pokemon by ID
+// GetByID recupera um Pokémon pelo ID
 func (r *PostgresPokemonRepository) GetByID(ctx context.Context, id string) (*domain.Pokemon, error) {
 	query := `
 		SELECT id, name, number, types, height, weight, description, image_url, element_color, element_type, created_at, updated_at
@@ -53,7 +53,7 @@ func (r *PostgresPokemonRepository) GetByID(ctx context.Context, id string) (*do
 	return &pokemon, nil
 }
 
-// GetAll retrieves all Pokemons with pagination
+// GetAll recupera todos os Pokémons com paginação
 func (r *PostgresPokemonRepository) GetAll(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error) {
 	if pageSize <= 0 {
 		pageSize = 20
@@ -107,7 +107,6 @@ func (r *PostgresPokemonRepository) GetAll(ctx context.Context, page, pageSize i
 		return nil, err
 	}
 
-	// Get total count
 	var totalElements int64
 	countQuery := "SELECT COUNT(*) FROM pokemons"
 	err = r.db.QueryRow(ctx, countQuery).Scan(&totalElements)
@@ -127,7 +126,7 @@ func (r *PostgresPokemonRepository) GetAll(ctx context.Context, page, pageSize i
 	}, nil
 }
 
-// Search retrieves Pokemons matching a query string
+// Search recupera Pokémons que correspondem a uma query de busca
 func (r *PostgresPokemonRepository) Search(ctx context.Context, query string, page, pageSize int) (*domain.PokemonPage, error) {
 	if pageSize <= 0 {
 		pageSize = 20
@@ -183,7 +182,6 @@ func (r *PostgresPokemonRepository) Search(ctx context.Context, query string, pa
 		return nil, err
 	}
 
-	// Get total count
 	var totalElements int64
 	countSQL := "SELECT COUNT(*) FROM pokemons WHERE name ILIKE $1 OR number ILIKE $1"
 	err = r.db.QueryRow(ctx, countSQL, searchQuery).Scan(&totalElements)
@@ -203,7 +201,7 @@ func (r *PostgresPokemonRepository) Search(ctx context.Context, query string, pa
 	}, nil
 }
 
-// GetByType retrieves Pokemons filtered by type
+// GetByType recupera Pokémons filtrados por tipo
 func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter string, page, pageSize int) (*domain.PokemonPage, error) {
 	if pageSize <= 0 {
 		pageSize = 20
@@ -258,7 +256,6 @@ func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter st
 		return nil, err
 	}
 
-	// Get total count
 	var totalElements int64
 	countQuery := "SELECT COUNT(*) FROM pokemons WHERE $1 = ANY(types)"
 	err = r.db.QueryRow(ctx, countQuery, typeFilter).Scan(&totalElements)
@@ -278,7 +275,7 @@ func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter st
 	}, nil
 }
 
-// GetFavorites retrieves favorite Pokemon IDs for a user
+// GetFavorites recupera IDs de Pokémons favoritos do usuário
 func (r *PostgresPokemonRepository) GetFavorites(ctx context.Context, userID string, page, pageSize int) ([]string, error) {
 	if userID == "" {
 		return []string{}, nil

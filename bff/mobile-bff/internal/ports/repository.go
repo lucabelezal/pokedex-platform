@@ -6,7 +6,7 @@ import (
 	"pokedex-platform/bff/mobile-bff/internal/domain"
 )
 
-// PokemonRepository defines the contract for accessing Pokémon data
+// PokemonRepository define o contrato para acessar dados de Pokémon
 type PokemonRepository interface {
 	GetByID(ctx context.Context, id string) (*domain.Pokemon, error)
 	GetAll(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error)
@@ -15,7 +15,7 @@ type PokemonRepository interface {
 	GetFavorites(ctx context.Context, userID string, page, pageSize int) ([]string, error)
 }
 
-// FavoriteRepository defines the contract for accessing Favorite data
+// FavoriteRepository define o contrato para acessar dados de Favorito
 type FavoriteRepository interface {
 	AddFavorite(ctx context.Context, userID, pokemonID string) error
 	RemoveFavorite(ctx context.Context, userID, pokemonID string) error

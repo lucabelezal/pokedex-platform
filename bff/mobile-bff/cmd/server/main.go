@@ -66,17 +66,20 @@ func main() {
 	pokemonService := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	// Setup HTTP handlers
+	// Configurar cliente de auth-service
+	authClient := repository.NewAuthServiceClient(cfg.AuthServiceURL)
+
+	// Configurar handlers HTTP
 	mux := http.NewServeMux()
-	h := httpadapter.NewHandler(pokemonService, favoriteService)
+	h := httpadapter.NewHandler(pokemonService, favoriteService, authClient, favoriteRepo)
 	h.RegisterRoutes(mux)
 
-	// Apply middleware
+	// Aplicar middleware
 	var handler http.Handler = mux
 	handler = httpadapter.CORSMiddleware(handler)
 	handler = httpadapter.AuthMiddleware(handler)
 
-	// Start server
+	// Iniciar servidor
 	srv := &http.Server{
 		Addr:         ":" + cfg.Port,
 		Handler:      handler,

@@ -20,7 +20,7 @@ func TestHealthHandler(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil, favoriteRepo)
 
 	req := httptest.NewRequest("GET", "/health", nil)
 	w := httptest.NewRecorder()
@@ -42,7 +42,7 @@ func TestListPokemonsHandler(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil, favoriteRepo)
 
 	req := httptest.NewRequest("GET", "/api/v1/pokemons?page=0&size=10", nil)
 	w := httptest.NewRecorder()
@@ -64,7 +64,7 @@ func TestSearchPokemonsHandler(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil, favoriteRepo)
 
 	req := httptest.NewRequest("GET", "/api/v1/pokemons/search?q=Pikachu", nil)
 	w := httptest.NewRecorder()
@@ -86,7 +86,7 @@ func TestListPokemonsWithTypeFilterHandler(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil, favoriteRepo)
 
 	req := httptest.NewRequest("GET", "/api/v1/pokemons?type=Electric&page=0&size=10", nil)
 	w := httptest.NewRecorder()
@@ -108,7 +108,7 @@ func TestGetPokemonDetailsHandler(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil, favoriteRepo)
 
 	req := httptest.NewRequest("GET", "/api/v1/pokemons/25/details", nil)
 	req.SetPathValue("id", "25")
@@ -131,7 +131,7 @@ func TestGetHomeHandler(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil, favoriteRepo)
 
 	req := httptest.NewRequest("GET", "/api/v1/home", nil)
 	w := httptest.NewRecorder()
@@ -154,14 +154,12 @@ func TestAddFavoriteWithoutAuth(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil, favoriteRepo)
 
 	req := httptest.NewRequest("POST", "/api/v1/pokemons/25/favorite", nil)
 	req.SetPathValue("id", "25")
-	// No auth header - should be unauthorized
 	w := httptest.NewRecorder()
 
-	// Call handler directly through a route
 	mux := http.NewServeMux()
 	handler.RegisterRoutes(mux)
 	mux.ServeHTTP(w, req)
@@ -175,7 +173,7 @@ func TestRemoveFavoriteNotFound(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
-	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil, favoriteRepo)
 
 	req := httptest.NewRequest("DELETE", "/api/v1/pokemons/25/favorite", nil)
 	req.SetPathValue("id", "25")

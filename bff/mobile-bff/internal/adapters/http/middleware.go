@@ -16,7 +16,7 @@ type contextKey string
 
 const UserIDContextKey contextKey = "userID"
 
-// AuthMiddleware extracts and validates JWT token from request
+// AuthMiddleware extrai e valida o token JWT da requisição
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
@@ -47,7 +47,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-// RequireAuth is a middleware that requires authentication
+// RequireAuth é um middleware que exige autenticação
 func RequireAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		userID := getUserIDFromContext(r.Context())
@@ -59,7 +59,7 @@ func RequireAuth(next http.Handler) http.Handler {
 	})
 }
 
-// CORSMiddleware adds CORS headers
+// CORSMiddleware adiciona headers CORS
 func CORSMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")

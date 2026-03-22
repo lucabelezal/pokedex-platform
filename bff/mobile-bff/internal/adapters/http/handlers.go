@@ -2,11 +2,13 @@ package http
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
 
 	"pokedex-platform/bff/mobile-bff/internal/adapters/http/dto"
+	"pokedex-platform/bff/mobile-bff/internal/adapters/repository"
 	"pokedex-platform/bff/mobile-bff/internal/domain"
 	"pokedex-platform/bff/mobile-bff/internal/ports"
 )
@@ -14,33 +16,158 @@ import (
 type Handler struct {
 	pokemonUseCase  ports.PokemonUseCase
 	favoriteUseCase ports.FavoriteUseCase
+	authClient      *repository.AuthServiceClient
+	favoriteRepo    ports.FavoriteRepository
 	responseBuilder *ResponseBuilder
 }
 
 func NewHandler(
 	pokemonUseCase ports.PokemonUseCase,
 	favoriteUseCase ports.FavoriteUseCase,
+	authClient *repository.AuthServiceClient,
+	favoriteRepo ports.FavoriteRepository,
 ) *Handler {
 	return &Handler{
 		pokemonUseCase:  pokemonUseCase,
 		favoriteUseCase: favoriteUseCase,
+		authClient:      authClient,
+		favoriteRepo:    favoriteRepo,
 		responseBuilder: NewResponseBuilder(),
 	}
 }
 
 func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /health", h.Health)
+	mux.HandleFunc("POST /api/v1/auth/signup", h.Signup)
+	mux.HandleFunc("POST /api/v1/auth/login", h.Login)
+	mux.HandleFunc("GET /api/v1/me/favorites", h.withAuth(h.GetUserFavorites))
 	mux.HandleFunc("GET /api/v1/pokemons", h.ListPokemons)
 	mux.HandleFunc("GET /api/v1/pokemons/search", h.SearchPokemons)
 	mux.HandleFunc("GET /api/v1/pokemons/{id}/details", h.GetPokemonDetails)
 	mux.HandleFunc("GET /api/v1/home", h.GetHome)
-	mux.HandleFunc("POST /api/v1/pokemons/{id}/favorite", h.withAuth(h.AddFavorite))
-	mux.HandleFunc("DELETE /api/v1/pokemons/{id}/favorite", h.withAuth(h.RemoveFavorite))
+	mux.HandleFunc("POST /api/v1/pokemons/{id}/favorite", h.RequireAuth(h.AddFavorite))
+	mux.HandleFunc("DELETE /api/v1/pokemons/{id}/favorite", h.RequireAuth(h.RemoveFavorite))
 }
 
 func (h *Handler) Health(w http.ResponseWriter, r *http.Request) {
 	health := h.responseBuilder.BuildHealthResponse()
 	RespondJSON(w, http.StatusOK, health)
+}
+
+// Signup gerencia registro de usuário
+func (h *Handler) Signup(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		RespondError(w, http.StatusMethodNotAllowed, "metodo nao permitido", "METHOD_NOT_ALLOWED")
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	var req struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		RespondError(w, http.StatusBadRequest, "email e password obrigatorios", "INVALID_REQUEST")
+		return
+	}
+
+	if req.Email == "" || req.Password == "" {
+		RespondError(w, http.StatusBadRequest, "email e password obrigatorios", "INVALID_REQUEST")
+		return
+	}
+
+	authResp, err := h.authClient.Signup(ctx, req.Email, req.Password)
+	if err != nil {
+		RespondError(w, http.StatusBadRequest, err.Error(), "AUTH_ERROR")
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "auth_token",
+		Value:    authResp.AccessToken,
+		Path:     "/",
+		MaxAge:   authResp.ExpiresIn,
+		Secure:   false, // set to true in production with HTTPS
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	})
+
+	response := struct {
+		AccessToken string `json:"access_token"`
+		TokenType   string `json:"token_type"`
+		ExpiresIn   int    `json:"expires_in"`
+		UserID      string `json:"user_id"`
+		Email       string `json:"email"`
+	}{
+		AccessToken: authResp.AccessToken,
+		TokenType:   authResp.TokenType,
+		ExpiresIn:   authResp.ExpiresIn,
+		UserID:      authResp.UserID,
+		Email:       authResp.Email,
+	}
+
+	RespondJSON(w, http.StatusCreated, response)
+}
+
+// Login gerencia autenticação de usuário
+func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		RespondError(w, http.StatusMethodNotAllowed, "metodo nao permitido", "METHOD_NOT_ALLOWED")
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	var req struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		RespondError(w, http.StatusBadRequest, "email e password obrigatorios", "INVALID_REQUEST")
+		return
+	}
+
+	if req.Email == "" || req.Password == "" {
+		RespondError(w, http.StatusBadRequest, "email e password obrigatorios", "INVALID_REQUEST")
+		return
+	}
+
+	authResp, err := h.authClient.Login(ctx, req.Email, req.Password)
+	if err != nil {
+		RespondError(w, http.StatusUnauthorized, err.Error(), "AUTH_ERROR")
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "auth_token",
+		Value:    authResp.AccessToken,
+		Path:     "/",
+		MaxAge:   authResp.ExpiresIn,
+		Secure:   false, // set to true in production with HTTPS
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	})
+
+	response := struct {
+		AccessToken string `json:"access_token"`
+		TokenType   string `json:"token_type"`
+		ExpiresIn   int    `json:"expires_in"`
+		UserID      string `json:"user_id"`
+		Email       string `json:"email"`
+	}{
+		AccessToken: authResp.AccessToken,
+		TokenType:   authResp.TokenType,
+		ExpiresIn:   authResp.ExpiresIn,
+		UserID:      authResp.UserID,
+		Email:       authResp.Email,
+	}
+
+	RespondJSON(w, http.StatusOK, response)
 }
 
 func (h *Handler) ListPokemons(w http.ResponseWriter, r *http.Request) {
@@ -95,6 +222,7 @@ func (h *Handler) SearchPokemons(w http.ResponseWriter, r *http.Request) {
 	response := h.responseBuilder.BuildRichPokemonListResponse(pokemonPage)
 	RespondJSON(w, http.StatusOK, response)
 }
+
 func (h *Handler) GetPokemonDetails(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()
@@ -151,7 +279,7 @@ func (h *Handler) AddFavorite(w http.ResponseWriter, r *http.Request) {
 
 	userID := getUserIDFromContext(ctx)
 
-	err := h.favoriteUseCase.AddFavorite(ctx, userID, pokemonID)
+	err := h.favoriteRepo.AddFavorite(ctx, userID, pokemonID)
 	if err == domain.ErrFavoriteAlreadyExists {
 		RespondError(w, http.StatusConflict, "pokemon ja esta nos favoritos", "ALREADY_EXISTS")
 		return
@@ -181,7 +309,7 @@ func (h *Handler) RemoveFavorite(w http.ResponseWriter, r *http.Request) {
 
 	userID := getUserIDFromContext(ctx)
 
-	err := h.favoriteUseCase.RemoveFavorite(ctx, userID, pokemonID)
+	err := h.favoriteRepo.RemoveFavorite(ctx, userID, pokemonID)
 	if err == domain.ErrFavoriteNotFound {
 		RespondError(w, http.StatusNotFound, "favorito nao encontrado", "NOT_FOUND")
 		return
@@ -193,6 +321,32 @@ func (h *Handler) RemoveFavorite(w http.ResponseWriter, r *http.Request) {
 
 	response := dto.MessageResponse{
 		Message: "Pokemon removido dos favoritos",
+	}
+	RespondJSON(w, http.StatusOK, response)
+}
+
+func (h *Handler) GetUserFavorites(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	userID := getUserIDFromContext(ctx)
+	if userID == "" {
+		RespondError(w, http.StatusUnauthorized, "autenticacao obrigatoria", "UNAUTHORIZED")
+		return
+	}
+
+	favorites, err := h.favoriteRepo.GetUserFavorites(ctx, userID)
+	if err != nil {
+		RespondError(w, http.StatusInternalServerError, "falha ao listar favoritos", "INTERNAL_ERROR")
+		return
+	}
+
+	response := struct {
+		Favorites []string `json:"favorites"`
+		Count     int      `json:"count"`
+	}{
+		Favorites: favorites,
+		Count:     len(favorites),
 	}
 	RespondJSON(w, http.StatusOK, response)
 }
@@ -220,4 +374,16 @@ func getQueryParamInt(r *http.Request, key string, defaultVal int) int {
 	}
 
 	return intVal
+}
+
+// RequireAuth envolve um handler para exigir autenticação
+func (h *Handler) RequireAuth(handler func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userID := getUserIDFromContext(r.Context())
+		if userID == "" {
+			RespondError(w, http.StatusUnauthorized, "autenticacao obrigatoria", "UNAUTHORIZED")
+			return
+		}
+		handler(w, r)
+	}
 }

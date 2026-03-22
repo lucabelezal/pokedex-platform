@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Pokemon represents a Pokémon in the domain
+// Pokemon representa um Pokémon no domínio
 type Pokemon struct {
 	ID           string
 	Name         string
@@ -21,13 +21,13 @@ type Pokemon struct {
 	UpdatedAt    time.Time
 }
 
-// Type represents a Pokémon type with color information
+// Type representa um tipo de Pokémon com informações de cor
 type Type struct {
 	Name  string
 	Color string
 }
 
-// PokemonDetail holds enriched Pokémon data for detailed views
+// PokemonDetail contém dados enriquecidos de Pokémon para visualização detalhada
 type PokemonDetail struct {
 	Number      string
 	Name        string
@@ -40,13 +40,13 @@ type PokemonDetail struct {
 	IsFavorite  bool
 }
 
-// Element represents the primary type element with color
+// Element representa o tipo primário com cor
 type Element struct {
 	Color string
 	Type  string
 }
 
-// PokemonPage represents paginated Pokémon results
+// PokemonPage representa resultados paginados de Pokémons
 type PokemonPage struct {
 	Content       []Pokemon
 	TotalElements int64
@@ -55,7 +55,7 @@ type PokemonPage struct {
 	HasNext       bool
 }
 
-// User represents a user for tracking favorites
+// User representa um usuário para rastrear favoritos
 type User struct {
 	ID        string
 	Email     string
@@ -63,7 +63,7 @@ type User struct {
 	UpdatedAt time.Time
 }
 
-// Favorite represents a user's favorite Pokémon
+// Favorite representa um Pokémon favorito do usuário
 type Favorite struct {
 	ID        string
 	UserID    string

@@ -7,12 +7,12 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// Database holds the connection pool
+// Database mantém o pool de conexão
 type Database struct {
 	Pool *pgxpool.Pool
 }
 
-// NewDatabase creates a new database connection
+// NewDatabase cria uma nova conexão com o banco de dados
 func NewDatabase(ctx context.Context, databaseURL string) (*Database, error) {
 	if databaseURL == "" {
 		databaseURL = "postgres://user:password@localhost:5432/pokedex"
@@ -32,7 +32,7 @@ func NewDatabase(ctx context.Context, databaseURL string) (*Database, error) {
 	return &Database{Pool: pool}, nil
 }
 
-// Close closes the database connection
+// Close fecha a conexão com o banco de dados
 func (db *Database) Close() {
 	if db.Pool != nil {
 		db.Pool.Close()
