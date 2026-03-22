@@ -4,13 +4,44 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	httpadapter "pokedex-platform/bff/mobile-bff/internal/adapters/http"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestAuthMiddlewareWithToken(t *testing.T) {
+	t.Setenv("JWT_SECRET", "test-secret")
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user_id": "user123",
+		"exp":     time.Now().Add(1 * time.Hour).Unix(),
+	})
+	tokenString, err := token.SignedString([]byte("test-secret"))
+	assert.NoError(t, err)
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userID := httpadapter.GetUserID(r.Context())
+		assert.Equal(t, "user123", userID)
+		w.WriteHeader(http.StatusOK)
+	})
+
+	middleware := httpadapter.AuthMiddleware(handler)
+
+	req := httptest.NewRequest("GET", "/test", nil)
+	req.Header.Set("Authorization", "Bearer "+tokenString)
+	w := httptest.NewRecorder()
+
+	middleware.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+}
+
+func TestAuthMiddlewareWithInvalidToken(t *testing.T) {
+	t.Setenv("JWT_SECRET", "test-secret")
+
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
@@ -18,12 +49,12 @@ func TestAuthMiddlewareWithToken(t *testing.T) {
 	middleware := httpadapter.AuthMiddleware(handler)
 
 	req := httptest.NewRequest("GET", "/test", nil)
-	req.Header.Set("Authorization", "Bearer test-token")
+	req.Header.Set("Authorization", "Bearer token-invalido")
 	w := httptest.NewRecorder()
 
 	middleware.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
 }
 
 func TestAuthMiddlewareWithoutToken(t *testing.T) {

@@ -55,6 +55,8 @@ Para filtro por tipo, use `GET /api/v1/pokemons?type=Electric&page=0&size=20`.
 - `POST /api/v1/pokemons/{id}/favorite`
 - `DELETE /api/v1/pokemons/{id}/favorite`
 
+Esses endpoints exigem `Authorization: Bearer <jwt>` valido com claim `user_id` ou `sub`.
+
 ## Contrato Entre BFF E Service
 
 O BFF atende o contrato rico do front, enquanto o `pokedex-service` concentra o catalogo canonico de Pokemon.

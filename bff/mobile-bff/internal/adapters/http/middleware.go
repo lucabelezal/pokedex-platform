@@ -2,8 +2,14 @@ package http
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"net/http"
+	"os"
 	"strings"
+	"time"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type contextKey string
@@ -16,10 +22,23 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		authHeader := r.Header.Get("Authorization")
 
 		var userID string
-		if authHeader != "" && strings.HasPrefix(authHeader, "Bearer ") {
-			token := strings.TrimPrefix(authHeader, "Bearer ")
-			if token != "" {
-				userID = extractUserIDFromToken(token)
+		if authHeader != "" {
+			tokenString, err := parseBearerToken(authHeader)
+			if err != nil {
+				RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
+				return
+			}
+
+			claims, err := parseAndValidateJWT(tokenString, getJWTSecret())
+			if err != nil {
+				RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
+				return
+			}
+
+			userID = extractUserIDFromClaims(claims)
+			if userID == "" {
+				RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
+				return
 			}
 		}
 
@@ -57,13 +76,70 @@ func CORSMiddleware(next http.Handler) http.Handler {
 }
 
 func extractUserIDFromToken(token string) string {
-	if len(token) > 20 {
-		return token[:20]
-	}
-	if len(token) > 0 {
-		return token
-	}
+	_ = token
 	return ""
+}
+
+func parseBearerToken(authHeader string) (string, error) {
+	if !strings.HasPrefix(authHeader, "Bearer ") {
+		return "", errors.New("authorization header nao usa bearer")
+	}
+
+	tokenString := strings.TrimSpace(strings.TrimPrefix(authHeader, "Bearer "))
+	if tokenString == "" {
+		return "", errors.New("token vazio")
+	}
+
+	return tokenString, nil
+}
+
+func parseAndValidateJWT(tokenString, secret string) (jwt.MapClaims, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("algoritmo de assinatura invalido: %v", token.Header["alg"])
+		}
+		return []byte(secret), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		return nil, errors.New("claims invalidas")
+	}
+
+	if expRaw, ok := claims["exp"]; ok {
+		exp, ok := expRaw.(float64)
+		if !ok {
+			return nil, errors.New("exp invalido")
+		}
+		if time.Now().Unix() >= int64(exp) {
+			return nil, errors.New("token expirado")
+		}
+	}
+
+	return claims, nil
+}
+
+func extractUserIDFromClaims(claims jwt.MapClaims) string {
+	if userID, ok := claims["user_id"].(string); ok && strings.TrimSpace(userID) != "" {
+		return userID
+	}
+
+	if sub, ok := claims["sub"].(string); ok && strings.TrimSpace(sub) != "" {
+		return sub
+	}
+
+	return ""
+}
+
+func getJWTSecret() string {
+	secret := strings.TrimSpace(os.Getenv("JWT_SECRET"))
+	if secret == "" {
+		return "dev-secret"
+	}
+	return secret
 }
 
 func getUserIDFromContext(ctx context.Context) string {
@@ -76,4 +152,8 @@ func getUserIDFromContext(ctx context.Context) string {
 
 func SetUserID(ctx context.Context, userID string) context.Context {
 	return context.WithValue(ctx, UserIDContextKey, userID)
+}
+
+func GetUserID(ctx context.Context) string {
+	return getUserIDFromContext(ctx)
 }

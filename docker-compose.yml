@@ -58,6 +58,7 @@ services:
     environment:
       MOBILE_BFF_PORT: ${MOBILE_BFF_PORT:-8080}
       POKEDEX_SERVICE_URL: ${POKEDEX_SERVICE_URL:-http://pokedex-service:8081}
+      JWT_SECRET: ${JWT_SECRET:-dev-secret}
     depends_on:
       pokedex-service:
         condition: service_healthy

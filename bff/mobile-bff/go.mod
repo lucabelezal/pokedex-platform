@@ -3,6 +3,7 @@ module pokedex-platform/bff/mobile-bff
 go 1.22
 
 require (
+	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/jackc/pgx/v5 v5.5.0
 	github.com/stretchr/testify v1.8.4
 )
