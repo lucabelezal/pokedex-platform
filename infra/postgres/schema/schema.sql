@@ -1,5 +1,7 @@
 -- init.sql
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- Drop tables if they exist to ensure a clean slate
 -- CASCADE é usado para remover automaticamente objetos que dependem das tabelas que estão sendo descartadas (por exemplo, chaves estrangeiras)
 DROP TABLE IF EXISTS pokemon_types, pokemon_abilities, pokemon_egg_groups, pokemon_weaknesses, evolution_chains, pokemons, species, stats, abilities, generations, regions, types, egg_groups CASCADE;
@@ -128,3 +130,23 @@ CREATE TABLE pokemon_weaknesses (
     FOREIGN KEY (pokemon_id) REFERENCES pokemons(id),
     FOREIGN KEY (type_id) REFERENCES types(id)
 );
+
+-- Auth users (login/signup)
+CREATE TABLE IF NOT EXISTS auth_users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Favoritos por usuario autenticado
+CREATE TABLE IF NOT EXISTS user_favorites (
+    user_id UUID NOT NULL REFERENCES auth_users(id) ON DELETE CASCADE,
+    pokemon_id BIGINT NOT NULL REFERENCES pokemons(id) ON DELETE CASCADE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, pokemon_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_auth_users_email ON auth_users(email);
+CREATE INDEX IF NOT EXISTS idx_user_favorites_user_id ON user_favorites(user_id);

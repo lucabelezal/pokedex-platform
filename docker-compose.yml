@@ -50,6 +50,24 @@ services:
       timeout: 5s
       retries: 5
 
+  auth-service:
+    build:
+      context: ./app/auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    environment:
+      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT:-8082}
+      DATABASE_URL: ${DATABASE_URL:-postgres://pokedex:pokedex@postgres:5432/pokedex_dev_db?sslmode=disable}
+      JWT_SECRET: ${JWT_SECRET:-dev-secret}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8082/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   mobile-bff:
     build:
       context: ./bff/mobile-bff
@@ -58,9 +76,15 @@ services:
     environment:
       MOBILE_BFF_PORT: ${MOBILE_BFF_PORT:-8080}
       POKEDEX_SERVICE_URL: ${POKEDEX_SERVICE_URL:-http://pokedex-service:8081}
+      AUTH_SERVICE_URL: ${AUTH_SERVICE_URL:-http://auth-service:8082}
+      DATABASE_URL: ${DATABASE_URL:-postgres://pokedex:pokedex@postgres:5432/pokedex_dev_db?sslmode=disable}
       JWT_SECRET: ${JWT_SECRET:-dev-secret}
     depends_on:
       pokedex-service:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]

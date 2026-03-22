@@ -23,7 +23,7 @@ func NewDatabase(ctx context.Context, databaseURL string) (*Database, error) {
 		return nil, fmt.Errorf("failed to create connection pool: %w", err)
 	}
 
-	// Test the connection
+	// Testar a conexão
 	if err := pool.Ping(ctx); err != nil {
 		pool.Close()
 		return nil, fmt.Errorf("failed to ping database: %w", err)

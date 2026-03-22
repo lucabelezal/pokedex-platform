@@ -17,7 +17,7 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 
-	// Initialize repositories with fallback to mocks
+	// Inicializar repositórios com fallback para mocks
 	var pokemonRepo ports.PokemonRepository
 	var favoriteRepo ports.FavoriteRepository
 	var db *repository.Database
@@ -62,7 +62,7 @@ func main() {
 		favoriteRepo = mocks.NewMockFavoriteRepository()
 	}
 
-	// Setup services
+	// Configurar serviços
 	pokemonService := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 

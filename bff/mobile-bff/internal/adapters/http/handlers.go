@@ -90,7 +90,7 @@ func (h *Handler) Signup(w http.ResponseWriter, r *http.Request) {
 		Value:    authResp.AccessToken,
 		Path:     "/",
 		MaxAge:   authResp.ExpiresIn,
-		Secure:   false, // set to true in production with HTTPS
+		Secure:   false, // definir como true em produção com HTTPS
 		HttpOnly: true,
 		SameSite: http.SameSiteLaxMode,
 	})
@@ -148,7 +148,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		Value:    authResp.AccessToken,
 		Path:     "/",
 		MaxAge:   authResp.ExpiresIn,
-		Secure:   false, // set to true in production with HTTPS
+		Secure:   false, // definir como true em produção com HTTPS
 		HttpOnly: true,
 		SameSite: http.SameSiteLaxMode,
 	})
