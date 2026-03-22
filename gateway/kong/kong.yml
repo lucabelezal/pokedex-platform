@@ -1,0 +1,17 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: mobile-bff-service
+    url: http://mobile-bff:8080
+    routes:
+      - name: mobile-bff-all
+        paths:
+          - /bff
+        strip_path: true
+        path_handling: v1
+      - name: mobile-bff-v1
+        paths:
+          - /v1
+        strip_path: false
+        path_handling: v1

@@ -1,0 +1,1838 @@
+[
+    {
+        "id": 1,
+        "name": "Adaptabilidade",
+        "description": "Aumenta o poder de movimentos do mesmo tipo do Pokémon.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 2,
+        "name": "Pele Celeste",
+        "description": "Transforma movimentos do tipo Normal em movimentos do tipo Voador e aumenta ligeiramente seu poder.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 3,
+        "name": "Rescaldo",
+        "description": "Causa dano ao atacante que desfere o golpe final.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 4,
+        "name": "Bloqueio Aéreo",
+        "description": "Elimina os efeitos do clima.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 5,
+        "name": "Analítico",
+        "description": "Aumenta o poder do movimento se o Pokémon atacar por último.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 6,
+        "name": "Ponto de Raiva",
+        "description": "Maximiza o Ataque após receber um acerto crítico.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 7,
+        "name": "Carapaça Raivosa",
+        "description": "Reduz Defesa/Def. Esp. e aumenta Ataque/At. Esp./Velocidade quando o HP cai abaixo da metade.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 8,
+        "name": "Antecipação",
+        "description": "Pressente movimentos perigosos de um oponente.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 9,
+        "name": "Armadilha de Arena",
+        "description": "Impede o oponente de fugir.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 10,
+        "name": "Cauda Blindada",
+        "description": "Impede o oponente de usar movimentos de prioridade.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 11,
+        "name": "Véu Aromático",
+        "description": "Protege aliados de ataques que limitam suas escolhas de movimento.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 12,
+        "name": "Como Um Só",
+        "description": "Combina Nervosismo e Relincho Arrepiante/Relincho Sinistro.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 13,
+        "name": "Quebra Aura",
+        "description": "Reduz o poder de movimentos dos tipos Sombrio e Fada.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 14,
+        "name": "Pesadelos",
+        "description": "Reduz o HP de um oponente adormecido.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 15,
+        "name": "Apanhar Bola",
+        "description": "Recupera uma Poké Bola de um arremesso falho.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 16,
+        "name": "Bateria",
+        "description": "Aumenta o poder dos movimentos Especiais dos companheiros de equipe.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 17,
+        "name": "Armadura de Batalha",
+        "description": "O Pokémon é protegido contra acertos críticos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 18,
+        "name": "Laço de Batalha",
+        "description": "Transforma-se em Ash-Greninja após nocautear um oponente.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 19,
+        "name": "Contas da Ruína",
+        "description": "Reduz a Defesa Especial de todos os Pokémon, exceto o próprio.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 20,
+        "name": "Impulso Bestial",
+        "description": "O Pokémon aumenta seu atributo mais proficiente cada vez que nocauteia um Pokémon.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 21,
+        "name": "Frenesi",
+        "description": "Aumenta o Ataque Especial quando o HP cai abaixo da metade.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 22,
+        "name": "Bico Grande",
+        "description": "Protege o Pokémon de ataques que reduzem a Defesa.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 23,
+        "name": "Chama",
+        "description": "Aumenta o poder de movimentos do tipo Fogo em apuros.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 24,
+        "name": "À Prova de Bala",
+        "description": "Protege o Pokémon de movimentos de bola e bomba.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 25,
+        "name": "Bochechas Fofas",
+        "description": "Restaura HP adicional quando uma Berry é consumida.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 26,
+        "name": "Relincho Arrepiante",
+        "description": "Aumenta o Ataque após nocautear um Pokémon.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 27,
+        "name": "Clorofila",
+        "description": "Aumenta a Velocidade do Pokémon sob luz solar.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 28,
+        "name": "Corpo Puro",
+        "description": "Impede que outros Pokémon reduzam seus atributos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 29,
+        "name": "Nuvem Serena",
+        "description": "Elimina os efeitos do clima.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 30,
+        "name": "Mudança de Cor",
+        "description": "Muda o tipo do Pokémon para o do movimento do oponente.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 31,
+        "name": "Comatoso",
+        "description": "O Pokémon está sempre dormindo, mas ainda pode atacar.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 32,
+        "name": "Comandante",
+        "description": "Entra na boca de um Dondozo aliado se houver um no campo.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 33,
+        "name": "Competitivo",
+        "description": "Aumenta acentuadamente o Ataque Especial quando os atributos do Pokémon são reduzidos.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 34,
+        "name": "Olhos Compostos",
+        "description": "A precisão do Pokémon é aumentada.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 35,
+        "name": "Contrário",
+        "description": "Faz com que as mudanças de atributos tenham um efeito oposto.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 36,
+        "name": "Corrosão",
+        "description": "O Pokémon pode envenenar tipos Aço e Venenoso.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 37,
+        "name": "Co-Estrela",
+        "description": "Copia as mudanças de atributos do aliado ao entrar em batalha.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 38,
+        "name": "Penugem de Algodão",
+        "description": "Reduz a Velocidade do oponente quando atingido.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 39,
+        "name": "Ruminação",
+        "description": "Pode comer a mesma Berry duas vezes.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 40,
+        "name": "Medicina Curiosa",
+        "description": "Redefine todas as mudanças de atributos ao entrar no campo de batalha.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 41,
+        "name": "Corpo Amaldiçoado",
+        "description": "Pode desabilitar um movimento usado no Pokémon.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 42,
+        "name": "Charme Fofo",
+        "description": "Contato com o Pokémon pode causar atração.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 43,
+        "name": "Umidade",
+        "description": "Impede o uso de movimentos autodestrutivos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 44,
+        "name": "Dançarino",
+        "description": "Copia os movimentos de Dança do oponente.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 45,
+        "name": "Aura Sombria",
+        "description": "Aumenta o poder de movimentos do tipo Sombrio para todos os Pokémon em batalha.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 46,
+        "name": "Escudo Intrépido",
+        "description": "Aumenta a Defesa em batalha.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 47,
+        "name": "Ofuscante",
+        "description": "Protege o Pokémon de movimentos de alta prioridade.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 48,
+        "name": "Derrotista",
+        "description": "Reduz os atributos quando o HP cai abaixo da metade.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 49,
+        "name": "Desafiador",
+        "description": "Aumenta acentuadamente o Ataque quando os atributos do Pokémon são reduzidos.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 50,
+        "name": "Corrente Delta",
+        "description": "Cria ventos fortes quando a habilidade é ativada.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 51,
+        "name": "Terra Desolada",
+        "description": "Torna a luz solar extremamente forte quando a habilidade é ativada.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 52,
+        "name": "Disfarce",
+        "description": "Evita dano por um turno.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 53,
+        "name": "Download",
+        "description": "Ajusta o poder de acordo com as defesas de um oponente.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 54,
+        "name": "Mandíbula de Dragão",
+        "description": "Aumenta o poder de movimentos do tipo Dragão.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 55,
+        "name": "Chuvisco",
+        "description": "O Pokémon faz chover quando entra em uma batalha.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 56,
+        "name": "Seca",
+        "description": "Torna a luz solar forte quando o Pokémon entra em uma batalha.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 57,
+        "name": "Pele Seca",
+        "description": "Reduz HP se estiver quente. Água restaura HP.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 58,
+        "name": "Madrugador",
+        "description": "O Pokémon acorda rapidamente do sono.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 59,
+        "name": "Devorador de Terra",
+        "description": "Restaura HP quando atingido por um movimento do tipo Terrestre.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 60,
+        "name": "Efeito Esporo",
+        "description": "Contato pode envenenar ou causar paralisia ou sono.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 61,
+        "name": "Surto Elétrico",
+        "description": "O Pokémon cria um Terreno Elétrico quando entra em uma batalha.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 62,
+        "name": "Eletromorfose",
+        "description": "Dobra o poder do próximo movimento do tipo Elétrico quando atingido por um ataque.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 63,
+        "name": "Encarnar Aspecto",
+        "description": "Aumenta Ataque/Defesa/Def. Esp./Velocidade dependendo da forma.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 64,
+        "name": "Saída de Emergência",
+        "description": "Troca quando o HP cai abaixo de 50%.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 65,
+        "name": "Aura Feérica",
+        "description": "Aumenta o poder de movimentos do tipo Fada para todos os Pokémon em batalha.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 66,
+        "name": "Filtro",
+        "description": "Reduz o dano de ataques super eficazes.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 67,
+        "name": "Corpo Flamejante",
+        "description": "Contato com o Pokémon pode queimar o atacante.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 68,
+        "name": "Impulso Flamejante",
+        "description": "Aumenta o poder de ataques especiais quando queimado.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 69,
+        "name": "Absorver Fogo",
+        "description": "Aumenta o poder de movimentos do tipo Fogo se for atingido por um.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 70,
+        "name": "Dádiva Floral",
+        "description": "Aumenta o poder dos Pokémon da equipe quando está ensolarado.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 71,
+        "name": "Véu Floral",
+        "description": "Impede a redução dos atributos de Pokémon aliados do tipo Planta.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 72,
+        "name": "Fofo",
+        "description": "Reduz pela metade o dano de movimentos de contato, mas dobra o dano de movimentos do tipo Fogo.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 73,
+        "name": "Previsão",
+        "description": "Castform se transforma com o clima.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 74,
+        "name": "Prevenir",
+        "description": "Determina quais movimentos um oponente possui.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 75,
+        "name": "Guarda Amiga",
+        "description": "Reduz o dano causado aos aliados.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 76,
+        "name": "Revistar",
+        "description": "O Pokémon pode verificar o item segurado por um oponente.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 77,
+        "name": "Corpo Metálico Completo",
+        "description": "Impede que outros Pokémon reduzam seus atributos.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 78,
+        "name": "Casaco de Pelo",
+        "description": "Reduz o dano de movimentos físicos.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 79,
+        "name": "Asas Vendaval",
+        "description": "Dá prioridade a movimentos do tipo Voador.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 80,
+        "name": "Galvanizar",
+        "description": "Movimentos do tipo Normal tornam-se do tipo Elétrico e seu poder é aumentado.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 81,
+        "name": "Gula",
+        "description": "Incentiva o uso antecipado de uma Berry segurada.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 82,
+        "name": "Bom como Ouro",
+        "description": "Concede imunidade a movimentos de status.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 83,
+        "name": "Gosmento",
+        "description": "Contato com o Pokémon reduz a Velocidade do atacante.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 84,
+        "name": "Táticas de Gorila",
+        "description": "Aumenta o Ataque do Pokémon, mas só permite o uso do primeiro movimento selecionado.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 85,
+        "name": "Pelagem de Grama",
+        "description": "Aumenta a Defesa em Terreno Gramado.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 86,
+        "name": "Surto Gramado",
+        "description": "O Pokémon cria um Terreno Gramado quando entra em uma batalha.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 87,
+        "name": "Relincho Sinistro",
+        "description": "Aumenta o Ataque Especial após nocautear um Pokémon.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 88,
+        "name": "Cão de Guarda",
+        "description": "Aumenta o Ataque se intimidado e impede ser forçado a trocar.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 89,
+        "name": "Míssil Engolido",
+        "description": "Retorna com uma presa na boca após usar Surf ou Dive.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 90,
+        "name": "Tripas",
+        "description": "Aumenta o Ataque se houver um problema de status.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 91,
+        "name": "Motor Hadrônico",
+        "description": "Cria um Terreno Elétrico ao entrar em batalha e aumenta o Ataque Especial enquanto ativo.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 92,
+        "name": "Colheita",
+        "description": "Pode criar outra Berry após uma ser usada.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 93,
+        "name": "Curandeiro",
+        "description": "Pode curar as condições de status de um aliado.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 94,
+        "name": "À Prova de Calor",
+        "description": "Enfraquece o poder de movimentos do tipo Fogo.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 95,
+        "name": "Metal Pesado",
+        "description": "Dobra o peso do Pokémon.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 96,
+        "name": "Coletar Mel",
+        "description": "O Pokémon pode coletar Mel de algum lugar.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 97,
+        "name": "Hospitalidade",
+        "description": "Restaura parcialmente o HP de um aliado quando ele entra em batalha.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 98,
+        "name": "Poder Enorme",
+        "description": "Aumenta o Ataque do Pokémon.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 99,
+        "name": "Interruptor de Fome",
+        "description": "Muda de forma a cada turno.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 100,
+        "name": "Agitação",
+        "description": "Aumenta o Ataque, mas reduz a precisão.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 101,
+        "name": "Hidratação",
+        "description": "Cura problemas de status se estiver chovendo.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 102,
+        "name": "Cortador Hiper",
+        "description": "Impede que outros Pokémon reduzam seu Ataque.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 103,
+        "name": "Corpo de Gelo",
+        "description": "O Pokémon recupera HP gradualmente em uma tempestade de granizo.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 104,
+        "name": "Face de Gelo",
+        "description": "Evita dano de movimentos Físicos por um turno.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 105,
+        "name": "Escamas de Gelo",
+        "description": "Reduz pela metade o dano de movimentos Especiais.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 106,
+        "name": "Iluminar",
+        "description": "Aumenta a probabilidade de encontrar Pokémon selvagens.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 107,
+        "name": "Ilusão",
+        "description": "Entra em batalha disfarçado como o último Pokémon da equipe.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 108,
+        "name": "Imunidade",
+        "description": "Impede que o Pokémon seja envenenado.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 109,
+        "name": "Impostor",
+        "description": "Transforma-se no Pokémon que está enfrentando.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 110,
+        "name": "Infiltrador",
+        "description": "Passa pela barreira do oponente e ataca.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 111,
+        "name": "Entranhas Expostas",
+        "description": "Causa dano ao desmaiar.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 112,
+        "name": "Foco Interno",
+        "description": "O Pokémon é protegido contra recuo (flinch).",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 113,
+        "name": "Insônia",
+        "description": "Impede que o Pokémon adormeça.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 114,
+        "name": "Intimidação",
+        "description": "Reduz o Ataque do oponente.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 115,
+        "name": "Espada Intrépida",
+        "description": "Aumenta o Ataque em batalha.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 116,
+        "name": "Farpas de Ferro",
+        "description": "Inflige dano ao Pokémon em contato.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 117,
+        "name": "Punho de Ferro",
+        "description": "Aumenta o poder de movimentos de soco.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 118,
+        "name": "Justificado",
+        "description": "Aumenta o Ataque quando atingido por um movimento do tipo Sombrio.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 119,
+        "name": "Olhar Aguçado",
+        "description": "Impede que outros Pokémon reduzam sua precisão.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 120,
+        "name": "Desajeitado",
+        "description": "O Pokémon não pode usar nenhum item segurado.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 121,
+        "name": "Defesa de Folha",
+        "description": "Previne problemas de status sob tempo ensolarado.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 122,
+        "name": "Levitar",
+        "description": "Concede imunidade a movimentos do tipo Terrestre.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 123,
+        "name": "Líbero",
+        "description": "Muda o tipo do Pokémon para o do seu último movimento usado.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 124,
+        "name": "Metal Leve",
+        "description": "Reduz pela metade o peso do Pokémon.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 125,
+        "name": "Para-raios",
+        "description": "Atrai todos os movimentos do tipo Elétrico para aumentar o At. Esp.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 126,
+        "name": "Flexível",
+        "description": "O Pokémon é protegido contra paralisia.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 127,
+        "name": "Aroma Persistente",
+        "description": "Contato muda a Habilidade do atacante para Aroma Persistente.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 128,
+        "name": "Lodo Líquido",
+        "description": "Causa dano a atacantes que usam qualquer movimento de drenagem.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 129,
+        "name": "Voz Líquida",
+        "description": "Todos os movimentos baseados em som tornam-se do tipo Água.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 130,
+        "name": "Longo Alcance",
+        "description": "O Pokémon usa seus movimentos sem fazer contato com o alvo.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 131,
+        "name": "Salto Mágico",
+        "description": "Reflete movimentos que alteram o status.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 132,
+        "name": "Guarda Mágica",
+        "description": "Protege o Pokémon de dano indireto.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 133,
+        "name": "Mágico",
+        "description": "O Pokémon rouba o item segurado de um Pokémon que atinge com um movimento.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 134,
+        "name": "Armadura Magma",
+        "description": "Impede que o Pokémon seja congelado.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 135,
+        "name": "Atração Magnética",
+        "description": "Impede Pokémon do tipo Aço de escapar.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 136,
+        "name": "Escama Milagrosa",
+        "description": "Aumenta a Defesa se houver um problema de status.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 137,
+        "name": "Mega Lançador",
+        "description": "Aumenta o poder de movimentos de aura e pulso.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 138,
+        "name": "Implacável",
+        "description": "Os ataques do Pokémon tornam-se acertos críticos se o alvo estiver envenenado.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 139,
+        "name": "Mimetismo",
+        "description": "Muda o tipo dependendo do terreno.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 140,
+        "name": "Olho da Mente",
+        "description": "Ignora a Evasão do oponente e permite que ataques do tipo Normal e Lutador atinjam Fantasmas.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 141,
+        "name": "Menos",
+        "description": "Aumenta o At. Esp. se outro Pokémon tiver Mais ou Menos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 142,
+        "name": "Armadura Espelhada",
+        "description": "Reflete quaisquer efeitos de redução de atributos.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 143,
+        "name": "Surto Nebuloso",
+        "description": "O Pokémon cria um Terreno Nebuloso quando entra em uma batalha.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 144,
+        "name": "Quebra-molde",
+        "description": "Movimentos podem ser usados independentemente das Habilidades.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 145,
+        "name": "Temperamental",
+        "description": "Aumenta um atributo e reduz outro.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 146,
+        "name": "Motor Drive",
+        "description": "Aumenta a Velocidade se atingido por um movimento do tipo Elétrico.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 147,
+        "name": "Autoestima",
+        "description": "Aumenta o Ataque após nocautear qualquer Pokémon.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 148,
+        "name": "Multiescamas",
+        "description": "Reduz o dano quando o HP está cheio.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 149,
+        "name": "Multitipo",
+        "description": "Muda o tipo para corresponder à Placa segurada.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 150,
+        "name": "Múmia",
+        "description": "Contato com este Pokémon espalha esta Habilidade.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 151,
+        "name": "Poder Micelial",
+        "description": "Movimentos de status atacam por último, mas não são afetados pela habilidade do oponente.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 152,
+        "name": "Cura Natural",
+        "description": "Todos os problemas de status são curados quando ele é trocado.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 153,
+        "name": "Neuroforça",
+        "description": "Aumenta o poder de movimentos que são super eficazes.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 154,
+        "name": "Gás Neutralizante",
+        "description": "Neutraliza as habilidades de todos os Pokémon em batalha.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 155,
+        "name": "Sem Guarda",
+        "description": "Garante que os ataques pelo ou contra o Pokémon acertem.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 156,
+        "name": "Normalizar",
+        "description": "Todos os movimentos do Pokémon tornam-se do tipo Normal.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 157,
+        "name": "Indiferente",
+        "description": "Impede que se apaixone.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 158,
+        "name": "Oportunista",
+        "description": "Copia os aumentos de atributos do oponente.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 159,
+        "name": "Pulso de Oricalco",
+        "description": "Torna a luz solar forte ao entrar em batalha e aumenta o Ataque enquanto ativo.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 160,
+        "name": "Casaco Protetor",
+        "description": "Protege o Pokémon de dano climático.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 161,
+        "name": "Supercrescimento",
+        "description": "Aumenta o poder de movimentos do tipo Planta em apuros.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 162,
+        "name": "Ritmo Próprio",
+        "description": "Impede que o Pokémon fique confuso.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 163,
+        "name": "Laço Parental",
+        "description": "Permite que o Pokémon ataque duas vezes.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 164,
+        "name": "Véu Pastel",
+        "description": "Impede que o Pokémon e seus aliados sejam envenenados.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 165,
+        "name": "Corpo Perecível",
+        "description": "Quando atingido por um movimento de contato direto, o Pokémon e o atacante desmaiarão após três turnos, a menos que saiam da batalha.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 166,
+        "name": "Batedor de Carteira",
+        "description": "Rouba um item quando atingido por outro Pokémon.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 167,
+        "name": "Coleta",
+        "description": "O Pokémon pode pegar itens.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 168,
+        "name": "Pele Feérica",
+        "description": "Transforma movimentos do tipo Normal em movimentos do tipo Fada e aumenta ligeiramente seu poder.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 169,
+        "name": "Mais",
+        "description": "Aumenta o At. Esp. se outro Pokémon tiver Mais ou Menos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 170,
+        "name": "Cura Venenosa",
+        "description": "Restaura HP se o Pokémon estiver envenenado.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 171,
+        "name": "Ponto Venenoso",
+        "description": "Contato com o Pokémon pode envenenar o atacante.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 172,
+        "name": "Marionetista Venenoso",
+        "description": "Pokémon envenenados também ficam confusos.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 173,
+        "name": "Toque Venenoso",
+        "description": "Pode envenenar alvos quando um Pokémon faz contato.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 174,
+        "name": "Construção de Poder",
+        "description": "Muda de forma quando o HP cai abaixo da metade.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 175,
+        "name": "Poder da Alquimia",
+        "description": "O Pokémon copia a Habilidade de um aliado derrotado.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 176,
+        "name": "Ponto de Poder",
+        "description": "Apenas estar perto do Pokémon aumenta o poder dos movimentos.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 177,
+        "name": "Zombeteiro",
+        "description": "Dá prioridade a um movimento de status.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 178,
+        "name": "Pressão",
+        "description": "O Pokémon aumenta o uso de PP do oponente.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 179,
+        "name": "Mar Primordial",
+        "description": "Faz chover intensamente quando a habilidade é ativada.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 180,
+        "name": "Armadura Prisma",
+        "description": "Reduz o dano de ataques super eficazes.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 181,
+        "name": "Cauda de Hélice",
+        "description": "Ignora movimentos e habilidades que atraem movimentos.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 182,
+        "name": "Mutante",
+        "description": "Muda o tipo do Pokémon para o do seu último movimento usado.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 183,
+        "name": "Protossíntese",
+        "description": "Aumenta o atributo mais alto sob luz solar forte, ou se estiver segurando Energia Impulsionadora.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 184,
+        "name": "Surto Psíquico",
+        "description": "O Pokémon cria um Terreno Psíquico quando entra em uma batalha.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 185,
+        "name": "Punk Rock",
+        "description": "Aumenta movimentos baseados em som e reduz pela metade o dano dos mesmos movimentos.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 186,
+        "name": "Poder Puro",
+        "description": "Aumenta o Ataque do Pokémon.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 187,
+        "name": "Sal Purificador",
+        "description": "Protege de condições de status e reduz pela metade o dano de movimentos do tipo Fantasma.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 188,
+        "name": "Motor Quark",
+        "description": "Aumenta o atributo mais alto em Terreno Elétrico, ou se estiver segurando Energia Impulsionadora.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 189,
+        "name": "Majestade Real",
+        "description": "Impede o uso de movimentos de prioridade.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 190,
+        "name": "Saque Rápido",
+        "description": "O Pokémon pode atacar primeiro ocasionalmente.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 191,
+        "name": "Pés Rápidos",
+        "description": "Aumenta a Velocidade se houver um problema de status.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 192,
+        "name": "Prato de Chuva",
+        "description": "O Pokémon recupera HP gradualmente na chuva.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 193,
+        "name": "Assustado",
+        "description": "Movimentos do tipo Inseto, Fantasma ou Sombrio o assustam e aumentam sua Velocidade.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 194,
+        "name": "Receptor",
+        "description": "Herda a habilidade de um aliado quando ele desmaia.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 195,
+        "name": "Imprudente",
+        "description": "Aumenta o poder de movimentos que causam dano de recuo.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 196,
+        "name": "Refrigerar",
+        "description": "Transforma movimentos do tipo Normal em movimentos do tipo Gelo e aumenta ligeiramente seu poder.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 197,
+        "name": "Regenerador",
+        "description": "Restaura um pouco de HP quando retirado da batalha.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 198,
+        "name": "Amadurecer",
+        "description": "Dobra o efeito das berries.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 199,
+        "name": "Rivalidade",
+        "description": "Causa mais dano a um Pokémon do mesmo gênero.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 200,
+        "name": "Sistema RKS",
+        "description": "Muda o tipo dependendo do item segurado.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 201,
+        "name": "Cabeça de Pedra",
+        "description": "Protege o Pokémon de dano de recuo.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 202,
+        "name": "Carga Rochosa",
+        "description": "Aumenta o poder de movimentos do tipo Pedra.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 203,
+        "name": "Pele Áspera",
+        "description": "Inflige dano ao atacante em contato.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 204,
+        "name": "Fugir",
+        "description": "Permite uma fuga certeira de Pokémon selvagens.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 205,
+        "name": "Força da Areia",
+        "description": "Aumenta o poder de certos movimentos em uma tempestade de areia.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 206,
+        "name": "Ímpeto da Areia",
+        "description": "Aumenta a Velocidade do Pokémon em uma tempestade de areia.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 207,
+        "name": "Cuspir Areia",
+        "description": "Cria uma tempestade de areia quando atingido por um ataque.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 208,
+        "name": "Corrente de Areia",
+        "description": "O Pokémon invoca uma tempestade de areia em batalha.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 209,
+        "name": "Véu de Areia",
+        "description": "Aumenta a evasão do Pokémon em uma tempestade de areia.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 210,
+        "name": "Absorver Seiva",
+        "description": "Aumenta o Ataque quando atingido por um movimento do tipo Planta.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 211,
+        "name": "Escolaridade",
+        "description": "Muda Wishiwashi para a Forma Escolar.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 212,
+        "name": "Intrépido",
+        "description": "Permite que movimentos atinjam Pokémon do tipo Fantasma.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 213,
+        "name": "Limpador de Tela",
+        "description": "Anula os efeitos de Tela de Luz, Refletor e Véu de Aurora.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 214,
+        "name": "Semeador",
+        "description": "Transforma o solo em Terreno Gramado quando o Pokémon é atingido por um ataque.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 215,
+        "name": "Graça Serena",
+        "description": "Aumenta a probabilidade de efeitos adicionais aparecerem.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 216,
+        "name": "Escudo Sombrio",
+        "description": "Reduz o dano quando o HP está cheio.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 217,
+        "name": "Marca Sombria",
+        "description": "Impede o oponente de escapar.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 218,
+        "name": "Nitidez",
+        "description": "Aumenta o poder de movimentos cortantes.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 219,
+        "name": "Troca de Pele",
+        "description": "O Pokémon pode curar seus próprios problemas de status.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 220,
+        "name": "Força Bruta",
+        "description": "Remove efeitos adicionais para aumentar o dano do movimento.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 221,
+        "name": "Armadura de Concha",
+        "description": "O Pokémon é protegido contra acertos críticos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 222,
+        "name": "Pó de Escudo",
+        "description": "Bloqueia os efeitos adicionais dos ataques recebidos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 223,
+        "name": "Escudos Baixos",
+        "description": "Muda os atributos quando o HP cai abaixo da metade.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 224,
+        "name": "Simples",
+        "description": "Dobra todas as mudanças de atributos.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 225,
+        "name": "Elo de Habilidade",
+        "description": "Aumenta a frequência de movimentos de múltiplos acertos.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 226,
+        "name": "Início Lento",
+        "description": "Reduz temporariamente pela metade o Ataque e a Velocidade.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 227,
+        "name": "Ímpeto na Neve",
+        "description": "Aumenta a Velocidade do Pokémon em uma tempestade de granizo.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 228,
+        "name": "Franco Atirador",
+        "description": "Aumenta o poder dos movimentos se eles se tornarem acertos críticos.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 229,
+        "name": "Manto de Neve",
+        "description": "Aumenta a evasão em uma tempestade de granizo.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 230,
+        "name": "Alerta de Neve",
+        "description": "O Pokémon invoca uma tempestade de granizo em batalha.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 231,
+        "name": "Poder Solar",
+        "description": "Sob luz solar, o At. Esp. é aumentado, mas o HP diminui.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 232,
+        "name": "Rocha Sólida",
+        "description": "Reduz o dano de ataques super eficazes.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 233,
+        "name": "Coração Anímico",
+        "description": "Aumenta o Ataque Especial quando outro Pokémon desmaia.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 234,
+        "name": "À Prova de Som",
+        "description": "Concede imunidade a movimentos baseados em som.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 235,
+        "name": "Aumento de Velocidade",
+        "description": "Sua Velocidade é gradualmente aumentada.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 236,
+        "name": "Tocaia",
+        "description": "Causa dano em dobro a Pokémon que entram em campo.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 237,
+        "name": "Parado",
+        "description": "O Pokémon se move depois de todos os outros Pokémon.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 238,
+        "name": "Firme",
+        "description": "Ignora movimentos e habilidades que atraem movimentos.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 239,
+        "name": "Vigor",
+        "description": "Aumenta a Defesa quando atacado.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 240,
+        "name": "Mudança de Postura",
+        "description": "Muda de forma dependendo dos movimentos usados.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 241,
+        "name": "Estático",
+        "description": "Contato com o Pokémon pode causar paralisia.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 242,
+        "name": "Inabalável",
+        "description": "Aumenta a Velocidade cada vez que o Pokémon recua (flinch).",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 243,
+        "name": "Motor a Vapor",
+        "description": "Aumenta drasticamente a Velocidade quando atingido por um movimento do tipo Fogo ou Água.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 244,
+        "name": "Trabalhador do Aço",
+        "description": "Aumenta o poder de movimentos do tipo Aço.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 245,
+        "name": "Espírito de Aço",
+        "description": "Aumenta o poder dos movimentos do tipo Aço dos Pokémon aliados.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 246,
+        "name": "Mau Cheiro",
+        "description": "O mau cheiro pode fazer o alvo recuar (flinch).",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 247,
+        "name": "Aperto Pegajoso",
+        "description": "Protege o Pokémon contra roubo de item.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 248,
+        "name": "Drenagem Torrencial",
+        "description": "Atrai todos os movimentos do tipo Água para aumentar o At. Esp.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 249,
+        "name": "Mandíbula Forte",
+        "description": "Aumenta o poder de movimentos de mordida.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 250,
+        "name": "Robustez",
+        "description": "Não pode ser nocauteado com um único golpe.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 251,
+        "name": "Ventosas",
+        "description": "Nega todos os movimentos que forçam a troca.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 252,
+        "name": "Super Sorte",
+        "description": "Aumenta as taxas de acerto crítico dos movimentos.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 253,
+        "name": "Xarope Superdoce",
+        "description": "Reduz a Evasão do oponente ao entrar em batalha.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 254,
+        "name": "Suserano Supremo",
+        "description": "Ataque e Ataque Especial são aumentados para cada Pokémon da equipe que foi derrotado.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 255,
+        "name": "Surfista Elétrico",
+        "description": "Dobra a Velocidade durante o Terreno Elétrico.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 256,
+        "name": "Enxame",
+        "description": "Aumenta o poder de movimentos do tipo Inseto em apuros.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 257,
+        "name": "Véu Doce",
+        "description": "Impede que o Pokémon e aliados adormeçam.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 258,
+        "name": "Nado Rápido",
+        "description": "Aumenta a Velocidade do Pokémon na chuva.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 259,
+        "name": "Espada da Ruína",
+        "description": "Reduz o Ataque de todos os Pokémon, exceto o próprio.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 260,
+        "name": "Simbiose",
+        "description": "O Pokémon pode passar um item para um aliado.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 261,
+        "name": "Sincronizar",
+        "description": "Passa uma queimadura, veneno ou paralisia para o oponente.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 262,
+        "name": "Tábuas da Ruína",
+        "description": "Reduz o Ataque de todos os Pokémon, exceto o próprio.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 263,
+        "name": "Pés Emaranhados",
+        "description": "Aumenta a evasão se o Pokémon estiver confuso.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 264,
+        "name": "Cabelo Emaranhado",
+        "description": "Contato com o Pokémon reduz a Velocidade do atacante.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 265,
+        "name": "Técnico",
+        "description": "Aumenta o poder dos movimentos mais fracos do Pokémon.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 266,
+        "name": "Telepatia",
+        "description": "Antecipa o ataque de um aliado e o desvia.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 267,
+        "name": "Carapaça Tera",
+        "description": "Movimentos não são muito eficazes quando o HP está cheio.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 268,
+        "name": "Mudança Tera",
+        "description": "Transforma-se na Forma Terastal em batalha.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 269,
+        "name": "Teraforma Zero",
+        "description": "Elimina todos os efeitos de clima e terreno.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 270,
+        "name": "Teravolt",
+        "description": "Movimentos podem ser usados independentemente das Habilidades.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 271,
+        "name": "Troca Térmica",
+        "description": "Aumenta o Ataque quando atingido por um movimento do tipo Fogo. Não pode ser queimado.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 272,
+        "name": "Gordura Espessa",
+        "description": "Aumenta a resistência a movimentos dos tipos Fogo e Gelo.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 273,
+        "name": "Lente Tingida",
+        "description": "Aumenta o poder de movimentos “não muito eficazes”.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 274,
+        "name": "Torrente",
+        "description": "Aumenta o poder de movimentos do tipo Água em apuros.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 275,
+        "name": "Garras Resistentes",
+        "description": "Aumenta o poder de movimentos de contato.",
+        "introduced_generation_id": 6
+    },
+    {
+        "id": 276,
+        "name": "Impulso Tóxico",
+        "description": "Aumenta o poder de ataques físicos quando envenenado.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 277,
+        "name": "Corrente Tóxica",
+        "description": "Pode causar envenenamento grave.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 278,
+        "name": "Detritos Tóxicos",
+        "description": "Espalha espinhos venenosos aos pés da equipe adversária quando o Pokémon sofre dano de movimentos físicos.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 279,
+        "name": "Rastrear",
+        "description": "O Pokémon copia a Habilidade de um oponente.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 280,
+        "name": "Transistor",
+        "description": "Aumenta o poder de movimentos do tipo Elétrico.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 281,
+        "name": "Triagem",
+        "description": "Dá prioridade a movimentos restauradores.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 282,
+        "name": "Vadiagem",
+        "description": "O Pokémon não pode atacar em turnos consecutivos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 283,
+        "name": "Turbochama",
+        "description": "Movimentos podem ser usados independentemente das Habilidades.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 284,
+        "name": "Inconsciente",
+        "description": "Ignora quaisquer mudanças de atributos no Pokémon adversário.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 285,
+        "name": "Desimpedir",
+        "description": "Aumenta a Velocidade se um item segurado for usado.",
+        "introduced_generation_id": 4
+    },
+    {
+        "id": 286,
+        "name": "Nervosismo",
+        "description": "Deixa o oponente nervoso e incapaz de comer Berries.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 287,
+        "name": "Punho Invisível",
+        "description": "Movimentos de contato podem atingir através de Proteger/Detectar.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 288,
+        "name": "Vaso da Ruína",
+        "description": "Reduz o Ataque Especial de todos os Pokémon, exceto o próprio.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 289,
+        "name": "Estrela da Vitória",
+        "description": "Aumenta a precisão de seus aliados e de si mesmo.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 290,
+        "name": "Espírito Vital",
+        "description": "Impede que o Pokémon adormeça.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 291,
+        "name": "Absorver Voltagem",
+        "description": "Restaura HP se atingido por um movimento do tipo Elétrico.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 292,
+        "name": "Espírito Errante",
+        "description": "Troca habilidades com oponentes em contato.",
+        "introduced_generation_id": 8
+    },
+    {
+        "id": 293,
+        "name": "Absorver Água",
+        "description": "Restaura HP se atingido por um movimento do tipo Água.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 294,
+        "name": "Bolha d'Água",
+        "description": "Reduz pela metade o dano de movimentos do tipo Fogo, dobra o poder dos movimentos do tipo Água usados e previne queimaduras.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 295,
+        "name": "Compactação Aquática",
+        "description": "Aumenta acentuadamente a Defesa quando atingido por um movimento do tipo Água.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 296,
+        "name": "Véu d'Água",
+        "description": "Impede que o Pokémon sofra queimaduras.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 297,
+        "name": "Armadura Fraca",
+        "description": "Ataques físicos reduzem a Defesa e aumentam a Velocidade.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 298,
+        "name": "Corpo Bem Assado",
+        "description": "Imune a movimentos do tipo Fogo, e a Defesa é acentuadamente aumentada.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 299,
+        "name": "Fumaça Branca",
+        "description": "Impede que outros Pokémon reduzam seus atributos.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 300,
+        "name": "Retirada Estratégica",
+        "description": "Troca quando o HP cai abaixo da metade.",
+        "introduced_generation_id": 7
+    },
+    {
+        "id": 301,
+        "name": "Poder Eólico",
+        "description": "Dobra o poder do próximo movimento do tipo Elétrico usado, quando atingido por um movimento de vento.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 302,
+        "name": "Cavaleiro do Vento",
+        "description": "Não sofre dano de movimentos de vento e aumenta o Ataque se atingido por um.",
+        "introduced_generation_id": 9
+    },
+    {
+        "id": 303,
+        "name": "Superguarda",
+        "description": "Apenas movimentos super eficazes acertarão.",
+        "introduced_generation_id": 3
+    },
+    {
+        "id": 304,
+        "name": "Pele Maravilha",
+        "description": "Faz com que movimentos que alteram o status tenham maior probabilidade de errar.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 305,
+        "name": "Modo Zen",
+        "description": "Muda de forma quando o HP cai abaixo da metade.",
+        "introduced_generation_id": 5
+    },
+    {
+        "id": 306,
+        "name": "Zero a Herói",
+        "description": "Transforma-se em sua Forma Herói ao ser trocado.",
+        "introduced_generation_id": 9
+    }
+]

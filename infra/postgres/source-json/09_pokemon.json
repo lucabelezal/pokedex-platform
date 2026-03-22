@@ -1,0 +1,1782 @@
+[
+    {
+        "id": 1,
+        "number": "0001",
+        "name": "Bulbasaur",
+        "description": "Por um tempo após seu nascimento, ele usa os nutrientes armazenados na semente em suas costas para crescer.",
+        "height": 0.7,
+        "weight": 6.9,
+        "stats_id": 1,
+        "generation_id": 1,
+        "species_id": 1,
+        "region_id": 1,
+        "evolution_chain_id": 1,
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        },
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            7,
+            10
+        ],
+        "type_ids": [
+            5,
+            8
+        ],
+        "abilities": [
+            {
+                "ability_id": 65,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 66,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/1.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/1.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/1.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/1.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/1.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/1.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/1.gif",
+                    "front_shiny_female": null
+                }
+            }
+        }
+    },
+    {
+        "id": 2,
+        "number": "0002",
+        "name": "Ivysaur",
+        "description": "Quando o bulbo nas suas costas fica grande, parece que ele perde a capacidade de ficar de pé sobre duas pernas.",
+        "height": 1.0,
+        "weight": 13.0,
+        "stats_id": 2,
+        "generation_id": 1,
+        "species_id": 2,
+        "region_id": 1,
+        "evolution_chain_id": 1,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            7,
+            10
+        ],
+        "type_ids": [
+            5,
+            8
+        ],
+        "abilities": [
+            {
+                "ability_id": 65,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 66,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/2.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/2.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/2.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/2.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/2.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/2.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/2.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/2.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/2.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/2.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/2.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 3,
+        "number": "0003",
+        "name": "Venusaur",
+        "description": "A flor nas suas costas floresce quando absorve a luz solar. A floração libera um aroma que acalma as emoções das pessoas.",
+        "height": 2.0,
+        "weight": 100.0,
+        "stats_id": 3,
+        "generation_id": 1,
+        "species_id": 3,
+        "region_id": 1,
+        "evolution_chain_id": 1,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            7,
+            10
+        ],
+        "type_ids": [
+            5,
+            8
+        ],
+        "abilities": [
+            {
+                "ability_id": 65,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 66,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/3.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/3.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/3.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/3.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/3.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/3.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/3.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/3.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/3.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/3.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/3.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 4,
+        "number": "0003",
+        "name": "Mega Venusaur",
+        "description": "A flor nas suas costas floresce quando absorve a luz solar. A floração libera um aroma que acalma as emoções das pessoas.",
+        "height": 2.4,
+        "weight": 155.5,
+        "stats_id": 4,
+        "generation_id": 6,
+        "species_id": 3,
+        "region_id": 1,
+        "evolution_chain_id": 1,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            7,
+            10
+        ],
+        "type_ids": [
+            5,
+            8
+        ],
+        "abilities": [
+            {
+                "ability_id": 169,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/3-mega.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/3-mega.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3-mega.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/3-mega.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/3.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/3.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/3.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/3.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/3.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/3.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/3.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/3.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 5,
+        "number": "0004",
+        "name": "Charmander",
+        "description": "A chama na ponta da sua cauda indica a sua força vital. Se estiver saudável, a chama arde vigorosamente.",
+        "height": 0.6,
+        "weight": 8.5,
+        "stats_id": 5,
+        "generation_id": 1,
+        "species_id": 4,
+        "region_id": 1,
+        "evolution_chain_id": 2,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            3,
+            5
+        ],
+        "type_ids": [
+            2
+        ],
+        "abilities": [
+            {
+                "ability_id": 66,
+                "is_hidden": true
+            },
+            {
+                "ability_id": 189,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/4.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/4.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/4.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/4.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/4.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/4.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/4.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/4.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/4.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/4.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 6,
+        "number": "0005",
+        "name": "Charmeleon",
+        "description": "Ele ataca implacavelmente usando suas garras afiadas. Seus inimigos recuam diante do brilho de suas garras.",
+        "height": 1.1,
+        "weight": 19.0,
+        "stats_id": 6,
+        "generation_id": 1,
+        "species_id": 5,
+        "region_id": 1,
+        "evolution_chain_id": 2,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            3,
+            5
+        ],
+        "type_ids": [
+            2
+        ],
+        "abilities": [
+            {
+                "ability_id": 66,
+                "is_hidden": true
+            },
+            {
+                "ability_id": 189,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/5.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/5.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/5.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/5.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/5.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/5.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/5.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/5.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/5.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/5.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/5.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 7,
+        "number": "0006",
+        "name": "Charizard",
+        "description": "Charizard voa pelo céu em busca de oponentes fortes. Ele cospe fogo tão quente que derrete qualquer coisa.",
+        "height": 1.7,
+        "weight": 90.5,
+        "stats_id": 7,
+        "generation_id": 1,
+        "species_id": 6,
+        "region_id": 1,
+        "evolution_chain_id": 2,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            3,
+            5
+        ],
+        "type_ids": [
+            2,
+            10
+        ],
+        "abilities": [
+            {
+                "ability_id": 66,
+                "is_hidden": true
+            },
+            {
+                "ability_id": 189,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/6.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/6.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/6.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/6.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/6.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/6.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/6.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/6.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/6.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/6.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 8,
+        "number": "0006",
+        "name": "Mega Charizard X",
+        "description": "Charizard voa pelo céu em busca de oponentes fortes. Ele cospe fogo tão quente que derrete qualquer coisa.",
+        "height": 1.7,
+        "weight": 110.5,
+        "stats_id": 8,
+        "generation_id": 6,
+        "species_id": 6,
+        "region_id": 1,
+        "evolution_chain_id": 2,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            3,
+            5
+        ],
+        "type_ids": [
+            2,
+            16
+        ],
+        "abilities": [
+            {
+                "ability_id": 154,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/6-mega-x.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/6-mega-x.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6-mega-x.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/6-mega-x.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/6.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/6.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/6.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/6.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/6.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/6.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/6.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 9,
+        "number": "0006",
+        "name": "Mega Charizard Y",
+        "description": "Charizard voa pelo céu em busca de oponentes fortes. Ele cospe fogo tão quente que derrete qualquer coisa.",
+        "height": 1.7,
+        "weight": 100.5,
+        "stats_id": 9,
+        "generation_id": 6,
+        "species_id": 6,
+        "region_id": 1,
+        "evolution_chain_id": 2,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            3,
+            5
+        ],
+        "type_ids": [
+            2,
+            10
+        ],
+        "abilities": [
+            {
+                "ability_id": 174,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/6-mega-y.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/6-mega-y.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6-mega-y.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/6-mega-y.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/6.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/6.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/6.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/6.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/6.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/6.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/6.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 10,
+        "number": "0007",
+        "name": "Squirtle",
+        "description": "Quando retrai seu longo pescoço para dentro de sua concha, ele jorra água com força prodigiosa.",
+        "height": 0.5,
+        "weight": 9.0,
+        "stats_id": 10,
+        "generation_id": 1,
+        "species_id": 7,
+        "region_id": 1,
+        "evolution_chain_id": 3,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            11,
+            13
+        ],
+        "type_ids": [
+            3
+        ],
+        "abilities": [
+            {
+                "ability_id": 67,
+                "is_hidden": true
+            },
+            {
+                "ability_id": 189,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/7.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/7.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/7.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/7.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/7.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/7.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/7.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/7.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/7.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/7.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/7.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 11,
+        "number": "0008",
+        "name": "Wartortle",
+        "description": "Sua cauda grande e peluda é um símbolo de longevidade, tornando-o popular entre as pessoas idosas.",
+        "height": 1.0,
+        "weight": 22.5,
+        "stats_id": 11,
+        "generation_id": 1,
+        "species_id": 8,
+        "region_id": 1,
+        "evolution_chain_id": 3,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            11,
+            13
+        ],
+        "type_ids": [
+            3
+        ],
+        "abilities": [
+            {
+                "ability_id": 67,
+                "is_hidden": true
+            },
+            {
+                "ability_id": 189,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/8.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/8.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/8.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/8.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/8.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/8.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/8.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/8.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/8.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/8.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/8.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 12,
+        "number": "0009",
+        "name": "Blastoise",
+        "description": "Seus jatos de água que se projetam de sua concha possuem um poder de impacto que pode perfurar até mesmo o aço mais grosso.",
+        "height": 1.6,
+        "weight": 85.5,
+        "stats_id": 12,
+        "generation_id": 1,
+        "species_id": 9,
+        "region_id": 1,
+        "evolution_chain_id": 3,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            11,
+            13
+        ],
+        "type_ids": [
+            3
+        ],
+        "abilities": [
+            {
+                "ability_id": 67,
+                "is_hidden": true
+            },
+            {
+                "ability_id": 189,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/9.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/9.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/9.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/9.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/9.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/9.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/9.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/9.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/9.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/9.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/9.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 13,
+        "number": "0009",
+        "name": "Mega Blastoise",
+        "description": "Seus jatos de água que se projetam de sua concha possuem um poder de impacto que pode perfurar até mesmo o aço mais grosso.",
+        "height": 1.6,
+        "weight": 101.1,
+        "stats_id": 13,
+        "generation_id": 6,
+        "species_id": 9,
+        "region_id": 1,
+        "evolution_chain_id": 3,
+        "gender_rate_value": 1,
+        "egg_cycles": 20,
+        "egg_group_ids": [
+            11,
+            13
+        ],
+        "type_ids": [
+            3
+        ],
+        "abilities": [
+            {
+                "ability_id": 186,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/9-mega.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/9-mega.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9-mega.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/9-mega.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/9.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/9.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/9.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/9.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/9.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/9.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/9.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/9.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 87.5,
+            "female": 12.5
+        }
+    },
+    {
+        "id": 14,
+        "number": "0010",
+        "name": "Caterpie",
+        "description": "Para se proteger, ele libera um cheiro horrível de suas antenas. Tem um apetite voraz.",
+        "height": 0.3,
+        "weight": 2.9,
+        "stats_id": 14,
+        "generation_id": 1,
+        "species_id": 10,
+        "region_id": 1,
+        "evolution_chain_id": 4,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            2
+        ],
+        "type_ids": [
+            7
+        ],
+        "abilities": [
+            {
+                "ability_id": 50,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 51,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/10.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/10.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/10.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/10.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/10.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/10.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/10.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/10.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/10.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/10.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 15,
+        "number": "0011",
+        "name": "Metapod",
+        "description": "Seu corpo é envolto em uma casca dura como aço. Ele se prepara para sua evolução dentro da casca.",
+        "height": 0.7,
+        "weight": 9.9,
+        "stats_id": 15,
+        "generation_id": 1,
+        "species_id": 11,
+        "region_id": 1,
+        "evolution_chain_id": 4,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            2
+        ],
+        "type_ids": [
+            7
+        ],
+        "abilities": [
+            {
+                "ability_id": 64,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/11.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/11.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/11.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/11.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/11.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/11.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/11.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/11.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/11.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/11.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/11.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 16,
+        "number": "0012",
+        "name": "Butterfree",
+        "description": "Adora o néctar das flores. Ele pode localizar flores que possuem até mesmo a menor quantidade de pólen.",
+        "height": 1.1,
+        "weight": 32.0,
+        "stats_id": 16,
+        "generation_id": 1,
+        "species_id": 12,
+        "region_id": 1,
+        "evolution_chain_id": 4,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            2
+        ],
+        "type_ids": [
+            7,
+            10
+        ],
+        "abilities": [
+            {
+                "ability_id": 46,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 47,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/12.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/12.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/12.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/12.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/12.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/12.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/12.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/12.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/12.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/12.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/12.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 17,
+        "number": "0013",
+        "name": "Weedle",
+        "description": "Seu sentido de olfato é incrivelmente aguçado. Ele consegue identificar seus tipos favoritos de folhas em milhas de distância.",
+        "height": 0.3,
+        "weight": 3.2,
+        "stats_id": 17,
+        "generation_id": 1,
+        "species_id": 13,
+        "region_id": 1,
+        "evolution_chain_id": 5,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            2
+        ],
+        "type_ids": [
+            2,
+            8
+        ],
+        "abilities": [
+            {
+                "ability_id": 50,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 51,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/13.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/13.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/13.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/13.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/13.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/13.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/13.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/13.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/13.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/13.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/13.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 18,
+        "number": "0014",
+        "name": "Kakuna",
+        "description": "Ele fica quase imóvel enquanto se agarra a uma árvore, aguardando sua evolução. A temperatura do corpo fica alta.",
+        "height": 0.6,
+        "weight": 10.0,
+        "stats_id": 18,
+        "generation_id": 1,
+        "species_id": 14,
+        "region_id": 1,
+        "evolution_chain_id": 5,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            2
+        ],
+        "type_ids": [
+            7,
+            8
+        ],
+        "abilities": [
+            {
+                "ability_id": 61,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/14.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/14.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/14.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/14.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/14.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/14.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/14.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/14.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/14.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/14.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/14.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/14.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/14.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 19,
+        "number": "0015",
+        "name": "Beedrill",
+        "description": "Tem três grandes ferrões venenosos, um em cada braço e um na cauda. Eles são usados para atacar seus inimigos sem parar.",
+        "height": 1.0,
+        "weight": 29.5,
+        "stats_id": 19,
+        "generation_id": 1,
+        "species_id": 15,
+        "region_id": 1,
+        "evolution_chain_id": 5,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            2
+        ],
+        "type_ids": [
+            2,
+            8
+        ],
+        "abilities": [
+            {
+                "ability_id": 61,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 62,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/15.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/15.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/15.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/15.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/15.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/15.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/15.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/15.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/15.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/15.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/15.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 20,
+        "number": "0015",
+        "name": "Mega Beedrill",
+        "description": "Tem três grandes ferrões venenosos, um em cada braço e um na cauda. Eles são usados para atacar seus inimigos sem parar.",
+        "height": 1.4,
+        "weight": 40.5,
+        "stats_id": 20,
+        "generation_id": 6,
+        "species_id": 15,
+        "region_id": 1,
+        "evolution_chain_id": 5,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            2
+        ],
+        "type_ids": [
+            2,
+            8
+        ],
+        "abilities": [
+            {
+                "ability_id": 1,
+                "is_hidden": false
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/15-mega.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/15-mega.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15-mega.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/15-mega.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/15.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/15.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/15.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/15.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/15.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/15.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/15.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/15.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 21,
+        "number": "0016",
+        "name": "Pidgey",
+        "description": "É dócil e prefere evitar brigas. No entanto, se for provocado, ele revida vigorosamente.",
+        "height": 0.3,
+        "weight": 1.8,
+        "stats_id": 21,
+        "generation_id": 1,
+        "species_id": 16,
+        "region_id": 1,
+        "evolution_chain_id": 6,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            6,
+            1
+        ],
+        "type_ids": [
+            1,
+            10
+        ],
+        "abilities": [
+            {
+                "ability_id": 190,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 43,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/16.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/16.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/16.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/16.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/16.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/16.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/16.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/16.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/16.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/16.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/16.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 22,
+        "number": "0017",
+        "name": "Pidgeotto",
+        "description": "Este Pokémon é um protetor feroz de seu vasto território. Ele bica impiedosamente qualquer intruso.",
+        "height": 1.1,
+        "weight": 30.0,
+        "stats_id": 22,
+        "generation_id": 1,
+        "species_id": 17,
+        "region_id": 1,
+        "evolution_chain_id": 6,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            6,
+            1
+        ],
+        "type_ids": [
+            1,
+            10
+        ],
+        "abilities": [
+            {
+                "ability_id": 190,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 43,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/17.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/17.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/17.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/17.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/17.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/17.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/17.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/17.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/17.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/17.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/17.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 23,
+        "number": "0018",
+        "name": "Pidgeot",
+        "description": "Com suas asas magníficas, ele pode voar a velocidades Mach 2. É temido por todos os inimigos.",
+        "height": 1.5,
+        "weight": 39.5,
+        "stats_id": 23,
+        "generation_id": 1,
+        "species_id": 18,
+        "region_id": 1,
+        "evolution_chain_id": 6,
+        "gender_rate_value": 1,
+        "egg_cycles": 15,
+        "egg_group_ids": [
+            6,
+            1
+        ],
+        "type_ids": [
+            1,
+            10
+        ],
+        "abilities": [
+            {
+                "ability_id": 190,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 43,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/18.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/18.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/18.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/18.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/18.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/18.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/18.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/18.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/18.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/18.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/18.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/18.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 24,
+        "number": "0026",
+        "name": "Raichu",
+        "description": "Se sua bolsa elétrica for sobrecarregada, ele libera eletricidade. Pode até eletrocutar a si mesmo, então é bom ter cuidado.",
+        "height": 0.8,
+        "weight": 30.0,
+        "stats_id": 24,
+        "generation_id": 1,
+        "species_id": 26,
+        "region_id": 1,
+        "evolution_chain_id": 10,
+        "gender_rate_value": 1,
+        "egg_cycles": 10,
+        "egg_group_ids": [
+            5,
+            4
+        ],
+        "type_ids": [
+            4
+        ],
+        "abilities": [
+            {
+                "ability_id": 18,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 19,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/26.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/26.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/26.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/26.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/26.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/26.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/26.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/26.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/26.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/26.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/26.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    },
+    {
+        "id": 25,
+        "number": "0025",
+        "name": "Pikachu",
+        "description": "Este Pokémon tem bolsas elétricas nas bochechas. Elas parecem carregar eletricidade durante a noite enquanto ele dorme.",
+        "height": 0.4,
+        "weight": 6.0,
+        "stats_id": 25,
+        "generation_id": 1,
+        "species_id": 25,
+        "region_id": 1,
+        "evolution_chain_id": 10,
+        "gender_rate_value": 1,
+        "egg_cycles": 10,
+        "egg_group_ids": [
+            5,
+            4
+        ],
+        "type_ids": [
+            4
+        ],
+        "abilities": [
+            {
+                "ability_id": 18,
+                "is_hidden": false
+            },
+            {
+                "ability_id": 19,
+                "is_hidden": true
+            }
+        ],
+        "sprites": {
+            "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png",
+            "back_female": null,
+            "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/25.png",
+            "back_shiny_female": null,
+            "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+            "front_female": null,
+            "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/25.png",
+            "front_shiny_female": null,
+            "other": {
+                "dream_world": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg",
+                    "front_female": null
+                },
+                "home": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/25.png",
+                    "front_shiny_female": null
+                },
+                "official-artwork": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/25.png"
+                },
+                "showdown": {
+                    "back_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/25.gif",
+                    "back_female": null,
+                    "back_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/shiny/25.gif",
+                    "back_shiny_female": null,
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/25.gif",
+                    "front_female": null,
+                    "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/25.gif",
+                    "front_shiny_female": null
+                }
+            }
+        },
+        "gender": {
+            "male": 50.0,
+            "female": 50.0
+        }
+    }
+]

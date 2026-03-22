@@ -1,0 +1,92 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pokedex-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-pokedex_dev_db}
+      POSTGRES_USER: ${POSTGRES_USER:-pokedex}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pokedex}
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./infra/postgres/schema/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./infra/postgres/seeds/init-data.sql:/docker-entrypoint-initdb.d/02_init-data.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-pokedex} -d ${POSTGRES_DB:-pokedex_dev_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: pokedex-redis
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - ./infra/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pokedex-service:
+    build:
+      context: ./app/pokedex-service
+      dockerfile: Dockerfile
+    container_name: pokedex-service
+    environment:
+      POKEDEX_SERVICE_PORT: ${POKEDEX_SERVICE_PORT:-8081}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8081/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mobile-bff:
+    build:
+      context: ./bff/mobile-bff
+      dockerfile: Dockerfile
+    container_name: mobile-bff
+    environment:
+      MOBILE_BFF_PORT: ${MOBILE_BFF_PORT:-8080}
+      POKEDEX_SERVICE_URL: ${POKEDEX_SERVICE_URL:-http://pokedex-service:8081}
+    depends_on:
+      pokedex-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kong:
+    image: kong:3.7
+    container_name: pokedex-kong
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /opt/kong/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    volumes:
+      - ./gateway/kong/kong.yml:/opt/kong/kong.yml:ro
+    depends_on:
+      mobile-bff:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
