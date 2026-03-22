@@ -4,3 +4,7 @@ bin/
 vendor/
 .env
 .DS_Store
+
+# Binarios locais gerados por go build
+app/auth-service/server
+bff/mobile-bff/server
