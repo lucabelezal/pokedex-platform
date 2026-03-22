@@ -20,24 +20,45 @@ func main() {
 	// Initialize repositories with fallback to mocks
 	var pokemonRepo ports.PokemonRepository
 	var favoriteRepo ports.FavoriteRepository
+	var db *repository.Database
+
+	if cfg.PokedexServiceURL != "" {
+		pokemonRepo = repository.NewPokedexServiceRepository(cfg.PokedexServiceURL)
+		log.Printf("Using pokedex-service catalog from %s", cfg.PokedexServiceURL)
+	}
 
 	if cfg.DatabaseURL != "" {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
-		db, err := repository.NewDatabase(ctx, cfg.DatabaseURL)
+		var err error
+		db, err = repository.NewDatabase(ctx, cfg.DatabaseURL)
 		if err != nil {
-			log.Printf("Warning: PostgreSQL unavailable, using mocks: %v", err)
-			pokemonRepo = mocks.NewMockPokemonRepository()
+			log.Printf("Warning: PostgreSQL unavailable for favorites, using mock favorites: %v", err)
 			favoriteRepo = mocks.NewMockFavoriteRepository()
 		} else {
-			defer db.Close()
-			pokemonRepo = repository.NewPostgresPokemonRepository(db.Pool)
 			favoriteRepo = repository.NewPostgresFavoriteRepository(db.Pool)
+			if pokemonRepo == nil {
+				pokemonRepo = repository.NewPostgresPokemonRepository(db.Pool)
+			}
 		}
-	} else {
-		log.Println("No DATABASE_URL set, using mock repositories")
+	}
+
+	if db != nil {
+		defer db.Close()
+	}
+
+	if pokemonRepo == nil {
+		if cfg.DatabaseURL == "" {
+			log.Println("No POKEDEX_SERVICE_URL or DATABASE_URL set, using mock pokemons")
+		}
 		pokemonRepo = mocks.NewMockPokemonRepository()
+	}
+
+	if favoriteRepo == nil {
+		if cfg.DatabaseURL == "" {
+			log.Println("No DATABASE_URL set, using mock favorites")
+		}
 		favoriteRepo = mocks.NewMockFavoriteRepository()
 	}
 

@@ -50,8 +50,19 @@ func (h *Handler) ListPokemons(w http.ResponseWriter, r *http.Request) {
 	page := getQueryParamInt(r, "page", 0)
 	pageSize := getQueryParamInt(r, "size", 20)
 	userID := getUserIDFromContext(ctx)
+	typeFilter := r.URL.Query().Get("type")
 
-	pokemonPage, err := h.pokemonUseCase.ListPokemons(ctx, page, pageSize, userID)
+	var (
+		pokemonPage *domain.PokemonPage
+		err         error
+	)
+
+	if typeFilter != "" {
+		pokemonPage, err = h.pokemonUseCase.FilterByType(ctx, typeFilter, page, pageSize, userID)
+	} else {
+		pokemonPage, err = h.pokemonUseCase.ListPokemons(ctx, page, pageSize, userID)
+	}
+
 	if err != nil {
 		RespondError(w, http.StatusInternalServerError, "falha ao listar pokemons", "INTERNAL_ERROR")
 		return
@@ -84,7 +95,6 @@ func (h *Handler) SearchPokemons(w http.ResponseWriter, r *http.Request) {
 	response := h.responseBuilder.BuildRichPokemonListResponse(pokemonPage)
 	RespondJSON(w, http.StatusOK, response)
 }
-
 func (h *Handler) GetPokemonDetails(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()

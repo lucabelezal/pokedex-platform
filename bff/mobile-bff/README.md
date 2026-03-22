@@ -48,10 +48,37 @@ tests/
 - `GET /api/v1/pokemons/{id}/details`
 - `GET /api/v1/home`
 
+Para filtro por tipo, use `GET /api/v1/pokemons?type=Electric&page=0&size=20`.
+
 ### Autenticados
 
 - `POST /api/v1/pokemons/{id}/favorite`
 - `DELETE /api/v1/pokemons/{id}/favorite`
+
+## Contrato Entre BFF E Service
+
+O BFF atende o contrato rico do front, enquanto o `pokedex-service` concentra o catalogo canonico de Pokemon.
+
+### BFF (mobile-bff)
+
+- Compoe respostas para UI (`home`, cards e detalhe rico)
+- Aplica regras de experiencia para cliente mobile/web
+- Mantem regra de favoritos por usuario (escrita)
+
+### Service (pokedex-service)
+
+- Exposicao de dados canonicos de catalogo (leitura)
+- Endpoints consumidos pelo BFF:
+   - `GET /v1/pokemons`
+   - `GET /v1/pokemons/search`
+   - `GET /v1/pokemons/type/{type}`
+   - `GET /v1/pokemons/{id}`
+
+### Decisao Atual
+
+- Catalogo: no `pokedex-service`
+- Favoritos: no BFF por usuario autenticado
+- Evolucao futura: extrair favoritos para um servico proprio quando login/cadastro estiverem integrados
 
 ## Stack
 

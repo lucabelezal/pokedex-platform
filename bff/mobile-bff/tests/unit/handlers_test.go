@@ -80,6 +80,28 @@ func TestSearchPokemonsHandler(t *testing.T) {
 	assert.Equal(t, "Pikachu", response.Content[0].Name)
 }
 
+func TestListPokemonsWithTypeFilterHandler(t *testing.T) {
+	pokemonRepo := mocks.NewMockPokemonRepository()
+	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
+	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc)
+
+	req := httptest.NewRequest("GET", "/api/v1/pokemons?type=Electric&page=0&size=10", nil)
+	w := httptest.NewRecorder()
+
+	handler.ListPokemons(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response dto.RichPokemonListResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, response.Content)
+	assert.Equal(t, "Pikachu", response.Content[0].Name)
+}
+
 func TestGetPokemonDetailsHandler(t *testing.T) {
 	pokemonRepo := mocks.NewMockPokemonRepository()
 	favoriteRepo := mocks.NewMockFavoriteRepository()
