@@ -8,3 +8,7 @@ vendor/
 # Binarios locais gerados por go build
 app/auth-service/server
 bff/mobile-bff/server
+
+# Artefatos locais para coleta de dados da Gen 1
+infra/postgres/source-json/generated/
+infra/postgres/source-json/.local-tools/

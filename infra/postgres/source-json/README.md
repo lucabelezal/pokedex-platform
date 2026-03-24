@@ -39,3 +39,30 @@ Os arquivos são numerados para respeitar dependências de chaves estrangeiras.
 - Nao alterar a numeração dos arquivos.
 - Manter campos e tipos consistentes.
 - Evitar editar SQL gerado manualmente.
+
+## Coleta automatica da Gen 1 (apoio)
+
+Existe um script Python para coletar dados factuais da PokeAPI e gerar arquivos
+de apoio para os 151 Pokemon da Geracao 1.
+
+Arquivo local (nao versionado):
+
+- `infra/postgres/source-json/.local-tools/fetch_gen1_facts.py`
+
+Execucao:
+
+```bash
+python3 infra/postgres/source-json/.local-tools/fetch_gen1_facts.py \
+	--start 1 \
+	--end 151 \
+	--output-dir infra/postgres/source-json/generated
+```
+
+Saidas:
+
+- `gen1_facts.json`
+- `gen1_evolution_chains.json`
+- `gen1_description_drafts_ptbr.json`
+
+Observacao: os arquivos gerados sao de apoio e nao substituem automaticamente
+os JSONs canonicos numerados (`01_...` ate `10_...`).
