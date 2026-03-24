@@ -72,6 +72,59 @@ func TestAuthMiddlewareWithoutToken(t *testing.T) {
 	assert.Equal(t, http.StatusOK, w.Code)
 }
 
+func TestAuthMiddlewareWithCookieToken(t *testing.T) {
+	t.Setenv("JWT_SECRET", "test-secret")
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user_id": "user-cookie",
+		"exp":     time.Now().Add(1 * time.Hour).Unix(),
+	})
+	tokenString, err := token.SignedString([]byte("test-secret"))
+	assert.NoError(t, err)
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userID := httpadapter.GetUserID(r.Context())
+		assert.Equal(t, "user-cookie", userID)
+		w.WriteHeader(http.StatusOK)
+	})
+
+	middleware := httpadapter.AuthMiddleware(handler)
+
+	req := httptest.NewRequest("GET", "/test", nil)
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: tokenString})
+	w := httptest.NewRecorder()
+
+	middleware.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+}
+
+func TestAuthMiddlewareHeaderHasPriorityOverCookie(t *testing.T) {
+	t.Setenv("JWT_SECRET", "test-secret")
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user_id": "user-cookie",
+		"exp":     time.Now().Add(1 * time.Hour).Unix(),
+	})
+	validCookieToken, err := token.SignedString([]byte("test-secret"))
+	assert.NoError(t, err)
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	middleware := httpadapter.AuthMiddleware(handler)
+
+	req := httptest.NewRequest("GET", "/test", nil)
+	req.Header.Set("Authorization", "Bearer token-invalido")
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: validCookieToken})
+	w := httptest.NewRecorder()
+
+	middleware.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code)
+}
+
 func TestCORSMiddleware(t *testing.T) {
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)

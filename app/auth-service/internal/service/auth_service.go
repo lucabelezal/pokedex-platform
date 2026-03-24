@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
@@ -15,6 +16,7 @@ import (
 var (
 	ErrInvalidCredentials = errors.New("credenciais invalidas")
 	ErrInvalidInput       = errors.New("dados invalidos")
+	ErrInvalidToken       = errors.New("token invalido")
 )
 
 type AuthService struct {
@@ -84,6 +86,29 @@ func (s *AuthService) Login(ctx context.Context, email, password string) (*AuthR
 	return s.createToken(user.ID, user.Email)
 }
 
+func (s *AuthService) Refresh(tokenString string) (*AuthResult, error) {
+	claims, err := s.parseAndValidateToken(tokenString)
+	if err != nil {
+		return nil, ErrInvalidToken
+	}
+
+	userID, _ := claims["sub"].(string)
+	userID = strings.TrimSpace(userID)
+	if userID == "" {
+		return nil, ErrInvalidToken
+	}
+
+	email, _ := claims["email"].(string)
+	email = strings.TrimSpace(email)
+
+	return s.createToken(userID, email)
+}
+
+func (s *AuthService) Logout(_ string) error {
+	// Implementacao stateless: a invalidacao final ocorre no cliente removendo o token.
+	return nil
+}
+
 func (s *AuthService) createToken(userID, email string) (*AuthResult, error) {
 	now := time.Now()
 	expiresAt := now.Add(s.tokenTTL)
@@ -108,4 +133,38 @@ func (s *AuthService) createToken(userID, email string) (*AuthResult, error) {
 		UserID:      userID,
 		Email:       email,
 	}, nil
+}
+
+func (s *AuthService) parseAndValidateToken(tokenString string) (jwt.MapClaims, error) {
+	tokenString = strings.TrimSpace(tokenString)
+	if tokenString == "" {
+		return nil, ErrInvalidToken
+	}
+
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("algoritmo de assinatura invalido: %v", token.Header["alg"])
+		}
+		return []byte(s.jwtSecret), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		return nil, ErrInvalidToken
+	}
+
+	if expRaw, ok := claims["exp"]; ok {
+		exp, ok := expRaw.(float64)
+		if !ok {
+			return nil, ErrInvalidToken
+		}
+		if time.Now().Unix() >= int64(exp) {
+			return nil, ErrInvalidToken
+		}
+	}
+
+	return claims, nil
 }

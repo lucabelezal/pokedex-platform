@@ -31,6 +31,8 @@ func NewMux(authService *service.AuthService) *http.ServeMux {
 	mux.HandleFunc("GET /health", h.health)
 	mux.HandleFunc("POST /v1/auth/signup", h.signup)
 	mux.HandleFunc("POST /v1/auth/login", h.login)
+	mux.HandleFunc("POST /v1/auth/refresh", h.refresh)
+	mux.HandleFunc("POST /v1/auth/logout", h.logout)
 	return mux
 }
 
@@ -88,6 +90,56 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondJSON(w, http.StatusOK, result)
+}
+
+func (h *Handler) refresh(w http.ResponseWriter, r *http.Request) {
+	tokenString, err := extractBearerToken(r)
+	if err != nil {
+		respondError(w, http.StatusUnauthorized, "token invalido")
+		return
+	}
+
+	result, err := h.authService.Refresh(tokenString)
+	if err != nil {
+		respondError(w, http.StatusUnauthorized, "token invalido")
+		return
+	}
+
+	respondJSON(w, http.StatusOK, result)
+}
+
+func (h *Handler) logout(w http.ResponseWriter, r *http.Request) {
+	tokenString, err := extractBearerToken(r)
+	if err != nil {
+		respondError(w, http.StatusUnauthorized, "token invalido")
+		return
+	}
+
+	if err := h.authService.Logout(tokenString); err != nil {
+		respondError(w, http.StatusInternalServerError, "falha ao encerrar sessao")
+		return
+	}
+
+	respondJSON(w, http.StatusOK, map[string]string{"message": "sessao encerrada"})
+}
+
+func extractBearerToken(r *http.Request) (string, error) {
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
+		return "", errors.New("authorization ausente")
+	}
+
+	const prefix = "Bearer "
+	if len(authHeader) <= len(prefix) || authHeader[:len(prefix)] != prefix {
+		return "", errors.New("authorization invalido")
+	}
+
+	tokenString := authHeader[len(prefix):]
+	if tokenString == "" {
+		return "", errors.New("token vazio")
+	}
+
+	return tokenString, nil
 }
 
 func respondJSON(w http.ResponseWriter, status int, payload any) {

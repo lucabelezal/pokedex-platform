@@ -47,6 +47,18 @@ docker compose up --build
 - Saúde do BFF via Kong: `http://localhost:8000/bff/health`
 - Rota Ping via Kong: `http://localhost:8000/v1/pokemon/ping`
 
+Endpoints de autenticacao (via BFF):
+- `POST /api/v1/auth/signup`
+- `POST /api/v1/auth/login`
+- `POST /api/v1/auth/refresh`
+- `POST /api/v1/auth/logout`
+
+Endpoints autenticados (via BFF):
+- `GET /api/v1/me`
+- `GET /api/v1/me/favorites`
+- `POST /api/v1/pokemons/{id}/favorite`
+- `DELETE /api/v1/pokemons/{id}/favorite`
+
 ## Pipeline de Dados
 
 - Arquivos JSON de origem: `infra/postgres/source-json/*.json`

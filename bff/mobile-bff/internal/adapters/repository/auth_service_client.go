@@ -152,3 +152,74 @@ func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (
 
 	return &authResp, nil
 }
+
+// Refresh chama o endpoint de refresh do auth-service
+func (c *AuthServiceClient) Refresh(ctx context.Context, token string) (*AuthResponse, error) {
+	if c.baseURL == "" {
+		return nil, errors.New("auth service URL not configured")
+	}
+
+	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/v1/auth/refresh", nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create refresh request: %w", err)
+	}
+
+	httpReq.Header.Set("Authorization", "Bearer "+token)
+
+	resp, err := c.httpClient.Do(httpReq)
+	if err != nil {
+		return nil, fmt.Errorf("refresh request failed: %w", err)
+	}
+	defer resp.Body.Close()
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read refresh response: %w", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		var errResp ErrorResponse
+		if err := json.Unmarshal(respBody, &errResp); err == nil && errResp.Error != "" {
+			return nil, fmt.Errorf("refresh failed: %s", errResp.Error)
+		}
+		return nil, fmt.Errorf("refresh failed with status %d: %s", resp.StatusCode, string(respBody))
+	}
+
+	var authResp AuthResponse
+	if err := json.Unmarshal(respBody, &authResp); err != nil {
+		return nil, fmt.Errorf("failed to parse refresh response: %w", err)
+	}
+
+	return &authResp, nil
+}
+
+// Logout chama o endpoint de logout do auth-service
+func (c *AuthServiceClient) Logout(ctx context.Context, token string) error {
+	if c.baseURL == "" {
+		return errors.New("auth service URL not configured")
+	}
+
+	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/v1/auth/logout", nil)
+	if err != nil {
+		return fmt.Errorf("failed to create logout request: %w", err)
+	}
+
+	httpReq.Header.Set("Authorization", "Bearer "+token)
+
+	resp, err := c.httpClient.Do(httpReq)
+	if err != nil {
+		return fmt.Errorf("logout request failed: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		respBody, _ := io.ReadAll(resp.Body)
+		var errResp ErrorResponse
+		if err := json.Unmarshal(respBody, &errResp); err == nil && errResp.Error != "" {
+			return fmt.Errorf("logout failed: %s", errResp.Error)
+		}
+		return fmt.Errorf("logout failed with status %d: %s", resp.StatusCode, string(respBody))
+	}
+
+	return nil
+}

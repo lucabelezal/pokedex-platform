@@ -15,20 +15,20 @@ import (
 type contextKey string
 
 const UserIDContextKey contextKey = "userID"
+const UserEmailContextKey contextKey = "userEmail"
 
 // AuthMiddleware extrai e valida o token JWT da requisição
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		authHeader := r.Header.Get("Authorization")
+		tokenString, err := extractTokenFromRequest(r)
+		if err != nil {
+			RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
+			return
+		}
 
 		var userID string
-		if authHeader != "" {
-			tokenString, err := parseBearerToken(authHeader)
-			if err != nil {
-				RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
-				return
-			}
-
+		var userEmail string
+		if tokenString != "" {
 			claims, err := parseAndValidateJWT(tokenString, getJWTSecret())
 			if err != nil {
 				RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
@@ -40,11 +40,32 @@ func AuthMiddleware(next http.Handler) http.Handler {
 				RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
 				return
 			}
+
+			userEmail = extractUserEmailFromClaims(claims)
 		}
 
 		ctx := context.WithValue(r.Context(), UserIDContextKey, userID)
+		ctx = context.WithValue(ctx, UserEmailContextKey, userEmail)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
+}
+
+func extractTokenFromRequest(r *http.Request) (string, error) {
+	authHeader := strings.TrimSpace(r.Header.Get("Authorization"))
+	if authHeader != "" {
+		// Se Authorization foi enviado, ele tem prioridade sobre cookie.
+		return parseBearerToken(authHeader)
+	}
+
+	cookie, err := r.Cookie("auth_token")
+	if err == nil {
+		tokenString := strings.TrimSpace(cookie.Value)
+		if tokenString != "" {
+			return tokenString, nil
+		}
+	}
+
+	return "", nil
 }
 
 // RequireAuth é um middleware que exige autenticação
@@ -129,6 +150,14 @@ func extractUserIDFromClaims(claims jwt.MapClaims) string {
 	return ""
 }
 
+func extractUserEmailFromClaims(claims jwt.MapClaims) string {
+	if email, ok := claims["email"].(string); ok {
+		return strings.TrimSpace(email)
+	}
+
+	return ""
+}
+
 func getJWTSecret() string {
 	secret := strings.TrimSpace(os.Getenv("JWT_SECRET"))
 	if secret == "" {
@@ -147,6 +176,22 @@ func getUserIDFromContext(ctx context.Context) string {
 
 func SetUserID(ctx context.Context, userID string) context.Context {
 	return context.WithValue(ctx, UserIDContextKey, userID)
+}
+
+func getUserEmailFromContext(ctx context.Context) string {
+	userEmail, ok := ctx.Value(UserEmailContextKey).(string)
+	if !ok {
+		return ""
+	}
+	return userEmail
+}
+
+func SetUserEmail(ctx context.Context, userEmail string) context.Context {
+	return context.WithValue(ctx, UserEmailContextKey, userEmail)
+}
+
+func GetUserEmail(ctx context.Context) string {
+	return getUserEmailFromContext(ctx)
 }
 
 func GetUserID(ctx context.Context) string {

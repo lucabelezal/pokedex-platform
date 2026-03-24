@@ -52,10 +52,23 @@ Para filtro por tipo, use `GET /api/v1/pokemons?type=Electric&page=0&size=20`.
 
 ### Autenticados
 
+- `GET /api/v1/me`
 - `POST /api/v1/pokemons/{id}/favorite`
 - `DELETE /api/v1/pokemons/{id}/favorite`
+- `GET /api/v1/me/favorites`
 
-Esses endpoints exigem `Authorization: Bearer <jwt>` valido com claim `user_id` ou `sub`.
+### Sessao/Auth
+
+- `POST /api/v1/auth/signup`
+- `POST /api/v1/auth/login`
+- `POST /api/v1/auth/refresh`
+- `POST /api/v1/auth/logout`
+
+Os endpoints autenticados aceitam token por:
+- Header: `Authorization: Bearer <jwt>`
+- Cookie HTTP-only: `auth_token`
+
+Regra de precedencia: quando os dois forem enviados, o header `Authorization` tem prioridade.
 
 ## Contrato Entre BFF E Service
 
