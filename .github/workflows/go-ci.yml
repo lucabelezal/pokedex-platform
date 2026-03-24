@@ -15,10 +15,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        module:
-          - app/pokedex-service
-          - bff/mobile-bff
-          - infra/postgres/json2sql
+        include:
+          - module: app/pokedex-service
+            artifact_name: coverage-app-pokedex-service
+          - module: bff/mobile-bff
+            artifact_name: coverage-bff-mobile-bff
+          - module: infra/postgres/json2sql
+            artifact_name: coverage-infra-postgres-json2sql
 
     defaults:
       run:
@@ -67,7 +70,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{ replace(matrix.module, '/', '-') }}
+          name: ${{ matrix.artifact_name }}
           path: ${{ matrix.module }}/coverage.out
           if-no-files-found: ignore
 
