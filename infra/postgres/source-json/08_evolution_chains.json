@@ -1,325 +1,2148 @@
 [
-    {
+  {
+    "id": 1,
+    "chain": {
+      "pokemon": {
         "id": 1,
-        "chain": {
-            "pokemon": {
-                "id": 1,
-                "name": "Bulbasaur"
-            },
-            "evolutions_to": [
-                {
-                    "pokemon": {
-                        "id": 2,
-                        "name": "Ivysaur"
-                    },
-                    "condition": {
-                        "type": "level_up",
-                        "value": 16,
-                        "description": "Nível 16"
-                    },
-                    "evolutions_to": [
-                        {
-                            "pokemon": {
-                                "id": 3,
-                                "name": "Venusaur"
-                            },
-                            "condition": {
-                                "type": "level_up",
-                                "value": 32,
-                                "description": "Nível 32"
-                            },
-                            "evolutions_to": [
-                                {
-                                    "pokemon": {
-                                        "id": 4,
-                                        "name": "Mega Venusaur"
-                                    },
-                                    "condition": {
-                                        "type": "mega_evolution",
-                                        "description": "Mega Evolução"
-                                    },
-                                    "evolutions_to": []
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+        "name": "Bulbasaur"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 2,
+            "name": "Ivysaur"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 16,
+            "description": "Nivel 16"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 3,
+                "name": "Venusaur"
+              },
+              "condition": {
+                "type": "level_up",
+                "value": 32,
+                "description": "Nivel 32"
+              },
+              "evolutions_to": []
+            }
+          ]
         }
-    },
-    {
-        "id": 2,
-        "chain": {
-            "pokemon": {
-                "id": 5,
-                "name": "Charmander"
-            },
-            "evolutions_to": [
-                {
-                    "pokemon": {
-                        "id": 6,
-                        "name": "Charmeleon"
-                    },
-                    "condition": {
-                        "type": "level_up",
-                        "value": 16,
-                        "description": "Nível 16"
-                    },
-                    "evolutions_to": [
-                        {
-                            "pokemon": {
-                                "id": 7,
-                                "name": "Charizard"
-                            },
-                            "condition": {
-                                "type": "level_up",
-                                "value": 36,
-                                "description": "Nível 36"
-                            },
-                            "evolutions_to": [
-                                {
-                                    "pokemon": {
-                                        "id": 8,
-                                        "name": "Mega Charizard X"
-                                    },
-                                    "condition": {
-                                        "type": "mega_evolution",
-                                        "description": "Mega Evolução"
-                                    },
-                                    "evolutions_to": []
-                                },
-                                {
-                                    "pokemon": {
-                                        "id": 9,
-                                        "name": "Mega Charizard Y"
-                                    },
-                                    "condition": {
-                                        "type": "mega_evolution",
-                                        "description": "Mega Evolução"
-                                    },
-                                    "evolutions_to": []
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "id": 3,
-        "chain": {
-            "pokemon": {
-                "id": 10,
-                "name": "Squirtle"
-            },
-            "evolutions_to": [
-                {
-                    "pokemon": {
-                        "id": 11,
-                        "name": "Wartortle"
-                    },
-                    "condition": {
-                        "type": "level_up",
-                        "value": 16,
-                        "description": "Nível 16"
-                    },
-                    "evolutions_to": [
-                        {
-                            "pokemon": {
-                                "id": 12,
-                                "name": "Blastoise"
-                            },
-                            "condition": {
-                                "type": "level_up",
-                                "value": 36,
-                                "description": "Nível 36"
-                            },
-                            "evolutions_to": [
-                                {
-                                    "pokemon": {
-                                        "id": 13,
-                                        "name": "Mega Blastoise"
-                                    },
-                                    "condition": {
-                                        "type": "mega_evolution",
-                                        "description": "Mega Evolução"
-                                    },
-                                    "evolutions_to": []
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "id": 4,
-        "chain": {
-            "pokemon": {
-                "id": 14,
-                "name": "Caterpie"
-            },
-            "evolutions_to": [
-                {
-                    "pokemon": {
-                        "id": 15,
-                        "name": "Metapod"
-                    },
-                    "condition": {
-                        "type": "level_up",
-                        "value": 7,
-                        "description": "Nível 7"
-                    },
-                    "evolutions_to": [
-                        {
-                            "pokemon": {
-                                "id": 16,
-                                "name": "Butterfree"
-                            },
-                            "condition": {
-                                "type": "level_up",
-                                "value": 10,
-                                "description": "Nível 10"
-                            },
-                            "evolutions_to": []
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "id": 5,
-        "chain": {
-            "pokemon": {
-                "id": 17,
-                "name": "Weedle"
-            },
-            "evolutions_to": [
-                {
-                    "pokemon": {
-                        "id": 18,
-                        "name": "Kakuna"
-                    },
-                    "condition": {
-                        "type": "level_up",
-                        "value": 7,
-                        "description": "Nível 7"
-                    },
-                    "evolutions_to": [
-                        {
-                            "pokemon": {
-                                "id": 19,
-                                "name": "Beedrill"
-                            },
-                            "condition": {
-                                "type": "level_up",
-                                "value": 10,
-                                "description": "Nível 10"
-                            },
-                            "evolutions_to": [
-                                {
-                                    "pokemon": {
-                                        "id": 20,
-                                        "name": "Mega Beedrill"
-                                    },
-                                    "condition": {
-                                        "type": "mega_evolution",
-                                        "description": "Mega Evolução"
-                                    },
-                                    "evolutions_to": []
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "id": 6,
-        "chain": {
-            "pokemon": {
-                "id": 21,
-                "name": "Pidgey"
-            },
-            "evolutions_to": [
-                {
-                    "pokemon": {
-                        "id": 22,
-                        "name": "Pidgeotto"
-                    },
-                    "condition": {
-                        "type": "level_up",
-                        "value": 18,
-                        "description": "Nível 18"
-                    },
-                    "evolutions_to": [
-                        {
-                            "pokemon": {
-                                "id": 23,
-                                "name": "Pidgeot"
-                            },
-                            "condition": {
-                                "type": "level_up",
-                                "value": 36,
-                                "description": "Nível 36"
-                            },
-                            "evolutions_to": []
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "id": 10,
-        "chain": {
-            "pokemon": {
-                "id": 172,
-                "name": "Pichu"
-            },
-            "evolutions_to": [
-                {
-                    "pokemon": {
-                        "id": 25,
-                        "name": "Pikachu"
-                    },
-                    "condition": {
-                        "type": "friendship",
-                        "value": "high",
-                        "description": "Alta Amizade"
-                    },
-                    "evolutions_to": [
-                        {
-                            "pokemon": {
-                                "id": 26,
-                                "name": "Raichu"
-                            },
-                            "condition": {
-                                "type": "item_use",
-                                "value": "Thunder Stone",
-                                "description": "Usar Pedra Trovão (fora de Alola)"
-                            },
-                            "evolutions_to": []
-                        },
-                        {
-                            "pokemon": {
-                                "id": 26,
-                                "name": "Alolan Raichu"
-                            },
-                            "condition": {
-                                "type": "item_use",
-                                "value": "Thunder Stone",
-                                "description": "Usar Pedra Trovão (em Alola)"
-                            },
-                            "evolutions_to": []
-                        }
-                    ]
-                }
-            ]
-        }
+      ]
     }
+  },
+  {
+    "id": 2,
+    "chain": {
+      "pokemon": {
+        "id": 4,
+        "name": "Charmander"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 5,
+            "name": "Charmeleon"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 16,
+            "description": "Nivel 16"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 6,
+                "name": "Charizard"
+              },
+              "condition": {
+                "type": "level_up",
+                "value": 36,
+                "description": "Nivel 36"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "chain": {
+      "pokemon": {
+        "id": 7,
+        "name": "Squirtle"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 8,
+            "name": "Wartortle"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 16,
+            "description": "Nivel 16"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 9,
+                "name": "Blastoise"
+              },
+              "condition": {
+                "type": "level_up",
+                "value": 36,
+                "description": "Nivel 36"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "chain": {
+      "pokemon": {
+        "id": 10,
+        "name": "Caterpie"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 11,
+            "name": "Metapod"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 7,
+            "description": "Nivel 7"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 12,
+                "name": "Butterfree"
+              },
+              "condition": {
+                "type": "level_up",
+                "value": 10,
+                "description": "Nivel 10"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "chain": {
+      "pokemon": {
+        "id": 13,
+        "name": "Weedle"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 14,
+            "name": "Kakuna"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 7,
+            "description": "Nivel 7"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 15,
+                "name": "Beedrill"
+              },
+              "condition": {
+                "type": "level_up",
+                "value": 10,
+                "description": "Nivel 10"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "chain": {
+      "pokemon": {
+        "id": 16,
+        "name": "Pidgey"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 17,
+            "name": "Pidgeotto"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 18,
+            "description": "Nivel 18"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 18,
+                "name": "Pidgeot"
+              },
+              "condition": {
+                "type": "level_up",
+                "value": 36,
+                "description": "Nivel 36"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "chain": {
+      "pokemon": {
+        "id": 19,
+        "name": "Rattata"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 20,
+            "name": "Raticate"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 20,
+            "description": "Nivel 20"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "chain": {
+      "pokemon": {
+        "id": 21,
+        "name": "Spearow"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 22,
+            "name": "Fearow"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 20,
+            "description": "Nivel 20"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "chain": {
+      "pokemon": {
+        "id": 23,
+        "name": "Ekans"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 24,
+            "name": "Arbok"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 22,
+            "description": "Nivel 22"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "chain": {
+      "pokemon": {
+        "id": 172,
+        "name": "Pichu"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 25,
+            "name": "Pikachu"
+          },
+          "condition": {
+            "type": "happiness",
+            "description": "Subir nivel com felicidade"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 26,
+                "name": "Raichu"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de thunder stone"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "chain": {
+      "pokemon": {
+        "id": 27,
+        "name": "Sandshrew"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 28,
+            "name": "Sandslash"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 22,
+            "description": "Nivel 22"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "chain": {
+      "pokemon": {
+        "id": 29,
+        "name": "Nidoran-F"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 30,
+            "name": "Nidorina"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 16,
+            "description": "Nivel 16"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 31,
+                "name": "Nidoqueen"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de moon stone"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "chain": {
+      "pokemon": {
+        "id": 32,
+        "name": "Nidoran-M"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 33,
+            "name": "Nidorino"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 16,
+            "description": "Nivel 16"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 34,
+                "name": "Nidoking"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de moon stone"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "chain": {
+      "pokemon": {
+        "id": 173,
+        "name": "Cleffa"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 35,
+            "name": "Clefairy"
+          },
+          "condition": {
+            "type": "happiness",
+            "description": "Subir nivel com felicidade"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 36,
+                "name": "Clefable"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de moon stone"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "chain": {
+      "pokemon": {
+        "id": 37,
+        "name": "Vulpix"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 38,
+            "name": "Ninetales"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de fire stone"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 16,
+    "chain": {
+      "pokemon": {
+        "id": 174,
+        "name": "Igglybuff"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 39,
+            "name": "Jigglypuff"
+          },
+          "condition": {
+            "type": "happiness",
+            "description": "Subir nivel com felicidade"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 40,
+                "name": "Wigglytuff"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de moon stone"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 17,
+    "chain": {
+      "pokemon": {
+        "id": 41,
+        "name": "Zubat"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 42,
+            "name": "Golbat"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 22,
+            "description": "Nivel 22"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 169,
+                "name": "Crobat"
+              },
+              "condition": {
+                "type": "happiness",
+                "description": "Subir nivel com felicidade"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "chain": {
+      "pokemon": {
+        "id": 43,
+        "name": "Oddish"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 44,
+            "name": "Gloom"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 21,
+            "description": "Nivel 21"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 45,
+                "name": "Vileplume"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de leaf stone"
+              },
+              "evolutions_to": []
+            },
+            {
+              "pokemon": {
+                "id": 182,
+                "name": "Bellossom"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de sun stone"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "chain": {
+      "pokemon": {
+        "id": 46,
+        "name": "Paras"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 47,
+            "name": "Parasect"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 24,
+            "description": "Nivel 24"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "chain": {
+      "pokemon": {
+        "id": 48,
+        "name": "Venonat"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 49,
+            "name": "Venomoth"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 31,
+            "description": "Nivel 31"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 21,
+    "chain": {
+      "pokemon": {
+        "id": 50,
+        "name": "Diglett"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 51,
+            "name": "Dugtrio"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 26,
+            "description": "Nivel 26"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 22,
+    "chain": {
+      "pokemon": {
+        "id": 52,
+        "name": "Meowth"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 53,
+            "name": "Persian"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 28,
+            "description": "Nivel 28"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 863,
+            "name": "Perrserker"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 28,
+            "description": "Nivel 28"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 23,
+    "chain": {
+      "pokemon": {
+        "id": 54,
+        "name": "Psyduck"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 55,
+            "name": "Golduck"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 33,
+            "description": "Nivel 33"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 24,
+    "chain": {
+      "pokemon": {
+        "id": 56,
+        "name": "Mankey"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 57,
+            "name": "Primeape"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 28,
+            "description": "Nivel 28"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 979,
+                "name": "Annihilape"
+              },
+              "condition": {
+                "type": "unknown",
+                "description": "Condicao nao mapeada"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 25,
+    "chain": {
+      "pokemon": {
+        "id": 58,
+        "name": "Growlithe"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 59,
+            "name": "Arcanine"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de fire stone"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 26,
+    "chain": {
+      "pokemon": {
+        "id": 60,
+        "name": "Poliwag"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 61,
+            "name": "Poliwhirl"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 25,
+            "description": "Nivel 25"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 62,
+                "name": "Poliwrath"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de water stone"
+              },
+              "evolutions_to": []
+            },
+            {
+              "pokemon": {
+                "id": 186,
+                "name": "Politoed"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 27,
+    "chain": {
+      "pokemon": {
+        "id": 63,
+        "name": "Abra"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 64,
+            "name": "Kadabra"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 16,
+            "description": "Nivel 16"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 65,
+                "name": "Alakazam"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 28,
+    "chain": {
+      "pokemon": {
+        "id": 66,
+        "name": "Machop"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 67,
+            "name": "Machoke"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 28,
+            "description": "Nivel 28"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 68,
+                "name": "Machamp"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 29,
+    "chain": {
+      "pokemon": {
+        "id": 69,
+        "name": "Bellsprout"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 70,
+            "name": "Weepinbell"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 21,
+            "description": "Nivel 21"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 71,
+                "name": "Victreebel"
+              },
+              "condition": {
+                "type": "stone_or_item",
+                "description": "Uso de leaf stone"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 30,
+    "chain": {
+      "pokemon": {
+        "id": 72,
+        "name": "Tentacool"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 73,
+            "name": "Tentacruel"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 30,
+            "description": "Nivel 30"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 31,
+    "chain": {
+      "pokemon": {
+        "id": 74,
+        "name": "Geodude"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 75,
+            "name": "Graveler"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 25,
+            "description": "Nivel 25"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 76,
+                "name": "Golem"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 32,
+    "chain": {
+      "pokemon": {
+        "id": 77,
+        "name": "Ponyta"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 78,
+            "name": "Rapidash"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 40,
+            "description": "Nivel 40"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 33,
+    "chain": {
+      "pokemon": {
+        "id": 79,
+        "name": "Slowpoke"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 80,
+            "name": "Slowbro"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 37,
+            "description": "Nivel 37"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 199,
+            "name": "Slowking"
+          },
+          "condition": {
+            "type": "trade",
+            "description": "Troca"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 34,
+    "chain": {
+      "pokemon": {
+        "id": 81,
+        "name": "Magnemite"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 82,
+            "name": "Magneton"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 30,
+            "description": "Nivel 30"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 462,
+                "name": "Magnezone"
+              },
+              "condition": {
+                "type": "unknown",
+                "description": "Condicao nao mapeada"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 35,
+    "chain": {
+      "pokemon": {
+        "id": 83,
+        "name": "Farfetchd"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 865,
+            "name": "Sirfetchd"
+          },
+          "condition": {
+            "type": "unknown",
+            "description": "Condicao nao mapeada"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 36,
+    "chain": {
+      "pokemon": {
+        "id": 84,
+        "name": "Doduo"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 85,
+            "name": "Dodrio"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 31,
+            "description": "Nivel 31"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 37,
+    "chain": {
+      "pokemon": {
+        "id": 86,
+        "name": "Seel"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 87,
+            "name": "Dewgong"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 34,
+            "description": "Nivel 34"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 38,
+    "chain": {
+      "pokemon": {
+        "id": 88,
+        "name": "Grimer"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 89,
+            "name": "Muk"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 38,
+            "description": "Nivel 38"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 39,
+    "chain": {
+      "pokemon": {
+        "id": 90,
+        "name": "Shellder"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 91,
+            "name": "Cloyster"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de water stone"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 40,
+    "chain": {
+      "pokemon": {
+        "id": 92,
+        "name": "Gastly"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 93,
+            "name": "Haunter"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 25,
+            "description": "Nivel 25"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 94,
+                "name": "Gengar"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 41,
+    "chain": {
+      "pokemon": {
+        "id": 95,
+        "name": "Onix"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 208,
+            "name": "Steelix"
+          },
+          "condition": {
+            "type": "trade",
+            "description": "Troca"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 42,
+    "chain": {
+      "pokemon": {
+        "id": 96,
+        "name": "Drowzee"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 97,
+            "name": "Hypno"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 26,
+            "description": "Nivel 26"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 43,
+    "chain": {
+      "pokemon": {
+        "id": 98,
+        "name": "Krabby"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 99,
+            "name": "Kingler"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 28,
+            "description": "Nivel 28"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 44,
+    "chain": {
+      "pokemon": {
+        "id": 100,
+        "name": "Voltorb"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 101,
+            "name": "Electrode"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 30,
+            "description": "Nivel 30"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 45,
+    "chain": {
+      "pokemon": {
+        "id": 102,
+        "name": "Exeggcute"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 103,
+            "name": "Exeggutor"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de leaf stone"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 46,
+    "chain": {
+      "pokemon": {
+        "id": 104,
+        "name": "Cubone"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 105,
+            "name": "Marowak"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 28,
+            "description": "Nivel 28"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 47,
+    "chain": {
+      "pokemon": {
+        "id": 236,
+        "name": "Tyrogue"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 106,
+            "name": "Hitmonlee"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 20,
+            "description": "Nivel 20"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 107,
+            "name": "Hitmonchan"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 20,
+            "description": "Nivel 20"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 237,
+            "name": "Hitmontop"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 20,
+            "description": "Nivel 20"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 48,
+    "chain": {
+      "pokemon": {
+        "id": 108,
+        "name": "Lickitung"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 463,
+            "name": "Lickilicky"
+          },
+          "condition": {
+            "type": "unknown",
+            "description": "Condicao nao mapeada"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 49,
+    "chain": {
+      "pokemon": {
+        "id": 109,
+        "name": "Koffing"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 110,
+            "name": "Weezing"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 35,
+            "description": "Nivel 35"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 50,
+    "chain": {
+      "pokemon": {
+        "id": 111,
+        "name": "Rhyhorn"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 112,
+            "name": "Rhydon"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 42,
+            "description": "Nivel 42"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 464,
+                "name": "Rhyperior"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 51,
+    "chain": {
+      "pokemon": {
+        "id": 440,
+        "name": "Happiny"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 113,
+            "name": "Chansey"
+          },
+          "condition": {
+            "type": "unknown",
+            "description": "Condicao nao mapeada"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 242,
+                "name": "Blissey"
+              },
+              "condition": {
+                "type": "happiness",
+                "description": "Subir nivel com felicidade"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 52,
+    "chain": {
+      "pokemon": {
+        "id": 114,
+        "name": "Tangela"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 465,
+            "name": "Tangrowth"
+          },
+          "condition": {
+            "type": "unknown",
+            "description": "Condicao nao mapeada"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 53,
+    "chain": {
+      "pokemon": {
+        "id": 115,
+        "name": "Kangaskhan"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 54,
+    "chain": {
+      "pokemon": {
+        "id": 116,
+        "name": "Horsea"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 117,
+            "name": "Seadra"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 32,
+            "description": "Nivel 32"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 230,
+                "name": "Kingdra"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 55,
+    "chain": {
+      "pokemon": {
+        "id": 118,
+        "name": "Goldeen"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 119,
+            "name": "Seaking"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 33,
+            "description": "Nivel 33"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 56,
+    "chain": {
+      "pokemon": {
+        "id": 120,
+        "name": "Staryu"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 121,
+            "name": "Starmie"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de water stone"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 57,
+    "chain": {
+      "pokemon": {
+        "id": 439,
+        "name": "Mime-Jr"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 122,
+            "name": "Mr-Mime"
+          },
+          "condition": {
+            "type": "unknown",
+            "description": "Condicao nao mapeada"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 866,
+                "name": "Mr-Rime"
+              },
+              "condition": {
+                "type": "level_up",
+                "value": 42,
+                "description": "Nivel 42"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 58,
+    "chain": {
+      "pokemon": {
+        "id": 123,
+        "name": "Scyther"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 212,
+            "name": "Scizor"
+          },
+          "condition": {
+            "type": "trade",
+            "description": "Troca"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 900,
+            "name": "Kleavor"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de black augurite"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 59,
+    "chain": {
+      "pokemon": {
+        "id": 238,
+        "name": "Smoochum"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 124,
+            "name": "Jynx"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 30,
+            "description": "Nivel 30"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 60,
+    "chain": {
+      "pokemon": {
+        "id": 239,
+        "name": "Elekid"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 125,
+            "name": "Electabuzz"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 30,
+            "description": "Nivel 30"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 466,
+                "name": "Electivire"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 61,
+    "chain": {
+      "pokemon": {
+        "id": 240,
+        "name": "Magby"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 126,
+            "name": "Magmar"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 30,
+            "description": "Nivel 30"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 467,
+                "name": "Magmortar"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 62,
+    "chain": {
+      "pokemon": {
+        "id": 127,
+        "name": "Pinsir"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 63,
+    "chain": {
+      "pokemon": {
+        "id": 128,
+        "name": "Tauros"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 64,
+    "chain": {
+      "pokemon": {
+        "id": 129,
+        "name": "Magikarp"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 130,
+            "name": "Gyarados"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 20,
+            "description": "Nivel 20"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 65,
+    "chain": {
+      "pokemon": {
+        "id": 131,
+        "name": "Lapras"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 66,
+    "chain": {
+      "pokemon": {
+        "id": 132,
+        "name": "Ditto"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 67,
+    "chain": {
+      "pokemon": {
+        "id": 133,
+        "name": "Eevee"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 134,
+            "name": "Vaporeon"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de water stone"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 135,
+            "name": "Jolteon"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de thunder stone"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 136,
+            "name": "Flareon"
+          },
+          "condition": {
+            "type": "stone_or_item",
+            "description": "Uso de fire stone"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 196,
+            "name": "Espeon"
+          },
+          "condition": {
+            "type": "happiness",
+            "description": "Subir nivel com felicidade"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 197,
+            "name": "Umbreon"
+          },
+          "condition": {
+            "type": "happiness",
+            "description": "Subir nivel com felicidade"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 470,
+            "name": "Leafeon"
+          },
+          "condition": {
+            "type": "unknown",
+            "description": "Condicao nao mapeada"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 471,
+            "name": "Glaceon"
+          },
+          "condition": {
+            "type": "unknown",
+            "description": "Condicao nao mapeada"
+          },
+          "evolutions_to": []
+        },
+        {
+          "pokemon": {
+            "id": 700,
+            "name": "Sylveon"
+          },
+          "condition": {
+            "type": "unknown",
+            "description": "Condicao nao mapeada"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 68,
+    "chain": {
+      "pokemon": {
+        "id": 137,
+        "name": "Porygon"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 233,
+            "name": "Porygon2"
+          },
+          "condition": {
+            "type": "trade",
+            "description": "Troca"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 474,
+                "name": "Porygon-Z"
+              },
+              "condition": {
+                "type": "trade",
+                "description": "Troca"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 69,
+    "chain": {
+      "pokemon": {
+        "id": 138,
+        "name": "Omanyte"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 139,
+            "name": "Omastar"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 40,
+            "description": "Nivel 40"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 70,
+    "chain": {
+      "pokemon": {
+        "id": 140,
+        "name": "Kabuto"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 141,
+            "name": "Kabutops"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 40,
+            "description": "Nivel 40"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 71,
+    "chain": {
+      "pokemon": {
+        "id": 142,
+        "name": "Aerodactyl"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 72,
+    "chain": {
+      "pokemon": {
+        "id": 446,
+        "name": "Munchlax"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 143,
+            "name": "Snorlax"
+          },
+          "condition": {
+            "type": "happiness",
+            "description": "Subir nivel com felicidade"
+          },
+          "evolutions_to": []
+        }
+      ]
+    }
+  },
+  {
+    "id": 73,
+    "chain": {
+      "pokemon": {
+        "id": 144,
+        "name": "Articuno"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 74,
+    "chain": {
+      "pokemon": {
+        "id": 145,
+        "name": "Zapdos"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 75,
+    "chain": {
+      "pokemon": {
+        "id": 146,
+        "name": "Moltres"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 76,
+    "chain": {
+      "pokemon": {
+        "id": 147,
+        "name": "Dratini"
+      },
+      "evolutions_to": [
+        {
+          "pokemon": {
+            "id": 148,
+            "name": "Dragonair"
+          },
+          "condition": {
+            "type": "level_up",
+            "value": 30,
+            "description": "Nivel 30"
+          },
+          "evolutions_to": [
+            {
+              "pokemon": {
+                "id": 149,
+                "name": "Dragonite"
+              },
+              "condition": {
+                "type": "level_up",
+                "value": 55,
+                "description": "Nivel 55"
+              },
+              "evolutions_to": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 77,
+    "chain": {
+      "pokemon": {
+        "id": 150,
+        "name": "Mewtwo"
+      },
+      "evolutions_to": []
+    }
+  },
+  {
+    "id": 78,
+    "chain": {
+      "pokemon": {
+        "id": 151,
+        "name": "Mew"
+      },
+      "evolutions_to": []
+    }
+  }
 ]

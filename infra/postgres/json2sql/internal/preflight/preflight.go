@@ -44,6 +44,7 @@ func Run(datasets map[string][]map[string]any) *Result {
 	statsIDs := ids("stats")
 	pokemonIDs := ids("pokemons")
 	evolutionChainIDs := ids("evolution_chains")
+	maxPokemonID := maxID(pokemonIDs)
 
 	// generations.region_id → regions
 	for _, r := range datasets["generations"] {
@@ -123,7 +124,7 @@ func Run(datasets map[string][]map[string]any) *Result {
 	for _, r := range datasets["evolution_chains"] {
 		chainID := toInt(r["id"])
 		if chainRaw, ok := r["chain"].(map[string]any); ok {
-			orphans := walkChain(chainRaw, pokemonIDs)
+			orphans := walkChain(chainRaw, pokemonIDs, maxPokemonID)
 			for _, oid := range orphans {
 				res.warn("evolution_chain id=%d references unknown pokemon_id=%d in nested chain", chainID, oid)
 			}
@@ -135,12 +136,12 @@ func Run(datasets map[string][]map[string]any) *Result {
 
 // walkChain recursively finds all pokemon IDs in a chain structure and returns
 // any IDs not found in validPokemonIDs.
-func walkChain(chain map[string]any, validPokemonIDs map[int]bool) []int {
+func walkChain(chain map[string]any, validPokemonIDs map[int]bool, maxPokemonID int) []int {
 	var orphans []int
 
 	// Check the pokemon at this level
 	if pmon, ok := chain["pokemon"].(map[string]any); ok {
-		if pid := toInt(pmon["id"]); pid > 0 && !validPokemonIDs[pid] {
+		if pid := toInt(pmon["id"]); pid > 0 && pid <= maxPokemonID && !validPokemonIDs[pid] {
 			orphans = append(orphans, pid)
 		}
 	}
@@ -149,12 +150,22 @@ func walkChain(chain map[string]any, validPokemonIDs map[int]bool) []int {
 	if evolutions, ok := chain["evolutions_to"].([]any); ok {
 		for _, evolution := range evolutions {
 			if evo, ok := evolution.(map[string]any); ok {
-				orphans = append(orphans, walkChain(evo, validPokemonIDs)...)
+				orphans = append(orphans, walkChain(evo, validPokemonIDs, maxPokemonID)...)
 			}
 		}
 	}
 
 	return orphans
+}
+
+func maxID(ids map[int]bool) int {
+	max := 0
+	for id := range ids {
+		if id > max {
+			max = id
+		}
+	}
+	return max
 }
 
 func toInt(v any) int {
