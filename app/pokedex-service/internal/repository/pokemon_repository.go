@@ -34,9 +34,24 @@ func (r *PostgresPokemonRepository) GetAll(ctx context.Context, page, pageSize i
 	offset := page * pageSize
 
 	query := `
-		SELECT id, name, number, types, height, weight, description, image_url, element_color, element_type, created_at, updated_at
-		FROM pokemons
-		ORDER BY number ASC
+		SELECT
+			p.id::text,
+			p.name,
+			p.number,
+			COALESCE(array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL), ARRAY[]::text[]),
+			COALESCE(p.height::double precision, 0),
+			COALESCE(p.weight::double precision, 0),
+			COALESCE(p.description, ''),
+			COALESCE(p.sprites->>'front_default', ''),
+			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
+			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
+			now(),
+			now()
+		FROM pokemons p
+		LEFT JOIN pokemon_types pt ON pt.pokemon_id = p.id
+		LEFT JOIN types t ON t.id = pt.type_id
+		GROUP BY p.id, p.name, p.number, p.height, p.weight, p.description, p.sprites
+		ORDER BY p.number ASC
 		LIMIT $1 OFFSET $2
 	`
 
@@ -65,10 +80,25 @@ func (r *PostgresPokemonRepository) Search(ctx context.Context, query string, pa
 	q := "%" + query + "%"
 
 	sql := `
-		SELECT id, name, number, types, height, weight, description, image_url, element_color, element_type, created_at, updated_at
-		FROM pokemons
-		WHERE name ILIKE $1 OR number ILIKE $1
-		ORDER BY number ASC
+		SELECT
+			p.id::text,
+			p.name,
+			p.number,
+			COALESCE(array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL), ARRAY[]::text[]),
+			COALESCE(p.height::double precision, 0),
+			COALESCE(p.weight::double precision, 0),
+			COALESCE(p.description, ''),
+			COALESCE(p.sprites->>'front_default', ''),
+			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
+			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
+			now(),
+			now()
+		FROM pokemons p
+		LEFT JOIN pokemon_types pt ON pt.pokemon_id = p.id
+		LEFT JOIN types t ON t.id = pt.type_id
+		WHERE p.name ILIKE $1 OR p.number ILIKE $1
+		GROUP BY p.id, p.name, p.number, p.height, p.weight, p.description, p.sprites
+		ORDER BY p.number ASC
 		LIMIT $2 OFFSET $3
 	`
 
@@ -96,10 +126,27 @@ func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter st
 	offset := page * pageSize
 
 	query := `
-		SELECT id, name, number, types, height, weight, description, image_url, element_color, element_type, created_at, updated_at
-		FROM pokemons
-		WHERE $1 = ANY(types)
-		ORDER BY number ASC
+		SELECT
+			p.id::text,
+			p.name,
+			p.number,
+			COALESCE(array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL), ARRAY[]::text[]),
+			COALESCE(p.height::double precision, 0),
+			COALESCE(p.weight::double precision, 0),
+			COALESCE(p.description, ''),
+			COALESCE(p.sprites->>'front_default', ''),
+			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
+			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
+			now(),
+			now()
+		FROM pokemons p
+		JOIN pokemon_types pt_filter ON pt_filter.pokemon_id = p.id
+		JOIN types t_filter ON t_filter.id = pt_filter.type_id
+		LEFT JOIN pokemon_types pt ON pt.pokemon_id = p.id
+		LEFT JOIN types t ON t.id = pt.type_id
+		WHERE t_filter.name = $1
+		GROUP BY p.id, p.name, p.number, p.height, p.weight, p.description, p.sprites
+		ORDER BY p.number ASC
 		LIMIT $2 OFFSET $3
 	`
 
@@ -115,7 +162,13 @@ func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter st
 	}
 
 	var total int64
-	if err := r.db.QueryRow(ctx, "SELECT COUNT(*) FROM pokemons WHERE $1 = ANY(types)", typeFilter).Scan(&total); err != nil {
+	if err := r.db.QueryRow(ctx, `
+		SELECT COUNT(DISTINCT p.id)
+		FROM pokemons p
+		JOIN pokemon_types pt ON pt.pokemon_id = p.id
+		JOIN types t ON t.id = pt.type_id
+		WHERE t.name = $1
+	`, typeFilter).Scan(&total); err != nil {
 		return nil, err
 	}
 
@@ -124,9 +177,24 @@ func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter st
 
 func (r *PostgresPokemonRepository) GetByID(ctx context.Context, id string) (*domain.Pokemon, error) {
 	query := `
-		SELECT id, name, number, types, height, weight, description, image_url, element_color, element_type, created_at, updated_at
-		FROM pokemons
-		WHERE id = $1 OR number = $1
+		SELECT
+			p.id::text,
+			p.name,
+			p.number,
+			COALESCE(array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL), ARRAY[]::text[]),
+			COALESCE(p.height::double precision, 0),
+			COALESCE(p.weight::double precision, 0),
+			COALESCE(p.description, ''),
+			COALESCE(p.sprites->>'front_default', ''),
+			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
+			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
+			now(),
+			now()
+		FROM pokemons p
+		LEFT JOIN pokemon_types pt ON pt.pokemon_id = p.id
+		LEFT JOIN types t ON t.id = pt.type_id
+		WHERE p.id::text = $1 OR p.number = $1
+		GROUP BY p.id, p.name, p.number, p.height, p.weight, p.description, p.sprites
 	`
 
 	var p domain.Pokemon
