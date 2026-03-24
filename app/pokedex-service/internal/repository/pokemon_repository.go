@@ -42,7 +42,12 @@ func (r *PostgresPokemonRepository) GetAll(ctx context.Context, page, pageSize i
 			COALESCE(p.height::double precision, 0),
 			COALESCE(p.weight::double precision, 0),
 			COALESCE(p.description, ''),
-			COALESCE(p.sprites->>'front_default', ''),
+			COALESCE(
+				jsonb_extract_path_text(p.sprites, 'other', 'home', 'front_default'),
+				jsonb_extract_path_text(p.sprites, 'other', 'official-artwork', 'front_default'),
+				p.sprites->>'front_default',
+				''
+			),
 			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
 			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
 			now(),
@@ -88,7 +93,12 @@ func (r *PostgresPokemonRepository) Search(ctx context.Context, query string, pa
 			COALESCE(p.height::double precision, 0),
 			COALESCE(p.weight::double precision, 0),
 			COALESCE(p.description, ''),
-			COALESCE(p.sprites->>'front_default', ''),
+			COALESCE(
+				jsonb_extract_path_text(p.sprites, 'other', 'home', 'front_default'),
+				jsonb_extract_path_text(p.sprites, 'other', 'official-artwork', 'front_default'),
+				p.sprites->>'front_default',
+				''
+			),
 			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
 			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
 			now(),
@@ -134,7 +144,12 @@ func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter st
 			COALESCE(p.height::double precision, 0),
 			COALESCE(p.weight::double precision, 0),
 			COALESCE(p.description, ''),
-			COALESCE(p.sprites->>'front_default', ''),
+			COALESCE(
+				jsonb_extract_path_text(p.sprites, 'other', 'home', 'front_default'),
+				jsonb_extract_path_text(p.sprites, 'other', 'official-artwork', 'front_default'),
+				p.sprites->>'front_default',
+				''
+			),
 			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
 			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
 			now(),
@@ -185,7 +200,12 @@ func (r *PostgresPokemonRepository) GetByID(ctx context.Context, id string) (*do
 			COALESCE(p.height::double precision, 0),
 			COALESCE(p.weight::double precision, 0),
 			COALESCE(p.description, ''),
-			COALESCE(p.sprites->>'front_default', ''),
+			COALESCE(
+				jsonb_extract_path_text(p.sprites, 'other', 'home', 'front_default'),
+				jsonb_extract_path_text(p.sprites, 'other', 'official-artwork', 'front_default'),
+				p.sprites->>'front_default',
+				''
+			),
 			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
 			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
 			now(),
