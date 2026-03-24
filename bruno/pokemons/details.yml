@@ -6,6 +6,9 @@ info:
 http:
   method: GET
   url: "{{baseUrl}}/v1/pokemons/25"
+  headers:
+    - name: Authorization
+      value: "Bearer {{authToken}}"
   auth: inherit
 
 settings:

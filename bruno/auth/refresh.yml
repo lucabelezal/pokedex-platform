@@ -11,6 +11,15 @@ http:
       value: "Bearer {{authToken}}"
   auth: inherit
 
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const token = res?.body?.access_token || res?.body?.accessToken;
+        if (token) {
+          bru.setVar("authToken", token);
+        }
+
 settings:
   encodeUrl: true
   timeout: 0

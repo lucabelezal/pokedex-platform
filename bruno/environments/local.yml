@@ -3,7 +3,7 @@ variables:
   - name: baseUrl
     value: http://localhost:8000
   - name: authToken
-    value: cole-seu-token-aqui
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNldS1lbWFpbEBleGVtcGxvLmNvbSIsImV4cCI6MTc3NDM3MTIxMSwiaWF0IjoxNzc0MzcwMzExLCJzdWIiOiI1NTgxMGFhMy1iNWI0LTQ1NjMtYTY5ZC1jZDRhNzQ4ZGFiOTAifQ.refC8kHflpUeKIHZHeDlMm1cIe8P7aRFL58DWx0Px7w
   - name: userId
     value: 00000000-0000-0000-0000-000000000000
   - name: userEmail
