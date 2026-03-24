@@ -39,6 +39,7 @@ func NewHandler(
 
 func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /health", h.Health)
+	mux.HandleFunc("GET /api/v1/health", h.Health)
 	mux.HandleFunc("POST /api/v1/auth/signup", h.Signup)
 	mux.HandleFunc("POST /api/v1/auth/login", h.Login)
 	mux.HandleFunc("POST /api/v1/auth/refresh", h.Refresh)
