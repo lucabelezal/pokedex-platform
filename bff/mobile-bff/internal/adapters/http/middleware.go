@@ -75,11 +75,6 @@ func CORSMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-func extractUserIDFromToken(token string) string {
-	_ = token
-	return ""
-}
-
 func parseBearerToken(authHeader string) (string, error) {
 	if !strings.HasPrefix(authHeader, "Bearer ") {
 		return "", errors.New("authorization header nao usa bearer")

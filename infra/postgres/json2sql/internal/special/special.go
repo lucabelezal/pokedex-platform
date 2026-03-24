@@ -1,7 +1,7 @@
 // Package special handles the three tables that need custom SQL generation:
 //   - evolution_chains  – maps JSON "chain" field to "chain_data" JSONB column
 //   - pokemons          – also emits rows into pokemon_types, pokemon_abilities,
-//                          pokemon_egg_groups
+//     pokemon_egg_groups
 //   - pokemon_weaknesses – resolves type name → type_id via the types lookup map
 package special
 

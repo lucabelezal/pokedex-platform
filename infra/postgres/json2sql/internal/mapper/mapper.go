@@ -16,26 +16,26 @@ var FileOrder = []string{
 
 // FileToTable maps each source file to its primary target table.
 var FileToTable = map[string]string{
-	"01_region.json":         "regions",
-	"02_type.json":           "types",
-	"03_egg_group.json":      "egg_groups",
-	"04_generation.json":     "generations",
-	"05_ability.json":        "abilities",
-	"06_species.json":        "species",
-	"07_stats.json":          "stats",
+	"01_region.json":           "regions",
+	"02_type.json":             "types",
+	"03_egg_group.json":        "egg_groups",
+	"04_generation.json":       "generations",
+	"05_ability.json":          "abilities",
+	"06_species.json":          "species",
+	"07_stats.json":            "stats",
 	"08_evolution_chains.json": "evolution_chains",
-	"09_pokemon.json":        "pokemons",
-	"10_weaknesses.json":     "pokemon_weaknesses",
+	"09_pokemon.json":          "pokemons",
+	"10_weaknesses.json":       "pokemon_weaknesses",
 }
 
 // TableValidFields lists the columns accepted by each table.
 // Fields present in the JSON but absent here are silently dropped.
 var TableValidFields = map[string][]string{
-	"regions":    {"id", "name"},
-	"types":      {"id", "name", "color"},
-	"egg_groups": {"id", "name"},
+	"regions":     {"id", "name"},
+	"types":       {"id", "name", "color"},
+	"egg_groups":  {"id", "name"},
 	"generations": {"id", "name", "region_id"},
-	"abilities":  {"id", "name", "description", "introduced_generation_id"},
+	"abilities":   {"id", "name", "description", "introduced_generation_id"},
 	"species": {
 		"id", "pokemon_number", "name", "species_en", "species_pt",
 		"description", "color", "generation_id",

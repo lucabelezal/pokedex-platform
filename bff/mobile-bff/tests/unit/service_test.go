@@ -181,8 +181,10 @@ func TestFavoriteServiceGetUserFavorites(t *testing.T) {
 	ctx := context.Background()
 	userID := "user123"
 
-	svc.AddFavorite(ctx, userID, "1")
-	svc.AddFavorite(ctx, userID, "25")
+	err := svc.AddFavorite(ctx, userID, "1")
+	assert.NoError(t, err)
+	err = svc.AddFavorite(ctx, userID, "25")
+	assert.NoError(t, err)
 
 	favs, err := svc.GetUserFavorites(ctx, userID)
 

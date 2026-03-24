@@ -87,6 +87,10 @@ func NewFavoriteService(
 }
 
 func (s *FavoriteService) AddFavorite(ctx context.Context, userID, pokemonID string) error {
+	if _, err := s.pokemonRepo.GetByID(ctx, pokemonID); err != nil {
+		return err
+	}
+
 	return s.favoriteRepo.AddFavorite(ctx, userID, pokemonID)
 }
 
