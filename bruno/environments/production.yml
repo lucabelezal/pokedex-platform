@@ -1,0 +1,10 @@
+name: production
+variables:
+  - name: baseUrl
+    value: https://api.pokedex.com
+  - name: authToken
+    value: cole-seu-token-aqui
+  - name: userId
+    value: 00000000-0000-0000-0000-000000000000
+  - name: userEmail
+    value: user@pokedex.com

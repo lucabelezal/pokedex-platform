@@ -97,7 +97,11 @@ bruno .
 
 ```
 bruno/
+├── opencollection.yml         # Root da coleção OpenCollection
 ├── health.yml                  # GET /health
+├── environments/
+│   ├── local.yml              # Variáveis de ambiente local
+│   └── production.yml         # Variáveis de ambiente production
 ├── auth/
 │   ├── signup.yml             # POST /auth/signup - Criar conta
 │   ├── login.yml              # POST /auth/login - Autenticar
@@ -138,16 +142,17 @@ Abra `health.yml` e clique em **Send** (ou Cmd+Enter)
 1. Clique no ícone de **engrenagem** (⚙️) no canto superior direito
 2. Selecione **"local"** (desenvolvimento local) ou **"production"** (servidor remoto)
 
-**Variáveis do `environment.yml`:**
+**Variáveis dos arquivos de ambiente (`environments/local.yml` e `environments/production.yml`):**
 ```yaml
-local:
-  baseUrl: http://localhost:8000
-  authToken: ""  # Será preenchido após login
-
-production:
-  baseUrl: https://api.pokedex.com
-  authToken: ""  # Será preenchido após login
+name: local
+variables:
+  - name: baseUrl
+    value: http://localhost:8000
+  - name: authToken
+    value: cole-seu-token-aqui  # Substitua após login
 ```
+
+Os arquivos de ambiente já vêm com placeholders para facilitar visualização no Bruno.
 
 Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa mudar URLs manualmente.
 
