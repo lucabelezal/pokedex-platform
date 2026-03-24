@@ -2,6 +2,97 @@
 
 Coleção completa de testes da API Pokedex em [Bruno](https://www.usebruno.com/) (alternativa leve ao Postman).
 
+---
+
+## 🎯 O que é Bruno?
+
+**Bruno** é um cliente HTTP **open-source** e **leve** para testar APIs, similar ao Postman, mas com algumas vantagens:
+
+| Aspecto | Bruno | Postman |
+|--------|-------|---------|
+| **Instalação** | Standalone desktop | Cloud + desktop |
+| **Versionamento** | YAML simples (git-friendly) | Binário (difícil de versionar) |
+| **Tamanho** | ~100MB | ~500MB |
+| **Offline** | ✅ Completo suporte | ⚠️ Limitado |
+| **Preço** | Gratuito (MIT) | Freemium |
+
+**Vantagens para este projeto:**
+- ✅ Colecção versionável (`bruno/` em Git)
+- ✅ Equipes podem colaborar editando YAML
+- ✅ Integração com CI/CD (`bru run`)
+- ✅ Leve e rápido
+- ✅ Sem account necessária
+
+---
+
+## 📥 Como Baixar e Instalar Bruno
+
+### Opção 1: Download Oficial (Recomendado)
+
+1. Acesse https://www.usebruno.com/downloads
+2. Selecione seu sistema operacional:
+   - **macOS**: intel ou apple silicon
+   - **Windows**: exe installer
+   - **Linux**: AppImage ou deb/rpm
+3. Instale normalmente (drag-and-drop no macOS, duplo-clique no Windows, etc)
+
+### Opção 2: Package Manager
+
+**macOS (Homebrew):**
+```bash
+brew install bruno
+```
+
+**Windows (Chocolatey):**
+```bash
+choco install bruno
+```
+
+**Linux (apt):**
+```bash
+sudo apt install bruno
+```
+
+### Opção 3: Docker (se preferir)
+```bash
+docker run -it -v ~/Documents/bruno:/home/user/.config/bruno \
+  -p 6969:6969 \
+  usebruno/bruno
+```
+
+---
+
+## 📂 Como Importar Esta Colecção
+
+### Método 1: Abrir com `bruno` Command (Terminal)
+
+```bash
+cd /Users/lucasnascimento/Dev/GitHub/BFF/pokedex-platform
+bruno .
+```
+
+Isso abre a colecção `./bruno/` automaticamente no Bruno Desktop.
+
+### Método 2: Importar Manualmente (UI)
+
+1. **Abra o Bruno Desktop**
+2. Clique em **File** (canto superior esquerdo)
+3. Selecione **"Open Collection"** ou **"Import"**
+4. Navegue até `/Users/lucasnascimento/Dev/GitHub/BFF/pokedex-platform/bruno`
+5. Clique em **Open** ou **Import**
+
+### Método 3: Git Clone (Primeira Vez)
+
+Se ainda não tem o repositório:
+
+```bash
+git clone https://github.com/[seu-user]/BFF/pokedex-platform.git
+cd pokedex-platform
+bruno .
+```
+
+---
+
 ## 📋 Estrutura
 
 ```
@@ -20,73 +111,114 @@ bruno/
     └── remove-favorite.yml    # DELETE /pokemons/{id}/favorite - Remover favorito
 ```
 
-## 🚀 Como Usar
+## 🚀 Começando Rápido
 
-### 1. Abrir no Bruno Desktop
+### 1️⃣ Instale Bruno
+https://www.usebruno.com/downloads (2 minutos)
+
+### 2️⃣ Abra esta Colecção
 ```bash
-# Instale Bruno: https://www.usebruno.com/downloads
+cd /Users/lucasnascimento/Dev/GitHub/BFF/pokedex-platform
 bruno .
 ```
-Ou abra Bruno e importe a coleção: `File > Open Collection > ./bruno`
 
-### 2. Configurar Ambiente
+### 3️⃣ Selecione o Ambiente
+Clique em **"local"** (engrenagem no canto superior direito) para usar `http://localhost:8000`
 
-1. Clique em **environments** (engrenagem no canto superior)
-2. Selecione **"local"** (localhost:8000)
-3. As variáveis `{{baseUrl}}`, `{{authToken}}`, `{{userId}}` estarão disponíveis
+### 4️⃣ Teste um Endpoint
+Abra `health.yml` e clique em **Send** (ou Cmd+Enter)
 
-Para production:
-- Selecione **"production"** e atualize `baseUrl`: `https://api.pokedex.com`
+---
 
-### 3. Fluxo de Teste Completo
+## 🔧 Como Usar em Detalhes
 
-#### **A. Criar Conta (Signup)**
+### 1. Configurar Ambiente
+
+**Na Interface do Bruno:**
+1. Clique no ícone de **engrenagem** (⚙️) no canto superior direito
+2. Selecione **"local"** (desenvolvimento local) ou **"production"** (servidor remoto)
+
+**Variáveis do `environment.yml`:**
+```yaml
+local:
+  baseUrl: http://localhost:8000
+  authToken: ""  # Será preenchido após login
+
+production:
+  baseUrl: https://api.pokedex.com
+  authToken: ""  # Será preenchido após login
+```
+
+Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa mudar URLs manualmente.
+
+### 2. Fluxo de Teste Completo
+
+#### **A. Health Check (teste rápido)** ✅
+1. Abra `health.yml`
+2. Clique em **Send** (Cmd+Enter no macOS, Ctrl+Enter no Windows/Linux)
+3. Espere resposta: `{"status":"ok"}`
+
+#### **B. Criar Conta (Signup)**
 1. Abra `auth > signup.yml`
-2. Edite o body com um email/senha reais
+2. Edite o body com um **email e senha reais** (use um email de teste)
 3. Clique em **Send**
-4. Copie o valor de `access_token` da resposta
-5. Execute `Scripts > Globals` e cole em `authToken`
+4. Resposta esperada: `{"access_token": "eyJ...", "user_id": "uuid-...", ...}` (status 201)
+5. **Copie o `access_token`** da resposta
 
-#### **B. Fazer Login**
+#### **C. Salvar Token para Próximas Requisições**
+1. Abra **Scripts > Globals** (ícone de chave inglesa)
+2. Cole no campo `authToken`:
+   ```
+   authToken = eyJhbGciOiJIUzI1NiIs...
+   ```
+3. Feche a janela (Cmd+W ou Esc)
+
+#### **D. Fazer Login**
 1. Abra `auth > login.yml`
-2. Edite com suas credenciais
+2. Use as mesmas credenciais do signup
 3. Clique em **Send**
-4. Bruno extrai automaticamente `authToken` (se configurado o teste)
+4. Resposta: novo token + dados do usuário (status 200)
 
-#### **C. Listar Pokémon**
+#### **E. Listar Pokémon (Public)**
 1. Abra `pokemons > list.yml`
 2. Clique em **Send**
-3. Veja 20 Pokémon da primeira página
+3. Veja os primeiros 20 Pokémon (não requer autenticação)
 
-#### **D. Buscar Pokémon**
+#### **F. Buscar Pokémon**
 1. Abra `pokemons > search.yml`
-2. Modifique a query: `?q=charizard` (ao invés de pikachu)
+2. Modifique a query na URL: `?q=charizard` (ao invés de pikachu)
 3. Clique em **Send**
+4. Veja resultados filtrados
 
-#### **E. Ver Detalhes**
+#### **G. Ver Detalhes de um Pokémon**
 1. Abra `pokemons > details.yml`
-2. Mude o ID na URL (ex: 1 para Bulbasaur, 25 para Pikachu)
+2. Mude o ID na URL (ex: `/25` para Pikachu, `/1` para Bulbasaur)
 3. Clique em **Send**
+4. Veja estrutura completa com stats, tipos, etc
 
-#### **F. Adicionar Favorito (requer login)**
-1. Primeiro, faça login (passo B)
+#### **H. Adicionar Favorito (Autenticado)** 🔒
+1. Certifique-se que `authToken` está configurado (passo C)
 2. Abra `pokemons > add-favorite.yml`
-3. Clique em **Send**
-4. Resposta: `{"status": "ok"}`
+3. Modifique o ID se quiser (ex: 6 para Charizard)
+4. Clique em **Send**
+5. Resposta: `{"status": "ok"}` (status 200)
 
-#### **G. Remover Favorito**
+#### **I. Remover Favorito (Autenticado)** 🔒
 1. Abra `pokemons > remove-favorite.yml`
 2. Clique em **Send**
+3. Resposta: `{"message": "favorito removido"}` (status 200)
 
-#### **H. Renovar Token**
+#### **J. Renovar Token (Refresh)**
 1. Abra `auth > refresh.yml`
 2. Clique em **Send**
-3. Novo token é retornado e pode ser usado nas próximas requisições
+3. Novo token é gerado (útil quando token expirar)
+4. Copie o novo `access_token` e atualize em Globals
 
-#### **I. Fazer Logout**
+#### **K. Fazer Logout**
 1. Abra `auth > logout.yml`
 2. Clique em **Send**
-3. Sessão encerrada (token invalidado no servidor)
+3. Resposta: `{"message": "sessao encerrada"}` (status 200)
+4. Token é invalidado no servidor
 
 ## 🔐 Autenticação
 
