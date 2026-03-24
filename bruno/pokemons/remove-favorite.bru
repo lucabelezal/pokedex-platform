@@ -1,0 +1,13 @@
+meta {
+  name: Remove Favorite
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/v1/pokemons/25/favorite
+}
+
+headers {
+  Authorization: Bearer {{authToken}}
+}
