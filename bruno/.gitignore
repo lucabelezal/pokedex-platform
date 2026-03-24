@@ -1,0 +1,15 @@
+# Secrets
+.env*
+.env.local
+
+# Dependencies
+node_modules
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+tmp-*
+*.log
+test-results/
