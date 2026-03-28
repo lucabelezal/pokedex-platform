@@ -104,7 +104,7 @@ O BFF atende o contrato rico do front, enquanto o `pokemon-catalog-service` conc
 
 ## Stack
 
-- Go 1.22
+- Go 1.24
 - net/http
 - PostgreSQL + pgx/v5
 - Testify
