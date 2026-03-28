@@ -72,6 +72,16 @@ func (r *PokemonCatalogServiceRepository) GetByType(ctx context.Context, typeFil
 	return &out, nil
 }
 
+func (r *PokemonCatalogServiceRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
+	endpoint := fmt.Sprintf("%s/v1/types", r.baseURL)
+	var out []domain.Type
+	_, err := r.getJSON(ctx, endpoint, &out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (r *PokemonCatalogServiceRepository) GetFavorites(ctx context.Context, userID string, page, pageSize int) ([]string, error) {
 	_ = ctx
 	_ = userID

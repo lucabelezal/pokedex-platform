@@ -19,6 +19,7 @@ type PokemonRepository interface {
 	Search(ctx context.Context, query string, page, pageSize int) (*domain.PokemonPage, error)
 	GetByType(ctx context.Context, typeFilter string, page, pageSize int) (*domain.PokemonPage, error)
 	GetByID(ctx context.Context, id string) (*domain.Pokemon, error)
+	ListTypes(ctx context.Context) ([]domain.Type, error)
 }
 
 type PostgresPokemonRepository struct {
@@ -239,6 +240,33 @@ func (r *PostgresPokemonRepository) GetByID(ctx context.Context, id string) (*do
 	return &p, nil
 }
 
+func (r *PostgresPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
+	rows, err := r.db.Query(ctx, `
+		SELECT name, color
+		FROM types
+		ORDER BY id ASC
+	`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	types := make([]domain.Type, 0)
+	for rows.Next() {
+		var item domain.Type
+		if err := rows.Scan(&item.Name, &item.Color); err != nil {
+			return nil, err
+		}
+		types = append(types, item)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return types, nil
+}
+
 type InMemoryPokemonRepository struct {
 	items []domain.Pokemon
 }
@@ -316,6 +344,15 @@ func (r *InMemoryPokemonRepository) GetByID(ctx context.Context, id string) (*do
 		}
 	}
 	return nil, ErrPokemonNotFound
+}
+
+func (r *InMemoryPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
+	_ = ctx
+	return []domain.Type{
+		{Name: "Grama", Color: "#7AC74C"},
+		{Name: "Venenoso", Color: "#A33EA1"},
+		{Name: "Fogo", Color: "#EE8130"},
+	}, nil
 }
 
 func sanitizePage(page, pageSize int) (int, int) {

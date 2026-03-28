@@ -1,7 +1,6 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: pokedex-postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-pokedex_dev_db}
       POSTGRES_USER: ${POSTGRES_USER:-pokedex}
@@ -19,7 +18,6 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: pokedex-redis
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     ports:
       - "${REDIS_PORT:-6379}:6379"
@@ -35,7 +33,6 @@ services:
     build:
       context: ./app/pokemon-catalog-service
       dockerfile: Dockerfile
-    container_name: pokemon-catalog-service
     environment:
       POKEMON_CATALOG_SERVICE_PORT: ${POKEMON_CATALOG_SERVICE_PORT:-8081}
       DATABASE_URL: ${DATABASE_URL:-postgres://pokedex:pokedex@postgres:5432/pokedex_dev_db?sslmode=disable}
@@ -54,7 +51,6 @@ services:
     build:
       context: ./app/auth-service
       dockerfile: Dockerfile
-    container_name: auth-service
     environment:
       AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT:-8082}
       DATABASE_URL: ${DATABASE_URL:-postgres://pokedex:pokedex@postgres:5432/pokedex_dev_db?sslmode=disable}
@@ -72,7 +68,6 @@ services:
     build:
       context: ./bff/mobile-bff
       dockerfile: Dockerfile
-    container_name: mobile-bff
     environment:
       MOBILE_BFF_PORT: ${MOBILE_BFF_PORT:-8080}
       POKEMON_CATALOG_SERVICE_URL: ${POKEMON_CATALOG_SERVICE_URL:-http://pokemon-catalog-service:8081}
@@ -94,7 +89,6 @@ services:
 
   kong:
     image: kong:3.7
-    container_name: pokedex-kong
     environment:
       KONG_DATABASE: "off"
       KONG_DECLARATIVE_CONFIG: /opt/kong/kong.yml

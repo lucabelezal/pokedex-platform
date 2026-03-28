@@ -318,3 +318,29 @@ func (r *PostgresPokemonRepository) GetFavorites(ctx context.Context, userID str
 
 	return favorites, rows.Err()
 }
+
+// ListTypes recupera os tipos disponíveis para filtros da home/lista.
+func (r *PostgresPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
+	query := `
+		SELECT name, color
+		FROM types
+		ORDER BY id ASC
+	`
+
+	rows, err := r.db.Query(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	types := make([]domain.Type, 0)
+	for rows.Next() {
+		var pokemonType domain.Type
+		if err := rows.Scan(&pokemonType.Name, &pokemonType.Color); err != nil {
+			return nil, err
+		}
+		types = append(types, pokemonType)
+	}
+
+	return types, rows.Err()
+}

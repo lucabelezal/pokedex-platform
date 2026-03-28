@@ -206,9 +206,15 @@ func TestGetHomeHandler(t *testing.T) {
 	var response dto.HomeResponse
 	err := json.Unmarshal(w.Body.Bytes(), &response)
 	assert.NoError(t, err)
-	assert.NotEmpty(t, response.SearchPlaceholder)
-	assert.NotEmpty(t, response.Data)
-	assert.Greater(t, len(response.Data.Content), 0)
+	assert.Equal(t, "Procurar Pokémon...", response.Search.Placeholder)
+	assert.Equal(t, "Todos os tipos", response.Filters.Types.Title)
+	assert.NotEmpty(t, response.Filters.Types.Items)
+	assert.Equal(t, "Ordenação", response.Filters.Ordering.Title)
+	assert.Len(t, response.Filters.Ordering.Items, 1)
+	assert.Greater(t, len(response.Pokemons), 0)
+	assert.Equal(t, "Nº001", response.Pokemons[0].Number)
+	assert.NotEmpty(t, response.Pokemons[0].Sprites.URL)
+	assert.NotEmpty(t, response.Pokemons[0].Sprites.BackgroundColor)
 }
 
 func TestGetMeHandler(t *testing.T) {

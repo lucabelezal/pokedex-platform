@@ -414,8 +414,14 @@ func (h *Handler) GetHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := h.responseBuilder.BuildHomePageResponse(pokemonPage)
-	h.enrichFavoriteFlags(ctx, userID, response.Data)
+	types, err := h.pokemonUseCase.ListTypes(ctx)
+	if err != nil {
+		RespondError(w, http.StatusInternalServerError, "falha ao obter filtros da home", "INTERNAL_ERROR")
+		return
+	}
+
+	favoriteSet := h.buildFavoriteSet(ctx, userID)
+	response := h.responseBuilder.BuildHomePageResponseWithTypes(pokemonPage, types, favoriteSet)
 	RespondJSON(w, http.StatusOK, response)
 }
 
@@ -438,6 +444,24 @@ func (h *Handler) enrichFavoriteFlags(ctx context.Context, userID string, respon
 		_, isFavorite := favoriteSet[normalizePokemonID(response.Content[i].Number)]
 		response.Content[i].IsFavorite = isFavorite
 	}
+}
+
+func (h *Handler) buildFavoriteSet(ctx context.Context, userID string) map[string]struct{} {
+	if userID == "" {
+		return nil
+	}
+
+	favorites, err := h.favoriteUseCase.GetUserFavorites(ctx, userID)
+	if err != nil {
+		return nil
+	}
+
+	favoriteSet := make(map[string]struct{}, len(favorites))
+	for _, id := range favorites {
+		favoriteSet[normalizePokemonID(id)] = struct{}{}
+	}
+
+	return favoriteSet
 }
 
 func normalizePokemonID(value string) string {

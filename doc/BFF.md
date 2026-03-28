@@ -12,6 +12,99 @@ O `mobile-bff` é a aplicação voltada ao cliente dentro da plataforma. O papel
 - Delegar fluxos de autenticação ao `auth-service`.
 - Retornar respostas já moldadas para consumo de UI.
 
+## Referência De Produto
+
+As próximas APIs do BFF para home e detalhe devem seguir a referência visual do Figma:
+
+- [Pokémon App By Junior Saraiva](https://www.figma.com/pt-br/comunidade/file/1202971127473077147/pokedex-pokemon-app)
+
+Essa referência é importante porque reforça o papel do BFF como camada orientada à experiência do cliente, e não apenas como proxy técnico.
+
+## Navegação Principal Do App
+
+As tabs principais esperadas hoje são:
+
+- `pokedex`: home ou lista principal
+- `detalhe`: tela aberta ao selecionar um Pokémon
+- `regioes`
+- `favoritos`
+- `perfil`
+
+Nem todas precisam existir imediatamente como endpoints independentes, mas elas servem como mapa de evolução da API do BFF.
+
+## Direção Das Próximas APIs
+
+As próximas entregas de API devem priorizar:
+
+- home da pokedex
+- detalhe do Pokémon
+
+Esses contratos devem ser moldados a partir da necessidade da interface, mesmo quando os dados canônicos vierem do `pokemon-catalog-service`.
+
+## Contrato Inicial Da Home
+
+Estrutura sugerida para a resposta da tela principal:
+
+```json
+{
+  "search": {
+    "placeholder": "Procurar Pokémon..."
+  },
+  "filters": {
+    "types": {
+      "title": "Todos os tipos",
+      "items": [
+        { "title": "Água" },
+        { "title": "Fantasma" }
+      ]
+    },
+    "ordering": {
+      "title": "Ordenação",
+      "items": [
+        { "title": "Menor número" }
+      ]
+    }
+  },
+  "pokemons": [
+    {
+      "number": "Nº001",
+      "name": "Bulbasaur",
+      "types": [
+        {
+          "title": "Grama",
+          "color": "63BC5A"
+        },
+        {
+          "title": "Venenoso",
+          "color": "B567CE"
+        }
+      ],
+      "sprites": {
+        "backgroundColor": "63BC5A"
+      },
+      "isFavorite": false
+    }
+  ]
+}
+```
+
+## Observações De Modelagem Para A Home
+
+- `search.placeholder` é parte da experiência da tela e faz sentido vir do BFF.
+- `filters` podem ser enriquecidos pelo BFF mesmo que sua fonte original venha do catálogo.
+- `types[].color` representa a cor visual associada ao tipo.
+- em `sprites.backgroundColor`, a cor representa o fundo visual do card atrás da imagem.
+
+## Direção Para O Detalhe
+
+A tela de detalhe deve ser carregada ao clicar em um Pokémon da home.
+
+O contrato de detalhe deve seguir a mesma lógica:
+
+- dados canônicos vêm do `pokemon-catalog-service`
+- favoritos e sinais de experiência podem ser enriquecidos no BFF
+- a resposta final deve ser organizada para a UI, e não como espelho puro do serviço interno
+
 ## Diagrama De Comunicação Do BFF
 
 ```mermaid

@@ -151,6 +151,19 @@ func (m *MockPokemonRepository) GetFavorites(ctx context.Context, userID string,
 	return []string{}, nil
 }
 
+func (m *MockPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
+	_ = ctx
+	return []domain.Type{
+		{Name: "Água", Color: "#6390F0"},
+		{Name: "Fantasma", Color: "#735797"},
+		{Name: "Grama", Color: "#7AC74C"},
+		{Name: "Venenoso", Color: "#A33EA1"},
+		{Name: "Fogo", Color: "#EE8130"},
+		{Name: "Elétrico", Color: "#F7D02C"},
+		{Name: "Voador", Color: "#A98FF3"},
+	}, nil
+}
+
 type MockFavoriteRepository struct {
 	mu        sync.RWMutex
 	favorites map[string]map[string]bool

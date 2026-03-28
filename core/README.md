@@ -31,7 +31,7 @@ A pasta `core/` mantém os artefatos de implementação reunidos para que a raiz
 A partir da raiz do repositório:
 
 ```bash
-docker compose -f core/docker-compose.yml up --build
+docker compose -p pokedex -f core/docker-compose.yml up --build
 ```
 
 ## Documentação Relacionada

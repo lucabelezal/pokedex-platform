@@ -50,6 +50,10 @@ O `core/docker-compose.yml` descreve a topologia local completa:
 
 Esse é um dos documentos mais claros da arquitetura real de execução hoje.
 
+Os arquivos de compose não fixam mais `container_name`. Isso reduz conflito entre execuções locais, ambientes paralelos e composes de teste.
+
+Quando for útil manter um prefixo legível para o projeto, a recomendação é executar o compose com `-p pokedex`.
+
 ## Oportunidades De Melhoria
 
 - Documentar qual serviço é dono de quais tabelas.

@@ -153,7 +153,7 @@ chmod +x scripts/*.sh
 A partir da raiz do repositorio:
 
 ```bash
-docker compose -f core/docker-compose.yml up --build
+docker compose -p pokedex -f core/docker-compose.yml up --build
 ```
 
 ## Testes

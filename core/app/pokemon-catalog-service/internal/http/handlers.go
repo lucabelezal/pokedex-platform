@@ -33,6 +33,7 @@ func NewMux(pokemonRepo repository.PokemonRepository) *http.ServeMux {
 	mux.HandleFunc("GET /v1/pokemons", h.listPokemons)
 	mux.HandleFunc("GET /v1/pokemons/search", h.searchPokemons)
 	mux.HandleFunc("GET /v1/pokemons/type/{type}", h.filterByType)
+	mux.HandleFunc("GET /v1/types", h.listTypes)
 	mux.HandleFunc("GET /v1/pokemons/{id}", h.getPokemonByID)
 	return mux
 }
@@ -122,6 +123,19 @@ func (h *Handler) getPokemonByID(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao buscar pokemon"})
+		return
+	}
+
+	respondJSON(w, http.StatusOK, data)
+}
+
+func (h *Handler) listTypes(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	data, err := h.pokemonRepo.ListTypes(ctx)
+	if err != nil {
+		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao listar tipos"})
 		return
 	}
 

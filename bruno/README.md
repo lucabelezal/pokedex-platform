@@ -2,6 +2,20 @@
 
 Coleção completa de testes da API Pokedex em [Bruno](https://www.usebruno.com/) (alternativa leve ao Postman).
 
+## UI/UX de Referência
+
+As próximas APIs orientadas à experiência do app seguem como referência visual:
+
+- [Pokémon App By Junior Saraiva](https://www.figma.com/pt-br/comunidade/file/1202971127473077147/pokedex-pokemon-app)
+
+Tabs principais consideradas na coleção:
+
+- `pokedex` ou home
+- detalhe do Pokémon
+- regiões
+- favoritos
+- perfil
+
 ---
 
 ## 🎯 O que é Bruno?
@@ -107,6 +121,12 @@ bruno/
 │   ├── login.yml              # POST /auth/login - Autenticar
 │   ├── refresh.yml            # POST /auth/refresh - Renovar token
 │   └── logout.yml             # POST /auth/logout - Encerrar
+├── app/
+│   ├── home.yml               # GET /home - Home da pokedex
+│   ├── pokemon-details.yml    # GET /pokemons/{id} - Tela de detalhe
+│   ├── regions.yml            # GET /regions - Lista de regiões
+│   ├── favorites.yml          # GET /me/favorites - Aba de favoritos
+│   └── profile.yml            # GET /me - Aba de perfil
 └── pokemons/
     ├── list.yml               # GET /pokemons - Listar (paginado)
     ├── search.yml             # GET /pokemons/search - Buscar por nome
@@ -189,6 +209,11 @@ Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa m
 2. Clique em **Send**
 3. Veja os primeiros 20 Pokémon (não requer autenticação)
 
+#### **E.1. Home da Pokedex**
+1. Abra `app > home.yml`
+2. Clique em **Send**
+3. Use este request como base para a futura API da home orientada ao Figma
+
 #### **F. Buscar Pokémon**
 1. Abra `pokemons > search.yml`
 2. Modifique a query na URL: `?q=charizard` (ao invés de pikachu)
@@ -200,6 +225,26 @@ Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa m
 2. Mude o ID na URL (ex: `/25` para Pikachu, `/1` para Bulbasaur)
 3. Clique em **Send**
 4. Veja estrutura completa com stats, tipos, etc
+
+#### **G.1. Tela de Detalhe do App**
+1. Abra `app > pokemon-details.yml`
+2. Ajuste o ID conforme necessário
+3. Use este request como base para a futura resposta orientada à UI
+
+#### **G.2. Regiões**
+1. Abra `app > regions.yml`
+2. Clique em **Send**
+3. Use este request como base para a futura aba de regiões
+
+#### **G.3. Favoritos**
+1. Abra `app > favorites.yml`
+2. Clique em **Send**
+3. Use este request como base para a aba de favoritos do app
+
+#### **G.4. Perfil**
+1. Abra `app > profile.yml`
+2. Clique em **Send**
+3. Use este request como base para a aba de perfil
 
 #### **H. Adicionar Favorito (Autenticado)** 🔒
 1. Certifique-se que `authToken` está configurado (passo C)

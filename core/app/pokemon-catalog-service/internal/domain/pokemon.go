@@ -26,3 +26,9 @@ type PokemonPage struct {
 	TotalPages    int       `json:"totalPages"`
 	HasNext       bool      `json:"hasNext"`
 }
+
+// Type representa um tipo canônico do catálogo com sua cor visual.
+type Type struct {
+	Name  string `json:"name"`
+	Color string `json:"color"`
+}

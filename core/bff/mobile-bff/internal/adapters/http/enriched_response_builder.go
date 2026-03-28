@@ -70,17 +70,22 @@ func (b *EnrichedResponseBuilder) BuildHomePageResponse(
 	page *domain.PokemonPage,
 	userID string,
 ) *dto.HomeResponse {
-	richResponse := b.BuildEnrichedListResponse(ctx, page, userID)
-
-	homeResponse := &dto.HomeResponse{
-		Status:             "success",
-		Data:               richResponse,
-		SearchPlaceholder:  "Search Pokemon by name or ID",
-		RecommendedFilters: []string{"Fire", "Water", "Grass", "Electric", "Flying"},
-		Message:            "Welcome to Pokedex",
+	favoriteSet := map[string]struct{}{}
+	if userID != "" && b.favoriteRepo != nil {
+		favorites, err := b.favoriteRepo.GetUserFavorites(ctx, userID)
+		if err == nil {
+			for _, id := range favorites {
+				favoriteSet[normalizePokemonID(id)] = struct{}{}
+			}
+		}
 	}
 
-	return homeResponse
+	types, err := b.pokemonRepo.ListTypes(ctx)
+	if err != nil {
+		types = nil
+	}
+
+	return b.responseBuilder.BuildHomePageResponseWithTypes(page, types, favoriteSet)
 }
 
 // BuildFavoritePokemonResponse constrói resposta para operações de favoritos

@@ -93,13 +93,47 @@ type RichPokemonListResponse struct {
 	Filters       []interface{}         `json:"filters"`
 }
 
-// HomeResponse representa dados para a tela de home
+type HomeSearchDTO struct {
+	Placeholder string `json:"placeholder"`
+}
+
+type HomeFilterItemDTO struct {
+	Title string `json:"title"`
+}
+
+type HomeFilterGroupDTO struct {
+	Title string              `json:"title"`
+	Items []HomeFilterItemDTO `json:"items"`
+}
+
+type HomeFiltersDTO struct {
+	Types    HomeFilterGroupDTO `json:"types"`
+	Ordering HomeFilterGroupDTO `json:"ordering"`
+}
+
+type HomePokemonTypeDTO struct {
+	Title string `json:"title"`
+	Color string `json:"color"`
+}
+
+type HomePokemonSpritesDTO struct {
+	URL             string `json:"url"`
+	BackgroundColor string `json:"backgroundColor"`
+}
+
+type HomePokemonDTO struct {
+	Number     string                `json:"number"`
+	Name       string                `json:"name"`
+	Types      []HomePokemonTypeDTO  `json:"types"`
+	Sprites    HomePokemonSpritesDTO `json:"sprites"`
+	IsFavorite bool                  `json:"isFavorite"`
+}
+
+// HomeResponse representa dados para a tela de pokedex/home
 type HomeResponse struct {
-	Status             string                   `json:"status"`
-	Message            string                   `json:"message"`
-	SearchPlaceholder  string                   `json:"searchPlaceholder"`
-	RecommendedFilters []string                 `json:"recommendedFilters"`
-	Data               *RichPokemonListResponse `json:"data"`
+	Search   HomeSearchDTO    `json:"search"`
+	Filters  HomeFiltersDTO   `json:"filters"`
+	Pokemons []HomePokemonDTO `json:"pokemons"`
 }
 
 // FavoriteRequest representa uma requisição para adicionar um favorito

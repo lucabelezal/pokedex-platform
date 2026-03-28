@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/http/dto"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
+	"strings"
 )
 
 type ResponseBuilder struct{}
@@ -105,14 +106,67 @@ func (rb *ResponseBuilder) BuildHomeResponse(page *domain.PokemonPage) *dto.Rich
 }
 
 func (rb *ResponseBuilder) BuildHomePageResponse(page *domain.PokemonPage) *dto.HomeResponse {
-	richList := rb.BuildHomeResponse(page)
+	return rb.BuildHomePageResponseWithTypes(page, nil, nil)
+}
+
+func (rb *ResponseBuilder) BuildHomePageResponseWithTypes(
+	page *domain.PokemonPage,
+	types []domain.Type,
+	favoriteSet map[string]struct{},
+) *dto.HomeResponse {
+	pokemons := make([]dto.HomePokemonDTO, len(page.Content))
+	for i, p := range page.Content {
+		pokemons[i] = rb.BuildHomePokemonDTO(&p, favoriteSet)
+	}
+
+	typeItems := make([]dto.HomeFilterItemDTO, len(types))
+	for i, t := range types {
+		typeItems[i] = dto.HomeFilterItemDTO{Title: t.Name}
+	}
 
 	return &dto.HomeResponse{
-		Status:             "sucesso",
-		Message:            "Bem-vindo a Pokedex",
-		SearchPlaceholder:  "Busque Pokemon por nome ou ID",
-		RecommendedFilters: []string{"Fire", "Water", "Grass", "Electric", "Flying"},
-		Data:               richList,
+		Search: dto.HomeSearchDTO{
+			Placeholder: "Procurar Pokémon...",
+		},
+		Filters: dto.HomeFiltersDTO{
+			Types: dto.HomeFilterGroupDTO{
+				Title: "Todos os tipos",
+				Items: typeItems,
+			},
+			Ordering: dto.HomeFilterGroupDTO{
+				Title: "Ordenação",
+				Items: []dto.HomeFilterItemDTO{
+					{Title: "Menor número"},
+				},
+			},
+		},
+		Pokemons: pokemons,
+	}
+}
+
+func (rb *ResponseBuilder) BuildHomePokemonDTO(
+	p *domain.Pokemon,
+	favoriteSet map[string]struct{},
+) dto.HomePokemonDTO {
+	types := make([]dto.HomePokemonTypeDTO, len(p.Types))
+	for i, t := range p.Types {
+		types[i] = dto.HomePokemonTypeDTO{
+			Title: t,
+			Color: normalizeHexColor(getTypeColor(t)),
+		}
+	}
+
+	_, isFavorite := favoriteSet[normalizePokemonID(p.Number)]
+
+	return dto.HomePokemonDTO{
+		Number: formatHomePokemonNumber(p.Number),
+		Name:   p.Name,
+		Types:  types,
+		Sprites: dto.HomePokemonSpritesDTO{
+			URL:             p.ImageURL,
+			BackgroundColor: normalizeHexColor(p.ElementColor),
+		},
+		IsFavorite: isFavorite,
 	}
 }
 
@@ -149,6 +203,14 @@ func getTypeColor(typeStr string) string {
 		return color
 	}
 	return "#A9AC86"
+}
+
+func normalizeHexColor(value string) string {
+	return strings.TrimPrefix(strings.TrimSpace(value), "#")
+}
+
+func formatHomePokemonNumber(number string) string {
+	return "Nº" + strings.TrimSpace(number)
 }
 
 func RespondJSON(w http.ResponseWriter, status int, payload interface{}) {

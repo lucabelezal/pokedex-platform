@@ -46,13 +46,19 @@ A implementacao executavel da plataforma fica em `core/`.
 - Gateway: `doc/GATEWAY.md`
 - Infraestrutura: `doc/INFRA.md`
 - Decisoes arquiteturais: `doc/DECISIONS.md`
-- Hexagonal no BFF: `doc/bff/HEXAGONAL-ARCHITECTURE.md`
+- SOLID e patterns: `doc/SOLID-AND-PATTERNS.md`
 - Visao do runtime: `core/README.md`
+
+## UI/UX Design
+
+### Figma Community
+
+- [Pokémon App By Junior Saraiva](https://www.figma.com/pt-br/comunidade/file/1202971127473077147/pokedex-pokemon-app)
 
 ## Como Executar
 
 ```bash
-docker compose -f core/docker-compose.yml up --build
+docker compose -p pokedex -f core/docker-compose.yml up --build
 ```
 
 ### Endpoints
