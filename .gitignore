@@ -6,9 +6,9 @@ vendor/
 .DS_Store
 
 # Binarios locais gerados por go build
-app/auth-service/server
-bff/mobile-bff/server
+core/app/auth-service/server
+core/bff/mobile-bff/server
 
 # Artefatos locais para coleta de dados da Gen 1
-infra/postgres/source-json/generated/
-infra/postgres/source-json/.local-tools/
+core/infra/postgres/source-json/generated/
+core/infra/postgres/source-json/.local-tools/
