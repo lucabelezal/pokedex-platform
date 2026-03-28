@@ -2,9 +2,11 @@ package http
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/http/dto"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
+	"strconv"
 	"strings"
 )
 
@@ -179,24 +181,41 @@ func (rb *ResponseBuilder) BuildHealthResponse() *dto.HealthResponse {
 
 func getTypeColor(typeStr string) string {
 	typeColors := map[string]string{
-		"Normal":   "#A8A878",
-		"Fire":     "#F08030",
-		"Water":    "#6890F0",
-		"Electric": "#F8D030",
-		"Grass":    "#78C850",
-		"Ice":      "#98D8D8",
-		"Fighting": "#C03028",
-		"Poison":   "#A040A0",
-		"Ground":   "#E0C068",
-		"Flying":   "#A890F0",
-		"Psychic":  "#F85888",
-		"Bug":      "#A8B820",
-		"Rock":     "#B8A038",
-		"Ghost":    "#705898",
-		"Dragon":   "#7038F8",
-		"Dark":     "#705848",
-		"Steel":    "#B8B8D0",
-		"Fairy":    "#EE99AC",
+		"Normal":    "#A8A878",
+		"Fogo":      "#EE8130",
+		"Fire":      "#F08030",
+		"Água":      "#6390F0",
+		"Water":     "#6890F0",
+		"Elétrico":  "#F7D02C",
+		"Electric":  "#F8D030",
+		"Grama":     "#7AC74C",
+		"Grass":     "#78C850",
+		"Gelo":      "#96D9D6",
+		"Ice":       "#98D8D8",
+		"Lutador":   "#C22E28",
+		"Fighting":  "#C03028",
+		"Venenoso":  "#A33EA1",
+		"Poison":    "#A040A0",
+		"Terrestre": "#E2BF65",
+		"Ground":    "#E0C068",
+		"Voador":    "#A98FF3",
+		"Flying":    "#A890F0",
+		"Psíquico":  "#F95587",
+		"Psychic":   "#F85888",
+		"Inseto":    "#A6B91A",
+		"Bug":       "#A8B820",
+		"Pedra":     "#B6A136",
+		"Rock":      "#B8A038",
+		"Fantasma":  "#735797",
+		"Ghost":     "#705898",
+		"Dragão":    "#6F35FC",
+		"Dragon":    "#7038F8",
+		"Sombrio":   "#705746",
+		"Dark":      "#705848",
+		"Aço":       "#B7B7CE",
+		"Steel":     "#B8B8D0",
+		"Fada":      "#D685AD",
+		"Fairy":     "#EE99AC",
 	}
 
 	if color, exists := typeColors[typeStr]; exists {
@@ -210,7 +229,21 @@ func normalizeHexColor(value string) string {
 }
 
 func formatHomePokemonNumber(number string) string {
-	return "Nº" + strings.TrimSpace(number)
+	trimmed := strings.TrimSpace(number)
+	if parsed, err := strconv.Atoi(trimmed); err == nil {
+		return fmt.Sprintf("Nº%03d", parsed)
+	}
+
+	normalized := strings.TrimLeft(trimmed, "0")
+	if normalized == "" {
+		normalized = "0"
+	}
+
+	if parsed, err := strconv.Atoi(normalized); err == nil {
+		return fmt.Sprintf("Nº%03d", parsed)
+	}
+
+	return "Nº" + trimmed
 }
 
 func RespondJSON(w http.ResponseWriter, status int, payload interface{}) {
