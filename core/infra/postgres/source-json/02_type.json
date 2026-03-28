@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "name": "Normal",
+        "color": "#A8A77A"
+    },
+    {
+        "id": 2,
+        "name": "Fogo",
+        "color": "#EE8130"
+    },
+    {
+        "id": 3,
+        "name": "Água",
+        "color": "#6390F0"
+    },
+    {
+        "id": 4,
+        "name": "Elétrico",
+        "color": "#F7D02C"
+    },
+    {
+        "id": 5,
+        "name": "Grama",
+        "color": "#7AC74C"
+    },
+    {
+        "id": 6,
+        "name": "Gelo",
+        "color": "#96D9D6"
+    },
+    {
+        "id": 7,
+        "name": "Lutador",
+        "color": "#C22E28"
+    },
+    {
+        "id": 8,
+        "name": "Venenoso",
+        "color": "#A33EA1"
+    },
+    {
+        "id": 9,
+        "name": "Terrestre",
+        "color": "#E2BF65"
+    },
+    {
+        "id": 10,
+        "name": "Voador",
+        "color": "#A98FF3"
+    },
+    {
+        "id": 11,
+        "name": "Psíquico",
+        "color": "#F95587"
+    },
+    {
+        "id": 12,
+        "name": "Inseto",
+        "color": "#A6B91A"
+    },
+    {
+        "id": 13,
+        "name": "Pedra",
+        "color": "#B6A136"
+    },
+    {
+        "id": 14,
+        "name": "Fantasma",
+        "color": "#735797"
+    },
+    {
+        "id": 15,
+        "name": "Dragão",
+        "color": "#6F35FC"
+    },
+    {
+        "id": 16,
+        "name": "Sombrio",
+        "color": "#705746"
+    },
+    {
+        "id": 17,
+        "name": "Aço",
+        "color": "#B7B7CE"
+    },
+    {
+        "id": 18,
+        "name": "Fada",
+        "color": "#D685AD"
+    }
+]

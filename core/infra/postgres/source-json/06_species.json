@@ -1,0 +1,4342 @@
+[
+    {
+        "id": 1,
+        "pokemon_number": "0001",
+        "name": "Bulbasaur",
+        "species_en": "Seed Pokémon",
+        "species_pt": "Pokémon Semente"
+    },
+    {
+        "id": 2,
+        "pokemon_number": "0002",
+        "name": "Ivysaur",
+        "species_en": "Seed Pokémon",
+        "species_pt": "Pokémon Semente"
+    },
+    {
+        "id": 3,
+        "pokemon_number": "0003",
+        "name": "Venusaur",
+        "species_en": "Seed Pokémon",
+        "species_pt": "Pokémon Semente"
+    },
+    {
+        "id": 4,
+        "pokemon_number": "0004",
+        "name": "Charmander",
+        "species_en": "Lizard Pokémon",
+        "species_pt": "Pokémon Lagarto"
+    },
+    {
+        "id": 5,
+        "pokemon_number": "0005",
+        "name": "Charmeleon",
+        "species_en": "Flame Pokémon",
+        "species_pt": "Pokémon Chama"
+    },
+    {
+        "id": 6,
+        "pokemon_number": "0006",
+        "name": "Charizard",
+        "species_en": "Flame Pokémon",
+        "species_pt": "Pokémon Chama"
+    },
+    {
+        "id": 7,
+        "pokemon_number": "0007",
+        "name": "Squirtle",
+        "species_en": "Tiny Turtle Pokémon",
+        "species_pt": "Pokémon Jovem Tartaruga"
+    },
+    {
+        "id": 8,
+        "pokemon_number": "0008",
+        "name": "Wartortle",
+        "species_en": "Turtle Pokémon",
+        "species_pt": "Pokémon Tartaruga"
+    },
+    {
+        "id": 9,
+        "pokemon_number": "0009",
+        "name": "Blastoise",
+        "species_en": "Shellfish Pokémon",
+        "species_pt": "Pokémon Concha"
+    },
+    {
+        "id": 10,
+        "pokemon_number": "0010",
+        "name": "Caterpie",
+        "species_en": "Worm Pokémon",
+        "species_pt": "Pokémon Lagarta"
+    },
+    {
+        "id": 11,
+        "pokemon_number": "0011",
+        "name": "Metapod",
+        "species_en": "Cocoon Pokémon",
+        "species_pt": "Pokémon Crisálida"
+    },
+    {
+        "id": 12,
+        "pokemon_number": "0012",
+        "name": "Butterfree",
+        "species_en": "Butterfly Pokémon",
+        "species_pt": "Pokémon Borboleta"
+    },
+    {
+        "id": 13,
+        "pokemon_number": "0013",
+        "name": "Weedle",
+        "species_en": "Hairy Bug Pokémon",
+        "species_pt": "Pokémon Lagarta Peluda"
+    },
+    {
+        "id": 14,
+        "pokemon_number": "0014",
+        "name": "Kakuna",
+        "species_en": "Cocoon Pokémon",
+        "species_pt": "Pokémon Crisálida"
+    },
+    {
+        "id": 15,
+        "pokemon_number": "0015",
+        "name": "Beedrill",
+        "species_en": "Poison Bee Pokémon",
+        "species_pt": "Pokémon Abelha Venenosa"
+    },
+    {
+        "id": 16,
+        "pokemon_number": "0016",
+        "name": "Pidgey",
+        "species_en": "Tiny Bird Pokémon",
+        "species_pt": "Pokémon Pequeno Pássaro"
+    },
+    {
+        "id": 17,
+        "pokemon_number": "0017",
+        "name": "Pidgeotto",
+        "species_en": "Bird Pokémon",
+        "species_pt": "Pokémon Pássaro"
+    },
+    {
+        "id": 18,
+        "pokemon_number": "0018",
+        "name": "Pidgeot",
+        "species_en": "Bird Pokémon",
+        "species_pt": "Pokémon Pássaro"
+    },
+    {
+        "id": 19,
+        "pokemon_number": "0019",
+        "name": "Rattata",
+        "species_en": "Mouse Pokémon",
+        "species_pt": "Pokémon Rato"
+    },
+    {
+        "id": 20,
+        "pokemon_number": "0020",
+        "name": "Raticate",
+        "species_en": "Mouse Pokémon",
+        "species_pt": "Pokémon Rato"
+    },
+    {
+        "id": 21,
+        "pokemon_number": "0021",
+        "name": "Spearow",
+        "species_en": "Tiny Bird Pokémon",
+        "species_pt": "Pokémon Pequeno Pássaro"
+    },
+    {
+        "id": 22,
+        "pokemon_number": "0022",
+        "name": "Fearow",
+        "species_en": "Beak Pokémon",
+        "species_pt": "Pokémon Bico"
+    },
+    {
+        "id": 23,
+        "pokemon_number": "0023",
+        "name": "Ekans",
+        "species_en": "Snake Pokémon",
+        "species_pt": "Pokémon Cobra"
+    },
+    {
+        "id": 24,
+        "pokemon_number": "0024",
+        "name": "Arbok",
+        "species_en": "Cobra Pokémon",
+        "species_pt": "Pokémon Cobra"
+    },
+    {
+        "id": 25,
+        "pokemon_number": "0025",
+        "name": "Pikachu",
+        "species_en": "Mouse Pokémon",
+        "species_pt": "Pokémon Rato"
+    },
+    {
+        "id": 26,
+        "pokemon_number": "0026",
+        "name": "Raichu",
+        "species_en": "Mouse Pokémon",
+        "species_pt": "Pokémon Rato"
+    },
+    {
+        "id": 27,
+        "pokemon_number": "0027",
+        "name": "Sandshrew",
+        "species_en": "Mouse Pokémon",
+        "species_pt": "Pokémon Rato"
+    },
+    {
+        "id": 28,
+        "pokemon_number": "0028",
+        "name": "Sandslash",
+        "species_en": "Mouse Pokémon",
+        "species_pt": "Pokémon Rato"
+    },
+    {
+        "id": 29,
+        "pokemon_number": "0029",
+        "name": "Nidoran♀",
+        "species_en": "Poison Pin Pokémon",
+        "species_pt": "Pokémon Espinho Venenoso"
+    },
+    {
+        "id": 30,
+        "pokemon_number": "0030",
+        "name": "Nidorina",
+        "species_en": "Poison Pin Pokémon",
+        "species_pt": "Pokémon Espinho Venenoso"
+    },
+    {
+        "id": 31,
+        "pokemon_number": "0031",
+        "name": "Nidoqueen",
+        "species_en": "Drill Pokémon",
+        "species_pt": "Pokémon Perfurador"
+    },
+    {
+        "id": 32,
+        "pokemon_number": "0032",
+        "name": "Nidoran♂",
+        "species_en": "Poison Pin Pokémon",
+        "species_pt": "Pokémon Espinho Venenoso"
+    },
+    {
+        "id": 33,
+        "pokemon_number": "0033",
+        "name": "Nidorino",
+        "species_en": "Poison Pin Pokémon",
+        "species_pt": "Pokémon Espinho Venenoso"
+    },
+    {
+        "id": 34,
+        "pokemon_number": "0034",
+        "name": "Nidoking",
+        "species_en": "Drill Pokémon",
+        "species_pt": "Pokémon Perfurador"
+    },
+    {
+        "id": 35,
+        "pokemon_number": "0035",
+        "name": "Clefairy",
+        "species_en": "Fairy Pokémon",
+        "species_pt": "Pokémon Fada"
+    },
+    {
+        "id": 36,
+        "pokemon_number": "0036",
+        "name": "Clefable",
+        "species_en": "Fairy Pokémon",
+        "species_pt": "Pokémon Fada"
+    },
+    {
+        "id": 37,
+        "pokemon_number": "0037",
+        "name": "Vulpix",
+        "species_en": "Fox Pokémon",
+        "species_pt": "Pokémon Raposa"
+    },
+    {
+        "id": 38,
+        "pokemon_number": "0038",
+        "name": "Ninetales",
+        "species_en": "Fox Pokémon",
+        "species_pt": "Pokémon Raposa"
+    },
+    {
+        "id": 39,
+        "pokemon_number": "0039",
+        "name": "Jigglypuff",
+        "species_en": "Balloon Pokémon",
+        "species_pt": "Pokémon Balão"
+    },
+    {
+        "id": 40,
+        "pokemon_number": "0040",
+        "name": "Wigglytuff",
+        "species_en": "Balloon Pokémon",
+        "species_pt": "Pokémon Balão"
+    },
+    {
+        "id": 41,
+        "pokemon_number": "0041",
+        "name": "Zubat",
+        "species_en": "Bat Pokémon",
+        "species_pt": "Pokémon Morcego"
+    },
+    {
+        "id": 42,
+        "pokemon_number": "0042",
+        "name": "Golbat",
+        "species_en": "Bat Pokémon",
+        "species_pt": "Pokémon Morcego"
+    },
+    {
+        "id": 43,
+        "pokemon_number": "0043",
+        "name": "Oddish",
+        "species_en": "Weed Pokémon",
+        "species_pt": "Pokémon Erva Daninha"
+    },
+    {
+        "id": 44,
+        "pokemon_number": "0044",
+        "name": "Gloom",
+        "species_en": "Weed Pokémon",
+        "species_pt": "Pokémon Erva Daninha"
+    },
+    {
+        "id": 45,
+        "pokemon_number": "0045",
+        "name": "Vileplume",
+        "species_en": "Flower Pokémon",
+        "species_pt": "Pokémon Flor"
+    },
+    {
+        "id": 46,
+        "pokemon_number": "0046",
+        "name": "Paras",
+        "species_en": "Mushroom Pokémon",
+        "species_pt": "Pokémon Cogumelo"
+    },
+    {
+        "id": 47,
+        "pokemon_number": "0047",
+        "name": "Parasect",
+        "species_en": "Mushroom Pokémon",
+        "species_pt": "Pokémon Cogumelo"
+    },
+    {
+        "id": 48,
+        "pokemon_number": "0048",
+        "name": "Venonat",
+        "species_en": "Insect Pokémon",
+        "species_pt": "Pokémon Inseto"
+    },
+    {
+        "id": 49,
+        "pokemon_number": "0049",
+        "name": "Venomoth",
+        "species_en": "Poison Moth Pokémon",
+        "species_pt": "Pokémon Mariposa Venenosa"
+    },
+    {
+        "id": 50,
+        "pokemon_number": "0050",
+        "name": "Diglett",
+        "species_en": "Mole Pokémon",
+        "species_pt": "Pokémon Toupeira"
+    },
+    {
+        "id": 51,
+        "pokemon_number": "0051",
+        "name": "Dugtrio",
+        "species_en": "Mole Pokémon",
+        "species_pt": "Pokémon Toupeira"
+    },
+    {
+        "id": 52,
+        "pokemon_number": "0052",
+        "name": "Meowth",
+        "species_en": "Scratch Cat Pokémon",
+        "species_pt": "Pokémon Gato Rabiscador"
+    },
+    {
+        "id": 53,
+        "pokemon_number": "0053",
+        "name": "Persian",
+        "species_en": "Classy Cat Pokémon",
+        "species_pt": "Pokémon Gato Siamês"
+    },
+    {
+        "id": 54,
+        "pokemon_number": "0054",
+        "name": "Psyduck",
+        "species_en": "Duck Pokémon",
+        "species_pt": "Pokémon Pato"
+    },
+    {
+        "id": 55,
+        "pokemon_number": "0055",
+        "name": "Golduck",
+        "species_en": "Duck Pokémon",
+        "species_pt": "Pokémon Pato"
+    },
+    {
+        "id": 56,
+        "pokemon_number": "0056",
+        "name": "Mankey",
+        "species_en": "Pig Monkey Pokémon",
+        "species_pt": "Pokémon Macaco Porco"
+    },
+    {
+        "id": 57,
+        "pokemon_number": "0057",
+        "name": "Primeape",
+        "species_en": "Pig Monkey Pokémon",
+        "species_pt": "Pokémon Macaco Porco"
+    },
+    {
+        "id": 58,
+        "pokemon_number": "0058",
+        "name": "Growlithe",
+        "species_en": "Puppy Pokémon",
+        "species_pt": "Pokémon Filhote"
+    },
+    {
+        "id": 59,
+        "pokemon_number": "0058",
+        "name": "Growlithe Hisuian Form",
+        "species_en": "Scout Pokémon",
+        "species_pt": "Pokémon Observador"
+    },
+    {
+        "id": 60,
+        "pokemon_number": "0059",
+        "name": "Arcanine",
+        "species_en": "Legendary Pokémon",
+        "species_pt": "Pokémon Lenda"
+    },
+    {
+        "id": 61,
+        "pokemon_number": "0060",
+        "name": "Poliwag",
+        "species_en": "Tadpole Pokémon",
+        "species_pt": "Pokémon Girino"
+    },
+    {
+        "id": 62,
+        "pokemon_number": "0061",
+        "name": "Poliwhirl",
+        "species_en": "Tadpole Pokémon",
+        "species_pt": "Pokémon Girino"
+    },
+    {
+        "id": 63,
+        "pokemon_number": "0062",
+        "name": "Poliwrath",
+        "species_en": "Tadpole Pokémon",
+        "species_pt": "Pokémon Girino"
+    },
+    {
+        "id": 64,
+        "pokemon_number": "0063",
+        "name": "Abra",
+        "species_en": "Psi Pokémon",
+        "species_pt": "Pokémon Poder Psíquico"
+    },
+    {
+        "id": 65,
+        "pokemon_number": "0064",
+        "name": "Kadabra",
+        "species_en": "Psi Pokémon",
+        "species_pt": "Pokémon Poder Psíquico"
+    },
+    {
+        "id": 66,
+        "pokemon_number": "0065",
+        "name": "Alakazam",
+        "species_en": "Psi Pokémon",
+        "species_pt": "Pokémon Poder Psíquico"
+    },
+    {
+        "id": 67,
+        "pokemon_number": "0066",
+        "name": "Machop",
+        "species_en": "Superpower Pokémon",
+        "species_pt": "Pokémon Força Sobre-humana"
+    },
+    {
+        "id": 68,
+        "pokemon_number": "0067",
+        "name": "Machoke",
+        "species_en": "Superpower Pokémon",
+        "species_pt": "Pokémon Força Sobre-humana"
+    },
+    {
+        "id": 69,
+        "pokemon_number": "0068",
+        "name": "Machamp",
+        "species_en": "Superpower Pokémon",
+        "species_pt": "Pokémon Força Sobre-humana"
+    },
+    {
+        "id": 70,
+        "pokemon_number": "0069",
+        "name": "Bellsprout",
+        "species_en": "Flower Pokémon",
+        "species_pt": "Pokémon Flor"
+    },
+    {
+        "id": 71,
+        "pokemon_number": "0070",
+        "name": "Weepinbell",
+        "species_en": "Flycatcher Pokémon",
+        "species_pt": "Pokémon Papa-moscas"
+    },
+    {
+        "id": 72,
+        "pokemon_number": "0071",
+        "name": "Victreebel",
+        "species_en": "Flycatcher Pokémon",
+        "species_pt": "Pokémon Papa-moscas"
+    },
+    {
+        "id": 73,
+        "pokemon_number": "0072",
+        "name": "Tentacool",
+        "species_en": "Jellyfish Pokémon",
+        "species_pt": "Pokémon Água-viva"
+    },
+    {
+        "id": 74,
+        "pokemon_number": "0073",
+        "name": "Tentacruel",
+        "species_en": "Jellyfish Pokémon",
+        "species_pt": "Pokémon Água-viva"
+    },
+    {
+        "id": 75,
+        "pokemon_number": "0074",
+        "name": "Geodude",
+        "species_en": "Rock Pokémon",
+        "species_pt": "Pokémon Rocha"
+    },
+    {
+        "id": 76,
+        "pokemon_number": "0075",
+        "name": "Graveler",
+        "species_en": "Rock Pokémon",
+        "species_pt": "Pokémon Rocha"
+    },
+    {
+        "id": 77,
+        "pokemon_number": "0076",
+        "name": "Golem",
+        "species_en": "Megaton Pokémon",
+        "species_pt": "Pokémon Megaton"
+    },
+    {
+        "id": 78,
+        "pokemon_number": "0077",
+        "name": "Ponyta",
+        "species_en": "Fire Horse Pokémon",
+        "species_pt": "Pokémon Cavalo de Fogo"
+    },
+    {
+        "id": 79,
+        "pokemon_number": "0077",
+        "name": "Ponyta Galarian Form",
+        "species_en": "Unique Horn Pokémon",
+        "species_pt": "Pokémon Um Chifre"
+    },
+    {
+        "id": 80,
+        "pokemon_number": "0078",
+        "name": "Rapidash",
+        "species_en": "Fire Horse Pokémon",
+        "species_pt": "Pokémon Cavalo de Fogo"
+    },
+    {
+        "id": 81,
+        "pokemon_number": "0078",
+        "name": "Rapidash Galarian Form",
+        "species_en": "Unique Horn Pokémon",
+        "species_pt": "Pokémon Um Chifre"
+    },
+    {
+        "id": 82,
+        "pokemon_number": "0079",
+        "name": "Slowpoke",
+        "species_en": "Dopey Pokémon",
+        "species_pt": "Pokémon Estúpido"
+    },
+    {
+        "id": 83,
+        "pokemon_number": "0080",
+        "name": "Slowbro",
+        "species_en": "Hermit Crab Pokémon",
+        "species_pt": "Pokémon Caranguejo Eremita"
+    },
+    {
+        "id": 84,
+        "pokemon_number": "0081",
+        "name": "Magnemite",
+        "species_en": "Magnet Pokémon",
+        "species_pt": "Pokémon Imã"
+    },
+    {
+        "id": 85,
+        "pokemon_number": "0082",
+        "name": "Magneton",
+        "species_en": "Magnet Pokémon",
+        "species_pt": "Pokémon Imã"
+    },
+    {
+        "id": 86,
+        "pokemon_number": "0083",
+        "name": "Farfetch'd",
+        "species_en": "Wild Duck Pokémon",
+        "species_pt": "Pokémon Pato-selvagem"
+    },
+    {
+        "id": 87,
+        "pokemon_number": "0084",
+        "name": "Doduo",
+        "species_en": "Twin Bird Pokémon",
+        "species_pt": "Pokémon Pássaro Gêmeo"
+    },
+    {
+        "id": 88,
+        "pokemon_number": "0085",
+        "name": "Dodrio",
+        "species_en": "Triple Bird Pokémon",
+        "species_pt": "Pokémon Pássaro Trigêmeo"
+    },
+    {
+        "id": 89,
+        "pokemon_number": "0086",
+        "name": "Seel",
+        "species_en": "Sea Lion Pokémon",
+        "species_pt": "Pokémon Leão Marinho"
+    },
+    {
+        "id": 90,
+        "pokemon_number": "0087",
+        "name": "Dewgong",
+        "species_en": "Sea Lion Pokémon",
+        "species_pt": "Pokémon Leão Marinho"
+    },
+    {
+        "id": 91,
+        "pokemon_number": "0088",
+        "name": "Grimer",
+        "species_en": "Sludge Pokémon",
+        "species_pt": "Pokémon Lama"
+    },
+    {
+        "id": 92,
+        "pokemon_number": "0089",
+        "name": "Muk",
+        "species_en": "Sludge Pokémon",
+        "species_pt": "Pokémon Lama"
+    },
+    {
+        "id": 93,
+        "pokemon_number": "0090",
+        "name": "Shellder",
+        "species_en": "Bivalve Pokémon",
+        "species_pt": "Pokémon Bivalve"
+    },
+    {
+        "id": 94,
+        "pokemon_number": "0091",
+        "name": "Cloyster",
+        "species_en": "Bivalve Pokémon",
+        "species_pt": "Pokémon Bivalve"
+    },
+    {
+        "id": 95,
+        "pokemon_number": "0092",
+        "name": "Gastly",
+        "species_en": "Gas Pokémon",
+        "species_pt": "Pokémon Gasoso"
+    },
+    {
+        "id": 96,
+        "pokemon_number": "0093",
+        "name": "Haunter",
+        "species_en": "Gas Pokémon",
+        "species_pt": "Pokémon Gasoso"
+    },
+    {
+        "id": 97,
+        "pokemon_number": "0094",
+        "name": "Gengar",
+        "species_en": "Shadow Pokémon",
+        "species_pt": "Pokémon Sombra"
+    },
+    {
+        "id": 98,
+        "pokemon_number": "0095",
+        "name": "Onix",
+        "species_en": "Rock Snake Pokémon",
+        "species_pt": "Pokémon Cobra de Pedra"
+    },
+    {
+        "id": 99,
+        "pokemon_number": "0096",
+        "name": "Drowzee",
+        "species_en": "Hypnosis Pokémon",
+        "species_pt": "Pokémon Hipnose"
+    },
+    {
+        "id": 100,
+        "pokemon_number": "0097",
+        "name": "Hypno",
+        "species_en": "Hypnosis Pokémon",
+        "species_pt": "Pokémon Hipnose"
+    },
+    {
+        "id": 101,
+        "pokemon_number": "0098",
+        "name": "Krabby",
+        "species_en": "River Crab Pokémon",
+        "species_pt": "Pokémon Caranguejo de Água Doce"
+    },
+    {
+        "id": 102,
+        "pokemon_number": "0099",
+        "name": "Kingler",
+        "species_en": "Pincer Pokémon",
+        "species_pt": "Pokémon Pinça"
+    },
+    {
+        "id": 103,
+        "pokemon_number": "0100",
+        "name": "Voltorb",
+        "species_en": "Ball Pokémon",
+        "species_pt": "Pokémon Bola"
+    },
+    {
+        "id": 104,
+        "pokemon_number": "0100",
+        "name": "Voltorb Hisuian Form",
+        "species_en": "Sphere Pokémon",
+        "species_pt": "Pokémon Esfera"
+    },
+    {
+        "id": 105,
+        "pokemon_number": "0101",
+        "name": "Electrode",
+        "species_en": "Ball Pokémon",
+        "species_pt": "Pokémon Bola"
+    },
+    {
+        "id": 106,
+        "pokemon_number": "0101",
+        "name": "Electrode Hisuian Form",
+        "species_en": "Sphere Pokémon",
+        "species_pt": "Pokémon Esfera"
+    },
+    {
+        "id": 107,
+        "pokemon_number": "0102",
+        "name": "Exeggcute",
+        "species_en": "Egg Pokémon",
+        "species_pt": "Pokémon Ovo"
+    },
+    {
+        "id": 108,
+        "pokemon_number": "0103",
+        "name": "Exeggutor",
+        "species_en": "Coconut Pokémon",
+        "species_pt": "Pokémon Coco"
+    },
+    {
+        "id": 109,
+        "pokemon_number": "0104",
+        "name": "Cubone",
+        "species_en": "Lonely Pokémon",
+        "species_pt": "Pokémon Solitário"
+    },
+    {
+        "id": 110,
+        "pokemon_number": "0105",
+        "name": "Marowak",
+        "species_en": "Bone Keeper Pokémon",
+        "species_pt": "Pokémon Amante de Osso"
+    },
+    {
+        "id": 111,
+        "pokemon_number": "0106",
+        "name": "Hitmonlee",
+        "species_en": "Kicking Pokémon",
+        "species_pt": "Pokémon Chute"
+    },
+    {
+        "id": 112,
+        "pokemon_number": "0107",
+        "name": "Hitmonchan",
+        "species_en": "Punching Pokémon",
+        "species_pt": "Pokémon Soco"
+    },
+    {
+        "id": 113,
+        "pokemon_number": "0108",
+        "name": "Lickitung",
+        "species_en": "Licking Pokémon",
+        "species_pt": "Pokémon Lambida"
+    },
+    {
+        "id": 114,
+        "pokemon_number": "0109",
+        "name": "Koffing",
+        "species_en": "Poison Gas Pokémon",
+        "species_pt": "Pokémon Gás Venenoso"
+    },
+    {
+        "id": 115,
+        "pokemon_number": "0110",
+        "name": "Weezing",
+        "species_en": "Poison Gas Pokémon",
+        "species_pt": "Pokémon Gás Venenoso"
+    },
+    {
+        "id": 116,
+        "pokemon_number": "0111",
+        "name": "Rhyhorn",
+        "species_en": "Spikes Pokémon",
+        "species_pt": "Pokémon Espinhoso"
+    },
+    {
+        "id": 117,
+        "pokemon_number": "0112",
+        "name": "Rhydon",
+        "species_en": "Drill Pokémon",
+        "species_pt": "Pokémon Perfurador"
+    },
+    {
+        "id": 118,
+        "pokemon_number": "0113",
+        "name": "Chansey",
+        "species_en": "Egg Pokémon",
+        "species_pt": "Pokémon Ovo"
+    },
+    {
+        "id": 119,
+        "pokemon_number": "0114",
+        "name": "Tangela",
+        "species_en": "Vine Pokémon",
+        "species_pt": "Pokémon Cipó"
+    },
+    {
+        "id": 120,
+        "pokemon_number": "0115",
+        "name": "Kangaskhan",
+        "species_en": "Parent Pokémon",
+        "species_pt": "Pokémon Pai e Filho"
+    },
+    {
+        "id": 121,
+        "pokemon_number": "0116",
+        "name": "Horsea",
+        "species_en": "Dragon Pokémon",
+        "species_pt": "Pokémon Dragão"
+    },
+    {
+        "id": 122,
+        "pokemon_number": "0117",
+        "name": "Seadra",
+        "species_en": "Dragon Pokémon",
+        "species_pt": "Pokémon Dragão"
+    },
+    {
+        "id": 123,
+        "pokemon_number": "0118",
+        "name": "Goldeen",
+        "species_en": "Goldfish Pokémon",
+        "species_pt": "Pokémon Peixe Dourado"
+    },
+    {
+        "id": 124,
+        "pokemon_number": "0119",
+        "name": "Seaking",
+        "species_en": "Goldfish Pokémon",
+        "species_pt": "Pokémon Peixe Dourado"
+    },
+    {
+        "id": 125,
+        "pokemon_number": "0120",
+        "name": "Staryu",
+        "species_en": "Star Shape Pokémon",
+        "species_pt": "Pokémon Forma de Estrela"
+    },
+    {
+        "id": 126,
+        "pokemon_number": "0121",
+        "name": "Starmie",
+        "species_en": "Mysterious Pokémon",
+        "species_pt": "Pokémon Misterioso"
+    },
+    {
+        "id": 127,
+        "pokemon_number": "0122",
+        "name": "Mr. Mime",
+        "species_en": "Barrier Pokémon",
+        "species_pt": "Pokémon Barreira"
+    },
+    {
+        "id": 128,
+        "pokemon_number": "0122",
+        "name": "Mr. Mime Galarian Form",
+        "species_en": "Dancing Pokémon",
+        "species_pt": "Pokémon Dançarino"
+    },
+    {
+        "id": 129,
+        "pokemon_number": "0123",
+        "name": "Scyther",
+        "species_en": "Mantis Pokémon",
+        "species_pt": "Pokémon Louva-a-deus"
+    },
+    {
+        "id": 130,
+        "pokemon_number": "0124",
+        "name": "Jynx",
+        "species_en": "Human Shape Pokémon",
+        "species_pt": "Pokémon Humanoide"
+    },
+    {
+        "id": 131,
+        "pokemon_number": "0125",
+        "name": "Electabuzz",
+        "species_en": "Electric Pokémon",
+        "species_pt": "Pokémon Choque Elétrico"
+    },
+    {
+        "id": 132,
+        "pokemon_number": "0126",
+        "name": "Magmar",
+        "species_en": "Spitfire Pokémon",
+        "species_pt": "Pokémon Cuspidor de Fogo"
+    },
+    {
+        "id": 133,
+        "pokemon_number": "0127",
+        "name": "Pinsir",
+        "species_en": "Stag Beetle Pokémon",
+        "species_pt": "Pokémon Besouro Cervo"
+    },
+    {
+        "id": 134,
+        "pokemon_number": "0128",
+        "name": "Tauros",
+        "species_en": "Wild Bull Pokémon",
+        "species_pt": "Pokémon Touro Selvagem"
+    },
+    {
+        "id": 135,
+        "pokemon_number": "0129",
+        "name": "Magikarp",
+        "species_en": "Fish Pokémon",
+        "species_pt": "Pokémon Peixe"
+    },
+    {
+        "id": 136,
+        "pokemon_number": "0130",
+        "name": "Gyarados",
+        "species_en": "Atrocious Pokémon",
+        "species_pt": "Pokémon Atroz"
+    },
+    {
+        "id": 137,
+        "pokemon_number": "0131",
+        "name": "Lapras",
+        "species_en": "Transport Pokémon",
+        "species_pt": "Pokémon Transporte"
+    },
+    {
+        "id": 138,
+        "pokemon_number": "0132",
+        "name": "Ditto",
+        "species_en": "Transform Pokémon",
+        "species_pt": "Pokémon Transformação"
+    },
+    {
+        "id": 139,
+        "pokemon_number": "0133",
+        "name": "Eevee",
+        "species_en": "Evolution Pokémon",
+        "species_pt": "Pokémon Evolução"
+    },
+    {
+        "id": 140,
+        "pokemon_number": "0134",
+        "name": "Vaporeon",
+        "species_en": "Bubble Jet Pokémon",
+        "species_pt": "Pokémon Jato de Bolha"
+    },
+    {
+        "id": 141,
+        "pokemon_number": "0135",
+        "name": "Jolteon",
+        "species_en": "Lightning Pokémon",
+        "species_pt": "Pokémon Relâmpago"
+    },
+    {
+        "id": 142,
+        "pokemon_number": "0136",
+        "name": "Flareon",
+        "species_en": "Flame Pokémon",
+        "species_pt": "Pokémon Chama"
+    },
+    {
+        "id": 143,
+        "pokemon_number": "0137",
+        "name": "Porygon",
+        "species_en": "Virtual Pokémon",
+        "species_pt": "Pokémon Virtual"
+    },
+    {
+        "id": 144,
+        "pokemon_number": "0138",
+        "name": "Omanyte",
+        "species_en": "Spiral Pokémon",
+        "species_pt": "Pokémon Espiral"
+    },
+    {
+        "id": 145,
+        "pokemon_number": "0139",
+        "name": "Omastar",
+        "species_en": "Spiral Pokémon",
+        "species_pt": "Pokémon Espiral"
+    },
+    {
+        "id": 146,
+        "pokemon_number": "0140",
+        "name": "Kabuto",
+        "species_en": "Shellfish Pokémon",
+        "species_pt": "Pokémon Concha"
+    },
+    {
+        "id": 147,
+        "pokemon_number": "0141",
+        "name": "Kabutops",
+        "species_en": "Shellfish Pokémon",
+        "species_pt": "Pokémon Concha"
+    },
+    {
+        "id": 148,
+        "pokemon_number": "0142",
+        "name": "Aerodactyl",
+        "species_en": "Fossil Pokémon",
+        "species_pt": "Pokémon Fóssil"
+    },
+    {
+        "id": 149,
+        "pokemon_number": "0143",
+        "name": "Snorlax",
+        "species_en": "Sleeping Pokémon",
+        "species_pt": "Pokémon Dorminhoco"
+    },
+    {
+        "id": 150,
+        "pokemon_number": "0144",
+        "name": "Articuno",
+        "species_en": "Freeze Pokémon",
+        "species_pt": "Pokémon Congelante"
+    },
+    {
+        "id": 151,
+        "pokemon_number": "0144",
+        "name": "Articuno Galarian Form",
+        "species_en": "Cruel Pokémon",
+        "species_pt": "Pokémon Cruel"
+    },
+    {
+        "id": 152,
+        "pokemon_number": "0145",
+        "name": "Zapdos",
+        "species_en": "Electric Pokémon",
+        "species_pt": "Pokémon Choque Elétrico"
+    },
+    {
+        "id": 153,
+        "pokemon_number": "0145",
+        "name": "Zapdos Galarian Form",
+        "species_en": "Strong Legs Pokémon",
+        "species_pt": "Pokémon Pernas Fortes"
+    },
+    {
+        "id": 154,
+        "pokemon_number": "0146",
+        "name": "Moltres",
+        "species_en": "Flame Pokémon",
+        "species_pt": "Pokémon Chama"
+    },
+    {
+        "id": 155,
+        "pokemon_number": "0146",
+        "name": "Moltres Galarian Form",
+        "species_en": "Malevolent Pokémon",
+        "species_pt": "Pokémon Malévolo"
+    },
+    {
+        "id": 156,
+        "pokemon_number": "0147",
+        "name": "Dratini",
+        "species_en": "Dragon Pokémon",
+        "species_pt": "Pokémon Dragão"
+    },
+    {
+        "id": 157,
+        "pokemon_number": "0148",
+        "name": "Dragonair",
+        "species_en": "Dragon Pokémon",
+        "species_pt": "Pokémon Dragão"
+    },
+    {
+        "id": 158,
+        "pokemon_number": "0149",
+        "name": "Dragonite",
+        "species_en": "Dragon Pokémon",
+        "species_pt": "Pokémon Dragão"
+    },
+    {
+        "id": 159,
+        "pokemon_number": "0150",
+        "name": "Mewtwo",
+        "species_en": "Genetic Pokémon",
+        "species_pt": "Pokémon Genético"
+    },
+    {
+        "id": 160,
+        "pokemon_number": "0151",
+        "name": "Mew",
+        "species_en": "New Species Pokémon",
+        "species_pt": "Pokémon Nova Espécie"
+    },
+    {
+        "id": 161,
+        "pokemon_number": "0152",
+        "name": "Chikorita",
+        "species_en": "Leaf Pokémon",
+        "species_pt": "Pokémon Folha"
+    },
+    {
+        "id": 162,
+        "pokemon_number": "0153",
+        "name": "Bayleef",
+        "species_en": "Leaf Pokémon",
+        "species_pt": "Pokémon Folha"
+    },
+    {
+        "id": 163,
+        "pokemon_number": "0154",
+        "name": "Meganium",
+        "species_en": "Herb Pokémon",
+        "species_pt": "Pokémon Erva"
+    },
+    {
+        "id": 164,
+        "pokemon_number": "0155",
+        "name": "Cyndaquil",
+        "species_en": "Fire Mouse Pokémon",
+        "species_pt": "Pokémon Rato de Fogo"
+    },
+    {
+        "id": 165,
+        "pokemon_number": "0156",
+        "name": "Quilava",
+        "species_en": "Volcano Pokémon",
+        "species_pt": "Pokémon Vulcão"
+    },
+    {
+        "id": 166,
+        "pokemon_number": "0157",
+        "name": "Typhlosion",
+        "species_en": "Volcano Pokémon",
+        "species_pt": "Pokémon Vulcão"
+    },
+    {
+        "id": 167,
+        "pokemon_number": "0157",
+        "name": "Typhlosion Hisuian Form",
+        "species_en": "Ghost Flame Pokémon",
+        "species_pt": "Pokémon Chama Fantasma"
+    },
+    {
+        "id": 168,
+        "pokemon_number": "0158",
+        "name": "Totodile",
+        "species_en": "Big Jaw Pokémon",
+        "species_pt": "Pokémon Mandíbula Grande"
+    },
+    {
+        "id": 169,
+        "pokemon_number": "0159",
+        "name": "Croconaw",
+        "species_en": "Big Jaw Pokémon",
+        "species_pt": "Pokémon Mandíbula Grande"
+    },
+    {
+        "id": 170,
+        "pokemon_number": "0160",
+        "name": "Feraligatr",
+        "species_en": "Big Jaw Pokémon",
+        "species_pt": "Pokémon Mandíbula Grande"
+    },
+    {
+        "id": 171,
+        "pokemon_number": "0161",
+        "name": "Sentret",
+        "species_en": "Scout Pokémon",
+        "species_pt": "Pokémon Observador"
+    },
+    {
+        "id": 172,
+        "pokemon_number": "0162",
+        "name": "Furret",
+        "species_en": "Long Body Pokémon",
+        "species_pt": "Pokémon Tronco Longo"
+    },
+    {
+        "id": 173,
+        "pokemon_number": "0163",
+        "name": "Hoothoot",
+        "species_en": "Owl Pokémon",
+        "species_pt": "Pokémon Coruja"
+    },
+    {
+        "id": 174,
+        "pokemon_number": "0164",
+        "name": "Noctowl",
+        "species_en": "Owl Pokémon",
+        "species_pt": "Pokémon Coruja"
+    },
+    {
+        "id": 175,
+        "pokemon_number": "0165",
+        "name": "Ledyba",
+        "species_en": "Five Star Pokémon",
+        "species_pt": "Pokémon Cinco Estrelas"
+    },
+    {
+        "id": 176,
+        "pokemon_number": "0166",
+        "name": "Ledian",
+        "species_en": "Five Star Pokémon",
+        "species_pt": "Pokémon Cinco Estrelas"
+    },
+    {
+        "id": 177,
+        "pokemon_number": "0167",
+        "name": "Spinarak",
+        "species_en": "String Spit Pokémon",
+        "species_pt": "Pokémon Cuspidor de Fio"
+    },
+    {
+        "id": 178,
+        "pokemon_number": "0168",
+        "name": "Ariados",
+        "species_en": "Long Leg Pokémon",
+        "species_pt": "Pokémon Perna Longa"
+    },
+    {
+        "id": 179,
+        "pokemon_number": "0169",
+        "name": "Crobat",
+        "species_en": "Bat Pokémon",
+        "species_pt": "Pokémon Morcego"
+    },
+    {
+        "id": 180,
+        "pokemon_number": "0170",
+        "name": "Chinchou",
+        "species_en": "Angler Pokémon",
+        "species_pt": "Pokémon Peixe-pescador"
+    },
+    {
+        "id": 181,
+        "pokemon_number": "0171",
+        "name": "Lanturn",
+        "species_en": "Light Pokémon",
+        "species_pt": "Pokémon Luz"
+    },
+    {
+        "id": 182,
+        "pokemon_number": "0172",
+        "name": "Pichu",
+        "species_en": "Tiny Mouse Pokémon",
+        "species_pt": "Pokémon Rato Pequeno"
+    },
+    {
+        "id": 183,
+        "pokemon_number": "0173",
+        "name": "Cleffa",
+        "species_en": "Star Shape Pokémon",
+        "species_pt": "Pokémon Forma de Estrela"
+    },
+    {
+        "id": 184,
+        "pokemon_number": "0174",
+        "name": "Igglybuff",
+        "species_en": "Balloon Pokémon",
+        "species_pt": "Pokémon Balão"
+    },
+    {
+        "id": 185,
+        "pokemon_number": "0175",
+        "name": "Togepi",
+        "species_en": "Spike Ball Pokémon",
+        "species_pt": "Pokémon Bola de Espinhos"
+    },
+    {
+        "id": 186,
+        "pokemon_number": "0176",
+        "name": "Togetic",
+        "species_en": "Happiness Pokémon",
+        "species_pt": "Pokémon Felicidade"
+    },
+    {
+        "id": 187,
+        "pokemon_number": "0177",
+        "name": "Natu",
+        "species_en": "Tiny Bird Pokémon",
+        "species_pt": "Pokémon Pequeno Pássaro"
+    },
+    {
+        "id": 188,
+        "pokemon_number": "0178",
+        "name": "Xatu",
+        "species_en": "Mystic Pokémon",
+        "species_pt": "Pokémon Espírito"
+    },
+    {
+        "id": 189,
+        "pokemon_number": "0179",
+        "name": "Mareep",
+        "species_en": "Wool Pokémon",
+        "species_pt": "Pokémon Fiapo"
+    },
+    {
+        "id": 190,
+        "pokemon_number": "0180",
+        "name": "Flaaffy",
+        "species_en": "Wool Pokémon",
+        "species_pt": "Pokémon Fiapo"
+    },
+    {
+        "id": 191,
+        "pokemon_number": "0181",
+        "name": "Ampharos",
+        "species_en": "Light Pokémon",
+        "species_pt": "Pokémon Luz"
+    },
+    {
+        "id": 192,
+        "pokemon_number": "0182",
+        "name": "Bellossom",
+        "species_en": "Flower Pokémon",
+        "species_pt": "Pokémon Flor"
+    },
+    {
+        "id": 193,
+        "pokemon_number": "0183",
+        "name": "Marill",
+        "species_en": "Aqua Mouse Pokémon",
+        "species_pt": "Pokémon Rato Aquático"
+    },
+    {
+        "id": 194,
+        "pokemon_number": "0184",
+        "name": "Azumarill",
+        "species_en": "Aqua Rabbit Pokémon",
+        "species_pt": "Pokémon Coelho Aquático"
+    },
+    {
+        "id": 195,
+        "pokemon_number": "0185",
+        "name": "Sudowoodo",
+        "species_en": "Imitation Pokémon",
+        "species_pt": "Pokémon Imitação"
+    },
+    {
+        "id": 196,
+        "pokemon_number": "0186",
+        "name": "Politoed",
+        "species_en": "Frog Pokémon",
+        "species_pt": "Pokémon Sapo"
+    },
+    {
+        "id": 197,
+        "pokemon_number": "0187",
+        "name": "Hoppip",
+        "species_en": "Cottonweed Pokémon",
+        "species_pt": "Pokémon Erva-algodão"
+    },
+    {
+        "id": 198,
+        "pokemon_number": "0188",
+        "name": "Skiploom",
+        "species_en": "Cottonweed Pokémon",
+        "species_pt": "Pokémon Erva-algodão"
+    },
+    {
+        "id": 199,
+        "pokemon_number": "0189",
+        "name": "Jumpluff",
+        "species_en": "Cottonweed Pokémon",
+        "species_pt": "Pokémon Erva-algodão"
+    },
+    {
+        "id": 200,
+        "pokemon_number": "0190",
+        "name": "Aipom",
+        "species_en": "Long Tail Pokémon",
+        "species_pt": "Pokémon Cauda Longa"
+    },
+    {
+        "id": 201,
+        "pokemon_number": "0191",
+        "name": "Sunkern",
+        "species_en": "Seed Pokémon",
+        "species_pt": "Pokémon Semente"
+    },
+    {
+        "id": 202,
+        "pokemon_number": "0192",
+        "name": "Sunflora",
+        "species_en": "Sun Pokémon",
+        "species_pt": "Pokémon Sol"
+    },
+    {
+        "id": 203,
+        "pokemon_number": "0193",
+        "name": "Yanma",
+        "species_en": "Clear Wing Pokémon",
+        "species_pt": "Pokémon Asa Fina"
+    },
+    {
+        "id": 204,
+        "pokemon_number": "0194",
+        "name": "Wooper",
+        "species_en": "Water Fish Pokémon",
+        "species_pt": "Pokémon Peixe-d'água"
+    },
+    {
+        "id": 205,
+        "pokemon_number": "0194",
+        "name": "Wooper Paldean Form",
+        "species_en": "Poison Fish Pokémon",
+        "species_pt": "Pokémon Peixe Venenoso"
+    },
+    {
+        "id": 206,
+        "pokemon_number": "0195",
+        "name": "Quagsire",
+        "species_en": "Water Fish Pokémon",
+        "species_pt": "Pokémon Peixe-d'água"
+    },
+    {
+        "id": 207,
+        "pokemon_number": "0196",
+        "name": "Espeon",
+        "species_en": "Sun Pokémon",
+        "species_pt": "Pokémon Sol"
+    },
+    {
+        "id": 208,
+        "pokemon_number": "0197",
+        "name": "Umbreon",
+        "species_en": "Moonlight Pokémon",
+        "species_pt": "Pokémon Luz da Lua"
+    },
+    {
+        "id": 209,
+        "pokemon_number": "0198",
+        "name": "Murkrow",
+        "species_en": "Darkness Pokémon",
+        "species_pt": "Pokémon Escuridão"
+    },
+    {
+        "id": 210,
+        "pokemon_number": "0199",
+        "name": "Slowking",
+        "species_en": "Royal Pokémon",
+        "species_pt": "Pokémon Monarca"
+    },
+    {
+        "id": 211,
+        "pokemon_number": "0199",
+        "name": "Slowking Galarian Form",
+        "species_en": "Hexpert Pokémon",
+        "species_pt": "Pokémon Xamã"
+    },
+    {
+        "id": 212,
+        "pokemon_number": "0200",
+        "name": "Misdreavus",
+        "species_en": "Screech Pokémon",
+        "species_pt": "Pokémon Grito Noturno"
+    },
+    {
+        "id": 213,
+        "pokemon_number": "0201",
+        "name": "Unown",
+        "species_en": "Symbol Pokémon",
+        "species_pt": "Pokémon Símbolo"
+    },
+    {
+        "id": 214,
+        "pokemon_number": "0202",
+        "name": "Wobbuffet",
+        "species_en": "Patient Pokémon",
+        "species_pt": "Pokémon Resistência"
+    },
+    {
+        "id": 215,
+        "pokemon_number": "0203",
+        "name": "Girafarig",
+        "species_en": "Long Neck Pokémon",
+        "species_pt": "Pokémon Pescoço Longo"
+    },
+    {
+        "id": 216,
+        "pokemon_number": "0204",
+        "name": "Pineco",
+        "species_en": "Bagworm Pokémon",
+        "species_pt": "Pokémon Bicho-da-seda"
+    },
+    {
+        "id": 217,
+        "pokemon_number": "0205",
+        "name": "Forretress",
+        "species_en": "Bagworm Pokémon",
+        "species_pt": "Pokémon Bicho-da-seda"
+    },
+    {
+        "id": 218,
+        "pokemon_number": "0206",
+        "name": "Dunsparce",
+        "species_en": "Land Snake Pokémon",
+        "species_pt": "Pokémon Cobra Terrestre"
+    },
+    {
+        "id": 219,
+        "pokemon_number": "0207",
+        "name": "Gligar",
+        "species_en": "Fly Scorpion Pokémon",
+        "species_pt": "Pokémon Escorpião Voador"
+    },
+    {
+        "id": 220,
+        "pokemon_number": "0208",
+        "name": "Steelix",
+        "species_en": "Iron Snake Pokémon",
+        "species_pt": "Pokémon Cobra de Ferro"
+    },
+    {
+        "id": 221,
+        "pokemon_number": "0209",
+        "name": "Snubbull",
+        "species_en": "Fairy Pokémon",
+        "species_pt": "Pokémon Fada"
+    },
+    {
+        "id": 222,
+        "pokemon_number": "0210",
+        "name": "Granbull",
+        "species_en": "Fairy Pokémon",
+        "species_pt": "Pokémon Fada"
+    },
+    {
+        "id": 223,
+        "pokemon_number": "0211",
+        "name": "Qwilfish",
+        "species_en": "Balloon Pokémon",
+        "species_pt": "Pokémon Balão"
+    },
+    {
+        "id": 224,
+        "pokemon_number": "0212",
+        "name": "Scizor",
+        "species_en": "Pincer Pokémon",
+        "species_pt": "Pokémon Pinça"
+    },
+    {
+        "id": 225,
+        "pokemon_number": "0213",
+        "name": "Shuckle",
+        "species_en": "Mold Pokémon",
+        "species_pt": "Pokémon Fermentação"
+    },
+    {
+        "id": 226,
+        "pokemon_number": "0214",
+        "name": "Heracross",
+        "species_en": "Single Horn Pokémon",
+        "species_pt": "Pokémon Chifre Único"
+    },
+    {
+        "id": 227,
+        "pokemon_number": "0215",
+        "name": "Sneasel",
+        "species_en": "Sharp Claw Pokémon",
+        "species_pt": "Pokémon Garra"
+    },
+    {
+        "id": 228,
+        "pokemon_number": "0216",
+        "name": "Teddiursa",
+        "species_en": "Little Bear Pokémon",
+        "species_pt": "Pokémon Urso Pequeno"
+    },
+    {
+        "id": 229,
+        "pokemon_number": "0217",
+        "name": "Ursaring",
+        "species_en": "Hibernator Pokémon",
+        "species_pt": "Pokémon Hibernação"
+    },
+    {
+        "id": 230,
+        "pokemon_number": "0218",
+        "name": "Slugma",
+        "species_en": "Lava Pokémon",
+        "species_pt": "Pokémon Lava"
+    },
+    {
+        "id": 231,
+        "pokemon_number": "0219",
+        "name": "Magcargo",
+        "species_en": "Lava Pokémon",
+        "species_pt": "Pokémon Lava"
+    },
+    {
+        "id": 232,
+        "pokemon_number": "0220",
+        "name": "Swinub",
+        "species_en": "Pig Pokémon",
+        "species_pt": "Pokémon Javali"
+    },
+    {
+        "id": 233,
+        "pokemon_number": "0221",
+        "name": "Piloswine",
+        "species_en": "Swine Pokémon",
+        "species_pt": "Pokémon Javali Selvagem"
+    },
+    {
+        "id": 234,
+        "pokemon_number": "0222",
+        "name": "Corsola",
+        "species_en": "Coral Pokémon",
+        "species_pt": "Pokémon Coral"
+    },
+    {
+        "id": 235,
+        "pokemon_number": "0223",
+        "name": "Remoraid",
+        "species_en": "Jet Pokémon",
+        "species_pt": "Pokémon Jato"
+    },
+    {
+        "id": 236,
+        "pokemon_number": "0224",
+        "name": "Octillery",
+        "species_en": "Jet Pokémon",
+        "species_pt": "Pokémon Jato"
+    },
+    {
+        "id": 237,
+        "pokemon_number": "0225",
+        "name": "Delibird",
+        "species_en": "Delivery Pokémon",
+        "species_pt": "Pokémon Correio"
+    },
+    {
+        "id": 238,
+        "pokemon_number": "0226",
+        "name": "Mantine",
+        "species_en": "Kite Pokémon",
+        "species_pt": "Pokémon Pipa"
+    },
+    {
+        "id": 239,
+        "pokemon_number": "0227",
+        "name": "Skarmory",
+        "species_en": "Armor Bird Pokémon",
+        "species_pt": "Pokémon Pássaro Armadura"
+    },
+    {
+        "id": 240,
+        "pokemon_number": "0228",
+        "name": "Houndour",
+        "species_en": "Dark Pokémon",
+        "species_pt": "Pokémon Sombrio"
+    },
+    {
+        "id": 241,
+        "pokemon_number": "0229",
+        "name": "Houndoom",
+        "species_en": "Dark Pokémon",
+        "species_pt": "Pokémon Sombrio"
+    },
+    {
+        "id": 242,
+        "pokemon_number": "0230",
+        "name": "Kingdra",
+        "species_en": "Dragon Pokémon",
+        "species_pt": "Pokémon Dragão"
+    },
+    {
+        "id": 243,
+        "pokemon_number": "0231",
+        "name": "Phanpy",
+        "species_en": "Long Nose Pokémon",
+        "species_pt": "Pokémon Nariz Longo"
+    },
+    {
+        "id": 244,
+        "pokemon_number": "0232",
+        "name": "Donphan",
+        "species_en": "Armor Pokémon",
+        "species_pt": "Pokémon Armadura"
+    },
+    {
+        "id": 245,
+        "pokemon_number": "0233",
+        "name": "Porygon2",
+        "species_en": "Virtual Pokémon",
+        "species_pt": "Pokémon Virtual"
+    },
+    {
+        "id": 246,
+        "pokemon_number": "0234",
+        "name": "Stantler",
+        "species_en": "Big Horn Pokémon",
+        "species_pt": "Pokémon Chifre Grande"
+    },
+    {
+        "id": 247,
+        "pokemon_number": "0235",
+        "name": "Smeargle",
+        "species_en": "Painter Pokémon",
+        "species_pt": "Pokémon Pintor"
+    },
+    {
+        "id": 248,
+        "pokemon_number": "0236",
+        "name": "Tyrogue",
+        "species_en": "Scuffle Pokémon",
+        "species_pt": "Pokémon Briga"
+    },
+    {
+        "id": 249,
+        "pokemon_number": "0237",
+        "name": "Hitmontop",
+        "species_en": "Handstand Pokémon",
+        "species_pt": "Pokémon Parada de Mão"
+    },
+    {
+        "id": 250,
+        "pokemon_number": "0238",
+        "name": "Smoochum",
+        "species_en": "Kiss Pokémon",
+        "species_pt": "Pokémon Beijo"
+    },
+    {
+        "id": 251,
+        "pokemon_number": "0239",
+        "name": "Elekid",
+        "species_en": "Electric Pokémon",
+        "species_pt": "Pokémon Elétrico"
+    },
+    {
+        "id": 252,
+        "pokemon_number": "0240",
+        "name": "Magby",
+        "species_en": "Live Coal Pokémon",
+        "species_pt": "Pokémon Brasa Viva"
+    },
+    {
+        "id": 253,
+        "pokemon_number": "0241",
+        "name": "Miltank",
+        "species_en": "Milk Cow Pokémon",
+        "species_pt": "Pokémon Vaca Leiteira"
+    },
+    {
+        "id": 254,
+        "pokemon_number": "0242",
+        "name": "Blissey",
+        "species_en": "Happiness Pokémon",
+        "species_pt": "Pokémon Felicidade"
+    },
+    {
+        "id": 255,
+        "pokemon_number": "0243",
+        "name": "Raikou",
+        "species_en": "Thunder Pokémon",
+        "species_pt": "Pokémon Trovão"
+    },
+    {
+        "id": 256,
+        "pokemon_number": "0244",
+        "name": "Entei",
+        "species_en": "Volcano Pokémon",
+        "species_pt": "Pokémon Vulcão"
+    },
+    {
+        "id": 257,
+        "pokemon_number": "0245",
+        "name": "Suicune",
+        "species_en": "Aurora Pokémon",
+        "species_pt": "Pokémon Aurora"
+    },
+    {
+        "id": 258,
+        "pokemon_number": "0246",
+        "name": "Larvitar",
+        "species_en": "Rock Skin Pokémon",
+        "species_pt": "Pokémon Pele de Rocha"
+    },
+    {
+        "id": 259,
+        "pokemon_number": "0247",
+        "name": "Pupitar",
+        "species_en": "Hard Shell Pokémon",
+        "species_pt": "Pokémon Bala"
+    },
+    {
+        "id": 260,
+        "pokemon_number": "0248",
+        "name": "Tyranitar",
+        "species_en": "Armor Pokémon",
+        "species_pt": "Pokémon Armadura"
+    },
+    {
+        "id": 261,
+        "pokemon_number": "0249",
+        "name": "Lugia",
+        "species_en": "Diving Pokémon",
+        "species_pt": "Pokémon Mergulhador"
+    },
+    {
+        "id": 262,
+        "pokemon_number": "0250",
+        "name": "Ho-Oh",
+        "species_en": "Rainbow Pokémon",
+        "species_pt": "Pokémon Arco-íris"
+    },
+    {
+        "id": 263,
+        "pokemon_number": "0251",
+        "name": "Celebi",
+        "species_en": "Time Travel Pokémon",
+        "species_pt": "Pokémon Viajante do Tempo"
+    },
+    {
+        "id": 264,
+        "pokemon_number": "0252",
+        "name": "Treecko",
+        "species_en": "Wood Gecko Pokémon",
+        "species_pt": "Pokémon Lagartixa da Floresta"
+    },
+    {
+        "id": 265,
+        "pokemon_number": "0253",
+        "name": "Grovyle",
+        "species_en": "Wood Gecko Pokémon",
+        "species_pt": "Pokémon Lagartixa da Floresta"
+    },
+    {
+        "id": 266,
+        "pokemon_number": "0254",
+        "name": "Sceptile",
+        "species_en": "Forest Pokémon",
+        "species_pt": "Pokémon Selva"
+    },
+    {
+        "id": 267,
+        "pokemon_number": "0255",
+        "name": "Torchic",
+        "species_en": "Chick Pokémon",
+        "species_pt": "Pokémon Pintinho"
+    },
+    {
+        "id": 268,
+        "pokemon_number": "0256",
+        "name": "Combusken",
+        "species_en": "Young Fowl Pokémon",
+        "species_pt": "Pokémon Frango"
+    },
+    {
+        "id": 269,
+        "pokemon_number": "0257",
+        "name": "Blaziken",
+        "species_en": "Blaze Pokémon",
+        "species_pt": "Pokémon Chamas Furiosas"
+    },
+    {
+        "id": 270,
+        "pokemon_number": "0258",
+        "name": "Mudkip",
+        "species_en": "Mud Fish Pokémon",
+        "species_pt": "Pokémon Peixe do Pântano"
+    },
+    {
+        "id": 271,
+        "pokemon_number": "0259",
+        "name": "Marshtomp",
+        "species_en": "Mud Fish Pokémon",
+        "species_pt": "Pokémon Peixe do Pântano"
+    },
+    {
+        "id": 272,
+        "pokemon_number": "0260",
+        "name": "Swampert",
+        "species_en": "Mud Fish Pokémon",
+        "species_pt": "Pokémon Peixe do Pântano"
+    },
+    {
+        "id": 273,
+        "pokemon_number": "0261",
+        "name": "Poochyena",
+        "species_en": "Bite Pokémon",
+        "species_pt": "Pokémon Mordida"
+    },
+    {
+        "id": 274,
+        "pokemon_number": "0262",
+        "name": "Mightyena",
+        "species_en": "Bite Pokémon",
+        "species_pt": "Pokémon Mordida"
+    },
+    {
+        "id": 275,
+        "pokemon_number": "0263",
+        "name": "Zigzagoon",
+        "species_en": "Tiny Raccoon Pokémon",
+        "species_pt": "Pokémon Pequeno Guaxinim"
+    },
+    {
+        "id": 276,
+        "pokemon_number": "0264",
+        "name": "Linoone",
+        "species_en": "Rushing Pokémon",
+        "species_pt": "Pokémon Avanço"
+    },
+    {
+        "id": 277,
+        "pokemon_number": "0265",
+        "name": "Wurmple",
+        "species_en": "Worm Pokémon",
+        "species_pt": "Pokémon Lagarta"
+    },
+    {
+        "id": 278,
+        "pokemon_number": "0266",
+        "name": "Silcoon",
+        "species_en": "Cocoon Pokémon",
+        "species_pt": "Pokémon Crisálida"
+    },
+    {
+        "id": 279,
+        "pokemon_number": "0267",
+        "name": "Beautifly",
+        "species_en": "Butterfly Pokémon",
+        "species_pt": "Pokémon Borboleta"
+    },
+    {
+        "id": 280,
+        "pokemon_number": "0268",
+        "name": "Cascoon",
+        "species_en": "Cocoon Pokémon",
+        "species_pt": "Pokémon Crisálida"
+    },
+    {
+        "id": 281,
+        "pokemon_number": "0269",
+        "name": "Dustox",
+        "species_en": "Poison Moth Pokémon",
+        "species_pt": "Pokémon Mariposa Venenosa"
+    },
+    {
+        "id": 282,
+        "pokemon_number": "0270",
+        "name": "Lotad",
+        "species_en": "Water Weed Pokémon",
+        "species_pt": "Pokémon Erva Aquática Flutuante"
+    },
+    {
+        "id": 283,
+        "pokemon_number": "0271",
+        "name": "Lombre",
+        "species_en": "Jolly Pokémon",
+        "species_pt": "Pokémon Alegre"
+    },
+    {
+        "id": 284,
+        "pokemon_number": "0272",
+        "name": "Ludicolo",
+        "species_en": "Carefree Pokémon",
+        "species_pt": "Pokémon Otimista"
+    },
+    {
+        "id": 285,
+        "pokemon_number": "0273",
+        "name": "Seedot",
+        "species_en": "Acorn Pokémon",
+        "species_pt": "Pokémon Bolota"
+    },
+    {
+        "id": 286,
+        "pokemon_number": "0274",
+        "name": "Nuzleaf",
+        "species_en": "Wily Pokémon",
+        "species_pt": "Pokémon Malicioso"
+    },
+    {
+        "id": 287,
+        "pokemon_number": "0275",
+        "name": "Shiftry",
+        "species_en": "Wicked Pokémon",
+        "species_pt": "Pokémon Maligno"
+    },
+    {
+        "id": 288,
+        "pokemon_number": "0276",
+        "name": "Taillow",
+        "species_en": "Tiny Swallow Pokémon",
+        "species_pt": "Pokémon Andorinha Pequena"
+    },
+    {
+        "id": 289,
+        "pokemon_number": "0277",
+        "name": "Swellow",
+        "species_en": "Swallow Pokémon",
+        "species_pt": "Pokémon Andorinha"
+    },
+    {
+        "id": 290,
+        "pokemon_number": "0278",
+        "name": "Wingull",
+        "species_en": "Seagull Pokémon",
+        "species_pt": "Pokémon Gaivota-de-Cauda-Preta"
+    },
+    {
+        "id": 291,
+        "pokemon_number": "0279",
+        "name": "Pelipper",
+        "species_en": "Water Bird Pokémon",
+        "species_pt": "Pokémon Ave Aquática"
+    },
+    {
+        "id": 292,
+        "pokemon_number": "0280",
+        "name": "Ralts",
+        "species_en": "Feeling Pokémon",
+        "species_pt": "Pokémon Sentimento"
+    },
+    {
+        "id": 293,
+        "pokemon_number": "0281",
+        "name": "Kirlia",
+        "species_en": "Emotion Pokémon",
+        "species_pt": "Pokémon Emoção"
+    },
+    {
+        "id": 294,
+        "pokemon_number": "0282",
+        "name": "Gardevoir",
+        "species_en": "Embrace Pokémon",
+        "species_pt": "Pokémon Abraço"
+    },
+    {
+        "id": 295,
+        "pokemon_number": "0283",
+        "name": "Surskit",
+        "species_en": "Pond Skater Pokémon",
+        "species_pt": "Pokémon Inseto-d'água"
+    },
+    {
+        "id": 296,
+        "pokemon_number": "0284",
+        "name": "Masquerain",
+        "species_en": "Eyeball Pokémon",
+        "species_pt": "Pokémon Globo Ocular"
+    },
+    {
+        "id": 297,
+        "pokemon_number": "0285",
+        "name": "Shroomish",
+        "species_en": "Mushroom Pokémon",
+        "species_pt": "Pokémon Cogumelo"
+    },
+    {
+        "id": 298,
+        "pokemon_number": "0286",
+        "name": "Breloom",
+        "species_en": "Mushroom Pokémon",
+        "species_pt": "Pokémon Cogumelo"
+    },
+    {
+        "id": 299,
+        "pokemon_number": "0287",
+        "name": "Slakoth",
+        "species_en": "Slacker Pokémon",
+        "species_pt": "Pokémon Preguiça"
+    },
+    {
+        "id": 300,
+        "pokemon_number": "0288",
+        "name": "Vigoroth",
+        "species_en": "Wild Monkey Pokémon",
+        "species_pt": "Pokémon Macaco Descontrolado"
+    },
+    {
+        "id": 301,
+        "pokemon_number": "0289",
+        "name": "Slaking",
+        "species_en": "Lazy Pokémon",
+        "species_pt": "Pokémon Preguiçoso"
+    },
+    {
+        "id": 302,
+        "pokemon_number": "0290",
+        "name": "Nincada",
+        "species_en": "Trainee Pokémon",
+        "species_pt": "Pokémon de Classe Inferior"
+    },
+    {
+        "id": 303,
+        "pokemon_number": "0291",
+        "name": "Ninjask",
+        "species_en": "Ninja Pokémon",
+        "species_pt": "Pokémon Ninja"
+    },
+    {
+        "id": 304,
+        "pokemon_number": "0292",
+        "name": "Shedinja",
+        "species_en": "Shed Pokémon",
+        "species_pt": "Pokémon Casca"
+    },
+    {
+        "id": 305,
+        "pokemon_number": "0293",
+        "name": "Whismur",
+        "species_en": "Whisper Pokémon",
+        "species_pt": "Pokémon Sussurro"
+    },
+    {
+        "id": 306,
+        "pokemon_number": "0294",
+        "name": "Loudred",
+        "species_en": "Big Voice Pokémon",
+        "species_pt": "Pokémon Voz Grande"
+    },
+    {
+        "id": 307,
+        "pokemon_number": "0295",
+        "name": "Exploud",
+        "species_en": "Loud Noise Pokémon",
+        "species_pt": "Pokémon Ruído"
+    },
+    {
+        "id": 308,
+        "pokemon_number": "0296",
+        "name": "Makuhita",
+        "species_en": "Guts Pokémon",
+        "species_pt": "Pokémon Coragem"
+    },
+    {
+        "id": 309,
+        "pokemon_number": "0297",
+        "name": "Hariyama",
+        "species_en": "Arm Thrust Pokémon",
+        "species_pt": "Pokémon Impulso de Palma"
+    },
+    {
+        "id": 310,
+        "pokemon_number": "0298",
+        "name": "Azurill",
+        "species_en": "Polka Dot Pokémon",
+        "species_pt": "Pokémon Bolinhas"
+    },
+    {
+        "id": 311,
+        "pokemon_number": "0299",
+        "name": "Nosepass",
+        "species_en": "Compass Pokémon",
+        "species_pt": "Pokémon Bússola"
+    },
+    {
+        "id": 312,
+        "pokemon_number": "0300",
+        "name": "Skitty",
+        "species_en": "Kitten Pokémon",
+        "species_pt": "Pokémon Gatinho"
+    },
+    {
+        "id": 313,
+        "pokemon_number": "0301",
+        "name": "Delcatty",
+        "species_en": "Prim Pokémon",
+        "species_pt": "Pokémon Prim e Proper"
+    },
+    {
+        "id": 314,
+        "pokemon_number": "0302",
+        "name": "Sableye",
+        "species_en": "Darkness Pokémon",
+        "species_pt": "Pokémon Escuridão"
+    },
+    {
+        "id": 315,
+        "pokemon_number": "0303",
+        "name": "Mawile",
+        "species_en": "Deceiver Pokémon",
+        "species_pt": "Pokémon Enganador"
+    },
+    {
+        "id": 316,
+        "pokemon_number": "0304",
+        "name": "Aron",
+        "species_en": "Iron Armor Pokémon",
+        "species_pt": "Pokémon Armadura de Ferro"
+    },
+    {
+        "id": 317,
+        "pokemon_number": "0305",
+        "name": "Lairon",
+        "species_en": "Iron Armor Pokémon",
+        "species_pt": "Pokémon Armadura de Ferro"
+    },
+    {
+        "id": 318,
+        "pokemon_number": "0306",
+        "name": "Aggron",
+        "species_en": "Iron Armor Pokémon",
+        "species_pt": "Pokémon Armadura de Ferro"
+    },
+    {
+        "id": 319,
+        "pokemon_number": "0307",
+        "name": "Meditite",
+        "species_en": "Meditate Pokémon",
+        "species_pt": "Pokémon Meditação"
+    },
+    {
+        "id": 320,
+        "pokemon_number": "0308",
+        "name": "Medicham",
+        "species_en": "Meditate Pokémon",
+        "species_pt": "Pokémon Meditação"
+    },
+    {
+        "id": 321,
+        "pokemon_number": "0309",
+        "name": "Electrike",
+        "species_en": "Lightning Pokémon",
+        "species_pt": "Pokémon Relâmpago"
+    },
+    {
+        "id": 322,
+        "pokemon_number": "0310",
+        "name": "Manectric",
+        "species_en": "Discharge Pokémon",
+        "species_pt": "Pokémon Descarga"
+    },
+    {
+        "id": 323,
+        "pokemon_number": "0311",
+        "name": "Plusle",
+        "species_en": "Cheering Pokémon",
+        "species_pt": "Pokémon Torcida"
+    },
+    {
+        "id": 324,
+        "pokemon_number": "0312",
+        "name": "Minun",
+        "species_en": "Cheering Pokémon",
+        "species_pt": "Pokémon Torcida"
+    },
+    {
+        "id": 325,
+        "pokemon_number": "0313",
+        "name": "Volbeat",
+        "species_en": "Firefly Pokémon",
+        "species_pt": "Pokémon Vagalume"
+    },
+    {
+        "id": 326,
+        "pokemon_number": "0314",
+        "name": "Illumise",
+        "species_en": "Firefly Pokémon",
+        "species_pt": "Pokémon Vagalume"
+    },
+    {
+        "id": 327,
+        "pokemon_number": "0315",
+        "name": "Roselia",
+        "species_en": "Thorn Pokémon",
+        "species_pt": "Pokémon Espinho"
+    },
+    {
+        "id": 328,
+        "pokemon_number": "0316",
+        "name": "Gulpin",
+        "species_en": "Stomach Pokémon",
+        "species_pt": "Pokémon Estômago"
+    },
+    {
+        "id": 329,
+        "pokemon_number": "0317",
+        "name": "Swalot",
+        "species_en": "Poison Bag Pokémon",
+        "species_pt": "Pokémon Bolsa de Veneno"
+    },
+    {
+        "id": 330,
+        "pokemon_number": "0318",
+        "name": "Carvanha",
+        "species_en": "Savage Pokémon",
+        "species_pt": "Pokémon Feroz"
+    },
+    {
+        "id": 331,
+        "pokemon_number": "0319",
+        "name": "Sharpedo",
+        "species_en": "Brutal Pokémon",
+        "species_pt": "Pokémon Brutal"
+    },
+    {
+        "id": 332,
+        "pokemon_number": "0320",
+        "name": "Wailmer",
+        "species_en": "Ball Whale Pokémon",
+        "species_pt": "Pokémon Baleia Bola"
+    },
+    {
+        "id": 333,
+        "pokemon_number": "0321",
+        "name": "Wailord",
+        "species_en": "Float Whale Pokémon",
+        "species_pt": "Pokémon Baleia Flutuante"
+    },
+    {
+        "id": 334,
+        "pokemon_number": "0322",
+        "name": "Numel",
+        "species_en": "Numb Pokémon",
+        "species_pt": "Pokémon Cabeça Grossa"
+    },
+    {
+        "id": 335,
+        "pokemon_number": "0323",
+        "name": "Camerupt",
+        "species_en": "Eruption Pokémon",
+        "species_pt": "Pokémon Erupção"
+    },
+    {
+        "id": 336,
+        "pokemon_number": "0324",
+        "name": "Torkoal",
+        "species_en": "Coal Pokémon",
+        "species_pt": "Pokémon Carvão"
+    },
+    {
+        "id": 337,
+        "pokemon_number": "0325",
+        "name": "Spoink",
+        "species_en": "Bounce Pokémon",
+        "species_pt": "Pokémon Saltitante"
+    },
+    {
+        "id": 338,
+        "pokemon_number": "0326",
+        "name": "Grumpig",
+        "species_en": "Manipulate Pokémon",
+        "species_pt": "Pokémon Manipulação"
+    },
+    {
+        "id": 339,
+        "pokemon_number": "0327",
+        "name": "Spinda",
+        "species_en": "Spot Panda Pokémon",
+        "species_pt": "Pokémon Panda Mancha"
+    },
+    {
+        "id": 340,
+        "pokemon_number": "0328",
+        "name": "Trapinch",
+        "species_en": "Ant Pit Pokémon",
+        "species_pt": "Pokémon Larva de Formiga-leão"
+    },
+    {
+        "id": 341,
+        "pokemon_number": "0329",
+        "name": "Vibrava",
+        "species_en": "Vibration Pokémon",
+        "species_pt": "Pokémon Vibração"
+    },
+    {
+        "id": 342,
+        "pokemon_number": "0330",
+        "name": "Flygon",
+        "species_en": "Mystic Pokémon",
+        "species_pt": "Pokémon Espírito"
+    },
+    {
+        "id": 343,
+        "pokemon_number": "0331",
+        "name": "Cacnea",
+        "species_en": "Cactus Pokémon",
+        "species_pt": "Pokémon Cacto"
+    },
+    {
+        "id": 344,
+        "pokemon_number": "0332",
+        "name": "Cacturne",
+        "species_en": "Scarecrow Pokémon",
+        "species_pt": "Pokémon Planta Espantalho"
+    },
+    {
+        "id": 345,
+        "pokemon_number": "0333",
+        "name": "Swablu",
+        "species_en": "Cotton Bird Pokémon",
+        "species_pt": "Pokémon Pássaro Algodão"
+    },
+    {
+        "id": 346,
+        "pokemon_number": "0334",
+        "name": "Altaria",
+        "species_en": "Humming Pokémon",
+        "species_pt": "Pokémon Zumbido"
+    },
+    {
+        "id": 347,
+        "pokemon_number": "0335",
+        "name": "Zangoose",
+        "species_en": "Cat Ferret Pokémon",
+        "species_pt": "Pokémon Mangusto"
+    },
+    {
+        "id": 348,
+        "pokemon_number": "0336",
+        "name": "Seviper",
+        "species_en": "Fang Snake Pokémon",
+        "species_pt": "Pokémon Cobra de Presas"
+    },
+    {
+        "id": 349,
+        "pokemon_number": "0337",
+        "name": "Lunatone",
+        "species_en": "Meteorite Pokémon",
+        "species_pt": "Pokémon Meteorito"
+    },
+    {
+        "id": 350,
+        "pokemon_number": "0338",
+        "name": "Solrock",
+        "species_en": "Meteorite Pokémon",
+        "species_pt": "Pokémon Meteorito"
+    },
+    {
+        "id": 351,
+        "pokemon_number": "0339",
+        "name": "Barboach",
+        "species_en": "Whiskers Pokémon",
+        "species_pt": "Pokémon Peixe com Barba"
+    },
+    {
+        "id": 352,
+        "pokemon_number": "0340",
+        "name": "Whiscash",
+        "species_en": "Whiskers Pokémon",
+        "species_pt": "Pokémon Peixe com Barba"
+    },
+    {
+        "id": 353,
+        "pokemon_number": "0341",
+        "name": "Corphish",
+        "species_en": "Ruffian Pokémon",
+        "species_pt": "Pokémon Rufião"
+    },
+    {
+        "id": 354,
+        "pokemon_number": "0342",
+        "name": "Crawdaunt",
+        "species_en": "Rogue Pokémon",
+        "species_pt": "Pokémon Rufião"
+    },
+    {
+        "id": 355,
+        "pokemon_number": "0343",
+        "name": "Baltoy",
+        "species_en": "Clay Doll Pokémon",
+        "species_pt": "Pokémon Figura de Barro"
+    },
+    {
+        "id": 356,
+        "pokemon_number": "0344",
+        "name": "Claydol",
+        "species_en": "Clay Doll Pokémon",
+        "species_pt": "Pokémon Figura de Barro"
+    },
+    {
+        "id": 357,
+        "pokemon_number": "0345",
+        "name": "Lileep",
+        "species_en": "Sea Lily Pokémon",
+        "species_pt": "Pokémon Lírio do Mar"
+    },
+    {
+        "id": 358,
+        "pokemon_number": "0346",
+        "name": "Cradily",
+        "species_en": "Barnacle Pokémon",
+        "species_pt": "Pokémon Copo de Pedra"
+    },
+    {
+        "id": 359,
+        "pokemon_number": "0347",
+        "name": "Anorith",
+        "species_en": "Old Shrimp Pokémon",
+        "species_pt": "Pokémon Camarão Antigo"
+    },
+    {
+        "id": 360,
+        "pokemon_number": "0348",
+        "name": "Armaldo",
+        "species_en": "Plate Pokémon",
+        "species_pt": "Pokémon Armadura"
+    },
+    {
+        "id": 361,
+        "pokemon_number": "0349",
+        "name": "Feebas",
+        "species_en": "Fish Pokémon",
+        "species_pt": "Pokémon Peixe"
+    },
+    {
+        "id": 362,
+        "pokemon_number": "0350",
+        "name": "Milotic",
+        "species_en": "Tender Pokémon",
+        "species_pt": "Pokémon Afeto"
+    },
+    {
+        "id": 363,
+        "pokemon_number": "0351",
+        "name": "Castform",
+        "species_en": "Weather Pokémon",
+        "species_pt": "Pokémon Tempo"
+    },
+    {
+        "id": 364,
+        "pokemon_number": "0352",
+        "name": "Kecleon",
+        "species_en": "Color Swap Pokémon",
+        "species_pt": "Pokémon Mudança de Cor"
+    },
+    {
+        "id": 365,
+        "pokemon_number": "0353",
+        "name": "Shuppet",
+        "species_en": "Puppet Pokémon",
+        "species_pt": "Pokémon Boneca"
+    },
+    {
+        "id": 366,
+        "pokemon_number": "0354",
+        "name": "Banette",
+        "species_en": "Marionette Pokémon",
+        "species_pt": "Pokémon Brinquedo de Pelúcia"
+    },
+    {
+        "id": 367,
+        "pokemon_number": "0355",
+        "name": "Duskull",
+        "species_en": "Requiem Pokémon",
+        "species_pt": "Pokémon Aproximação da Morte"
+    },
+    {
+        "id": 368,
+        "pokemon_number": "0356",
+        "name": "Dusclops",
+        "species_en": "Beckon Pokémon",
+        "species_pt": "Pokémon Gesticular"
+    },
+    {
+        "id": 369,
+        "pokemon_number": "0357",
+        "name": "Tropius",
+        "species_en": "Fruit Pokémon",
+        "species_pt": "Pokémon Fruta"
+    },
+    {
+        "id": 370,
+        "pokemon_number": "0358",
+        "name": "Chimecho",
+        "species_en": "Wind Chime Pokémon",
+        "species_pt": "Pokémon Sino de Vento"
+    },
+    {
+        "id": 371,
+        "pokemon_number": "0359",
+        "name": "Absol",
+        "species_en": "Disaster Pokémon",
+        "species_pt": "Pokémon Desastre"
+    },
+    {
+        "id": 372,
+        "pokemon_number": "0360",
+        "name": "Wynaut",
+        "species_en": "Bright Pokémon",
+        "species_pt": "Pokémon Alegre"
+    },
+    {
+        "id": 373,
+        "pokemon_number": "0361",
+        "name": "Snorunt",
+        "species_en": "Snow Hat Pokémon",
+        "species_pt": "Pokémon Guarda-chuva de Neve"
+    },
+    {
+        "id": 374,
+        "pokemon_number": "0362",
+        "name": "Glalie",
+        "species_en": "Face Pokémon",
+        "species_pt": "Pokémon Rosto"
+    },
+    {
+        "id": 375,
+        "pokemon_number": "0363",
+        "name": "Spheal",
+        "species_en": "Clap Pokémon",
+        "species_pt": "Pokémon Bater Palmas"
+    },
+    {
+        "id": 376,
+        "pokemon_number": "0364",
+        "name": "Sealeo",
+        "species_en": "Ball Roll Pokémon",
+        "species_pt": "Pokémon Rolar Bola"
+    },
+    {
+        "id": 377,
+        "pokemon_number": "0365",
+        "name": "Walrein",
+        "species_en": "Ice Break Pokémon",
+        "species_pt": "Pokémon Quebra-gelo"
+    },
+    {
+        "id": 378,
+        "pokemon_number": "0366",
+        "name": "Clamperl",
+        "species_en": "Bivalve Pokémon",
+        "species_pt": "Pokémon Bivalve"
+    },
+    {
+        "id": 379,
+        "pokemon_number": "0367",
+        "name": "Huntail",
+        "species_en": "Deep Sea Pokémon",
+        "species_pt": "Pokémon Mar Profundo"
+    },
+    {
+        "id": 380,
+        "pokemon_number": "0368",
+        "name": "Gorebyss",
+        "species_en": "South Sea Pokémon",
+        "species_pt": "Pokémon Mar do Sul"
+    },
+    {
+        "id": 381,
+        "pokemon_number": "0369",
+        "name": "Relicanth",
+        "species_en": "Longevity Pokémon",
+        "species_pt": "Pokémon Longevidade"
+    },
+    {
+        "id": 382,
+        "pokemon_number": "0370",
+        "name": "Luvdisc",
+        "species_en": "Rendezvous Pokémon",
+        "species_pt": "Pokémon Encontro"
+    },
+    {
+        "id": 383,
+        "pokemon_number": "0371",
+        "name": "Bagon",
+        "species_en": "Rock Head Pokémon",
+        "species_pt": "Pokémon Cabeça Dura"
+    },
+    {
+        "id": 384,
+        "pokemon_number": "0372",
+        "name": "Shelgon",
+        "species_en": "Endurance Pokémon",
+        "species_pt": "Pokémon Paciente"
+    },
+    {
+        "id": 385,
+        "pokemon_number": "0373",
+        "name": "Salamence",
+        "species_en": "Dragon Pokémon",
+        "species_pt": "Pokémon Dragão"
+    },
+    {
+        "id": 386,
+        "pokemon_number": "0374",
+        "name": "Beldum",
+        "species_en": "Iron Ball Pokémon",
+        "species_pt": "Pokémon Bola de Ferro"
+    },
+    {
+        "id": 387,
+        "pokemon_number": "0375",
+        "name": "Metang",
+        "species_en": "Iron Claw Pokémon",
+        "species_pt": "Pokémon Garra de Ferro"
+    },
+    {
+        "id": 388,
+        "pokemon_number": "0376",
+        "name": "Metagross",
+        "species_en": "Iron Leg Pokémon",
+        "species_pt": "Pokémon Perna de Ferro"
+    },
+    {
+        "id": 389,
+        "pokemon_number": "0377",
+        "name": "Regirock",
+        "species_en": "Rock Peak Pokémon",
+        "species_pt": "Pokémon Montanha Rochosa"
+    },
+    {
+        "id": 390,
+        "pokemon_number": "0378",
+        "name": "Regice",
+        "species_en": "Iceberg Pokémon",
+        "species_pt": "Pokémon Iceberg"
+    },
+    {
+        "id": 391,
+        "pokemon_number": "0379",
+        "name": "Registeel",
+        "species_en": "Iron Pokémon",
+        "species_pt": "Pokémon Ferro"
+    },
+    {
+        "id": 392,
+        "pokemon_number": "0380",
+        "name": "Latias",
+        "species_en": "Eon Pokémon",
+        "species_pt": "Pokémon Infinito"
+    },
+    {
+        "id": 393,
+        "pokemon_number": "0381",
+        "name": "Latios",
+        "species_en": "Eon Pokémon",
+        "species_pt": "Pokémon Infinito"
+    },
+    {
+        "id": 394,
+        "pokemon_number": "0382",
+        "name": "Kyogre",
+        "species_en": "Sea Basin Pokémon",
+        "species_pt": "Pokémon Fundo do Mar"
+    },
+    {
+        "id": 395,
+        "pokemon_number": "0383",
+        "name": "Groudon",
+        "species_en": "Continent Pokémon",
+        "species_pt": "Pokémon Continente"
+    },
+    {
+        "id": 396,
+        "pokemon_number": "0384",
+        "name": "Rayquaza",
+        "species_en": "Sky High Pokémon",
+        "species_pt": "Pokémon Céu"
+    },
+    {
+        "id": 397,
+        "pokemon_number": "0385",
+        "name": "Jirachi",
+        "species_en": "Wish Pokémon",
+        "species_pt": "Pokémon Desejo"
+    },
+    {
+        "id": 398,
+        "pokemon_number": "0386",
+        "name": "Deoxys",
+        "species_en": "DNA Pokémon",
+        "species_pt": "Pokémon DNA"
+    },
+    {
+        "id": 399,
+        "pokemon_number": "0387",
+        "name": "Turtwig",
+        "species_en": "Tiny Leaf Pokémon",
+        "species_pt": "Pokémon Folha Nova"
+    },
+    {
+        "id": 400,
+        "pokemon_number": "0388",
+        "name": "Grotle",
+        "species_en": "Grove Pokémon",
+        "species_pt": "Pokémon Bosque"
+    },
+    {
+        "id": 401,
+        "pokemon_number": "0389",
+        "name": "Torterra",
+        "species_en": "Continent Pokémon",
+        "species_pt": "Pokémon Continente"
+    },
+    {
+        "id": 402,
+        "pokemon_number": "0390",
+        "name": "Chimchar",
+        "species_en": "Chimp Pokémon",
+        "species_pt": "Pokémon Macaco Pequeno"
+    },
+    {
+        "id": 403,
+        "pokemon_number": "0391",
+        "name": "Monferno",
+        "species_en": "Playful Pokémon",
+        "species_pt": "Pokémon Travesso"
+    },
+    {
+        "id": 404,
+        "pokemon_number": "0392",
+        "name": "Infernape",
+        "species_en": "Flame Pokémon",
+        "species_pt": "Pokémon Chama"
+    },
+    {
+        "id": 405,
+        "pokemon_number": "0393",
+        "name": "Piplup",
+        "species_en": "Penguin Pokémon",
+        "species_pt": "Pokémon Pinguim"
+    },
+    {
+        "id": 406,
+        "pokemon_number": "0394",
+        "name": "Prinplup",
+        "species_en": "Penguin Pokémon",
+        "species_pt": "Pokémon Pinguim"
+    },
+    {
+        "id": 407,
+        "pokemon_number": "0395",
+        "name": "Empoleon",
+        "species_en": "Emperor Pokémon",
+        "species_pt": "Pokémon Imperador"
+    },
+    {
+        "id": 408,
+        "pokemon_number": "0396",
+        "name": "Starly",
+        "species_en": "Starling Pokémon",
+        "species_pt": "Pokémon Estorninho"
+    },
+    {
+        "id": 409,
+        "pokemon_number": "0397",
+        "name": "Staravia",
+        "species_en": "Starling Pokémon",
+        "species_pt": "Pokémon Estorninho"
+    },
+    {
+        "id": 410,
+        "pokemon_number": "0398",
+        "name": "Staraptor",
+        "species_en": "Predator Pokémon",
+        "species_pt": "Pokémon Ave de Rapina"
+    },
+    {
+        "id": 411,
+        "pokemon_number": "0399",
+        "name": "Bidoof",
+        "species_en": "Plump Mouse Pokémon",
+        "species_pt": "Pokémon Rato Redondo"
+    },
+    {
+        "id": 412,
+        "pokemon_number": "0400",
+        "name": "Bibarel",
+        "species_en": "Beaver Pokémon",
+        "species_pt": "Pokémon Castor"
+    },
+    {
+        "id": 413,
+        "pokemon_number": "0401",
+        "name": "Kricketot",
+        "species_en": "Cricket Pokémon",
+        "species_pt": "Pokémon Grilo"
+    },
+    {
+        "id": 414,
+        "pokemon_number": "0402",
+        "name": "Kricketune",
+        "species_en": "Cricket Pokémon",
+        "species_pt": "Pokémon Grilo"
+    },
+    {
+        "id": 415,
+        "pokemon_number": "0403",
+        "name": "Shinx",
+        "species_en": "Flash Pokémon",
+        "species_pt": "Pokémon Flash"
+    },
+    {
+        "id": 416,
+        "pokemon_number": "0404",
+        "name": "Luxio",
+        "species_en": "Spark Pokémon",
+        "species_pt": "Pokémon Relâmpago"
+    },
+    {
+        "id": 417,
+        "pokemon_number": "0405",
+        "name": "Luxray",
+        "species_en": "Gleam Eyes Pokémon",
+        "species_pt": "Pokémon Olhos Brilhantes"
+    },
+    {
+        "id": 418,
+        "pokemon_number": "0406",
+        "name": "Budew",
+        "species_en": "Bud Pokémon",
+        "species_pt": "Pokémon Botão"
+    },
+    {
+        "id": 419,
+        "pokemon_number": "0407",
+        "name": "Roserade",
+        "species_en": "Bouquet Pokémon",
+        "species_pt": "Pokémon Buquê"
+    },
+    {
+        "id": 420,
+        "pokemon_number": "0408",
+        "name": "Cranidos",
+        "species_en": "Head Butt Pokémon",
+        "species_pt": "Pokémon Cabeçada"
+    },
+    {
+        "id": 421,
+        "pokemon_number": "0409",
+        "name": "Rampardos",
+        "species_en": "Head Butt Pokémon",
+        "species_pt": "Pokémon Cabeçada"
+    },
+    {
+        "id": 422,
+        "pokemon_number": "0410",
+        "name": "Shieldon",
+        "species_en": "Shield Pokémon",
+        "species_pt": "Pokémon Escudo"
+    },
+    {
+        "id": 423,
+        "pokemon_number": "0411",
+        "name": "Bastiodon",
+        "species_en": "Shield Pokémon",
+        "species_pt": "Pokémon Escudo"
+    },
+    {
+        "id": 424,
+        "pokemon_number": "0412",
+        "name": "Burmy",
+        "species_en": "Bagworm Pokémon",
+        "species_pt": "Pokémon Bicho-da-seda"
+    },
+    {
+        "id": 425,
+        "pokemon_number": "0413",
+        "name": "Wormadam",
+        "species_en": "Bagworm Pokémon",
+        "species_pt": "Pokémon Bicho-da-seda"
+    },
+    {
+        "id": 426,
+        "pokemon_number": "0414",
+        "name": "Mothim",
+        "species_en": "Moth Pokémon",
+        "species_pt": "Pokémon Mariposa Bagworm"
+    },
+    {
+        "id": 427,
+        "pokemon_number": "0415",
+        "name": "Combee",
+        "species_en": "Tiny Bee Pokémon",
+        "species_pt": "Pokémon Larva de Abelha"
+    },
+    {
+        "id": 428,
+        "pokemon_number": "0416",
+        "name": "Vespiquen",
+        "species_en": "Beehive Pokémon",
+        "species_pt": "Pokémon Colmeia"
+    },
+    {
+        "id": 429,
+        "pokemon_number": "0417",
+        "name": "Pachirisu",
+        "species_en": "EleSquirrel Pokémon",
+        "species_pt": "Pokémon Esquilo Elétrico"
+    },
+    {
+        "id": 430,
+        "pokemon_number": "0418",
+        "name": "Buizel",
+        "species_en": "Sea Weasel Pokémon",
+        "species_pt": "Pokémon Doninha do Mar"
+    },
+    {
+        "id": 431,
+        "pokemon_number": "0419",
+        "name": "Floatzel",
+        "species_en": "Sea Weasel Pokémon",
+        "species_pt": "Pokémon Doninha do Mar"
+    },
+    {
+        "id": 432,
+        "pokemon_number": "0420",
+        "name": "Cherubi",
+        "species_en": "Cherry Pokémon",
+        "species_pt": "Pokémon Cereja"
+    },
+    {
+        "id": 433,
+        "pokemon_number": "0421",
+        "name": "Cherrim",
+        "species_en": "Blossom Pokémon",
+        "species_pt": "Pokémon Flor de Cerejeira"
+    },
+    {
+        "id": 434,
+        "pokemon_number": "0422",
+        "name": "Shellos",
+        "species_en": "Sea Slug Pokémon",
+        "species_pt": "Pokémon Lesma do Mar"
+    },
+    {
+        "id": 435,
+        "pokemon_number": "0423",
+        "name": "Gastrodon",
+        "species_en": "Sea Slug Pokémon",
+        "species_pt": "Pokémon Lesma do Mar"
+    },
+    {
+        "id": 436,
+        "pokemon_number": "0424",
+        "name": "Ambipom",
+        "species_en": "Long Tail Pokémon",
+        "species_pt": "Pokémon Cauda Longa"
+    },
+    {
+        "id": 437,
+        "pokemon_number": "0425",
+        "name": "Drifloon",
+        "species_en": "Balloon Pokémon",
+        "species_pt": "Pokémon Balão"
+    },
+    {
+        "id": 438,
+        "pokemon_number": "0426",
+        "name": "Drifblim",
+        "species_en": "Blimp Pokémon",
+        "species_pt": "Pokémon Dirigível"
+    },
+    {
+        "id": 439,
+        "pokemon_number": "0427",
+        "name": "Buneary",
+        "species_en": "Rabbit Pokémon",
+        "species_pt": "Pokémon Coelho"
+    },
+    {
+        "id": 440,
+        "pokemon_number": "0428",
+        "name": "Lopunny",
+        "species_en": "Rabbit Pokémon",
+        "species_pt": "Pokémon Coelho"
+    },
+    {
+        "id": 441,
+        "pokemon_number": "0429",
+        "name": "Mismagius",
+        "species_en": "Magical Pokémon",
+        "species_pt": "Pokémon Mágico"
+    },
+    {
+        "id": 442,
+        "pokemon_number": "0430",
+        "name": "Honchkrow",
+        "species_en": "Big Boss Pokémon",
+        "species_pt": "Pokémon Grande Chefe"
+    },
+    {
+        "id": 443,
+        "pokemon_number": "0431",
+        "name": "Glameow",
+        "species_en": "Catty Pokémon",
+        "species_pt": "Pokémon Sedutor"
+    },
+    {
+        "id": 444,
+        "pokemon_number": "0432",
+        "name": "Purugly",
+        "species_en": "Tiger Cat Pokémon",
+        "species_pt": "Pokémon Gato Tigre"
+    },
+    {
+        "id": 445,
+        "pokemon_number": "0433",
+        "name": "Chingling",
+        "species_en": "Bell Pokémon",
+        "species_pt": "Pokémon Sino"
+    },
+    {
+        "id": 446,
+        "pokemon_number": "0434",
+        "name": "Stunky",
+        "species_en": "Skunk Pokémon",
+        "species_pt": "Pokémon Gambá"
+    },
+    {
+        "id": 447,
+        "pokemon_number": "0435",
+        "name": "Skuntank",
+        "species_en": "Skunk Pokémon",
+        "species_pt": "Pokémon Gambá"
+    },
+    {
+        "id": 448,
+        "pokemon_number": "0436",
+        "name": "Bronzor",
+        "species_en": "Bronze Pokémon",
+        "species_pt": "Pokémon Bronze"
+    },
+    {
+        "id": 449,
+        "pokemon_number": "0437",
+        "name": "Bronzong",
+        "species_en": "Bronze Bell Pokémon",
+        "species_pt": "Pokémon Sino de Bronze"
+    },
+    {
+        "id": 450,
+        "pokemon_number": "0438",
+        "name": "Bonsly",
+        "species_en": "Bonsai Pokémon",
+        "species_pt": "Pokémon Bonsai"
+    },
+    {
+        "id": 451,
+        "pokemon_number": "0439",
+        "name": "Mime Jr.",
+        "species_en": "Mime Pokémon",
+        "species_pt": "Pokémon Mímico"
+    },
+    {
+        "id": 452,
+        "pokemon_number": "0440",
+        "name": "Happiny",
+        "species_en": "Playhouse Pokémon",
+        "species_pt": "Pokémon Casa de Brincar"
+    },
+    {
+        "id": 453,
+        "pokemon_number": "0441",
+        "name": "Chatot",
+        "species_en": "Music Note Pokémon",
+        "species_pt": "Pokémon Nota Musical"
+    },
+    {
+        "id": 454,
+        "pokemon_number": "0442",
+        "name": "Spiritomb",
+        "species_en": "Forbidden Pokémon",
+        "species_pt": "Pokémon Selado"
+    },
+    {
+        "id": 455,
+        "pokemon_number": "0443",
+        "name": "Gible",
+        "species_en": "Land Shark Pokémon",
+        "species_pt": "Pokémon Tubarão Terrestre"
+    },
+    {
+        "id": 456,
+        "pokemon_number": "0444",
+        "name": "Gabite",
+        "species_en": "Cave Pokémon",
+        "species_pt": "Pokémon Caverna"
+    },
+    {
+        "id": 457,
+        "pokemon_number": "0445",
+        "name": "Garchomp",
+        "species_en": "Mach Pokémon",
+        "species_pt": "Pokémon Mach"
+    },
+    {
+        "id": 458,
+        "pokemon_number": "0446",
+        "name": "Munchlax",
+        "species_en": "Big Eater Pokémon",
+        "species_pt": "Pokémon Glutão"
+    },
+    {
+        "id": 459,
+        "pokemon_number": "0447",
+        "name": "Riolu",
+        "species_en": "Emanation Pokémon",
+        "species_pt": "Pokémon Onda"
+    },
+    {
+        "id": 460,
+        "pokemon_number": "0448",
+        "name": "Lucario",
+        "species_en": "Aura Pokémon",
+        "species_pt": "Pokémon Onda"
+    },
+    {
+        "id": 461,
+        "pokemon_number": "0449",
+        "name": "Hippopotas",
+        "species_en": "Hippo Pokémon",
+        "species_pt": "Pokémon Hipopótamo"
+    },
+    {
+        "id": 462,
+        "pokemon_number": "0450",
+        "name": "Hippowdon",
+        "species_en": "Heavyweight Pokémon",
+        "species_pt": "Pokémon Peso Pesado"
+    },
+    {
+        "id": 463,
+        "pokemon_number": "0451",
+        "name": "Skorupi",
+        "species_en": "Scorpion Pokémon",
+        "species_pt": "Pokémon Escorpião"
+    },
+    {
+        "id": 464,
+        "pokemon_number": "0452",
+        "name": "Drapion",
+        "species_en": "Ogre Scorpion Pokémon",
+        "species_pt": "Pokémon Escorpião Monstro"
+    },
+    {
+        "id": 465,
+        "pokemon_number": "0453",
+        "name": "Croagunk",
+        "species_en": "Toxic Mouth Pokémon",
+        "species_pt": "Pokémon Picada Venenosa"
+    },
+    {
+        "id": 466,
+        "pokemon_number": "0454",
+        "name": "Toxicroak",
+        "species_en": "Toxic Mouth Pokémon",
+        "species_pt": "Pokémon Picada Venenosa"
+    },
+    {
+        "id": 467,
+        "pokemon_number": "0455",
+        "name": "Carnivine",
+        "species_en": "Bug Catcher Pokémon",
+        "species_pt": "Pokémon Caçador de Insetos"
+    },
+    {
+        "id": 468,
+        "pokemon_number": "0456",
+        "name": "Finneon",
+        "species_en": "Wing Fish Pokémon",
+        "species_pt": "Pokémon Peixe Asa"
+    },
+    {
+        "id": 469,
+        "pokemon_number": "0457",
+        "name": "Lumineon",
+        "species_en": "Neon Pokémon",
+        "species_pt": "Pokémon Neon"
+    },
+    {
+        "id": 470,
+        "pokemon_number": "0458",
+        "name": "Mantyke",
+        "species_en": "Kite Pokémon",
+        "species_pt": "Pokémon Pipa"
+    },
+    {
+        "id": 471,
+        "pokemon_number": "0459",
+        "name": "Snover",
+        "species_en": "Frost Tree Pokémon",
+        "species_pt": "Pokémon Árvore Coberta de Gelo"
+    },
+    {
+        "id": 472,
+        "pokemon_number": "0460",
+        "name": "Abomasnow",
+        "species_en": "Frost Tree Pokémon",
+        "species_pt": "Pokémon Árvore Coberta de Gelo"
+    },
+    {
+        "id": 473,
+        "pokemon_number": "0461",
+        "name": "Weavile",
+        "species_en": "Sharp Claw Pokémon",
+        "species_pt": "Pokémon Garra"
+    },
+    {
+        "id": 474,
+        "pokemon_number": "0462",
+        "name": "Magnezone",
+        "species_en": "Magnet Area Pokémon",
+        "species_pt": "Pokémon Campo Magnético"
+    },
+    {
+        "id": 475,
+        "pokemon_number": "0463",
+        "name": "Lickilicky",
+        "species_en": "Licking Pokémon",
+        "species_pt": "Pokémon Lambida"
+    },
+    {
+        "id": 476,
+        "pokemon_number": "0464",
+        "name": "Rhyperior",
+        "species_en": "Drill Pokémon",
+        "species_pt": "Pokémon Perfurador"
+    },
+    {
+        "id": 477,
+        "pokemon_number": "0465",
+        "name": "Tangrowth",
+        "species_en": "Vine Pokémon",
+        "species_pt": "Pokémon Cipó"
+    },
+    {
+        "id": 478,
+        "pokemon_number": "0466",
+        "name": "Electivire",
+        "species_en": "Thunderbolt Pokémon",
+        "species_pt": "Pokémon Trovão e Relâmpago"
+    },
+    {
+        "id": 479,
+        "pokemon_number": "0467",
+        "name": "Magmortar",
+        "species_en": "Blast Pokémon",
+        "species_pt": "Pokémon Fumaça de Explosão"
+    },
+    {
+        "id": 480,
+        "pokemon_number": "0468",
+        "name": "Togekiss",
+        "species_en": "Jubilee Pokémon",
+        "species_pt": "Pokémon Bênção"
+    },
+    {
+        "id": 481,
+        "pokemon_number": "0469",
+        "name": "Yanmega",
+        "species_en": "Ogre Darner Pokémon",
+        "species_pt": "Pokémon Libélula Ogro"
+    },
+    {
+        "id": 482,
+        "pokemon_number": "0470",
+        "name": "Leafeon",
+        "species_en": "Verdant Pokémon",
+        "species_pt": "Pokémon Verdura Fresca"
+    },
+    {
+        "id": 483,
+        "pokemon_number": "0471",
+        "name": "Glaceon",
+        "species_en": "Fresh Snow Pokémon",
+        "species_pt": "Pokémon Neve Fresca"
+    },
+    {
+        "id": 484,
+        "pokemon_number": "0472",
+        "name": "Gliscor",
+        "species_en": "Fang Scorpion Pokémon",
+        "species_pt": "Pokémon Escorpião de Presas"
+    },
+    {
+        "id": 485,
+        "pokemon_number": "0473",
+        "name": "Mamoswine",
+        "species_en": "Twin Tusk Pokémon",
+        "species_pt": "Pokémon Presa Dupla"
+    },
+    {
+        "id": 486,
+        "pokemon_number": "0474",
+        "name": "Porygon-Z",
+        "species_en": "Virtual Pokémon",
+        "species_pt": "Pokémon Virtual"
+    },
+    {
+        "id": 487,
+        "pokemon_number": "0475",
+        "name": "Gallade",
+        "species_en": "Blade Pokémon",
+        "species_pt": "Pokémon Lâmina"
+    },
+    {
+        "id": 488,
+        "pokemon_number": "0476",
+        "name": "Probopass",
+        "species_en": "Compass Pokémon",
+        "species_pt": "Pokémon Bússola"
+    },
+    {
+        "id": 489,
+        "pokemon_number": "0477",
+        "name": "Dusknoir",
+        "species_en": "Gripper Pokémon",
+        "species_pt": "Pokémon Agarrador"
+    },
+    {
+        "id": 490,
+        "pokemon_number": "0478",
+        "name": "Froslass",
+        "species_en": "Snow Land Pokémon",
+        "species_pt": "Pokémon País da Neve"
+    },
+    {
+        "id": 491,
+        "pokemon_number": "0479",
+        "name": "Rotom",
+        "species_en": "Plasma Pokémon",
+        "species_pt": "Pokémon Plasma"
+    },
+    {
+        "id": 492,
+        "pokemon_number": "0480",
+        "name": "Uxie",
+        "species_en": "Knowledge Pokémon",
+        "species_pt": "Pokémon Conhecimento"
+    },
+    {
+        "id": 493,
+        "pokemon_number": "0481",
+        "name": "Mesprit",
+        "species_en": "Emotion Pokémon",
+        "species_pt": "Pokémon Emoção"
+    },
+    {
+        "id": 494,
+        "pokemon_number": "0482",
+        "name": "Azelf",
+        "species_en": "Willpower Pokémon",
+        "species_pt": "Pokémon Vontade"
+    },
+    {
+        "id": 495,
+        "pokemon_number": "0483",
+        "name": "Dialga",
+        "species_en": "Temporal Pokémon",
+        "species_pt": "Pokémon Tempo"
+    },
+    {
+        "id": 496,
+        "pokemon_number": "0484",
+        "name": "Palkia",
+        "species_en": "Spatial Pokémon",
+        "species_pt": "Pokémon Espaço"
+    },
+    {
+        "id": 497,
+        "pokemon_number": "0485",
+        "name": "Heatran",
+        "species_en": "Lava Dome Pokémon",
+        "species_pt": "Pokémon Caldeira"
+    },
+    {
+        "id": 498,
+        "pokemon_number": "0486",
+        "name": "Regigigas",
+        "species_en": "Colossal Pokémon",
+        "species_pt": "Pokémon Gigantesco"
+    },
+    {
+        "id": 499,
+        "pokemon_number": "0487",
+        "name": "Giratina",
+        "species_en": "Renegade Pokémon",
+        "species_pt": "Pokémon Rebelde"
+    },
+    {
+        "id": 500,
+        "pokemon_number": "0488",
+        "name": "Cresselia",
+        "species_en": "Lunar Pokémon",
+        "species_pt": "Pokémon Lua Crescente"
+    },
+    {
+        "id": 501,
+        "pokemon_number": "0489",
+        "name": "Phione",
+        "species_en": "Sea Drifter Pokémon",
+        "species_pt": "Pokémon Oceano"
+    },
+    {
+        "id": 502,
+        "pokemon_number": "0490",
+        "name": "Manaphy",
+        "species_en": "Seafaring Pokémon",
+        "species_pt": "Pokémon Migração"
+    },
+    {
+        "id": 503,
+        "pokemon_number": "0491",
+        "name": "Darkrai",
+        "species_en": "Pitch-Black Pokémon",
+        "species_pt": "Pokémon Escuridão"
+    },
+    {
+        "id": 504,
+        "pokemon_number": "0492",
+        "name": "Shaymin",
+        "species_en": "Gratitude Pokémon",
+        "species_pt": "Pokémon Gratidão"
+    },
+    {
+        "id": 505,
+        "pokemon_number": "0493",
+        "name": "Arceus",
+        "species_en": "Alpha Pokémon",
+        "species_pt": "Pokémon Criação"
+    },
+    {
+        "id": 506,
+        "pokemon_number": "0494",
+        "name": "Victini",
+        "species_en": "Victory Pokémon",
+        "species_pt": "Pokémon Vitória"
+    },
+    {
+        "id": 507,
+        "pokemon_number": "0495",
+        "name": "Snivy",
+        "species_en": "Grass Snake Pokémon",
+        "species_pt": "Pokémon Cobra de Grama"
+    },
+    {
+        "id": 508,
+        "pokemon_number": "0496",
+        "name": "Servine",
+        "species_en": "Grass Snake Pokémon",
+        "species_pt": "Pokémon Cobra de Grama"
+    },
+    {
+        "id": 509,
+        "pokemon_number": "0497",
+        "name": "Serperior",
+        "species_en": "Regal Pokémon",
+        "species_pt": "Pokémon Real"
+    },
+    {
+        "id": 510,
+        "pokemon_number": "0498",
+        "name": "Tepig",
+        "species_en": "Fire Pig Pokémon",
+        "species_pt": "Pokémon Porco de Fogo"
+    },
+    {
+        "id": 511,
+        "pokemon_number": "0499",
+        "name": "Pignite",
+        "species_en": "Fire Pig Pokémon",
+        "species_pt": "Pokémon Porco de Fogo"
+    },
+    {
+        "id": 512,
+        "pokemon_number": "0500",
+        "name": "Emboar",
+        "species_en": "Mega Fire Pig Pokémon",
+        "species_pt": "Pokémon Grande Porco de Fogo"
+    },
+    {
+        "id": 513,
+        "pokemon_number": "0501",
+        "name": "Oshawott",
+        "species_en": "Sea Otter Pokémon",
+        "species_pt": "Pokémon Lontra do Mar"
+    },
+    {
+        "id": 514,
+        "pokemon_number": "0502",
+        "name": "Dewott",
+        "species_en": "Discipline Pokémon",
+        "species_pt": "Pokémon Treinamento"
+    },
+    {
+        "id": 515,
+        "pokemon_number": "0503",
+        "name": "Samurott",
+        "species_en": "Formidable Pokémon",
+        "species_pt": "Pokémon Dignificado"
+    },
+    {
+        "id": 516,
+        "pokemon_number": "0504",
+        "name": "Patrat",
+        "species_en": "Scout Pokémon",
+        "species_pt": "Pokémon Observador"
+    },
+    {
+        "id": 517,
+        "pokemon_number": "0505",
+        "name": "Watchog",
+        "species_en": "Lookout Pokémon",
+        "species_pt": "Pokémon Vigilante"
+    },
+    {
+        "id": 518,
+        "pokemon_number": "0506",
+        "name": "Lillipup",
+        "species_en": "Puppy Pokémon",
+        "species_pt": "Pokémon Filhote"
+    },
+    {
+        "id": 519,
+        "pokemon_number": "0507",
+        "name": "Herdier",
+        "species_en": "Loyal Dog Pokémon",
+        "species_pt": "Pokémon Cão Fiel"
+    },
+    {
+        "id": 520,
+        "pokemon_number": "0508",
+        "name": "Stoutland",
+        "species_en": "Big-Hearted Pokémon",
+        "species_pt": "Pokémon Tolerante"
+    },
+    {
+        "id": 521,
+        "pokemon_number": "0509",
+        "name": "Purrloin",
+        "species_en": "Devious Pokémon",
+        "species_pt": "Pokémon Mal-humorado"
+    },
+    {
+        "id": 522,
+        "pokemon_number": "0510",
+        "name": "Liepard",
+        "species_en": "Cruel Pokémon",
+        "species_pt": "Pokémon Cruel"
+    },
+    {
+        "id": 523,
+        "pokemon_number": "0511",
+        "name": "Pansage",
+        "species_en": "Grass Monkey Pokémon",
+        "species_pt": "Pokémon Macaco de Grama"
+    },
+    {
+        "id": 524,
+        "pokemon_number": "0512",
+        "name": "Simisage",
+        "species_en": "Thorn Monkey Pokémon",
+        "species_pt": "Pokémon Macaco de Espinhos"
+    },
+    {
+        "id": 525,
+        "pokemon_number": "0513",
+        "name": "Pansear",
+        "species_en": "High Temp Pokémon",
+        "species_pt": "Pokémon Alta Temperatura"
+    },
+    {
+        "id": 526,
+        "pokemon_number": "0514",
+        "name": "Simisear",
+        "species_en": "Ember Pokémon",
+        "species_pt": "Pokémon Faíscas"
+    },
+    {
+        "id": 527,
+        "pokemon_number": "0515",
+        "name": "Panpour",
+        "species_en": "Spray Pokémon",
+        "species_pt": "Pokémon Salpico de Água"
+    },
+    {
+        "id": 528,
+        "pokemon_number": "0516",
+        "name": "Simipour",
+        "species_en": "Geyser Pokémon",
+        "species_pt": "Pokémon Água Alta"
+    },
+    {
+        "id": 529,
+        "pokemon_number": "0517",
+        "name": "Munna",
+        "species_en": "Dream Eater Pokémon",
+        "species_pt": "Pokémon Comedor de Sonhos"
+    },
+    {
+        "id": 530,
+        "pokemon_number": "0518",
+        "name": "Musharna",
+        "species_en": "Drowsing Pokémon",
+        "species_pt": "Pokémon Transe"
+    },
+    {
+        "id": 531,
+        "pokemon_number": "0519",
+        "name": "Pidove",
+        "species_en": "Tiny Pigeon Pokémon",
+        "species_pt": "Pokémon Pequeno Pombo"
+    },
+    {
+        "id": 532,
+        "pokemon_number": "0520",
+        "name": "Tranquill",
+        "species_en": "Wild Pigeon Pokémon",
+        "species_pt": "Pokémon Pombo Selvagem"
+    },
+    {
+        "id": 533,
+        "pokemon_number": "0521",
+        "name": "Unfezant",
+        "species_en": "Proud Pokémon",
+        "species_pt": "Pokémon Orgulho"
+    },
+    {
+        "id": 534,
+        "pokemon_number": "0522",
+        "name": "Blitzle",
+        "species_en": "Electrified Pokémon",
+        "species_pt": "Pokémon Eletrificado"
+    },
+    {
+        "id": 535,
+        "pokemon_number": "0523",
+        "name": "Zebstrika",
+        "species_en": "Thunderbolt Pokémon",
+        "species_pt": "Pokémon Trovão e Relâmpago"
+    },
+    {
+        "id": 536,
+        "pokemon_number": "0524",
+        "name": "Roggenrola",
+        "species_en": "Mantle Pokémon",
+        "species_pt": "Pokémon Manto"
+    },
+    {
+        "id": 537,
+        "pokemon_number": "0525",
+        "name": "Boldore",
+        "species_en": "Ore Pokémon",
+        "species_pt": "Pokémon Minério"
+    },
+    {
+        "id": 538,
+        "pokemon_number": "0526",
+        "name": "Gigalith",
+        "species_en": "Compressed Pokémon",
+        "species_pt": "Pokémon Alta Pressão"
+    },
+    {
+        "id": 539,
+        "pokemon_number": "0527",
+        "name": "Woobat",
+        "species_en": "Bat Pokémon",
+        "species_pt": "Pokémon Morcego"
+    },
+    {
+        "id": 540,
+        "pokemon_number": "0528",
+        "name": "Swoobat",
+        "species_en": "Courting Pokémon",
+        "species_pt": "Pokémon Cortejo"
+    },
+    {
+        "id": 541,
+        "pokemon_number": "0529",
+        "name": "Drilbur",
+        "species_en": "Mole Pokémon",
+        "species_pt": "Pokémon Toupeira"
+    },
+    {
+        "id": 542,
+        "pokemon_number": "0530",
+        "name": "Excadrill",
+        "species_en": "Subterrene Pokémon",
+        "species_pt": "Pokémon Terra Profunda"
+    },
+    {
+        "id": 543,
+        "pokemon_number": "0531",
+        "name": "Audino",
+        "species_en": "Hearing Pokémon",
+        "species_pt": "Pokémon Audição"
+    },
+    {
+        "id": 544,
+        "pokemon_number": "0532",
+        "name": "Timburr",
+        "species_en": "Muscular Pokémon",
+        "species_pt": "Pokémon Músculo"
+    },
+    {
+        "id": 545,
+        "pokemon_number": "0533",
+        "name": "Gurdurr",
+        "species_en": "Muscular Pokémon",
+        "species_pt": "Pokémon Músculo"
+    },
+    {
+        "id": 546,
+        "pokemon_number": "0534",
+        "name": "Conkeldurr",
+        "species_en": "Muscular Pokémon",
+        "species_pt": "Pokémon Músculo"
+    },
+    {
+        "id": 547,
+        "pokemon_number": "0535",
+        "name": "Tympole",
+        "species_en": "Tadpole Pokémon",
+        "species_pt": "Pokémon Girino"
+    },
+    {
+        "id": 548,
+        "pokemon_number": "0536",
+        "name": "Palpitoad",
+        "species_en": "Vibration Pokémon",
+        "species_pt": "Pokémon Vibração"
+    },
+    {
+        "id": 549,
+        "pokemon_number": "0537",
+        "name": "Seismitoad",
+        "species_en": "Vibration Pokémon",
+        "species_pt": "Pokémon Vibração"
+    },
+    {
+        "id": 550,
+        "pokemon_number": "0538",
+        "name": "Throh",
+        "species_en": "Judo Pokémon",
+        "species_pt": "Pokémon Judô"
+    },
+    {
+        "id": 551,
+        "pokemon_number": "0539",
+        "name": "Sawk",
+        "species_en": "Karate Pokémon",
+        "species_pt": "Pokémon Caratê"
+    },
+    {
+        "id": 552,
+        "pokemon_number": "0540",
+        "name": "Sewaddle",
+        "species_en": "Sewing Pokémon",
+        "species_pt": "Pokémon Costura"
+    },
+    {
+        "id": 553,
+        "pokemon_number": "0541",
+        "name": "Swadloon",
+        "species_en": "Leaf-Wrapped Pokémon",
+        "species_pt": "Pokémon Capa da Floresta"
+    },
+    {
+        "id": 554,
+        "pokemon_number": "0542",
+        "name": "Leavanny",
+        "species_en": "Nurturing Pokémon",
+        "species_pt": "Pokémon Criação de Filhos"
+    },
+    {
+        "id": 555,
+        "pokemon_number": "0543",
+        "name": "Venipede",
+        "species_en": "Centipede Pokémon",
+        "species_pt": "Pokémon Centopeia"
+    },
+    {
+        "id": 556,
+        "pokemon_number": "0544",
+        "name": "Whirlipede",
+        "species_en": "Curlipede Pokémon",
+        "species_pt": "Pokémon Centopeia de Casulo"
+    },
+    {
+        "id": 557,
+        "pokemon_number": "0545",
+        "name": "Scolipede",
+        "species_en": "Megapede Pokémon",
+        "species_pt": "Pokémon Mega Centopeia"
+    },
+    {
+        "id": 558,
+        "pokemon_number": "0546",
+        "name": "Cottonee",
+        "species_en": "Cotton Puff Pokémon",
+        "species_pt": "Pokémon Bola de Algodão"
+    },
+    {
+        "id": 559,
+        "pokemon_number": "0547",
+        "name": "Whimsicott",
+        "species_en": "Windveiled Pokémon",
+        "species_pt": "Pokémon Escondido pelo Vento"
+    },
+    {
+        "id": 560,
+        "pokemon_number": "0548",
+        "name": "Petilil",
+        "species_en": "Bulb Pokémon",
+        "species_pt": "Pokémon Raiz"
+    },
+    {
+        "id": 561,
+        "pokemon_number": "0549",
+        "name": "Lilligant",
+        "species_en": "Flowering Pokémon",
+        "species_pt": "Pokémon Decoração de Flores"
+    },
+    {
+        "id": 562,
+        "pokemon_number": "0549",
+        "name": "Lilligant Hisuian Form",
+        "species_en": "Spinning Pokémon",
+        "species_pt": "Pokémon Rotação"
+    },
+    {
+        "id": 563,
+        "pokemon_number": "0550",
+        "name": "Basculin",
+        "species_en": "Hostile Pokémon",
+        "species_pt": "Pokémon Violento"
+    },
+    {
+        "id": 564,
+        "pokemon_number": "0550",
+        "name": "Basculin White-Striped Form",
+        "species_en": "Mellow Pokémon",
+        "species_pt": "Pokémon Gentil"
+    },
+    {
+        "id": 565,
+        "pokemon_number": "0551",
+        "name": "Sandile",
+        "species_en": "Desert Croc Pokémon",
+        "species_pt": "Pokémon Crocodilo do Deserto"
+    },
+    {
+        "id": 566,
+        "pokemon_number": "0552",
+        "name": "Krokorok",
+        "species_en": "Desert Croc Pokémon",
+        "species_pt": "Pokémon Crocodilo do Deserto"
+    },
+    {
+        "id": 567,
+        "pokemon_number": "0553",
+        "name": "Krookodile",
+        "species_en": "Intimidation Pokémon",
+        "species_pt": "Pokémon Ameaçador"
+    },
+    {
+        "id": 568,
+        "pokemon_number": "0554",
+        "name": "Darumaka",
+        "species_en": "Zen Charm Pokémon",
+        "species_pt": "Pokémon Daruma"
+    },
+    {
+        "id": 569,
+        "pokemon_number": "0555",
+        "name": "Darmanitan",
+        "species_en": "Blazing Pokémon",
+        "species_pt": "Pokémon Em Chamas"
+    },
+    {
+        "id": 570,
+        "pokemon_number": "0555",
+        "name": "Darmanitan Galarian Form",
+        "species_en": "Zen Charm Pokémon",
+        "species_pt": "Pokémon Daruma"
+    },
+    {
+        "id": 571,
+        "pokemon_number": "0555",
+        "name": "Darmanitan Galarian Form Zen Mode",
+        "species_en": "Blazing Pokémon",
+        "species_pt": "Pokémon Em Chamas"
+    },
+    {
+        "id": 572,
+        "pokemon_number": "0556",
+        "name": "Maractus",
+        "species_en": "Cactus Pokémon",
+        "species_pt": "Pokémon Cacto"
+    },
+    {
+        "id": 573,
+        "pokemon_number": "0557",
+        "name": "Dwebble",
+        "species_en": "Rock Inn Pokémon",
+        "species_pt": "Pokémon Eremita de Pedra"
+    },
+    {
+        "id": 574,
+        "pokemon_number": "0558",
+        "name": "Crustle",
+        "species_en": "Stone Home Pokémon",
+        "species_pt": "Pokémon Eremita de Rocha"
+    },
+    {
+        "id": 575,
+        "pokemon_number": "0559",
+        "name": "Scraggy",
+        "species_en": "Shedding Pokémon",
+        "species_pt": "Pokémon Troca de Pele"
+    },
+    {
+        "id": 576,
+        "pokemon_number": "0560",
+        "name": "Scrafty",
+        "species_en": "Hoodlum Pokémon",
+        "species_pt": "Pokémon Patife"
+    },
+    {
+        "id": 577,
+        "pokemon_number": "0561",
+        "name": "Sigilyph",
+        "species_en": "Avianoid Pokémon",
+        "species_pt": "Pokémon Pseudo-Pássaro"
+    },
+    {
+        "id": 578,
+        "pokemon_number": "0562",
+        "name": "Yamask",
+        "species_en": "Spirit Pokémon",
+        "species_pt": "Pokémon Espírito"
+    },
+    {
+        "id": 579,
+        "pokemon_number": "0563",
+        "name": "Cofagrigus",
+        "species_en": "Coffin Pokémon",
+        "species_pt": "Pokémon Caixão"
+    },
+    {
+        "id": 580,
+        "pokemon_number": "0564",
+        "name": "Tirtouga",
+        "species_en": "Prototurtle Pokémon",
+        "species_pt": "Pokémon Tartaruga Antiga"
+    },
+    {
+        "id": 581,
+        "pokemon_number": "0565",
+        "name": "Carracosta",
+        "species_en": "Prototurtle Pokémon",
+        "species_pt": "Pokémon Tartaruga Antiga"
+    },
+    {
+        "id": 582,
+        "pokemon_number": "0566",
+        "name": "Archen",
+        "species_en": "First Bird Pokémon",
+        "species_pt": "Pokémon Pássaro Mais Antigo"
+    },
+    {
+        "id": 583,
+        "pokemon_number": "0567",
+        "name": "Archeops",
+        "species_en": "First Bird Pokémon",
+        "species_pt": "Pokémon Pássaro Mais Antigo"
+    },
+    {
+        "id": 584,
+        "pokemon_number": "0568",
+        "name": "Trubbish",
+        "species_en": "Trash Bag Pokémon",
+        "species_pt": "Pokémon Saco de Lixo"
+    },
+    {
+        "id": 585,
+        "pokemon_number": "0569",
+        "name": "Garbodor",
+        "species_en": "Trash Heap Pokémon",
+        "species_pt": "Pokémon Lixão"
+    },
+    {
+        "id": 586,
+        "pokemon_number": "0570",
+        "name": "Zorua",
+        "species_en": "Tricky Fox Pokémon",
+        "species_pt": "Pokémon Raposa Maligna"
+    },
+    {
+        "id": 587,
+        "pokemon_number": "0570",
+        "name": "Zorua Hisuian Form",
+        "species_en": "Spiteful Fox Pokémon",
+        "species_pt": "Pokémon Raposa Rancorosa"
+    },
+    {
+        "id": 588,
+        "pokemon_number": "0571",
+        "name": "Zoroark",
+        "species_en": "Illusion Fox Pokémon",
+        "species_pt": "Pokémon Raposa Ilusória"
+    },
+    {
+        "id": 589,
+        "pokemon_number": "0571",
+        "name": "Zoroark Hisuian Form",
+        "species_en": "Baneful Fox Pokémon",
+        "species_pt": "Pokémon Raposa da Maldição"
+    },
+    {
+        "id": 590,
+        "pokemon_number": "0572",
+        "name": "Minccino",
+        "species_en": "Chinchilla Pokémon",
+        "species_pt": "Pokémon Chinchila"
+    },
+    {
+        "id": 591,
+        "pokemon_number": "0573",
+        "name": "Cinccino",
+        "species_en": "Scarf Pokémon",
+        "species_pt": "Pokémon Cachecol"
+    },
+    {
+        "id": 592,
+        "pokemon_number": "0574",
+        "name": "Gothita",
+        "species_en": "Fixation Pokémon",
+        "species_pt": "Pokémon Olhar Fixo"
+    },
+    {
+        "id": 593,
+        "pokemon_number": "0575",
+        "name": "Gothorita",
+        "species_en": "Manipulate Pokémon",
+        "species_pt": "Pokémon Manipulação"
+    },
+    {
+        "id": 594,
+        "pokemon_number": "0576",
+        "name": "Gothitelle",
+        "species_en": "Astral Body Pokémon",
+        "species_pt": "Pokémon Corpo Celestial"
+    },
+    {
+        "id": 595,
+        "pokemon_number": "0577",
+        "name": "Solosis",
+        "species_en": "Cell Pokémon",
+        "species_pt": "Pokémon Célula"
+    },
+    {
+        "id": 596,
+        "pokemon_number": "0578",
+        "name": "Duosion",
+        "species_en": "Mitosis Pokémon",
+        "species_pt": "Pokémon Mitose"
+    },
+    {
+        "id": 597,
+        "pokemon_number": "0579",
+        "name": "Reuniclus",
+        "species_en": "Multiplying Pokémon",
+        "species_pt": "Pokémon Amplificação"
+    },
+    {
+        "id": 598,
+        "pokemon_number": "0580",
+        "name": "Ducklett",
+        "species_en": "Water Bird Pokémon",
+        "species_pt": "Pokémon Ave Aquática"
+    },
+    {
+        "id": 599,
+        "pokemon_number": "0581",
+        "name": "Swanna",
+        "species_en": "White Bird Pokémon",
+        "species_pt": "Pokémon Cisne"
+    },
+    {
+        "id": 600,
+        "pokemon_number": "0582",
+        "name": "Vanillite",
+        "species_en": "Fresh Snow Pokémon",
+        "species_pt": "Pokémon Neve Fresca"
+    },
+    {
+        "id": 601,
+        "pokemon_number": "0583",
+        "name": "Vanillish",
+        "species_en": "Icy Snow Pokémon",
+        "species_pt": "Pokémon Gelo e Neve"
+    },
+    {
+        "id": 602,
+        "pokemon_number": "0584",
+        "name": "Vanilluxe",
+        "species_en": "Snowstorm Pokémon",
+        "species_pt": "Pokémon Nevasca"
+    },
+    {
+        "id": 603,
+        "pokemon_number": "0585",
+        "name": "Deerling",
+        "species_en": "Season Pokémon",
+        "species_pt": "Pokémon Sazonal"
+    },
+    {
+        "id": 604,
+        "pokemon_number": "0586",
+        "name": "Sawsbuck",
+        "species_en": "Season Pokémon",
+        "species_pt": "Pokémon Sazonal"
+    },
+    {
+        "id": 605,
+        "pokemon_number": "0587",
+        "name": "Emolga",
+        "species_en": "Sky Squirrel Pokémon",
+        "species_pt": "Pokémon Esquilo Voador"
+    },
+    {
+        "id": 606,
+        "pokemon_number": "0588",
+        "name": "Karrablast",
+        "species_en": "Clamping Pokémon",
+        "species_pt": "Pokémon Mordida"
+    },
+    {
+        "id": 607,
+        "pokemon_number": "0589",
+        "name": "Escavalier",
+        "species_en": "Cavalry Pokémon",
+        "species_pt": "Pokémon Cavalaria"
+    },
+    {
+        "id": 608,
+        "pokemon_number": "0590",
+        "name": "Foongus",
+        "species_en": "Mushroom Pokémon",
+        "species_pt": "Pokémon Cogumelo"
+    },
+    {
+        "id": 609,
+        "pokemon_number": "0591",
+        "name": "Amoonguss",
+        "species_en": "Mushroom Pokémon",
+        "species_pt": "Pokémon Cogumelo"
+    },
+    {
+        "id": 610,
+        "pokemon_number": "0592",
+        "name": "Frillish",
+        "species_en": "Floating Pokémon",
+        "species_pt": "Pokémon Flutuante"
+    },
+    {
+        "id": 611,
+        "pokemon_number": "0593",
+        "name": "Jellicent",
+        "species_en": "Floating Pokémon",
+        "species_pt": "Pokémon Flutuante"
+    },
+    {
+        "id": 612,
+        "pokemon_number": "0594",
+        "name": "Alomomola",
+        "species_en": "Caring Pokémon",
+        "species_pt": "Pokémon Cuidado"
+    },
+    {
+        "id": 613,
+        "pokemon_number": "0595",
+        "name": "Joltik",
+        "species_en": "Attaching Pokémon",
+        "species_pt": "Pokémon Aderente"
+    },
+    {
+        "id": 614,
+        "pokemon_number": "0596",
+        "name": "Galvantula",
+        "species_en": "EleSpider Pokémon",
+        "species_pt": "Pokémon Aranha Elétrica"
+    },
+    {
+        "id": 615,
+        "pokemon_number": "0597",
+        "name": "Ferroseed",
+        "species_en": "Thorn Seed Pokémon",
+        "species_pt": "Pokémon Semente de Espinho"
+    },
+    {
+        "id": 616,
+        "pokemon_number": "0598",
+        "name": "Ferrothorn",
+        "species_en": "Thorn Pod Pokémon",
+        "species_pt": "Pokémon Bola de Espinho"
+    },
+    {
+        "id": 617,
+        "pokemon_number": "0599",
+        "name": "Klink",
+        "species_en": "Gear Pokémon",
+        "species_pt": "Pokémon Engrenagem"
+    },
+    {
+        "id": 618,
+        "pokemon_number": "0600",
+        "name": "Klang",
+        "species_en": "Gear Pokémon",
+        "species_pt": "Pokémon Engrenagem"
+    },
+    {
+        "id": 619,
+        "pokemon_number": "0601",
+        "name": "Klinklang",
+        "species_en": "Gear Pokémon",
+        "species_pt": "Pokémon Engrenagem"
+    },
+    {
+        "id": 620,
+        "pokemon_number": "0602",
+        "name": "Tynamo",
+        "species_en": "EleFish Pokémon",
+        "species_pt": "Pokémon Peixe Elétrico"
+    }
+]

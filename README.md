@@ -18,26 +18,41 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 
 ```text
 .
-├── app/
-│   └── pokedex-service/
-├── bff/
-│   └── mobile-bff/
-├── gateway/
-│   └── kong/
-├── infra/
-│   ├── postgres/
-│   │   ├── schema/
-│   │   ├── seeds/
-│   │   ├── source-json/
-│   │   └── json2sql/
-│   └── redis/
-└── docker-compose.yml
+├── core/
+│   ├── app/
+│   │   └── pokemon-catalog-service/
+│   ├── bff/
+│   │   └── mobile-bff/
+│   ├── gateway/
+│   │   └── kong/
+│   ├── infra/
+│   │   ├── postgres/
+│   │   │   ├── schema/
+│   │   │   ├── seeds/
+│   │   │   ├── source-json/
+│   │   │   └── json2sql/
+│   │   └── redis/
+│   └── docker-compose.yml
+└── doc/
 ```
+
+## Documentacao
+
+A documentacao arquitetural do projeto fica em `doc/`.
+A implementacao executavel da plataforma fica em `core/`.
+
+- Visao geral: `doc/SYSTEM-OVERVIEW.md`
+- BFF: `doc/BFF.md`
+- Gateway: `doc/GATEWAY.md`
+- Infraestrutura: `doc/INFRA.md`
+- Decisoes arquiteturais: `doc/DECISIONS.md`
+- Hexagonal no BFF: `doc/bff/HEXAGONAL-ARCHITECTURE.md`
+- Visao do runtime: `core/README.md`
 
 ## Como Executar
 
 ```bash
-docker compose up --build
+docker compose -f core/docker-compose.yml up --build
 ```
 
 ### Endpoints
@@ -61,10 +76,10 @@ Endpoints autenticados (via BFF):
 
 ## Pipeline de Dados
 
-- Arquivos JSON de origem: `infra/postgres/source-json/*.json`
-- Schema do banco de dados: `infra/postgres/schema/schema.sql`
-- Seed gerada: `infra/postgres/seeds/init-data.sql`
-- CLI do gerador: `infra/postgres/json2sql/cmd/json2sql`
+- Arquivos JSON de origem: `core/infra/postgres/source-json/*.json`
+- Schema do banco de dados: `core/infra/postgres/schema/schema.sql`
+- Seed gerada: `core/infra/postgres/seeds/init-data.sql`
+- CLI do gerador: `core/infra/postgres/json2sql/cmd/json2sql`
 
 ### Gerador JSON para SQL
 
@@ -74,7 +89,7 @@ A CLI `json2sql` lê dados de Pokémon de 10 arquivos JSON e gera comandos SQL I
 
 A partir do diretório do módulo:
 ```bash
-cd infra/postgres/json2sql
+cd core/infra/postgres/json2sql
 go run ./cmd/json2sql/ --input ../source-json --output ../seeds/init-data.sql
 ```
 
@@ -85,8 +100,8 @@ go run ./cmd/json2sql/ --input ../source-json --output ../seeds/init-data.sql --
 
 #### Flags
 
-- `--input` (padrão: `infra/postgres/source-json`) — diretório com 10 arquivos JSON de origem
-- `--output` (padrão: `infra/postgres/seeds/init-data.sql`) — caminho para escrever o SQL gerado
+- `--input` (padrão: `core/infra/postgres/source-json`) — diretório com 10 arquivos JSON de origem
+- `--output` (padrão: `core/infra/postgres/seeds/init-data.sql`) — caminho para escrever o SQL gerado
 - `--strict` (padrão: false) — falhar em avisos de integridade referencial
 
 #### Mapeamento de Arquivos JSON
@@ -127,9 +142,9 @@ O gerador valida integridade referencial antes da geração:
 
 Este projeto intencionalmente não usa ferramentas de migração na v1.
 
-- Mudanças estruturais são feitas diretamente em `infra/postgres/schema/schema.sql`.
+- Mudanças estruturais são feitas diretamente em `core/infra/postgres/schema/schema.sql`.
 - Quando a estrutura muda, recrie o banco de dados do zero.
-- Carregamento de seed é completo e determinístico de `infra/postgres/seeds/init-data.sql`.
+- Carregamento de seed é completo e determinístico de `core/infra/postgres/seeds/init-data.sql`.
 
 ## Segurança
 

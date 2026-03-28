@@ -1,0 +1,908 @@
+[
+  {
+    "id": 1,
+    "number": "0001",
+    "name": "Bulbasaur",
+    "description_ptbr_draft": "Bulbasaur e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Seed Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 2,
+    "number": "0002",
+    "name": "Ivysaur",
+    "description_ptbr_draft": "Ivysaur e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Seed Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 3,
+    "number": "0003",
+    "name": "Venusaur",
+    "description_ptbr_draft": "Venusaur e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Seed Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 4,
+    "number": "0004",
+    "name": "Charmander",
+    "description_ptbr_draft": "Charmander e um Pokemon do tipo Fogo. E conhecido na categoria Lizard Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 5,
+    "number": "0005",
+    "name": "Charmeleon",
+    "description_ptbr_draft": "Charmeleon e um Pokemon do tipo Fogo. E conhecido na categoria Flame Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 6,
+    "number": "0006",
+    "name": "Charizard",
+    "description_ptbr_draft": "Charizard e um Pokemon do tipo Fogo e Voador. E conhecido na categoria Flame Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 7,
+    "number": "0007",
+    "name": "Squirtle",
+    "description_ptbr_draft": "Squirtle e um Pokemon do tipo Agua. E conhecido na categoria Tiny Turtle Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 8,
+    "number": "0008",
+    "name": "Wartortle",
+    "description_ptbr_draft": "Wartortle e um Pokemon do tipo Agua. E conhecido na categoria Turtle Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 9,
+    "number": "0009",
+    "name": "Blastoise",
+    "description_ptbr_draft": "Blastoise e um Pokemon do tipo Agua. E conhecido na categoria Shellfish Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 10,
+    "number": "0010",
+    "name": "Caterpie",
+    "description_ptbr_draft": "Caterpie e um Pokemon do tipo Inseto. E conhecido na categoria Worm Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 11,
+    "number": "0011",
+    "name": "Metapod",
+    "description_ptbr_draft": "Metapod e um Pokemon do tipo Inseto. E conhecido na categoria Cocoon Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 12,
+    "number": "0012",
+    "name": "Butterfree",
+    "description_ptbr_draft": "Butterfree e um Pokemon do tipo Inseto e Voador. E conhecido na categoria Butterfly Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 13,
+    "number": "0013",
+    "name": "Weedle",
+    "description_ptbr_draft": "Weedle e um Pokemon do tipo Inseto e Venenoso. E conhecido na categoria Hairy Bug Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 14,
+    "number": "0014",
+    "name": "Kakuna",
+    "description_ptbr_draft": "Kakuna e um Pokemon do tipo Inseto e Venenoso. E conhecido na categoria Cocoon Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 15,
+    "number": "0015",
+    "name": "Beedrill",
+    "description_ptbr_draft": "Beedrill e um Pokemon do tipo Inseto e Venenoso. E conhecido na categoria Poison Bee Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 16,
+    "number": "0016",
+    "name": "Pidgey",
+    "description_ptbr_draft": "Pidgey e um Pokemon do tipo Normal e Voador. E conhecido na categoria Tiny Bird Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 17,
+    "number": "0017",
+    "name": "Pidgeotto",
+    "description_ptbr_draft": "Pidgeotto e um Pokemon do tipo Normal e Voador. E conhecido na categoria Bird Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 18,
+    "number": "0018",
+    "name": "Pidgeot",
+    "description_ptbr_draft": "Pidgeot e um Pokemon do tipo Normal e Voador. E conhecido na categoria Bird Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 19,
+    "number": "0019",
+    "name": "Rattata",
+    "description_ptbr_draft": "Rattata e um Pokemon do tipo Normal. E conhecido na categoria Mouse Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 20,
+    "number": "0020",
+    "name": "Raticate",
+    "description_ptbr_draft": "Raticate e um Pokemon do tipo Normal. E conhecido na categoria Mouse Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 21,
+    "number": "0021",
+    "name": "Spearow",
+    "description_ptbr_draft": "Spearow e um Pokemon do tipo Normal e Voador. E conhecido na categoria Tiny Bird Pokémon e costuma aparecer em rough terrain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 22,
+    "number": "0022",
+    "name": "Fearow",
+    "description_ptbr_draft": "Fearow e um Pokemon do tipo Normal e Voador. E conhecido na categoria Beak Pokémon e costuma aparecer em rough terrain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 23,
+    "number": "0023",
+    "name": "Ekans",
+    "description_ptbr_draft": "Ekans e um Pokemon do tipo Venenoso. E conhecido na categoria Snake Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 24,
+    "number": "0024",
+    "name": "Arbok",
+    "description_ptbr_draft": "Arbok e um Pokemon do tipo Venenoso. E conhecido na categoria Cobra Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 25,
+    "number": "0025",
+    "name": "Pikachu",
+    "description_ptbr_draft": "Pikachu e um Pokemon do tipo Eletrico. E conhecido na categoria Mouse Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 26,
+    "number": "0026",
+    "name": "Raichu",
+    "description_ptbr_draft": "Raichu e um Pokemon do tipo Eletrico. E conhecido na categoria Mouse Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 27,
+    "number": "0027",
+    "name": "Sandshrew",
+    "description_ptbr_draft": "Sandshrew e um Pokemon do tipo Terrestre. E conhecido na categoria Mouse Pokémon e costuma aparecer em rough terrain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 28,
+    "number": "0028",
+    "name": "Sandslash",
+    "description_ptbr_draft": "Sandslash e um Pokemon do tipo Terrestre. E conhecido na categoria Mouse Pokémon e costuma aparecer em rough terrain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 29,
+    "number": "0029",
+    "name": "Nidoran-F",
+    "description_ptbr_draft": "Nidoran-F e um Pokemon do tipo Venenoso. E conhecido na categoria Poison Pin Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 30,
+    "number": "0030",
+    "name": "Nidorina",
+    "description_ptbr_draft": "Nidorina e um Pokemon do tipo Venenoso. E conhecido na categoria Poison Pin Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 31,
+    "number": "0031",
+    "name": "Nidoqueen",
+    "description_ptbr_draft": "Nidoqueen e um Pokemon do tipo Venenoso e Terrestre. E conhecido na categoria Drill Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 32,
+    "number": "0032",
+    "name": "Nidoran-M",
+    "description_ptbr_draft": "Nidoran-M e um Pokemon do tipo Venenoso. E conhecido na categoria Poison Pin Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 33,
+    "number": "0033",
+    "name": "Nidorino",
+    "description_ptbr_draft": "Nidorino e um Pokemon do tipo Venenoso. E conhecido na categoria Poison Pin Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 34,
+    "number": "0034",
+    "name": "Nidoking",
+    "description_ptbr_draft": "Nidoking e um Pokemon do tipo Venenoso e Terrestre. E conhecido na categoria Drill Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 35,
+    "number": "0035",
+    "name": "Clefairy",
+    "description_ptbr_draft": "Clefairy e um Pokemon do tipo Fada. E conhecido na categoria Fairy Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 36,
+    "number": "0036",
+    "name": "Clefable",
+    "description_ptbr_draft": "Clefable e um Pokemon do tipo Fada. E conhecido na categoria Fairy Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 37,
+    "number": "0037",
+    "name": "Vulpix",
+    "description_ptbr_draft": "Vulpix e um Pokemon do tipo Fogo. E conhecido na categoria Fox Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 38,
+    "number": "0038",
+    "name": "Ninetales",
+    "description_ptbr_draft": "Ninetales e um Pokemon do tipo Fogo. E conhecido na categoria Fox Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 39,
+    "number": "0039",
+    "name": "Jigglypuff",
+    "description_ptbr_draft": "Jigglypuff e um Pokemon do tipo Normal e Fada. E conhecido na categoria Balloon Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 40,
+    "number": "0040",
+    "name": "Wigglytuff",
+    "description_ptbr_draft": "Wigglytuff e um Pokemon do tipo Normal e Fada. E conhecido na categoria Balloon Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 41,
+    "number": "0041",
+    "name": "Zubat",
+    "description_ptbr_draft": "Zubat e um Pokemon do tipo Venenoso e Voador. E conhecido na categoria Bat Pokémon e costuma aparecer em cave. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 42,
+    "number": "0042",
+    "name": "Golbat",
+    "description_ptbr_draft": "Golbat e um Pokemon do tipo Venenoso e Voador. E conhecido na categoria Bat Pokémon e costuma aparecer em cave. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 43,
+    "number": "0043",
+    "name": "Oddish",
+    "description_ptbr_draft": "Oddish e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Weed Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 44,
+    "number": "0044",
+    "name": "Gloom",
+    "description_ptbr_draft": "Gloom e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Weed Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 45,
+    "number": "0045",
+    "name": "Vileplume",
+    "description_ptbr_draft": "Vileplume e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Flower Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 46,
+    "number": "0046",
+    "name": "Paras",
+    "description_ptbr_draft": "Paras e um Pokemon do tipo Inseto e Grama. E conhecido na categoria Mushroom Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 47,
+    "number": "0047",
+    "name": "Parasect",
+    "description_ptbr_draft": "Parasect e um Pokemon do tipo Inseto e Grama. E conhecido na categoria Mushroom Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 48,
+    "number": "0048",
+    "name": "Venonat",
+    "description_ptbr_draft": "Venonat e um Pokemon do tipo Inseto e Venenoso. E conhecido na categoria Insect Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 49,
+    "number": "0049",
+    "name": "Venomoth",
+    "description_ptbr_draft": "Venomoth e um Pokemon do tipo Inseto e Venenoso. E conhecido na categoria Poison Moth Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 50,
+    "number": "0050",
+    "name": "Diglett",
+    "description_ptbr_draft": "Diglett e um Pokemon do tipo Terrestre. E conhecido na categoria Mole Pokémon e costuma aparecer em cave. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 51,
+    "number": "0051",
+    "name": "Dugtrio",
+    "description_ptbr_draft": "Dugtrio e um Pokemon do tipo Terrestre. E conhecido na categoria Mole Pokémon e costuma aparecer em cave. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 52,
+    "number": "0052",
+    "name": "Meowth",
+    "description_ptbr_draft": "Meowth e um Pokemon do tipo Normal. E conhecido na categoria Scratch Cat Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 53,
+    "number": "0053",
+    "name": "Persian",
+    "description_ptbr_draft": "Persian e um Pokemon do tipo Normal. E conhecido na categoria Classy Cat Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 54,
+    "number": "0054",
+    "name": "Psyduck",
+    "description_ptbr_draft": "Psyduck e um Pokemon do tipo Agua. E conhecido na categoria Duck Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 55,
+    "number": "0055",
+    "name": "Golduck",
+    "description_ptbr_draft": "Golduck e um Pokemon do tipo Agua. E conhecido na categoria Duck Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 56,
+    "number": "0056",
+    "name": "Mankey",
+    "description_ptbr_draft": "Mankey e um Pokemon do tipo Lutador. E conhecido na categoria Pig Monkey Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 57,
+    "number": "0057",
+    "name": "Primeape",
+    "description_ptbr_draft": "Primeape e um Pokemon do tipo Lutador. E conhecido na categoria Pig Monkey Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 58,
+    "number": "0058",
+    "name": "Growlithe",
+    "description_ptbr_draft": "Growlithe e um Pokemon do tipo Fogo. E conhecido na categoria Puppy Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 59,
+    "number": "0059",
+    "name": "Arcanine",
+    "description_ptbr_draft": "Arcanine e um Pokemon do tipo Fogo. E conhecido na categoria Legendary Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 60,
+    "number": "0060",
+    "name": "Poliwag",
+    "description_ptbr_draft": "Poliwag e um Pokemon do tipo Agua. E conhecido na categoria Tadpole Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 61,
+    "number": "0061",
+    "name": "Poliwhirl",
+    "description_ptbr_draft": "Poliwhirl e um Pokemon do tipo Agua. E conhecido na categoria Tadpole Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 62,
+    "number": "0062",
+    "name": "Poliwrath",
+    "description_ptbr_draft": "Poliwrath e um Pokemon do tipo Agua e Lutador. E conhecido na categoria Tadpole Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 63,
+    "number": "0063",
+    "name": "Abra",
+    "description_ptbr_draft": "Abra e um Pokemon do tipo Psiquico. E conhecido na categoria Psi Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 64,
+    "number": "0064",
+    "name": "Kadabra",
+    "description_ptbr_draft": "Kadabra e um Pokemon do tipo Psiquico. E conhecido na categoria Psi Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 65,
+    "number": "0065",
+    "name": "Alakazam",
+    "description_ptbr_draft": "Alakazam e um Pokemon do tipo Psiquico. E conhecido na categoria Psi Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 66,
+    "number": "0066",
+    "name": "Machop",
+    "description_ptbr_draft": "Machop e um Pokemon do tipo Lutador. E conhecido na categoria Superpower Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 67,
+    "number": "0067",
+    "name": "Machoke",
+    "description_ptbr_draft": "Machoke e um Pokemon do tipo Lutador. E conhecido na categoria Superpower Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 68,
+    "number": "0068",
+    "name": "Machamp",
+    "description_ptbr_draft": "Machamp e um Pokemon do tipo Lutador. E conhecido na categoria Superpower Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 69,
+    "number": "0069",
+    "name": "Bellsprout",
+    "description_ptbr_draft": "Bellsprout e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Flower Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 70,
+    "number": "0070",
+    "name": "Weepinbell",
+    "description_ptbr_draft": "Weepinbell e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Flycatcher Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 71,
+    "number": "0071",
+    "name": "Victreebel",
+    "description_ptbr_draft": "Victreebel e um Pokemon do tipo Grama e Venenoso. E conhecido na categoria Flycatcher Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 72,
+    "number": "0072",
+    "name": "Tentacool",
+    "description_ptbr_draft": "Tentacool e um Pokemon do tipo Agua e Venenoso. E conhecido na categoria Jellyfish Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 73,
+    "number": "0073",
+    "name": "Tentacruel",
+    "description_ptbr_draft": "Tentacruel e um Pokemon do tipo Agua e Venenoso. E conhecido na categoria Jellyfish Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 74,
+    "number": "0074",
+    "name": "Geodude",
+    "description_ptbr_draft": "Geodude e um Pokemon do tipo Pedra e Terrestre. E conhecido na categoria Rock Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 75,
+    "number": "0075",
+    "name": "Graveler",
+    "description_ptbr_draft": "Graveler e um Pokemon do tipo Pedra e Terrestre. E conhecido na categoria Rock Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 76,
+    "number": "0076",
+    "name": "Golem",
+    "description_ptbr_draft": "Golem e um Pokemon do tipo Pedra e Terrestre. E conhecido na categoria Megaton Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 77,
+    "number": "0077",
+    "name": "Ponyta",
+    "description_ptbr_draft": "Ponyta e um Pokemon do tipo Fogo. E conhecido na categoria Fire Horse Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 78,
+    "number": "0078",
+    "name": "Rapidash",
+    "description_ptbr_draft": "Rapidash e um Pokemon do tipo Fogo. E conhecido na categoria Fire Horse Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 79,
+    "number": "0079",
+    "name": "Slowpoke",
+    "description_ptbr_draft": "Slowpoke e um Pokemon do tipo Agua e Psiquico. E conhecido na categoria Dopey Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 80,
+    "number": "0080",
+    "name": "Slowbro",
+    "description_ptbr_draft": "Slowbro e um Pokemon do tipo Agua e Psiquico. E conhecido na categoria Hermit Crab Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 81,
+    "number": "0081",
+    "name": "Magnemite",
+    "description_ptbr_draft": "Magnemite e um Pokemon do tipo Eletrico e Aco. E conhecido na categoria Magnet Pokémon e costuma aparecer em rough terrain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 82,
+    "number": "0082",
+    "name": "Magneton",
+    "description_ptbr_draft": "Magneton e um Pokemon do tipo Eletrico e Aco. E conhecido na categoria Magnet Pokémon e costuma aparecer em rough terrain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 83,
+    "number": "0083",
+    "name": "Farfetchd",
+    "description_ptbr_draft": "Farfetchd e um Pokemon do tipo Normal e Voador. E conhecido na categoria Wild Duck Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 84,
+    "number": "0084",
+    "name": "Doduo",
+    "description_ptbr_draft": "Doduo e um Pokemon do tipo Normal e Voador. E conhecido na categoria Twin Bird Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 85,
+    "number": "0085",
+    "name": "Dodrio",
+    "description_ptbr_draft": "Dodrio e um Pokemon do tipo Normal e Voador. E conhecido na categoria Triple Bird Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 86,
+    "number": "0086",
+    "name": "Seel",
+    "description_ptbr_draft": "Seel e um Pokemon do tipo Agua. E conhecido na categoria Sea Lion Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 87,
+    "number": "0087",
+    "name": "Dewgong",
+    "description_ptbr_draft": "Dewgong e um Pokemon do tipo Agua e Gelo. E conhecido na categoria Sea Lion Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 88,
+    "number": "0088",
+    "name": "Grimer",
+    "description_ptbr_draft": "Grimer e um Pokemon do tipo Venenoso. E conhecido na categoria Sludge Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 89,
+    "number": "0089",
+    "name": "Muk",
+    "description_ptbr_draft": "Muk e um Pokemon do tipo Venenoso. E conhecido na categoria Sludge Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 90,
+    "number": "0090",
+    "name": "Shellder",
+    "description_ptbr_draft": "Shellder e um Pokemon do tipo Agua. E conhecido na categoria Bivalve Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 91,
+    "number": "0091",
+    "name": "Cloyster",
+    "description_ptbr_draft": "Cloyster e um Pokemon do tipo Agua e Gelo. E conhecido na categoria Bivalve Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 92,
+    "number": "0092",
+    "name": "Gastly",
+    "description_ptbr_draft": "Gastly e um Pokemon do tipo Fantasma e Venenoso. E conhecido na categoria Gas Pokémon e costuma aparecer em cave. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 93,
+    "number": "0093",
+    "name": "Haunter",
+    "description_ptbr_draft": "Haunter e um Pokemon do tipo Fantasma e Venenoso. E conhecido na categoria Gas Pokémon e costuma aparecer em cave. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 94,
+    "number": "0094",
+    "name": "Gengar",
+    "description_ptbr_draft": "Gengar e um Pokemon do tipo Fantasma e Venenoso. E conhecido na categoria Shadow Pokémon e costuma aparecer em cave. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 95,
+    "number": "0095",
+    "name": "Onix",
+    "description_ptbr_draft": "Onix e um Pokemon do tipo Pedra e Terrestre. E conhecido na categoria Rock Snake Pokémon e costuma aparecer em cave. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 96,
+    "number": "0096",
+    "name": "Drowzee",
+    "description_ptbr_draft": "Drowzee e um Pokemon do tipo Psiquico. E conhecido na categoria Hypnosis Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 97,
+    "number": "0097",
+    "name": "Hypno",
+    "description_ptbr_draft": "Hypno e um Pokemon do tipo Psiquico. E conhecido na categoria Hypnosis Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 98,
+    "number": "0098",
+    "name": "Krabby",
+    "description_ptbr_draft": "Krabby e um Pokemon do tipo Agua. E conhecido na categoria River Crab Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 99,
+    "number": "0099",
+    "name": "Kingler",
+    "description_ptbr_draft": "Kingler e um Pokemon do tipo Agua. E conhecido na categoria Pincer Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 100,
+    "number": "0100",
+    "name": "Voltorb",
+    "description_ptbr_draft": "Voltorb e um Pokemon do tipo Eletrico. E conhecido na categoria Ball Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 101,
+    "number": "0101",
+    "name": "Electrode",
+    "description_ptbr_draft": "Electrode e um Pokemon do tipo Eletrico. E conhecido na categoria Ball Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 102,
+    "number": "0102",
+    "name": "Exeggcute",
+    "description_ptbr_draft": "Exeggcute e um Pokemon do tipo Grama e Psiquico. E conhecido na categoria Egg Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 103,
+    "number": "0103",
+    "name": "Exeggutor",
+    "description_ptbr_draft": "Exeggutor e um Pokemon do tipo Grama e Psiquico. E conhecido na categoria Coconut Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 104,
+    "number": "0104",
+    "name": "Cubone",
+    "description_ptbr_draft": "Cubone e um Pokemon do tipo Terrestre. E conhecido na categoria Lonely Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 105,
+    "number": "0105",
+    "name": "Marowak",
+    "description_ptbr_draft": "Marowak e um Pokemon do tipo Terrestre. E conhecido na categoria Bone Keeper Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 106,
+    "number": "0106",
+    "name": "Hitmonlee",
+    "description_ptbr_draft": "Hitmonlee e um Pokemon do tipo Lutador. E conhecido na categoria Kicking Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 107,
+    "number": "0107",
+    "name": "Hitmonchan",
+    "description_ptbr_draft": "Hitmonchan e um Pokemon do tipo Lutador. E conhecido na categoria Punching Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 108,
+    "number": "0108",
+    "name": "Lickitung",
+    "description_ptbr_draft": "Lickitung e um Pokemon do tipo Normal. E conhecido na categoria Licking Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 109,
+    "number": "0109",
+    "name": "Koffing",
+    "description_ptbr_draft": "Koffing e um Pokemon do tipo Venenoso. E conhecido na categoria Poison Gas Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 110,
+    "number": "0110",
+    "name": "Weezing",
+    "description_ptbr_draft": "Weezing e um Pokemon do tipo Venenoso. E conhecido na categoria Poison Gas Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 111,
+    "number": "0111",
+    "name": "Rhyhorn",
+    "description_ptbr_draft": "Rhyhorn e um Pokemon do tipo Terrestre e Pedra. E conhecido na categoria Spikes Pokémon e costuma aparecer em rough terrain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 112,
+    "number": "0112",
+    "name": "Rhydon",
+    "description_ptbr_draft": "Rhydon e um Pokemon do tipo Terrestre e Pedra. E conhecido na categoria Drill Pokémon e costuma aparecer em rough terrain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 113,
+    "number": "0113",
+    "name": "Chansey",
+    "description_ptbr_draft": "Chansey e um Pokemon do tipo Normal. E conhecido na categoria Egg Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 114,
+    "number": "0114",
+    "name": "Tangela",
+    "description_ptbr_draft": "Tangela e um Pokemon do tipo Grama. E conhecido na categoria Vine Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 115,
+    "number": "0115",
+    "name": "Kangaskhan",
+    "description_ptbr_draft": "Kangaskhan e um Pokemon do tipo Normal. E conhecido na categoria Parent Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 116,
+    "number": "0116",
+    "name": "Horsea",
+    "description_ptbr_draft": "Horsea e um Pokemon do tipo Agua. E conhecido na categoria Dragon Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 117,
+    "number": "0117",
+    "name": "Seadra",
+    "description_ptbr_draft": "Seadra e um Pokemon do tipo Agua. E conhecido na categoria Dragon Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 118,
+    "number": "0118",
+    "name": "Goldeen",
+    "description_ptbr_draft": "Goldeen e um Pokemon do tipo Agua. E conhecido na categoria Goldfish Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 119,
+    "number": "0119",
+    "name": "Seaking",
+    "description_ptbr_draft": "Seaking e um Pokemon do tipo Agua. E conhecido na categoria Goldfish Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 120,
+    "number": "0120",
+    "name": "Staryu",
+    "description_ptbr_draft": "Staryu e um Pokemon do tipo Agua. E conhecido na categoria Star Shape Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 121,
+    "number": "0121",
+    "name": "Starmie",
+    "description_ptbr_draft": "Starmie e um Pokemon do tipo Agua e Psiquico. E conhecido na categoria Mysterious Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 122,
+    "number": "0122",
+    "name": "Mr-Mime",
+    "description_ptbr_draft": "Mr-Mime e um Pokemon do tipo Psiquico e Fada. E conhecido na categoria Barrier Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 123,
+    "number": "0123",
+    "name": "Scyther",
+    "description_ptbr_draft": "Scyther e um Pokemon do tipo Inseto e Voador. E conhecido na categoria Mantis Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 124,
+    "number": "0124",
+    "name": "Jynx",
+    "description_ptbr_draft": "Jynx e um Pokemon do tipo Gelo e Psiquico. E conhecido na categoria Human Shape Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 125,
+    "number": "0125",
+    "name": "Electabuzz",
+    "description_ptbr_draft": "Electabuzz e um Pokemon do tipo Eletrico. E conhecido na categoria Electric Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 126,
+    "number": "0126",
+    "name": "Magmar",
+    "description_ptbr_draft": "Magmar e um Pokemon do tipo Fogo. E conhecido na categoria Spitfire Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 127,
+    "number": "0127",
+    "name": "Pinsir",
+    "description_ptbr_draft": "Pinsir e um Pokemon do tipo Inseto. E conhecido na categoria Stag Beetle Pokémon e costuma aparecer em forest. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 128,
+    "number": "0128",
+    "name": "Tauros",
+    "description_ptbr_draft": "Tauros e um Pokemon do tipo Normal. E conhecido na categoria Wild Bull Pokémon e costuma aparecer em grassland. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 129,
+    "number": "0129",
+    "name": "Magikarp",
+    "description_ptbr_draft": "Magikarp e um Pokemon do tipo Agua. E conhecido na categoria Fish Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 130,
+    "number": "0130",
+    "name": "Gyarados",
+    "description_ptbr_draft": "Gyarados e um Pokemon do tipo Agua e Voador. E conhecido na categoria Atrocious Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 131,
+    "number": "0131",
+    "name": "Lapras",
+    "description_ptbr_draft": "Lapras e um Pokemon do tipo Agua e Gelo. E conhecido na categoria Transport Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 132,
+    "number": "0132",
+    "name": "Ditto",
+    "description_ptbr_draft": "Ditto e um Pokemon do tipo Normal. E conhecido na categoria Transform Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 133,
+    "number": "0133",
+    "name": "Eevee",
+    "description_ptbr_draft": "Eevee e um Pokemon do tipo Normal. E conhecido na categoria Evolution Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 134,
+    "number": "0134",
+    "name": "Vaporeon",
+    "description_ptbr_draft": "Vaporeon e um Pokemon do tipo Agua. E conhecido na categoria Bubble Jet Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 135,
+    "number": "0135",
+    "name": "Jolteon",
+    "description_ptbr_draft": "Jolteon e um Pokemon do tipo Eletrico. E conhecido na categoria Lightning Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 136,
+    "number": "0136",
+    "name": "Flareon",
+    "description_ptbr_draft": "Flareon e um Pokemon do tipo Fogo. E conhecido na categoria Flame Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 137,
+    "number": "0137",
+    "name": "Porygon",
+    "description_ptbr_draft": "Porygon e um Pokemon do tipo Normal. E conhecido na categoria Virtual Pokémon e costuma aparecer em urban. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 138,
+    "number": "0138",
+    "name": "Omanyte",
+    "description_ptbr_draft": "Omanyte e um Pokemon do tipo Pedra e Agua. E conhecido na categoria Spiral Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 139,
+    "number": "0139",
+    "name": "Omastar",
+    "description_ptbr_draft": "Omastar e um Pokemon do tipo Pedra e Agua. E conhecido na categoria Spiral Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 140,
+    "number": "0140",
+    "name": "Kabuto",
+    "description_ptbr_draft": "Kabuto e um Pokemon do tipo Pedra e Agua. E conhecido na categoria Shellfish Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 141,
+    "number": "0141",
+    "name": "Kabutops",
+    "description_ptbr_draft": "Kabutops e um Pokemon do tipo Pedra e Agua. E conhecido na categoria Shellfish Pokémon e costuma aparecer em sea. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 142,
+    "number": "0142",
+    "name": "Aerodactyl",
+    "description_ptbr_draft": "Aerodactyl e um Pokemon do tipo Pedra e Voador. E conhecido na categoria Fossil Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 143,
+    "number": "0143",
+    "name": "Snorlax",
+    "description_ptbr_draft": "Snorlax e um Pokemon do tipo Normal. E conhecido na categoria Sleeping Pokémon e costuma aparecer em mountain. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 144,
+    "number": "0144",
+    "name": "Articuno",
+    "description_ptbr_draft": "Articuno e um Pokemon do tipo Gelo e Voador. E conhecido na categoria Freeze Pokémon e costuma aparecer em rare. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 145,
+    "number": "0145",
+    "name": "Zapdos",
+    "description_ptbr_draft": "Zapdos e um Pokemon do tipo Eletrico e Voador. E conhecido na categoria Electric Pokémon e costuma aparecer em rare. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 146,
+    "number": "0146",
+    "name": "Moltres",
+    "description_ptbr_draft": "Moltres e um Pokemon do tipo Fogo e Voador. E conhecido na categoria Flame Pokémon e costuma aparecer em rare. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 147,
+    "number": "0147",
+    "name": "Dratini",
+    "description_ptbr_draft": "Dratini e um Pokemon do tipo Dragao. E conhecido na categoria Dragon Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 148,
+    "number": "0148",
+    "name": "Dragonair",
+    "description_ptbr_draft": "Dragonair e um Pokemon do tipo Dragao. E conhecido na categoria Dragon Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 149,
+    "number": "0149",
+    "name": "Dragonite",
+    "description_ptbr_draft": "Dragonite e um Pokemon do tipo Dragao e Voador. E conhecido na categoria Dragon Pokémon e costuma aparecer em waters edge. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 150,
+    "number": "0150",
+    "name": "Mewtwo",
+    "description_ptbr_draft": "Mewtwo e um Pokemon do tipo Psiquico. E conhecido na categoria Genetic Pokémon e costuma aparecer em rare. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  },
+  {
+    "id": 151,
+    "number": "0151",
+    "name": "Mew",
+    "description_ptbr_draft": "Mew e um Pokemon do tipo Psiquico. E conhecido na categoria New Species Pokémon e costuma aparecer em rare. Este texto e um rascunho original para revisao editorial em portugues do Brasil."
+  }
+]

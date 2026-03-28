@@ -16,11 +16,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - module: app/pokedex-service
-            artifact_name: coverage-app-pokedex-service
-          - module: bff/mobile-bff
+          - module: core/app/pokemon-catalog-service
+            artifact_name: coverage-app-pokemon-catalog-service
+          - module: core/bff/mobile-bff
             artifact_name: coverage-bff-mobile-bff
-          - module: infra/postgres/json2sql
+          - module: core/infra/postgres/json2sql
             artifact_name: coverage-infra-postgres-json2sql
 
     defaults:
@@ -81,9 +81,9 @@ jobs:
       fail-fast: false
       matrix:
         module:
-          - app/pokedex-service
-          - bff/mobile-bff
-          - infra/postgres/json2sql
+          - core/app/pokemon-catalog-service
+          - core/bff/mobile-bff
+          - core/infra/postgres/json2sql
 
     defaults:
       run:
