@@ -12,6 +12,39 @@ O `mobile-bff` é a aplicação voltada ao cliente dentro da plataforma. O papel
 - Delegar fluxos de autenticação ao `auth-service`.
 - Retornar respostas já moldadas para consumo de UI.
 
+## Diagrama De Comunicação Do BFF
+
+```mermaid
+flowchart LR
+    cliente[Cliente]
+    http[HTTP Handlers]
+    service[Camada de Service / Casos de Uso]
+    catalog[Adapter do Catálogo]
+    auth[Adapter de Auth]
+    favorites[Repository de Favoritos]
+    catalogsvc[pokemon-catalog-service]
+    authsvc[auth-service]
+    postgres[(PostgreSQL)]
+
+    cliente --> http
+    http --> service
+    service --> catalog
+    service --> auth
+    service --> favorites
+    catalog --> catalogsvc
+    auth --> authsvc
+    favorites --> postgres
+```
+
+## Como Ler Esse Diagrama
+
+- O cliente conversa com o BFF por HTTP.
+- Os handlers recebem e validam transporte.
+- A camada de `service` orquestra os casos de uso.
+- O adapter de catálogo chama o `pokemon-catalog-service`.
+- O adapter de auth chama o `auth-service`.
+- O repository de favoritos persiste no `PostgreSQL`.
+
 ## O Que O BFF Deve Possuir
 
 - Orquestração de requisições.
@@ -33,6 +66,26 @@ O BFF atual está razoavelmente bem alinhado com arquitetura hexagonal:
 - `internal/ports` define contratos de entrada e saída.
 - `internal/service` funciona como camada de aplicação implementando casos de uso.
 - `internal/adapters/http` e `internal/adapters/repository` funcionam como adaptadores de entrada e saída.
+
+## Diagrama Hexagonal Simplificado
+
+```mermaid
+flowchart LR
+    cliente[Cliente]
+    http[Adapters de Entrada HTTP]
+    portsin[Ports de Entrada]
+    services[Services de Aplicação]
+    portsout[Ports de Saída]
+    adaptersout[Adapters de Saída]
+    externos[Catálogo / Auth / PostgreSQL]
+
+    cliente --> http
+    http --> portsin
+    portsin --> services
+    services --> portsout
+    portsout --> adaptersout
+    adaptersout --> externos
+```
 
 O principal ponto não era apenas o layout de pastas. O principal ponto era a direção das dependências em algumas partes do código.
 

@@ -16,6 +16,35 @@ Cliente
       -> Redis
 ```
 
+## Diagrama Da Plataforma
+
+```mermaid
+flowchart LR
+    cliente[Cliente Web ou Mobile]
+    kong[Kong Gateway]
+    bff[mobile-bff]
+    catalog[pokemon-catalog-service]
+    auth[auth-service]
+    postgres[(PostgreSQL)]
+    redis[(Redis)]
+
+    cliente --> kong
+    kong --> bff
+    bff --> catalog
+    bff --> auth
+    bff --> postgres
+    bff --> redis
+```
+
+## Leitura Arquitetural Do Diagrama
+
+- O cliente não acessa os serviços internos diretamente.
+- O `Kong Gateway` é o ponto de entrada público da plataforma.
+- O `mobile-bff` concentra a orquestração voltada ao cliente.
+- O `pokemon-catalog-service` mantém o catálogo canônico.
+- O `auth-service` concentra autenticação e ciclo de vida de token.
+- `PostgreSQL` e `Redis` aparecem como infraestrutura de apoio para os serviços.
+
 ## Áreas Do Repositório
 
 ### `core/app/`
@@ -45,6 +74,29 @@ No nível do repositório, a plataforma segue uma composição orientada a servi
 - BFF como orquestrador voltado ao cliente
 - serviços internos para capacidades específicas
 - infraestrutura mantida fora do código de aplicação
+
+## Fluxo De Comunicação Mais Comum
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant K as Kong Gateway
+    participant B as mobile-bff
+    participant P as pokemon-catalog-service
+    participant A as auth-service
+    participant DB as PostgreSQL
+
+    C->>K: Requisição HTTP
+    K->>B: Encaminha rota do cliente
+    B->>A: Valida ou renova sessão
+    A-->>B: Identidade ou token
+    B->>P: Busca dados do catálogo
+    P-->>B: Dados canônicos do Pokémon
+    B->>DB: Busca ou grava favoritos
+    DB-->>B: Estado persistido
+    B-->>K: Resposta moldada para UI
+    K-->>C: Resposta final
+```
 
 Dentro do `mobile-bff`, o estilo pretendido é arquitetura hexagonal. Essa intenção aparece nos pacotes `domain`, `ports`, `service` e `adapters`, embora alguns detalhes de implementação ainda possam gerar acoplamento com infraestrutura concreta.
 
