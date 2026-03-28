@@ -1,174 +1,146 @@
-# Hexagonal Architecture
+# Arquitetura Hexagonal
 
-## Purpose
+## Objetivo
 
-This document explains how hexagonal architecture is currently applied inside `core/bff/mobile-bff`.
+Este documento explica como a arquitetura hexagonal está aplicada atualmente dentro de `core/bff/mobile-bff`.
 
-## Layer Model
+## Modelo De Camadas
 
 ```text
-Inbound adapters
-  -> inbound ports
-    -> application services
-      -> outbound ports
-        -> outbound adapters
+Adapters de entrada
+  -> ports de entrada
+    -> services de aplicação
+      -> ports de saída
+        -> adapters de saída
 ```
 
-## Current Mapping In The Project
+## Mapeamento Atual No Projeto
 
-### Domain
+### Domínio
 
-Path: `core/bff/mobile-bff/internal/domain`
+Caminho: `core/bff/mobile-bff/internal/domain`
 
-Responsibility:
+Responsabilidade:
 
-- Define core business models.
-- Hold domain-level errors and validation rules.
-- Stay independent from HTTP, PostgreSQL, and external services.
+- Definir modelos centrais de negócio.
+- Guardar erros em nível de domínio e regras de validação.
+- Permanecer independente de HTTP, PostgreSQL e serviços externos.
 
-Examples:
+Exemplos:
 
 - `pokemon.go`
 - `errors.go`
 
-### Inbound Ports
+### Ports De Entrada
 
-Path: `core/bff/mobile-bff/internal/ports`
+Caminho: `core/bff/mobile-bff/internal/ports`
 
-Responsibility:
+Responsabilidade:
 
-- Define what the application can do from the perspective of callers.
-- Describe use cases without tying them to HTTP.
+- Definir o que a aplicação pode fazer do ponto de vista de quem a chama.
+- Descrever casos de uso sem acoplá-los a HTTP.
 
-Examples:
+Exemplos:
 
 - `PokemonUseCase`
 - `FavoriteUseCase`
 
-### Application Services
+### Services De Aplicação
 
-Path: `core/bff/mobile-bff/internal/service`
+Caminho: `core/bff/mobile-bff/internal/service`
 
-Responsibility:
+Responsabilidade:
 
-- Implement use cases.
-- Coordinate domain objects and outbound ports.
-- Apply application rules such as validation, orchestration, and pagination defaults.
+- Implementar casos de uso.
+- Coordenar objetos de domínio e ports de saída.
+- Aplicar regras de aplicação como validação, orquestração e paginação padrão.
 
-Examples:
+Exemplos:
 
 - `PokemonService`
 - `FavoriteService`
 
-### Outbound Ports
+### Ports De Saída
 
-Path: `core/bff/mobile-bff/internal/ports`
+Caminho: `core/bff/mobile-bff/internal/ports`
 
-Responsibility:
+Responsabilidade:
 
-- Define what infrastructure capabilities the application needs.
-- Hide persistence and remote communication details behind interfaces.
+- Definir quais capacidades de infraestrutura a aplicação precisa.
+- Esconder detalhes de persistência e comunicação remota atrás de interfaces.
 
-Examples:
+Exemplos:
 
 - `PokemonRepository`
 - `FavoriteRepository`
 
-### Inbound Adapters
+### Adapters De Entrada
 
-Path: `core/bff/mobile-bff/internal/adapters/http`
+Caminho: `core/bff/mobile-bff/internal/adapters/http`
 
-Responsibility:
+Responsabilidade:
 
-- Receive HTTP requests.
-- Parse transport-specific data.
-- Call use cases.
-- Convert application results into DTOs and HTTP responses.
+- Receber requisições HTTP.
+- Fazer o parse de dados específicos do transporte.
+- Chamar casos de uso.
+- Converter resultados da aplicação em DTOs e respostas HTTP.
 
-Examples:
+Exemplos:
 
 - `handlers.go`
 - `middleware.go`
 - `response_builder.go`
 - `dto/`
 
-### Outbound Adapters
+### Adapters De Saída
 
-Path: `core/bff/mobile-bff/internal/adapters/repository`
+Caminho: `core/bff/mobile-bff/internal/adapters/repository`
 
-Responsibility:
+Responsabilidade:
 
-- Implement ports using PostgreSQL or remote HTTP services.
-- Translate infrastructure details into application-facing behavior.
+- Implementar ports usando PostgreSQL ou serviços HTTP remotos.
+- Traduzir detalhes de infraestrutura para um comportamento voltado à aplicação.
 
-Examples:
+Exemplos:
 
 - `favorite_repository.go`
 - `pokemon_repository.go`
 - `pokemon_catalog_service_repository.go`
 - `auth_service_client.go`
 
-## What Is Working Well
+## O Que Está Funcionando Bem
 
-- The code already separates domain, ports, services, and adapters.
-- Use cases are represented as interfaces.
-- Repositories are abstractions rather than direct database calls in handlers.
-- HTTP DTOs stay inside the HTTP adapter package.
+- O código já separa domínio, ports, services e adapters.
+- Os casos de uso estão representados como interfaces.
+- Repositories são abstrações em vez de chamadas diretas ao banco dentro de handlers.
+- DTOs HTTP permanecem dentro do pacote do adapter HTTP.
+- Adapters de fallback de runtime vivem em código interno de runtime em vez de `tests/`.
+- Os fluxos de auth agora passam por `AuthUseCase` em vez de acoplar o adapter HTTP ao client externo de auth.
 
-## Where The Hexagon Is Weaker
+## Onde O Hexágono Está Mais Fraco
 
-### Concrete dependency in the entry adapter
+### Mapeamento de negócio duplicado entre camadas
 
-`handlers.go` depends on `*repository.AuthServiceClient`, which is a concrete outbound adapter.
+O mapeamento de cor por tipo de Pokémon existe em mais de um pacote.
 
-Why this matters:
+Por que isso importa:
 
-- An inbound adapter should depend on a port, not on a concrete infrastructure implementation.
+- O comportamento do domínio pode se desalinhar entre as camadas de adapter e service.
 
-### Repository access leaking into the handler
+## Próxima Refatoração Recomendada
 
-The handler also receives `favoriteRepo` directly.
+### Passo 1
 
-Why this matters:
+Centralizar as regras de apresentação de tipo de Pokémon usadas tanto pelo service quanto pelos response builders.
 
-- It weakens the use case boundary.
-- It makes it easier for transport code to coordinate persistence concerns.
+### Passo 2
 
-### Production code importing test package
+Revisar se parte da lógica de enriquecimento de favoritos deve ir para um mapper voltado à aplicação ou para um query service dedicado.
 
-`cmd/server/main.go` imports `tests/mocks`.
+### Passo 3
 
-Why this matters:
+Continuar expandindo os testes ao redor das fronteiras arquiteturais sempre que novos adapters ou integrações forem introduzidos.
 
-- Test code becomes part of runtime composition.
-- The dependency graph becomes harder to reason about.
+## Avaliação Final
 
-### Business mapping duplicated across layers
-
-Pokemon type color mapping exists in more than one package.
-
-Why this matters:
-
-- Domain behavior can drift between adapter and service layers.
-
-## Recommended Next Refactor
-
-### Step 1
-
-Introduce an `AuthProvider` port and make the HTTP handler depend on it.
-
-### Step 2
-
-Move runtime fallback implementations out of `tests/` into an internal adapter package.
-
-### Step 3
-
-Ensure handlers talk only to use cases, not directly to repositories.
-
-### Step 4
-
-Centralize shared mapping logic used by both service and response layers.
-
-## Final Assessment
-
-The BFF is already close to a real hexagonal architecture. The remaining work is mostly about tightening dependency direction and clarifying what belongs to application logic versus infrastructure composition.
+O BFF agora aplica arquitetura hexagonal de forma mais consistente do que antes. O trabalho restante tem menos a ver com corrigir grandes violações de fronteira e mais com refinar regras de mapeamento compartilhadas e manter a arquitetura leve à medida que o projeto evolui.

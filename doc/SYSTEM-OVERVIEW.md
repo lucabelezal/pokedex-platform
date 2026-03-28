@@ -1,13 +1,13 @@
-# System Overview
+# Visão Geral Do Sistema
 
-## Purpose
+## Objetivo
 
-The Pokedex Platform is organized as a small backend ecosystem built around a mobile-oriented BFF, internal services, an API gateway, and shared infrastructure.
+A Plataforma Pokedex está organizada como um pequeno ecossistema de backend composto por um BFF orientado ao cliente, serviços internos, um gateway de API e infraestrutura compartilhada.
 
-## Main Flow
+## Fluxo Principal
 
 ```text
-Client
+Cliente
   -> Kong Gateway
     -> mobile-bff
       -> pokemon-catalog-service
@@ -16,49 +16,47 @@ Client
       -> Redis
 ```
 
-## Repository Areas
+## Áreas Do Repositório
 
 ### `core/app/`
 
-Contains internal backend services that expose narrower business capabilities.
+Contém serviços internos de backend que expõem capacidades de negócio mais específicas.
 
-- `auth-service`: authentication and token lifecycle.
-- `pokemon-catalog-service`: canonical Pokemon catalog access.
+- `auth-service`: autenticação e ciclo de vida de tokens.
+- `pokemon-catalog-service`: acesso canônico ao catálogo de Pokémon.
 
 ### `core/bff/`
 
-Contains `mobile-bff`, the Backend for Frontend that shapes responses for client experience and orchestrates multiple dependencies.
+Contém o `mobile-bff`, o Backend for Frontend que molda respostas para a experiência do cliente e orquestra múltiplas dependências.
 
 ### `core/gateway/`
 
-Contains Kong declarative configuration used as the public entry point.
+Contém a configuração declarativa do Kong usada como ponto de entrada público.
 
 ### `core/infra/`
 
-Contains shared infrastructure assets such as PostgreSQL schema, seed generation inputs, generated seed data, and Redis configuration.
+Contém ativos compartilhados de infraestrutura, como schema do PostgreSQL, insumos para geração de seed, dados de seed gerados e configuração do Redis.
 
-## Architectural Style
+## Estilo Arquitetural
 
-At repository level, the platform follows a service-oriented composition:
+No nível do repositório, a plataforma segue uma composição orientada a serviços:
 
-- Gateway as entry point.
-- BFF as client-facing orchestrator.
-- Internal services for focused capabilities.
-- Infrastructure kept outside application code.
+- gateway como ponto de entrada
+- BFF como orquestrador voltado ao cliente
+- serviços internos para capacidades específicas
+- infraestrutura mantida fora do código de aplicação
 
-Inside the `mobile-bff`, the intended style is hexagonal architecture. That intent is visible in the `domain`, `ports`, `service`, and `adapters` packages, although a few implementation details still create coupling to concrete infrastructure.
+Dentro do `mobile-bff`, o estilo pretendido é arquitetura hexagonal. Essa intenção aparece nos pacotes `domain`, `ports`, `service` e `adapters`, embora alguns detalhes de implementação ainda possam gerar acoplamento com infraestrutura concreta.
 
-## Current Strengths
+## Pontos Fortes Atuais
 
-- Clear top-level separation between BFF, services, gateway, and infrastructure.
-- Good use of Docker Compose to represent the runtime topology.
-- BFF already uses ports and adapters terminology consistently.
-- Tests exist for unit and integration scenarios in the BFF.
+- Separação clara entre BFF, serviços, gateway e infraestrutura.
+- Bom uso do Docker Compose para representar a topologia de execução.
+- O BFF já usa a terminologia de ports and adapters com consistência.
+- Existem testes unitários e de integração no BFF.
 
-## Current Improvement Areas
+## Pontos De Melhoria Atuais
 
-- The BFF bootstrap still imports test mocks directly in production composition.
-- Some HTTP handlers depend on concrete infrastructure clients instead of ports.
-- Some business formatting rules are duplicated across layers.
-- Service boundaries are documented in practice, but not yet fully formalized as contracts.
-
+- Algumas regras de formatação de negócio ainda aparecem duplicadas em camadas diferentes.
+- Os limites entre serviços já estão claros na prática, mas ainda podem ser mais formalizados como contratos.
+- A arquitetura do BFF já está bem melhor, mas ainda pode evoluir na centralização de algumas regras compartilhadas.

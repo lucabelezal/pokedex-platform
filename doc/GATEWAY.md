@@ -1,32 +1,31 @@
 # Gateway
 
-## Purpose
+## Objetivo
 
-Kong is the platform entry point. It provides a single public access layer in front of the internal applications.
+O Kong é o ponto de entrada da plataforma. Ele fornece uma camada pública única de acesso na frente das aplicações internas.
 
-## Current Role
+## Papel Atual
 
-- Receive external traffic.
-- Route requests to `mobile-bff`.
-- Hide internal service topology from clients.
+- Receber tráfego externo.
+- Roteirizar requisições para o `mobile-bff`.
+- Esconder a topologia interna dos serviços para os clientes.
 
-## Current Configuration
+## Configuração Atual
 
-The repository uses a declarative Kong configuration in `core/gateway/kong/kong.yml`.
+O repositório usa uma configuração declarativa do Kong em `core/gateway/kong/kong.yml`.
 
-At the moment:
+No momento:
 
-- Kong exposes `/v1`.
-- Requests are forwarded to `http://mobile-bff:8080/api`.
+- o Kong expõe `/v1`
+- as requisições são encaminhadas para `http://mobile-bff:8080/api`
 
-## Architectural Notes
+## Notas Arquiteturais
 
-The gateway is intentionally thin right now. That is a good default for an early-stage project because it keeps routing simple while the domain is still evolving.
+O gateway está intencionalmente enxuto neste momento. Isso é uma boa escolha para uma fase inicial do projeto, porque mantém o roteamento simples enquanto o domínio ainda está evoluindo.
 
-## Improvement Opportunities
+## Oportunidades De Melhoria
 
-- Document public routes and route ownership more explicitly.
-- Add request tracing or correlation headers between gateway and downstream services.
-- Decide whether authentication should remain fully in the BFF or partially move to the gateway in the future.
-- Add rate limiting and standardized error transformation if the platform becomes externally exposed.
-
+- Documentar com mais clareza as rotas públicas e a responsabilidade de cada rota.
+- Adicionar tracing de requisições ou correlation headers entre gateway e serviços downstream.
+- Decidir se a autenticação deve continuar totalmente no BFF ou se parte dela pode migrar para o gateway no futuro.
+- Adicionar rate limiting e padronização de erros caso a plataforma fique mais exposta externamente.

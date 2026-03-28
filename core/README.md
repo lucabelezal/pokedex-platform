@@ -1,43 +1,42 @@
 # Core
 
-This directory contains the runtime code and infrastructure of the Pokedex Platform.
+Este diretório concentra o código executável e os ativos de infraestrutura da Plataforma Pokedex.
 
-## Structure
+## Estrutura
 
 ```text
 core/
-├── app/           # Internal backend services
-├── bff/           # Backend for Frontend applications
-├── gateway/       # API gateway configuration
-├── infra/         # Shared infrastructure assets
-├── bruno/         # API request collection
-├── observability/ # Monitoring and operational assets
+├── app/           # Serviços internos de backend
+├── bff/           # Aplicações Backend for Frontend
+├── gateway/       # Configuração do API Gateway
+├── infra/         # Ativos compartilhados de infraestrutura
+├── bruno/         # Coleção de requisições de API
+├── observability/ # Ativos de observabilidade e operação
 └── docker-compose.yml
 ```
 
-## Purpose
+## Objetivo
 
-The `core/` folder keeps implementation artifacts together so the repository root can stay focused on cross-cutting materials such as documentation and contribution files.
+A pasta `core/` mantém os artefatos de implementação reunidos para que a raiz do repositório permaneça focada em materiais transversais, como documentação e arquivos de colaboração.
 
-## Main Areas
+## Áreas Principais
 
-- `app/`: service-specific business capabilities such as `auth-service` and `pokemon-catalog-service`.
-- `bff/`: client-facing composition layer, currently `mobile-bff`.
-- `gateway/`: Kong declarative configuration.
-- `infra/`: PostgreSQL schema, seeds, source JSON files, Redis config, and data tooling.
+- `app/`: capacidades de negócio encapsuladas em serviços, como `auth-service` e `pokemon-catalog-service`.
+- `bff/`: camada de composição voltada ao cliente, atualmente o `mobile-bff`.
+- `gateway/`: configuração declarativa do Kong.
+- `infra/`: schema do PostgreSQL, seeds, arquivos-fonte em JSON, configuração do Redis e ferramentas de dados.
 
-## Local Runtime
+## Execução Local
 
-From the repository root:
+A partir da raiz do repositório:
 
 ```bash
 docker compose -f core/docker-compose.yml up --build
 ```
 
-## Related Documentation
+## Documentação Relacionada
 
 - `../README.md`
 - `../doc/SYSTEM-OVERVIEW.md`
 - `../doc/BFF.md`
 - `../doc/INFRA.md`
-

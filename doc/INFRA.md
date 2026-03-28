@@ -1,45 +1,45 @@
-# Infrastructure
+# Infraestrutura
 
-## Purpose
+## Objetivo
 
-The `core/infra/` directory contains the shared technical assets required to run the platform locally and in containerized environments.
+O diretório `core/infra/` contém os ativos técnicos compartilhados necessários para executar a plataforma localmente e em ambientes containerizados.
 
 ## PostgreSQL
 
-PostgreSQL is used as the main persistent store.
+O PostgreSQL é usado como principal armazenamento persistente.
 
-### Files
+### Arquivos
 
-- `core/infra/postgres/schema/schema.sql`: database schema.
-- `core/infra/postgres/seeds/init-data.sql`: generated seed data.
-- `core/infra/postgres/source-json/`: source of truth for catalog content.
-- `core/infra/postgres/json2sql/`: tool that converts source JSON files into SQL seed data.
+- `core/infra/postgres/schema/schema.sql`: schema do banco de dados.
+- `core/infra/postgres/seeds/init-data.sql`: seed gerada.
+- `core/infra/postgres/source-json/`: fonte de verdade do conteúdo do catálogo.
+- `core/infra/postgres/json2sql/`: ferramenta que converte arquivos JSON de origem em seed SQL.
 
-### Current Data Pipeline
+### Pipeline Atual De Dados
 
 ```text
 source-json/*.json
   -> json2sql
     -> seeds/init-data.sql
-      -> PostgreSQL container initialization
+      -> inicialização do container PostgreSQL
 ```
 
-This is a good fit for deterministic local environments and study projects because it keeps the dataset versioned and reproducible.
+Esse fluxo é adequado para ambientes locais determinísticos e projetos de estudo porque mantém o dataset versionado e reproduzível.
 
 ## Redis
 
-Redis is provisioned in Docker Compose, but its architectural role is not yet strongly visible in the application code.
+O Redis está provisionado no Docker Compose, mas seu papel arquitetural ainda não aparece com tanta força no código da aplicação.
 
-This usually means one of two things:
+Isso normalmente indica uma de duas situações:
 
-- It is planned for future use.
-- It is infrastructure-ready but not yet integrated into the core flows.
+- uso planejado para o futuro
+- infraestrutura pronta, mas ainda não integrada aos fluxos centrais
 
-That should be documented explicitly as the project evolves.
+Isso deveria continuar sendo documentado de forma explícita conforme o projeto evolui.
 
 ## Docker Compose
 
-The `core/docker-compose.yml` describes the full local topology:
+O `core/docker-compose.yml` descreve a topologia local completa:
 
 - PostgreSQL
 - Redis
@@ -48,12 +48,11 @@ The `core/docker-compose.yml` describes the full local topology:
 - `mobile-bff`
 - Kong
 
-This is one of the clearest documents of the real runtime architecture today.
+Esse é um dos documentos mais claros da arquitetura real de execução hoje.
 
-## Improvement Opportunities
+## Oportunidades De Melhoria
 
-- Document which service owns which tables.
-- Clarify whether the BFF may persist its own data long term or only temporarily.
-- Decide if Redis will be used for cache, sessions, rate limiting, or not at all.
-- Add environment variable documentation per service.
-
+- Documentar qual serviço é dono de quais tabelas.
+- Esclarecer se o BFF pode persistir seus próprios dados no longo prazo ou apenas temporariamente.
+- Decidir se o Redis será usado para cache, sessões, rate limiting, ou se não será usado.
+- Adicionar documentação de variáveis de ambiente por serviço.

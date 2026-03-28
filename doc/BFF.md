@@ -1,89 +1,88 @@
 # BFF
 
-## Purpose
+## Objetivo
 
-The `mobile-bff` is the client-facing application of the platform. Its job is not to be the source of truth for the whole domain, but to provide responses shaped for mobile and web experience.
+O `mobile-bff` é a aplicação voltada ao cliente dentro da plataforma. O papel dele não é ser a fonte de verdade de todo o domínio, mas sim fornecer respostas moldadas para a experiência mobile e web.
 
-## Current Responsibilities
+## Responsabilidades Atuais
 
-- Expose frontend-oriented HTTP endpoints.
-- Aggregate data from `pokemon-catalog-service`.
-- Manage user favorites.
-- Delegate authentication flows to `auth-service`.
-- Return responses already shaped for UI consumption.
+- Expor endpoints HTTP orientados ao frontend.
+- Agregar dados do `pokemon-catalog-service`.
+- Gerenciar favoritos de usuário.
+- Delegar fluxos de autenticação ao `auth-service`.
+- Retornar respostas já moldadas para consumo de UI.
 
-## What The BFF Should Own
+## O Que O BFF Deve Possuir
 
-- Request orchestration.
-- Experience-oriented response composition.
-- Session and identity propagation.
-- Client-specific contracts.
+- Orquestração de requisições.
+- Composição de respostas orientadas à experiência.
+- Propagação de sessão e identidade.
+- Contratos específicos para o cliente.
 
-## What The BFF Should Not Own
+## O Que O BFF Não Deve Possuir
 
-- Canonical Pokemon catalog rules that belong to `pokemon-catalog-service`.
-- Authentication core logic that belongs to `auth-service`.
-- Infrastructure-specific decisions leaking into use case code.
+- Regras canônicas do catálogo de Pokémon, que pertencem ao `pokemon-catalog-service`.
+- Lógica central de autenticação, que pertence ao `auth-service`.
+- Decisões específicas de infraestrutura vazando para o código de caso de uso.
 
-## Hexagonal Architecture Status
+## Estado Da Arquitetura Hexagonal
 
-The current BFF is partially well aligned with hexagonal architecture:
+O BFF atual está razoavelmente bem alinhado com arquitetura hexagonal:
 
-- `internal/domain` keeps core models independent from transport concerns.
-- `internal/ports` defines inbound and outbound contracts.
-- `internal/service` acts as an application layer implementing use cases.
-- `internal/adapters/http` and `internal/adapters/repository` work as entry and exit adapters.
+- `internal/domain` mantém modelos centrais independentes de transporte.
+- `internal/ports` define contratos de entrada e saída.
+- `internal/service` funciona como camada de aplicação implementando casos de uso.
+- `internal/adapters/http` e `internal/adapters/repository` funcionam como adaptadores de entrada e saída.
 
-The main issue is not the folder layout. The main issue is dependency direction in a few places.
+O principal ponto não era apenas o layout de pastas. O principal ponto era a direção das dependências em algumas partes do código.
 
-## Main Improvement Points
+## Principais Pontos De Melhoria
 
-### 1. Remove test mocks from production bootstrap
+### 1. Remover mocks de teste do bootstrap de produção
 
-`cmd/server/main.go` imports `tests/mocks` to assemble runtime fallbacks. This makes production composition depend on a test package.
+Antes, `cmd/server/main.go` importava `tests/mocks` para montar fallbacks de runtime. Isso fazia a composição de produção depender de um pacote de teste.
 
-Recommended direction:
+Direção recomendada:
 
-- Move fallback implementations to `internal/adapters/repository/mock` or `internal/adapters/repository/memory`.
-- Keep `tests/` only for test-only utilities.
+- mover implementações de fallback para `internal/adapters/repository`
+- manter `tests/` apenas para utilitários de teste
 
-### 2. Replace concrete auth client dependency with a port
+### 2. Substituir a dependência de auth concreta por uma porta
 
-`internal/adapters/http/handlers.go` depends on `*repository.AuthServiceClient`.
+Antes, o handler HTTP dependia do client concreto de auth.
 
-Recommended direction:
+Direção recomendada:
 
-- Create an outbound port such as `AuthProvider`.
-- Let the HTTP handler depend on the port, not on the concrete client.
-- Keep `AuthServiceClient` as one adapter implementing that port.
+- criar uma porta de saída como `AuthProvider`
+- deixar o fluxo HTTP depender de um caso de uso de auth
+- manter `AuthServiceClient` como adapter que implementa a porta
 
-### 3. Avoid bypassing the use case layer
+### 3. Evitar bypass da camada de caso de uso
 
-The handler currently receives both `favoriteUseCase` and `favoriteRepo`. When an entry adapter talks directly to a repository, the application layer becomes easier to bypass.
+Antes, o handler recebia tanto o `favoriteUseCase` quanto o `favoriteRepo`. Quando um adapter de entrada fala direto com repositório, a camada de aplicação fica mais fácil de ser ignorada.
 
-Recommended direction:
+Direção recomendada:
 
-- Keep handlers calling use cases only.
-- If a handler needs extra favorite data, move that behavior into an application service.
+- deixar handlers chamarem apenas casos de uso
+- mover enriquecimentos ou coordenações extras para serviços de aplicação
 
-### 4. Remove duplicated mapping rules
+### 4. Remover regras duplicadas de mapeamento
 
-Type color mapping appears in more than one place. That creates drift risk.
+Mapeamento de cor por tipo aparece em mais de um lugar. Isso cria risco de divergência.
 
-Recommended direction:
+Direção recomendada:
 
-- Centralize this mapping in a domain policy or dedicated mapper package owned by one layer.
+- centralizar esse mapeamento em uma política de domínio ou mapper dedicado
 
-### 5. Review port design
+### 5. Revisar o desenho das portas
 
-`PokemonRepository` includes `GetFavorites`, which does not appear to match the main responsibility of the Pokemon catalog port.
+`PokemonRepository` ainda carrega uma responsabilidade mais ampla do que a necessária em alguns pontos do modelo atual.
 
-Recommended direction:
+Direção recomendada:
 
-- Keep ports focused by capability.
-- Move favorite-related operations to favorite-specific ports only.
+- manter portas focadas por capacidade
+- evitar mistura entre responsabilidade de catálogo e responsabilidade de favoritos
 
-## Practical Assessment
+## Avaliação Prática
 
-The BFF is not badly structured. It already has the right architectural vocabulary and most of the right boundaries. The main next step is to make the dependency direction stricter so that the hexagonal structure is enforced by code, not only by folder names.
-
+O BFF não está mal estruturado. Ele já usa o vocabulário arquitetural certo e já possui boa parte dos limites corretos. O passo mais importante foi endurecer a direção das dependências para que a arquitetura hexagonal seja garantida por código, e não apenas por nomes de pastas.

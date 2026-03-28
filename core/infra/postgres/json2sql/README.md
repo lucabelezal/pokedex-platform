@@ -1,4 +1,4 @@
-# json2sql Tooling
+# Ferramenta json2sql
 
 Ferramenta para gerar seed SQL a partir dos JSONs em `core/infra/postgres/source-json`.
 

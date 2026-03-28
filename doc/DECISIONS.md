@@ -1,84 +1,83 @@
-# Decisions
+# Decisões
 
-## Purpose
+## Objetivo
 
-This file records the main architectural decisions that are already visible in the codebase.
+Este arquivo registra as principais decisões arquiteturais que já estão visíveis na base de código.
 
-## Decision 1: Use A BFF For Client-Facing API
+## Decisão 1: Usar Um BFF Para A API Voltada Ao Cliente
 
-### Decision
+### Decisão
 
-Expose client-oriented endpoints through `mobile-bff` instead of exposing internal services directly.
+Expor endpoints orientados ao cliente por meio do `mobile-bff`, em vez de expor diretamente os serviços internos.
 
-### Why
+### Por Que
 
-- Client responses can be shaped for UX needs.
-- Internal services stay narrower and more focused.
-- Cross-service orchestration stays out of the client.
+- As respostas podem ser moldadas para necessidades de UX.
+- Os serviços internos permanecem mais focados.
+- A orquestração entre serviços fica fora do cliente.
 
-### Consequence
+### Consequência
 
-The BFF becomes an important composition layer and must avoid growing into a generic monolith.
+O BFF se torna uma camada importante de composição e deve evitar crescer como um monólito genérico.
 
-## Decision 2: Keep The Canonical Pokemon Catalog In `pokemon-catalog-service`
+## Decisão 2: Manter O Catálogo Canônico Em `pokemon-catalog-service`
 
-### Decision
+### Decisão
 
-Use `pokemon-catalog-service` as the canonical read source for Pokemon catalog information.
+Usar o `pokemon-catalog-service` como fonte canônica de leitura para informações do catálogo de Pokémon.
 
-### Why
+### Por Que
 
-- Catalog rules stay centralized.
-- The BFF can stay focused on presentation and orchestration.
+- As regras do catálogo permanecem centralizadas.
+- O BFF pode continuar focado em apresentação e orquestração.
 
-### Consequence
+### Consequência
 
-The BFF should avoid re-implementing catalog rules beyond presentation-specific formatting.
+O BFF deve evitar reimplementar regras do catálogo além de formatações específicas de apresentação.
 
-## Decision 3: Keep Favorites In The BFF Context For Now
+## Decisão 3: Manter Favoritos No Contexto Do BFF Por Enquanto
 
-### Decision
+### Decisão
 
-Favorites are currently handled by the BFF context instead of a dedicated service.
+Os favoritos são atualmente tratados no contexto do BFF, e não em um serviço dedicado.
 
-### Why
+### Por Que
 
-- Simpler implementation for the current project stage.
-- Favorites are tightly connected to authenticated user experience.
+- Implementação mais simples para o estágio atual do projeto.
+- Favoritos estão muito ligados à experiência do usuário autenticado.
 
-### Consequence
+### Consequência
 
-This is acceptable now, but it may become a future extraction candidate if favorite logic grows, needs independent scaling, or must be shared by more clients.
+Isso é aceitável agora, mas pode se tornar um candidato à extração futura se a lógica de favoritos crescer, exigir escala independente ou precisar ser compartilhada por mais clientes.
 
-## Decision 4: Use Hexagonal Architecture In The BFF
+## Decisão 4: Usar Arquitetura Hexagonal No BFF
 
-### Decision
+### Decisão
 
-Organize the BFF around domain, ports, services, and adapters.
+Organizar o BFF em torno de domínio, portas, serviços e adaptadores.
 
-### Why
+### Por Que
 
-- Improves separation of concerns.
-- Makes testing easier.
-- Reduces coupling to transport and persistence details.
+- Melhora a separação de responsabilidades.
+- Facilita testes.
+- Reduz o acoplamento a detalhes de transporte e persistência.
 
-### Consequence
+### Consequência
 
-The codebase should keep enforcing dependency direction. Concrete adapters must depend on ports, and entry adapters should not bypass the application layer.
+A base de código deve continuar reforçando a direção das dependências. Adaptadores concretos devem depender de portas, e adaptadores de entrada não devem contornar a camada de aplicação.
 
-## Decision 5: Prefer Deterministic Seed Generation Over Runtime Data Setup
+## Decisão 5: Preferir Geração Determinística De Seed Em Vez De Setup Dinâmico
 
-### Decision
+### Decisão
 
-Maintain JSON files as source data and generate SQL seeds deterministically.
+Manter arquivos JSON como fonte de dados e gerar seeds SQL de forma determinística.
 
-### Why
+### Por Que
 
-- Reproducible local environments.
-- Easy review of source data changes.
-- Clear pipeline from source content to database initialization.
+- Ambientes locais reproduzíveis.
+- Facilidade para revisar mudanças nos dados de origem.
+- Pipeline claro do conteúdo de origem até a inicialização do banco.
 
-### Consequence
+### Consequência
 
-Any change in catalog content must respect the JSON-to-SQL generation flow.
-
+Qualquer mudança no conteúdo do catálogo deve respeitar o fluxo de geração JSON para SQL.
