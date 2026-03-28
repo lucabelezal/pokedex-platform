@@ -16,11 +16,6 @@ Este diretório centraliza a documentação arquitetural da Plataforma Pokedex.
 - `GATEWAY.md`: papel do Kong como ponto de entrada.
 - `INFRA.md`: infraestrutura, fluxo de dados e limites operacionais.
 - `DECISIONS.md`: decisões arquiteturais atuais e trade-offs.
-- `bff/HEXAGONAL-ARCHITECTURE.md`: explicação detalhada das camadas do BFF.
-- `architecture/README.md`: notas arquiteturais em estilo mais editorial.
-- `ddd/README.md`: fundamentos de DDD, exemplos em Go e contexto do projeto.
-- `design-patterns/README.md`: design patterns em Go e orientação aplicada ao projeto.
-- `design-patterns/SOLID-AND-PATTERNS.md`: ligação prática entre SOLID e design patterns.
 
 ## Convenção De Nomes
 
