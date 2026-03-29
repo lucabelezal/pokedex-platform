@@ -121,7 +121,7 @@ bruno/
 │   ├── login.yml              # POST /auth/login - Autenticar
 │   ├── refresh.yml            # POST /auth/refresh - Renovar token
 │   └── logout.yml             # POST /auth/logout - Encerrar
-├── app/
+├── pokedex/
 │   ├── home.yml               # GET /home - Home da pokedex
 │   ├── home-search-and-filters.yml # GET /home com query params combinados
 │   ├── home-filter-region.yml  # GET /home com filtro por região
@@ -213,7 +213,7 @@ Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa m
 3. Veja os primeiros 20 Pokémon (não requer autenticação)
 
 #### **E.1. Home da Pokedex**
-1. Abra `app > home.yml`
+1. Abra `pokedex > home.yml`
 2. Clique em **Send**
 3. A resposta já vem moldada para a tela da Pokédex, com busca, filtros e a coleção curada de cards do app
 
@@ -250,22 +250,22 @@ Importante:
 4. Veja estrutura completa com stats, tipos, etc
 
 #### **G.1. Tela de Detalhe do App**
-1. Abra `app > pokemon-details.yml`
+1. Abra `pokedex > pokemon-details.yml`
 2. Ajuste o ID conforme necessário
 3. Valide o payload orientado à UI (about, weaknesses, evolutions e isFavorite)
 
 #### **G.2. Regiões**
-1. Abra `app > regions.yml`
+1. Abra `pokedex > regions.yml`
 2. Clique em **Send**
 3. Valide o contrato da aba de regiões (`title` + `regions[]`)
 
 #### **G.3. Favoritos**
-1. Abra `app > favorites.yml`
+1. Abra `pokedex > favorites.yml`
 2. Clique em **Send**
 3. Valide os estados de tela: `unauthenticated`, `empty` e `has_data`
 
 #### **G.4. Perfil**
-1. Abra `app > profile.yml`
+1. Abra `pokedex > profile.yml`
 2. Clique em **Send**
 3. Valide os estados da tela de conta (`authenticated: false/true`)
 
