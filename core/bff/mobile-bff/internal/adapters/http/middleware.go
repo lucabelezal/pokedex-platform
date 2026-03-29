@@ -17,9 +17,31 @@ type contextKey string
 const UserIDContextKey contextKey = "userID"
 const UserEmailContextKey contextKey = "userEmail"
 
-// AuthMiddleware extrai e valida o token JWT da requisição
+// rotas públicas que não passam por validação de token
+var publicPaths = []string{
+	"/health",
+	"/api/v1/health",
+	"/api/v1/auth/",
+}
+
+func isPublicPath(path string) bool {
+	for _, prefix := range publicPaths {
+		if strings.HasPrefix(path, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
+// AuthMiddleware extrai e valida o token JWT da requisição.
+// Rotas públicas (health e auth/*) passam sem validação.
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if isPublicPath(r.URL.Path) {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		tokenString, err := extractTokenFromRequest(r)
 		if err != nil {
 			RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
