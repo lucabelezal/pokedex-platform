@@ -6,6 +6,8 @@ O Mobile-BFF e um Backend-for-Frontend (BFF) em Go para atender clientes mobile/
 O projeto usa arquitetura hexagonal (Ports and Adapters), PostgreSQL, testes unitarios e testes de integracao.
 Ele faz parte da pasta `core/`, onde ficam os artefatos executaveis da plataforma.
 
+Importante: o `POKEMON_CATALOG_SERVICE_URL` e obrigatorio para iniciar o BFF. O catalogo nao possui mais fallback direto para repositorio de pokemons em Postgres dentro do BFF.
+
 ## Localizacao No Repositorio
 
 ```text
@@ -95,6 +97,7 @@ O BFF atende o contrato rico do front, enquanto o `pokemon-catalog-service` conc
    - `GET /v1/pokemons/search`
    - `GET /v1/pokemons/type/{type}`
    - `GET /v1/pokemons/{id}`
+   - `GET /v1/pokemon-details/{id}`
 
 ### Decisao Atual
 
@@ -112,10 +115,11 @@ O BFF atende o contrato rico do front, enquanto o `pokemon-catalog-service` conc
 
 ## Como Executar
 
-### Modo local (mock)
+### Modo local (com catalog service)
 
 ```bash
 export MOBILE_BFF_PORT=8080
+export POKEMON_CATALOG_SERVICE_URL="http://localhost:8081"
 go run ./cmd/server/main.go
 ```
 
@@ -125,8 +129,11 @@ go run ./cmd/server/main.go
 docker compose -f docker-compose.test.yml up -d
 export DATABASE_URL="postgres://postgres:postgres@localhost:5432/pokedex"
 export MOBILE_BFF_PORT=8080
+export POKEMON_CATALOG_SERVICE_URL="http://localhost:8081"
 go run ./cmd/server/main.go
 ```
+
+No modo PostgreSQL do BFF, o banco e usado para favoritos e dados de suporte locais. O catalogo continua vindo do `pokemon-catalog-service`.
 
 ### Com Makefile
 

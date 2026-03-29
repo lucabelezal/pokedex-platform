@@ -111,7 +111,7 @@ Estrutura atual da resposta da tela principal:
 - `filters` são controlados pelo BFF a partir da necessidade da tela.
 - `types[].color` representa a cor visual associada ao tipo.
 - em `sprites.backgroundColor`, a cor representa o fundo visual do card atrás da imagem.
-- a home atual usa uma coleção curada de 26 pokémons para seguir o Figma, em vez de expor a paginação bruta do catálogo.
+- a home atual usa o catálogo completo como fonte e aplica filtros/ordenação no BFF para manter payload orientado à tela.
 
 ## Consulta Da Home Por Query Params
 
@@ -125,6 +125,8 @@ Parâmetros suportados:
 - `type`: filtra por tipo.
 - `order`: ordenação da lista (`Menor número`, `Maior número`, `A-Z`, `Z-A`).
 - `region`: filtra por região.
+- `page`: índice da página (quando informado, ativa paginação).
+- `size`: tamanho da página (padrão 20 quando `page` é informado e `size` não vem).
 
 Exemplos de uso:
 
@@ -141,6 +143,8 @@ Observações:
 - no consumo externo via gateway, use `/v1`.
 - internamente no serviço, as rotas seguem `/api/v1`.
 - evite barra final em `home/` durante debug por linha de comando para não confundir o parse da resposta.
+- sem `page` e sem `size`, a home retorna todos os resultados filtrados.
+- com `page` informado e `size` ausente, o BFF usa `size=20`.
 
 ## Contrato Atual De Detalhe
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/http"
@@ -21,10 +22,12 @@ func main() {
 	var favoriteRepo ports.FavoriteRepository
 	var db *repository.Database
 
-	if cfg.PokemonCatalogServiceURL != "" {
-		pokemonRepo = repository.NewPokemonCatalogServiceRepository(cfg.PokemonCatalogServiceURL)
-		log.Printf("Using pokemon-catalog-service catalog from %s", cfg.PokemonCatalogServiceURL)
+	if strings.TrimSpace(cfg.PokemonCatalogServiceURL) == "" {
+		log.Fatal("POKEMON_CATALOG_SERVICE_URL obrigatoria para iniciar o mobile-bff")
 	}
+
+	pokemonRepo = repository.NewPokemonCatalogServiceRepository(cfg.PokemonCatalogServiceURL)
+	log.Printf("Using pokemon-catalog-service catalog from %s", cfg.PokemonCatalogServiceURL)
 
 	if cfg.DatabaseURL != "" {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -37,21 +40,11 @@ func main() {
 			favoriteRepo = repository.NewMockFavoriteRepository()
 		} else {
 			favoriteRepo = repository.NewPostgresFavoriteRepository(db.Pool)
-			if pokemonRepo == nil {
-				pokemonRepo = repository.NewPostgresPokemonRepository(db.Pool)
-			}
 		}
 	}
 
 	if db != nil {
 		defer db.Close()
-	}
-
-	if pokemonRepo == nil {
-		if cfg.DatabaseURL == "" {
-			log.Println("No POKEMON_CATALOG_SERVICE_URL or DATABASE_URL set, using mock pokemons")
-		}
-		pokemonRepo = repository.NewMockPokemonRepository()
 	}
 
 	if favoriteRepo == nil {

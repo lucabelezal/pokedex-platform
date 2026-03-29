@@ -398,15 +398,32 @@ func (h *Handler) GetHome(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()
 
-	page := getQueryParamInt(r, "page", 0)
-	pageSize := getQueryParamInt(r, "size", 20)
+	page, hasPage := getOptionalQueryParamInt(r, "page", 0)
+	pageSize, hasSize := getOptionalQueryParamInt(r, "size", 20)
 	userID := getUserIDFromContext(ctx)
 	searchValue := strings.TrimSpace(r.URL.Query().Get("q"))
 	selectedType := strings.TrimSpace(r.URL.Query().Get("type"))
 	selectedOrdering := strings.TrimSpace(r.URL.Query().Get("order"))
 	selectedRegion := strings.TrimSpace(r.URL.Query().Get("region"))
+	paginate := hasPage
 
-	pokemonPage, err := h.loadHomePokemonPage(ctx, page, pageSize, userID, searchValue, selectedType)
+	if page < 0 {
+		page = 0
+	}
+
+	if paginate {
+		if !hasSize {
+			pageSize = 20
+		}
+		if pageSize < 1 {
+			pageSize = 20
+		}
+		if pageSize > 100 {
+			pageSize = 100
+		}
+	}
+
+	pokemonPage, err := h.loadHomePokemonPage(ctx, userID, searchValue, selectedType)
 	if err != nil {
 		RespondError(w, http.StatusInternalServerError, "falha ao obter dados da home", "INTERNAL_ERROR")
 		return
@@ -426,6 +443,10 @@ func (h *Handler) GetHome(w http.ResponseWriter, r *http.Request) {
 
 	filterHomePokemonByRegion(pokemonPage, selectedRegion)
 	sortHomePokemonPage(pokemonPage, selectedOrdering)
+
+	if paginate {
+		paginateHomePokemonPage(pokemonPage, page, pageSize)
+	}
 
 	favoriteSet := h.buildFavoriteSet(ctx, userID)
 	response := h.responseBuilder.BuildHomePageResponseWithTypes(
@@ -605,17 +626,6 @@ func (h *Handler) GetUserFavorites(w http.ResponseWriter, r *http.Request) {
 	RespondJSON(w, http.StatusOK, h.responseBuilder.BuildFavoritesResponse(page, favoriteSet, true))
 }
 
-func (h *Handler) withAuth(handler func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		userID := getUserIDFromContext(r.Context())
-		if userID == "" {
-			RespondError(w, http.StatusUnauthorized, "autenticacao obrigatoria", "UNAUTHORIZED")
-			return
-		}
-		handler(w, r)
-	}
-}
-
 func getQueryParamInt(r *http.Request, key string, defaultVal int) int {
 	val := r.URL.Query().Get(key)
 	if val == "" {
@@ -628,6 +638,25 @@ func getQueryParamInt(r *http.Request, key string, defaultVal int) int {
 	}
 
 	return intVal
+}
+
+func getOptionalQueryParamInt(r *http.Request, key string, defaultVal int) (int, bool) {
+	values, exists := r.URL.Query()[key]
+	if !exists || len(values) == 0 {
+		return defaultVal, false
+	}
+
+	trimmed := strings.TrimSpace(values[0])
+	if trimmed == "" {
+		return defaultVal, false
+	}
+
+	intVal, err := strconv.Atoi(trimmed)
+	if err != nil {
+		return defaultVal, true
+	}
+
+	return intVal, true
 }
 
 // RequireAuth envolve um handler para exigir autenticação
@@ -644,27 +673,26 @@ func (h *Handler) RequireAuth(handler func(w http.ResponseWriter, r *http.Reques
 
 func (h *Handler) loadHomePokemonPage(
 	ctx context.Context,
-	page int,
-	pageSize int,
 	userID string,
 	searchValue string,
 	selectedType string,
 ) (*domain.PokemonPage, error) {
-	items := make([]domain.Pokemon, 0, len(homePokemonNumbers))
-	for _, pokemonID := range homePokemonNumbers {
-		pokemon, err := h.pokemonUseCase.GetPokemonScreenDetails(ctx, pokemonID, userID)
+	const fetchSize = 100
+	items := make([]domain.Pokemon, 0, fetchSize)
+
+	for page := 0; ; page++ {
+		pokemonPage, err := h.pokemonUseCase.ListPokemons(ctx, page, fetchSize, userID)
 		if err != nil {
-			continue
+			return nil, err
+		}
+		if pokemonPage == nil || len(pokemonPage.Content) == 0 {
+			break
 		}
 
-		items = append(items, domain.Pokemon{
-			ID:           pokemon.ID,
-			Name:         pokemon.Name,
-			Number:       pokemon.Number,
-			Types:        mapScreenTypesToNames(pokemon.Types),
-			ImageURL:     pokemon.ImageURL,
-			ElementColor: pokemon.ElementColor,
-		})
+		items = append(items, pokemonPage.Content...)
+		if !pokemonPage.HasNext {
+			break
+		}
 	}
 
 	filtered := make([]domain.Pokemon, 0, len(items))
@@ -688,6 +716,32 @@ func (h *Handler) loadHomePokemonPage(
 	}
 
 	return &domain.PokemonPage{Content: filtered}, nil
+}
+
+func paginateHomePokemonPage(page *domain.PokemonPage, currentPage, pageSize int) {
+	if page == nil {
+		return
+	}
+
+	if currentPage < 0 {
+		currentPage = 0
+	}
+	if pageSize < 1 {
+		pageSize = 20
+	}
+
+	start := currentPage * pageSize
+	if start >= len(page.Content) {
+		page.Content = []domain.Pokemon{}
+		return
+	}
+
+	end := start + pageSize
+	if end > len(page.Content) {
+		end = len(page.Content)
+	}
+
+	page.Content = page.Content[start:end]
 }
 
 func sortHomePokemonPage(page *domain.PokemonPage, selectedOrdering string) {
@@ -722,32 +776,40 @@ func filterHomePokemonByRegion(page *domain.PokemonPage, region string) {
 }
 
 func matchesRegion(number string, region string) bool {
-	number = normalizePokemonID(number)
+	parsed, ok := parsePokemonNumber(number)
+	if !ok {
+		return true
+	}
+
 	switch strings.ToLower(strings.TrimSpace(region)) {
 	case "kanto":
-		return inNumbers(number, "1", "2", "3", "4", "5", "6", "7", "8", "9", "15", "25", "35", "51", "95", "108", "109", "151")
+		return parsed >= 1 && parsed <= 151
 	case "johto":
-		return inNumbers(number, "245")
+		return parsed >= 152 && parsed <= 251
 	case "hoenn":
-		return inNumbers(number, "306", "384")
+		return parsed >= 252 && parsed <= 386
 	case "sinnoh":
-		return inNumbers(number, "448")
+		return parsed >= 387 && parsed <= 493
 	case "unova":
-		return inNumbers(number, "497", "571", "609", "613")
+		return parsed >= 494 && parsed <= 649
+	case "kalos":
+		return parsed >= 650 && parsed <= 721
 	case "alola":
-		return inNumbers(number, "733")
+		return parsed >= 722 && parsed <= 809
+	case "galar":
+		return parsed >= 810 && parsed <= 905
 	default:
 		return true
 	}
 }
 
-func inNumbers(number string, values ...string) bool {
-	for _, item := range values {
-		if number == item {
-			return true
-		}
+func parsePokemonNumber(number string) (int, bool) {
+	normalized := normalizePokemonID(number)
+	parsed, err := strconv.Atoi(normalized)
+	if err != nil {
+		return 0, false
 	}
-	return false
+	return parsed, true
 }
 
 func selectedOrDefault(value string, fallback string) string {
@@ -773,10 +835,4 @@ func hasPokemonType(types []string, target string) bool {
 		}
 	}
 	return false
-}
-
-var homePokemonNumbers = []string{
-	"1", "2", "3", "4", "5", "6", "7", "8", "9",
-	"15", "25", "35", "51", "95", "108", "109", "151",
-	"245", "306", "384", "448", "497", "571", "609", "613", "733",
 }
