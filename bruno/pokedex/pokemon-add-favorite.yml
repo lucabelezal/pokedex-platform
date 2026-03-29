@@ -1,14 +1,14 @@
 info:
   name: pokemon-add-favorite
   type: http
-  seq: 13
+  seq: 12
 
 http:
   method: POST
   url: "{{baseUrl}}/v1/pokemons/25/favorite"
   headers:
     - name: Authorization
-      value: "Bearer {{authToken}}"
+      value: Bearer {{authToken}}
   auth: inherit
 
 settings:

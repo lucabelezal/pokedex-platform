@@ -1,14 +1,14 @@
 info:
   name: home-filter-region
   type: http
-  seq: 8
+  seq: 2
 
 http:
   method: GET
   url: "{{baseUrl}}/v1/home?region=kanto"
   headers:
     - name: Authorization
-      value: "Bearer {{authToken}}"
+      value: Bearer {{authToken}}
   auth: inherit
 
 settings:

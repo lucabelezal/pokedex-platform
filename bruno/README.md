@@ -129,7 +129,6 @@ bruno/
 │   ├── pokemon-details.yml    # GET /pokemons/{id}/details - Tela de detalhe
 │   ├── pokemon-list.yml       # GET /pokemons - Lista base da pokedex
 │   ├── pokemon-search.yml     # GET /pokemons/search - Busca por nome
-│   ├── pokemon-details-raw.yml # GET /pokemons/{id} - Detalhe bruto
 │   ├── pokemon-add-favorite.yml # POST /pokemons/{id}/favorite
 │   ├── pokemon-remove-favorite.yml # DELETE /pokemons/{id}/favorite
 │   ├── regions.yml            # GET /regions - Lista de regiões
@@ -242,16 +241,11 @@ Importante:
 3. Clique em **Send**
 4. Veja resultados filtrados
 
-#### **G. Ver Detalhes de um Pokémon**
-1. Abra `pokedex > pokemon-details-raw.yml`
-2. Mude o ID na URL (ex: `/25` para Pikachu, `/1` para Bulbasaur)
-3. Clique em **Send**
-4. Veja estrutura completa com stats, tipos, etc
-
-#### **G.1. Tela de Detalhe do App**
+#### **G. Tela de Detalhe do App**
 1. Abra `pokedex > pokemon-details.yml`
-2. Ajuste o ID conforme necessário
-3. Valide o payload orientado à UI (about, weaknesses, evolutions e isFavorite)
+2. Ajuste o ID na URL (ex: `/25` para Pikachu, `/1` para Bulbasaur)
+3. Clique em **Send**
+4. Valide o payload orientado à UI (about, weaknesses, evolutions e isFavorite)
 
 #### **G.2. Regiões**
 1. Abra `pokedex > regions.yml`
