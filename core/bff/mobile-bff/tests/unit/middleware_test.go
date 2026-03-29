@@ -133,12 +133,14 @@ func TestCORSMiddleware(t *testing.T) {
 	middleware := httpadapter.CORSMiddleware(handler)
 
 	req := httptest.NewRequest("GET", "/test", nil)
+	req.Header.Set("Origin", "http://localhost:3000")
 	w := httptest.NewRecorder()
 
 	middleware.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, "*", w.Header().Get("Access-Control-Allow-Origin"))
+	assert.Equal(t, "http://localhost:3000", w.Header().Get("Access-Control-Allow-Origin"))
+	assert.Equal(t, "true", w.Header().Get("Access-Control-Allow-Credentials"))
 	assert.NotEmpty(t, w.Header().Get("Access-Control-Allow-Methods"))
 }
 
@@ -150,9 +152,93 @@ func TestCORSMiddlewareOptions(t *testing.T) {
 	middleware := httpadapter.CORSMiddleware(handler)
 
 	req := httptest.NewRequest("OPTIONS", "/test", nil)
+	req.Header.Set("Origin", "http://localhost:5173")
 	w := httptest.NewRecorder()
 
 	middleware.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
+}
+
+func TestCORSMiddlewareBlocksUnknownOriginOnPreflight(t *testing.T) {
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	middleware := httpadapter.CORSMiddleware(handler)
+
+	req := httptest.NewRequest("OPTIONS", "/test", nil)
+	req.Header.Set("Origin", "https://evil.example")
+	w := httptest.NewRecorder()
+
+	middleware.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusForbidden, w.Code)
+}
+
+func TestAuthRateLimitMiddlewareAllowsWithinLimit(t *testing.T) {
+	t.Setenv("AUTH_RATE_LIMIT_REQUESTS", "2")
+	t.Setenv("AUTH_RATE_LIMIT_WINDOW_SECONDS", "60")
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	middleware := httpadapter.AuthRateLimitMiddleware(handler)
+
+	for range 2 {
+		req := httptest.NewRequest("POST", "/api/v1/auth/login", nil)
+		req.RemoteAddr = "192.168.0.10:1234"
+		w := httptest.NewRecorder()
+
+		middleware.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code)
+	}
+}
+
+func TestAuthRateLimitMiddlewareBlocksAfterLimit(t *testing.T) {
+	t.Setenv("AUTH_RATE_LIMIT_REQUESTS", "1")
+	t.Setenv("AUTH_RATE_LIMIT_WINDOW_SECONDS", "60")
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	middleware := httpadapter.AuthRateLimitMiddleware(handler)
+
+	firstReq := httptest.NewRequest("POST", "/api/v1/auth/login", nil)
+	firstReq.RemoteAddr = "192.168.0.20:1234"
+	firstResp := httptest.NewRecorder()
+	middleware.ServeHTTP(firstResp, firstReq)
+	assert.Equal(t, http.StatusOK, firstResp.Code)
+
+	secondReq := httptest.NewRequest("POST", "/api/v1/auth/login", nil)
+	secondReq.RemoteAddr = "192.168.0.20:1234"
+	secondResp := httptest.NewRecorder()
+	middleware.ServeHTTP(secondResp, secondReq)
+
+	assert.Equal(t, http.StatusTooManyRequests, secondResp.Code)
+	assert.Contains(t, secondResp.Body.String(), "TOO_MANY_REQUESTS")
+}
+
+func TestAuthRateLimitMiddlewareIgnoresNonAuthRoutes(t *testing.T) {
+	t.Setenv("AUTH_RATE_LIMIT_REQUESTS", "1")
+	t.Setenv("AUTH_RATE_LIMIT_WINDOW_SECONDS", "60")
+
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	middleware := httpadapter.AuthRateLimitMiddleware(handler)
+
+	for range 3 {
+		req := httptest.NewRequest("GET", "/api/v1/pokemons", nil)
+		req.RemoteAddr = "192.168.0.30:1234"
+		w := httptest.NewRecorder()
+
+		middleware.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code)
+	}
 }

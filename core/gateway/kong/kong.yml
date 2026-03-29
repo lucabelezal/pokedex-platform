@@ -4,7 +4,26 @@ _transform: true
 services:
   - name: mobile-bff-service
     url: http://mobile-bff:8080/api
+    plugins:
+      - name: request-size-limiting
+        config:
+          allowed_payload_size: 1
+          size_unit: megabytes
+          require_content_length: false
     routes:
+      - name: mobile-bff-auth
+        paths:
+          - /v1/auth
+        strip_path: false
+        path_handling: v0
+        plugins:
+          - name: rate-limiting
+            config:
+              policy: local
+              limit_by: ip
+              minute: 60
+              fault_tolerant: true
+              hide_client_headers: false
       - name: mobile-bff-v1
         paths:
           - /v1

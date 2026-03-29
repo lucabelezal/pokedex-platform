@@ -37,7 +37,7 @@ func TestAuthServiceClientSignupSuccess(t *testing.T) {
 	client := newTestAuthClient(func(r *http.Request) (*http.Response, error) {
 		assert.Equal(t, "/v1/auth/signup", r.URL.Path)
 		assert.Equal(t, http.MethodPost, r.Method)
-		return jsonResponse(http.StatusCreated, `{"accessToken":"token-123","tokenType":"Bearer","expiresIn":900,"userId":"user-1","email":"ash@kanto.dev"}`), nil
+		return jsonResponse(http.StatusCreated, `{"accessToken":"token-123","refreshToken":"refresh-123","tokenType":"Bearer","expiresIn":900,"userId":"user-1","email":"ash@kanto.dev"}`), nil
 	})
 
 	session, err := client.Signup(context.Background(), "ash@kanto.dev", "pikachu123")
@@ -45,6 +45,7 @@ func TestAuthServiceClientSignupSuccess(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, session)
 	assert.Equal(t, "token-123", session.AccessToken)
+	assert.Equal(t, "refresh-123", session.RefreshToken)
 	assert.Equal(t, "user-1", session.UserID)
 }
 

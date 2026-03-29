@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strings"
 )
 
 type Config struct {
@@ -10,19 +11,21 @@ type Config struct {
 	PokemonCatalogServiceURL string
 	AuthServiceURL           string
 	RedisURL                 string
+	JWTSecret                string
 }
 
 func LoadConfig() *Config {
-	port := os.Getenv("MOBILE_BFF_PORT")
+	port := strings.TrimSpace(os.Getenv("MOBILE_BFF_PORT"))
 	if port == "" {
 		port = "8080"
 	}
 
 	return &Config{
 		Port:                     port,
-		DatabaseURL:              os.Getenv("DATABASE_URL"),
-		PokemonCatalogServiceURL: os.Getenv("POKEMON_CATALOG_SERVICE_URL"),
-		AuthServiceURL:           os.Getenv("AUTH_SERVICE_URL"),
-		RedisURL:                 os.Getenv("REDIS_URL"),
+		DatabaseURL:              strings.TrimSpace(os.Getenv("DATABASE_URL")),
+		PokemonCatalogServiceURL: strings.TrimSpace(os.Getenv("POKEMON_CATALOG_SERVICE_URL")),
+		AuthServiceURL:           strings.TrimSpace(os.Getenv("AUTH_SERVICE_URL")),
+		RedisURL:                 strings.TrimSpace(os.Getenv("REDIS_URL")),
+		JWTSecret:                strings.TrimSpace(os.Getenv("JWT_SECRET")),
 	}
 }

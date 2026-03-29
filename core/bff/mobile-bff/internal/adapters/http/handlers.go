@@ -3,6 +3,8 @@ package http
 import (
 	"context"
 	"encoding/json"
+	"errors"
+	"io"
 	"net/http"
 	"sort"
 	"strconv"
@@ -20,6 +22,8 @@ type Handler struct {
 	authUseCase     ports.AuthUseCase
 	responseBuilder *ResponseBuilder
 }
+
+const maxAuthPayloadBytes int64 = 8 * 1024
 
 func NewHandler(
 	pokemonUseCase ports.PokemonUseCase,
@@ -81,7 +85,7 @@ func (h *Handler) Signup(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	if err := decodeAuthJSONBody(w, r, &req); err != nil {
 		RespondError(w, http.StatusBadRequest, "email e password obrigatorios", "INVALID_REQUEST")
 		return
 	}
@@ -102,15 +106,10 @@ func (h *Handler) Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     "auth_token",
-		Value:    authResp.AccessToken,
-		Path:     "/",
-		MaxAge:   authResp.ExpiresIn,
-		Secure:   false, // definir como true em produção com HTTPS
-		HttpOnly: true,
-		SameSite: http.SameSiteLaxMode,
-	})
+	http.SetCookie(w, buildAuthCookie(r, authResp.AccessToken, authResp.ExpiresIn))
+	if authResp.RefreshToken != "" {
+		http.SetCookie(w, buildRefreshCookie(r, authResp.RefreshToken))
+	}
 
 	response := struct {
 		AccessToken string `json:"access_token"`
@@ -144,7 +143,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		Password string `json:"password"`
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	if err := decodeAuthJSONBody(w, r, &req); err != nil {
 		RespondError(w, http.StatusBadRequest, "email e password obrigatorios", "INVALID_REQUEST")
 		return
 	}
@@ -165,15 +164,10 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     "auth_token",
-		Value:    authResp.AccessToken,
-		Path:     "/",
-		MaxAge:   authResp.ExpiresIn,
-		Secure:   false, // definir como true em produção com HTTPS
-		HttpOnly: true,
-		SameSite: http.SameSiteLaxMode,
-	})
+	http.SetCookie(w, buildAuthCookie(r, authResp.AccessToken, authResp.ExpiresIn))
+	if authResp.RefreshToken != "" {
+		http.SetCookie(w, buildRefreshCookie(r, authResp.RefreshToken))
+	}
 
 	response := struct {
 		AccessToken string `json:"access_token"`
@@ -202,7 +196,7 @@ func (h *Handler) Refresh(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()
 
-	tokenString, err := extractTokenFromRequest(r)
+	tokenString, err := extractRefreshTokenFromRequest(r)
 	if err != nil || tokenString == "" {
 		RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
 		return
@@ -219,15 +213,10 @@ func (h *Handler) Refresh(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     "auth_token",
-		Value:    authResp.AccessToken,
-		Path:     "/",
-		MaxAge:   authResp.ExpiresIn,
-		Secure:   false, // definir como true em produção com HTTPS
-		HttpOnly: true,
-		SameSite: http.SameSiteLaxMode,
-	})
+	http.SetCookie(w, buildAuthCookie(r, authResp.AccessToken, authResp.ExpiresIn))
+	if authResp.RefreshToken != "" {
+		http.SetCookie(w, buildRefreshCookie(r, authResp.RefreshToken))
+	}
 
 	response := struct {
 		AccessToken string `json:"access_token"`
@@ -256,23 +245,27 @@ func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()
 
-	tokenString, _ := extractTokenFromRequest(r)
-	if tokenString != "" && h.authUseCase != nil {
-		if err := h.authUseCase.Logout(ctx, tokenString); err != nil && err != domain.ErrInvalidToken {
-			h.respondAuthError(w, err, authOperationLogout)
-			return
+	accessToken, _ := extractTokenFromRequest(r)
+	refreshToken, _ := extractRefreshTokenFromRequest(r)
+
+	if h.authUseCase != nil {
+		if accessToken != "" {
+			if err := h.authUseCase.Logout(ctx, accessToken); err != nil && err != domain.ErrInvalidToken {
+				h.respondAuthError(w, err, authOperationLogout)
+				return
+			}
+		}
+
+		if refreshToken != "" && refreshToken != accessToken {
+			if err := h.authUseCase.Logout(ctx, refreshToken); err != nil && err != domain.ErrInvalidToken {
+				h.respondAuthError(w, err, authOperationLogout)
+				return
+			}
 		}
 	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     "auth_token",
-		Value:    "",
-		Path:     "/",
-		MaxAge:   -1,
-		Secure:   false, // definir como true em produção com HTTPS
-		HttpOnly: true,
-		SameSite: http.SameSiteLaxMode,
-	})
+	http.SetCookie(w, clearAuthCookie(r))
+	http.SetCookie(w, clearRefreshCookie(r))
 
 	RespondJSON(w, http.StatusOK, map[string]string{"message": "sessao encerrada"})
 }
@@ -669,6 +662,101 @@ func (h *Handler) RequireAuth(handler func(w http.ResponseWriter, r *http.Reques
 		}
 		handler(w, r)
 	}
+}
+
+func decodeAuthJSONBody(w http.ResponseWriter, r *http.Request, dst any) error {
+	r.Body = http.MaxBytesReader(w, r.Body, maxAuthPayloadBytes)
+	defer r.Body.Close()
+
+	decoder := json.NewDecoder(r.Body)
+	decoder.DisallowUnknownFields()
+
+	if err := decoder.Decode(dst); err != nil {
+		return err
+	}
+
+	if err := decoder.Decode(&struct{}{}); err != nil && !errors.Is(err, io.EOF) {
+		return errors.New("payload invalido")
+	}
+
+	return nil
+}
+
+func buildAuthCookie(r *http.Request, token string, maxAge int) *http.Cookie {
+	return &http.Cookie{
+		Name:     "auth_token",
+		Value:    token,
+		Path:     "/",
+		MaxAge:   maxAge,
+		Secure:   requestUsesHTTPS(r),
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	}
+}
+
+func buildRefreshCookie(r *http.Request, token string) *http.Cookie {
+	return &http.Cookie{
+		Name:     "refresh_token",
+		Value:    token,
+		Path:     "/",
+		MaxAge:   7 * 24 * 60 * 60,
+		Secure:   requestUsesHTTPS(r),
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	}
+}
+
+func clearAuthCookie(r *http.Request) *http.Cookie {
+	return &http.Cookie{
+		Name:     "auth_token",
+		Value:    "",
+		Path:     "/",
+		MaxAge:   -1,
+		Secure:   requestUsesHTTPS(r),
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	}
+}
+
+func clearRefreshCookie(r *http.Request) *http.Cookie {
+	return &http.Cookie{
+		Name:     "refresh_token",
+		Value:    "",
+		Path:     "/",
+		MaxAge:   -1,
+		Secure:   requestUsesHTTPS(r),
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	}
+}
+
+func extractRefreshTokenFromRequest(r *http.Request) (string, error) {
+	authHeader := strings.TrimSpace(r.Header.Get("Authorization"))
+	if authHeader != "" {
+		return parseBearerToken(authHeader)
+	}
+
+	if cookie, err := r.Cookie("refresh_token"); err == nil {
+		if tokenString := strings.TrimSpace(cookie.Value); tokenString != "" {
+			return tokenString, nil
+		}
+	}
+
+	if cookie, err := r.Cookie("auth_token"); err == nil {
+		if tokenString := strings.TrimSpace(cookie.Value); tokenString != "" {
+			return tokenString, nil
+		}
+	}
+
+	return "", nil
+}
+
+func requestUsesHTTPS(r *http.Request) bool {
+	if r != nil && r.TLS != nil {
+		return true
+	}
+
+	return strings.EqualFold(strings.TrimSpace(r.Header.Get("X-Forwarded-Proto")), "https")
 }
 
 func (h *Handler) loadHomePokemonPage(

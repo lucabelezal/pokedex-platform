@@ -471,23 +471,27 @@ func TestSignupReturnsCreatedWhenAuthSucceeds(t *testing.T) {
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 	authUseCase := &stubAuthUseCase{
 		session: &ports.AuthSession{
-			AccessToken: "token-123",
-			TokenType:   "Bearer",
-			ExpiresIn:   900,
-			UserID:      "user-1",
-			Email:       "ash@kanto.dev",
+			AccessToken:  "token-123",
+			RefreshToken: "refresh-123",
+			TokenType:    "Bearer",
+			ExpiresIn:    900,
+			UserID:       "user-1",
+			Email:        "ash@kanto.dev",
 		},
 	}
 
 	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, authUseCase)
 
 	req := httptest.NewRequest("POST", "/api/v1/auth/signup", strings.NewReader(`{"email":"ash@kanto.dev","password":"pikachu123"}`))
+	req.Header.Set("X-Forwarded-Proto", "https")
 	w := httptest.NewRecorder()
 
 	handler.Signup(w, req)
 
 	assert.Equal(t, http.StatusCreated, w.Code)
 	assert.Contains(t, w.Header().Get("Set-Cookie"), "auth_token=token-123")
+	assert.Contains(t, w.Header().Get("Set-Cookie"), "Secure")
+	assert.Contains(t, w.Result().Header.Values("Set-Cookie")[1], "refresh_token=refresh-123")
 }
 
 func TestLoginReturnsUnauthorizedForInvalidCredentials(t *testing.T) {

@@ -25,6 +25,9 @@ func main() {
 	if strings.TrimSpace(cfg.PokemonCatalogServiceURL) == "" {
 		log.Fatal("POKEMON_CATALOG_SERVICE_URL obrigatoria para iniciar o mobile-bff")
 	}
+	if strings.TrimSpace(cfg.JWTSecret) == "" {
+		log.Fatal("JWT_SECRET obrigatoria para iniciar o mobile-bff")
+	}
 
 	pokemonRepo = repository.NewPokemonCatalogServiceRepository(cfg.PokemonCatalogServiceURL)
 	log.Printf("Using pokemon-catalog-service catalog from %s", cfg.PokemonCatalogServiceURL)
@@ -70,15 +73,17 @@ func main() {
 	// Aplicar middleware
 	var handler http.Handler = mux
 	handler = httpadapter.CORSMiddleware(handler)
+	handler = httpadapter.AuthRateLimitMiddleware(handler)
 	handler = httpadapter.AuthMiddleware(handler)
 
 	// Iniciar servidor
 	srv := &http.Server{
-		Addr:         ":" + cfg.Port,
-		Handler:      handler,
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		IdleTimeout:  30 * time.Second,
+		Addr:              ":" + cfg.Port,
+		Handler:           handler,
+		ReadHeaderTimeout: 5 * time.Second,
+		ReadTimeout:       10 * time.Second,
+		WriteTimeout:      10 * time.Second,
+		IdleTimeout:       30 * time.Second,
 	}
 
 	log.Printf("mobile-bff listening on %s", srv.Addr)

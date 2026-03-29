@@ -2,11 +2,18 @@ package http
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"log"
+	"net"
 	"net/http"
 	"os"
+	"slices"
+	"strconv"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -24,6 +31,36 @@ var publicPaths = []string{
 	"/api/v1/auth/",
 }
 
+var authRateLimitedPaths = []string{
+	"/api/v1/auth/login",
+	"/api/v1/auth/signup",
+	"/api/v1/auth/refresh",
+	"/api/v1/auth/logout",
+}
+
+const (
+	defaultAuthRateLimitRequests      = 20
+	defaultAuthRateLimitWindowSeconds = 60
+)
+
+type rateLimitWindow struct {
+	startedAt time.Time
+	count     int
+}
+
+type authRateLimiter struct {
+	m                 sync.Mutex
+	entries           map[string]rateLimitWindow
+	maxRequests       int
+	window            time.Duration
+	now               func() time.Time
+	lastCleanupBucket int64
+}
+
+type tokenIntrospectionResponse struct {
+	Active bool `json:"active"`
+}
+
 func isPublicPath(path string) bool {
 	for _, prefix := range publicPaths {
 		if strings.HasPrefix(path, prefix) {
@@ -31,6 +68,37 @@ func isPublicPath(path string) bool {
 		}
 	}
 	return false
+}
+
+func isAuthRateLimitedPath(path string) bool {
+	for _, candidate := range authRateLimitedPaths {
+		if path == candidate {
+			return true
+		}
+	}
+
+	return false
+}
+
+// AuthRateLimitMiddleware limita tentativas por IP nas rotas públicas de autenticação.
+func AuthRateLimitMiddleware(next http.Handler) http.Handler {
+	limiter := newAuthRateLimiter(getAuthRateLimitRequests(), getAuthRateLimitWindow())
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if !isAuthRateLimitedPath(r.URL.Path) {
+			next.ServeHTTP(w, r)
+			return
+		}
+
+		clientID := clientIdentifier(r)
+		if !limiter.Allow(clientID) {
+			log.Printf("auth_audit action=rate_limit outcome=blocked client_ip=%q path=%q", clientID, r.URL.Path)
+			RespondError(w, http.StatusTooManyRequests, "muitas tentativas, tente novamente em instantes", "TOO_MANY_REQUESTS")
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
 }
 
 // AuthMiddleware extrai e valida o token JWT da requisição.
@@ -53,6 +121,16 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		if tokenString != "" {
 			claims, err := parseAndValidateJWT(tokenString, getJWTSecret())
 			if err != nil {
+				RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
+				return
+			}
+
+			active, activeErr := isTokenActiveWithAuthService(r.Context(), tokenString)
+			if activeErr != nil {
+				RespondError(w, http.StatusServiceUnavailable, "auth service unavailable", "AUTH_UNAVAILABLE")
+				return
+			}
+			if !active {
 				RespondError(w, http.StatusUnauthorized, "token invalido", "INVALID_TOKEN")
 				return
 			}
@@ -105,11 +183,20 @@ func RequireAuth(next http.Handler) http.Handler {
 // CORSMiddleware adiciona headers CORS
 func CORSMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		origin := strings.TrimSpace(r.Header.Get("Origin"))
+		if origin != "" && isAllowedOrigin(origin) {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Access-Control-Allow-Credentials", "true")
+			w.Header().Set("Vary", "Origin")
+		}
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
 		if r.Method == http.MethodOptions {
+			if origin != "" && !isAllowedOrigin(origin) {
+				w.WriteHeader(http.StatusForbidden)
+				return
+			}
 			w.WriteHeader(http.StatusOK)
 			return
 		}
@@ -181,11 +268,7 @@ func extractUserEmailFromClaims(claims jwt.MapClaims) string {
 }
 
 func getJWTSecret() string {
-	secret := strings.TrimSpace(os.Getenv("JWT_SECRET"))
-	if secret == "" {
-		return "dev-secret"
-	}
-	return secret
+	return strings.TrimSpace(os.Getenv("JWT_SECRET"))
 }
 
 func getUserIDFromContext(ctx context.Context) string {
@@ -218,4 +301,174 @@ func GetUserEmail(ctx context.Context) string {
 
 func GetUserID(ctx context.Context) string {
 	return getUserIDFromContext(ctx)
+}
+
+func newAuthRateLimiter(maxRequests int, window time.Duration) *authRateLimiter {
+	if maxRequests <= 0 {
+		maxRequests = defaultAuthRateLimitRequests
+	}
+	if window <= 0 {
+		window = time.Duration(defaultAuthRateLimitWindowSeconds) * time.Second
+	}
+
+	return &authRateLimiter{
+		entries:     make(map[string]rateLimitWindow),
+		maxRequests: maxRequests,
+		window:      window,
+		now:         time.Now,
+	}
+}
+
+func (l *authRateLimiter) Allow(clientID string) bool {
+	if clientID == "" {
+		clientID = "unknown"
+	}
+
+	now := l.now()
+	bucket := now.Unix() / int64(l.window.Seconds())
+
+	l.m.Lock()
+	defer l.m.Unlock()
+
+	if bucket != l.lastCleanupBucket {
+		l.cleanupExpired(now)
+		l.lastCleanupBucket = bucket
+	}
+
+	entry, exists := l.entries[clientID]
+	if !exists || now.Sub(entry.startedAt) >= l.window {
+		l.entries[clientID] = rateLimitWindow{startedAt: now, count: 1}
+		return true
+	}
+
+	if entry.count >= l.maxRequests {
+		return false
+	}
+
+	entry.count++
+	l.entries[clientID] = entry
+	return true
+}
+
+func (l *authRateLimiter) cleanupExpired(now time.Time) {
+	for clientID, entry := range l.entries {
+		if now.Sub(entry.startedAt) >= l.window {
+			delete(l.entries, clientID)
+		}
+	}
+}
+
+func clientIdentifier(r *http.Request) string {
+	forwardedFor := strings.TrimSpace(r.Header.Get("X-Forwarded-For"))
+	if forwardedFor != "" {
+		first, _, _ := strings.Cut(forwardedFor, ",")
+		if candidate := strings.TrimSpace(first); candidate != "" {
+			return candidate
+		}
+	}
+
+	host, _, err := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr))
+	if err == nil && host != "" {
+		return host
+	}
+
+	return strings.TrimSpace(r.RemoteAddr)
+}
+
+func getAuthRateLimitRequests() int {
+	raw := strings.TrimSpace(os.Getenv("AUTH_RATE_LIMIT_REQUESTS"))
+	if raw == "" {
+		return defaultAuthRateLimitRequests
+	}
+
+	value, err := strconv.Atoi(raw)
+	if err != nil || value <= 0 {
+		return defaultAuthRateLimitRequests
+	}
+
+	return value
+}
+
+func getAuthRateLimitWindow() time.Duration {
+	raw := strings.TrimSpace(os.Getenv("AUTH_RATE_LIMIT_WINDOW_SECONDS"))
+	if raw == "" {
+		return time.Duration(defaultAuthRateLimitWindowSeconds) * time.Second
+	}
+
+	value, err := strconv.Atoi(raw)
+	if err != nil || value <= 0 {
+		return time.Duration(defaultAuthRateLimitWindowSeconds) * time.Second
+	}
+
+	return time.Duration(value) * time.Second
+}
+
+func isTokenActiveWithAuthService(ctx context.Context, token string) (bool, error) {
+	baseURL := strings.TrimRight(strings.TrimSpace(os.Getenv("AUTH_SERVICE_URL")), "/")
+	if baseURL == "" {
+		return true, nil
+	}
+
+	requestCtx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(requestCtx, http.MethodPost, baseURL+"/v1/auth/introspect", nil)
+	if err != nil {
+		return false, err
+	}
+	req.Header.Set("Authorization", "Bearer "+token)
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return false, fmt.Errorf("auth introspect retornou status %d", resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return false, err
+	}
+
+	var introspection tokenIntrospectionResponse
+	if err := json.Unmarshal(body, &introspection); err != nil {
+		return false, err
+	}
+
+	return introspection.Active, nil
+}
+
+func isAllowedOrigin(origin string) bool {
+	allowedOrigins := getAllowedOrigins()
+	if len(allowedOrigins) == 0 {
+		return false
+	}
+
+	return slices.Contains(allowedOrigins, origin)
+}
+
+func getAllowedOrigins() []string {
+	raw := strings.TrimSpace(os.Getenv("ALLOWED_ORIGINS"))
+	if raw == "" {
+		return []string{
+			"http://localhost:3000",
+			"http://localhost:5173",
+			"http://localhost:8000",
+		}
+	}
+
+	parts := strings.Split(raw, ",")
+	origins := make([]string, 0, len(parts))
+	for _, part := range parts {
+		origin := strings.TrimSpace(part)
+		if origin == "" {
+			continue
+		}
+		origins = append(origins, origin)
+	}
+
+	return origins
 }

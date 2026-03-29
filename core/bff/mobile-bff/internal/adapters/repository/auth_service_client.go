@@ -33,11 +33,12 @@ type LoginRequest struct {
 
 // AuthResponse é a resposta do auth-service
 type AuthResponse struct {
-	AccessToken string `json:"accessToken"`
-	TokenType   string `json:"tokenType"`
-	ExpiresIn   int    `json:"expiresIn"`
-	UserID      string `json:"userId"`
-	Email       string `json:"email"`
+	AccessToken  string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
+	TokenType    string `json:"tokenType"`
+	ExpiresIn    int    `json:"expiresIn"`
+	UserID       string `json:"userId"`
+	Email        string `json:"email"`
 }
 
 // ErrorResponse é a resposta de erro do auth-service
@@ -108,11 +109,12 @@ func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) 
 	}
 
 	return &ports.AuthSession{
-		AccessToken: authResp.AccessToken,
-		TokenType:   authResp.TokenType,
-		ExpiresIn:   authResp.ExpiresIn,
-		UserID:      authResp.UserID,
-		Email:       authResp.Email,
+		AccessToken:  authResp.AccessToken,
+		RefreshToken: authResp.RefreshToken,
+		TokenType:    authResp.TokenType,
+		ExpiresIn:    authResp.ExpiresIn,
+		UserID:       authResp.UserID,
+		Email:        authResp.Email,
 	}, nil
 }
 
@@ -160,11 +162,12 @@ func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (
 	}
 
 	return &ports.AuthSession{
-		AccessToken: authResp.AccessToken,
-		TokenType:   authResp.TokenType,
-		ExpiresIn:   authResp.ExpiresIn,
-		UserID:      authResp.UserID,
-		Email:       authResp.Email,
+		AccessToken:  authResp.AccessToken,
+		RefreshToken: authResp.RefreshToken,
+		TokenType:    authResp.TokenType,
+		ExpiresIn:    authResp.ExpiresIn,
+		UserID:       authResp.UserID,
+		Email:        authResp.Email,
 	}, nil
 }
 
@@ -202,11 +205,12 @@ func (c *AuthServiceClient) Refresh(ctx context.Context, token string) (*ports.A
 	}
 
 	return &ports.AuthSession{
-		AccessToken: authResp.AccessToken,
-		TokenType:   authResp.TokenType,
-		ExpiresIn:   authResp.ExpiresIn,
-		UserID:      authResp.UserID,
-		Email:       authResp.Email,
+		AccessToken:  authResp.AccessToken,
+		RefreshToken: authResp.RefreshToken,
+		TokenType:    authResp.TokenType,
+		ExpiresIn:    authResp.ExpiresIn,
+		UserID:       authResp.UserID,
+		Email:        authResp.Email,
 	}, nil
 }
 

@@ -4,11 +4,12 @@ import "context"
 
 // AuthSession represents the authentication payload returned by an auth provider.
 type AuthSession struct {
-	AccessToken string
-	TokenType   string
-	ExpiresIn   int
-	UserID      string
-	Email       string
+	AccessToken  string
+	RefreshToken string
+	TokenType    string
+	ExpiresIn    int
+	UserID       string
+	Email        string
 }
 
 // AuthProvider defines the outbound authentication operations needed by the BFF.
