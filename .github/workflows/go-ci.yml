@@ -9,6 +9,36 @@ on:
       - develop
 
 jobs:
+  db-migrations:
+    name: DB Migrations
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: pokedex_ci_db
+          POSTGRES_USER: pokedex
+          POSTGRES_PASSWORD: pokedex
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U pokedex -d pokedex_ci_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar cliente PostgreSQL
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Aplicar migration incremental
+        env:
+          DATABASE_URL: postgres://pokedex:pokedex@localhost:5432/pokedex_ci_db?sslmode=disable
+        run: ./core/infra/postgres/migrations/apply.sh
+
   go-ci:
     name: Go CI - ${{ matrix.module }}
     runs-on: ubuntu-latest

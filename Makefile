@@ -1,4 +1,4 @@
-.PHONY: help verify-bff-env check-bff-env doctor up down restart logs ps health home detail bff-run-local
+.PHONY: help verify-bff-env check-bff-env doctor up down restart logs ps health home detail bff-run-local db-migrate-auth-hardening
 
 COMPOSE_FILE=core/docker-compose.yml
 PROJECT_NAME=pokedex
@@ -17,6 +17,7 @@ help:
 	@echo "  make check-bff-env   - Valida variavel e falha se ausente"
 	@echo "  make doctor          - Diagnostico rapido do ambiente local"
 	@echo "  make bff-run-local   - Roda mobile-bff local exigindo POKEMON_CATALOG_SERVICE_URL"
+	@echo "  make db-migrate-auth-hardening - Aplica migration incremental de tokens no Postgres"
 
 verify-bff-env:
 	@if [ -z "$$POKEMON_CATALOG_SERVICE_URL" ]; then \
@@ -107,3 +108,6 @@ detail:
 
 bff-run-local: check-bff-env
 	@cd core/bff/mobile-bff && MOBILE_BFF_PORT=8080 go run ./cmd/server/main.go
+
+db-migrate-auth-hardening:
+	@./core/infra/postgres/migrations/apply.sh
