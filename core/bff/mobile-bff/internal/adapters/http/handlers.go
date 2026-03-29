@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -40,12 +41,13 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/v1/auth/login", h.Login)
 	mux.HandleFunc("POST /api/v1/auth/refresh", h.Refresh)
 	mux.HandleFunc("POST /api/v1/auth/logout", h.Logout)
-	mux.HandleFunc("GET /api/v1/me", h.withAuth(h.GetMe))
-	mux.HandleFunc("GET /api/v1/me/favorites", h.withAuth(h.GetUserFavorites))
+	mux.HandleFunc("GET /api/v1/me", h.GetMe)
+	mux.HandleFunc("GET /api/v1/me/favorites", h.GetUserFavorites)
 	mux.HandleFunc("GET /api/v1/pokemons", h.ListPokemons)
 	mux.HandleFunc("GET /api/v1/pokemons/search", h.SearchPokemons)
 	mux.HandleFunc("GET /api/v1/pokemons/{id}/details", h.GetPokemonDetails)
 	mux.HandleFunc("GET /api/v1/home", h.GetHome)
+	mux.HandleFunc("GET /api/v1/regions", h.GetRegions)
 	mux.HandleFunc("POST /api/v1/pokemons/{id}/favorite", h.RequireAuth(h.AddFavorite))
 	mux.HandleFunc("DELETE /api/v1/pokemons/{id}/favorite", h.RequireAuth(h.RemoveFavorite))
 }
@@ -55,21 +57,7 @@ func (h *Handler) GetMe(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	userID := getUserIDFromContext(ctx)
-	if userID == "" {
-		RespondError(w, http.StatusUnauthorized, "autenticacao obrigatoria", "UNAUTHORIZED")
-		return
-	}
-
-	response := struct {
-		Authenticated bool   `json:"authenticated"`
-		UserID        string `json:"user_id"`
-		Email         string `json:"email,omitempty"`
-	}{
-		Authenticated: true,
-		UserID:        userID,
-		Email:         getUserEmailFromContext(ctx),
-	}
-
+	response := h.responseBuilder.BuildProfileResponse(userID != "", getUserEmailFromContext(ctx))
 	RespondJSON(w, http.StatusOK, response)
 }
 
@@ -386,7 +374,7 @@ func (h *Handler) GetPokemonDetails(w http.ResponseWriter, r *http.Request) {
 
 	userID := getUserIDFromContext(ctx)
 
-	detail, err := h.pokemonUseCase.GetPokemonDetails(ctx, pokemonID, userID)
+	detail, err := h.pokemonUseCase.GetPokemonScreenDetails(ctx, pokemonID, userID)
 	if err != nil {
 		if err == domain.ErrPokemonNotFound {
 			RespondError(w, http.StatusNotFound, "pokemon nao encontrado", "NOT_FOUND")
@@ -396,7 +384,13 @@ func (h *Handler) GetPokemonDetails(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	detailDTO := h.responseBuilder.BuildPokemonDetailDTO(detail)
+	isFavorite := false
+	if userID != "" {
+		favoriteSet := h.buildFavoriteSet(ctx, userID)
+		_, isFavorite = favoriteSet[normalizePokemonID(detail.Number)]
+	}
+
+	detailDTO := h.responseBuilder.BuildPokemonDetailScreenResponse(detail, isFavorite)
 	RespondJSON(w, http.StatusOK, detailDTO)
 }
 
@@ -407,8 +401,12 @@ func (h *Handler) GetHome(w http.ResponseWriter, r *http.Request) {
 	page := getQueryParamInt(r, "page", 0)
 	pageSize := getQueryParamInt(r, "size", 20)
 	userID := getUserIDFromContext(ctx)
+	searchValue := strings.TrimSpace(r.URL.Query().Get("q"))
+	selectedType := strings.TrimSpace(r.URL.Query().Get("type"))
+	selectedOrdering := strings.TrimSpace(r.URL.Query().Get("order"))
+	selectedRegion := strings.TrimSpace(r.URL.Query().Get("region"))
 
-	pokemonPage, err := h.pokemonUseCase.GetHomeData(ctx, page, pageSize, userID)
+	pokemonPage, err := h.loadHomePokemonPage(ctx, page, pageSize, userID, searchValue, selectedType)
 	if err != nil {
 		RespondError(w, http.StatusInternalServerError, "falha ao obter dados da home", "INTERNAL_ERROR")
 		return
@@ -420,9 +418,40 @@ func (h *Handler) GetHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	regions, err := h.pokemonUseCase.ListRegions(ctx)
+	if err != nil {
+		RespondError(w, http.StatusInternalServerError, "falha ao obter regioes da home", "INTERNAL_ERROR")
+		return
+	}
+
+	filterHomePokemonByRegion(pokemonPage, selectedRegion)
+	sortHomePokemonPage(pokemonPage, selectedOrdering)
+
 	favoriteSet := h.buildFavoriteSet(ctx, userID)
-	response := h.responseBuilder.BuildHomePageResponseWithTypes(pokemonPage, types, favoriteSet)
+	response := h.responseBuilder.BuildHomePageResponseWithTypes(
+		pokemonPage,
+		types,
+		regions,
+		favoriteSet,
+		searchValue,
+		selectedOrDefault(selectedType, "Todos os tipos"),
+		selectedOrDefault(selectedOrdering, "Menor número"),
+		selectedRegion,
+	)
 	RespondJSON(w, http.StatusOK, response)
+}
+
+func (h *Handler) GetRegions(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	regions, err := h.pokemonUseCase.ListRegions(ctx)
+	if err != nil {
+		RespondError(w, http.StatusInternalServerError, "falha ao listar regioes", "INTERNAL_ERROR")
+		return
+	}
+
+	RespondJSON(w, http.StatusOK, h.responseBuilder.BuildRegionsResponse(regions))
 }
 
 func (h *Handler) enrichFavoriteFlags(ctx context.Context, userID string, response *dto.RichPokemonListResponse) {
@@ -540,7 +569,7 @@ func (h *Handler) GetUserFavorites(w http.ResponseWriter, r *http.Request) {
 
 	userID := getUserIDFromContext(ctx)
 	if userID == "" {
-		RespondError(w, http.StatusUnauthorized, "autenticacao obrigatoria", "UNAUTHORIZED")
+		RespondJSON(w, http.StatusOK, h.responseBuilder.BuildFavoritesResponse(nil, nil, false))
 		return
 	}
 
@@ -550,14 +579,30 @@ func (h *Handler) GetUserFavorites(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := struct {
-		Favorites []string `json:"favorites"`
-		Count     int      `json:"count"`
-	}{
-		Favorites: favorites,
-		Count:     len(favorites),
+	items := make([]domain.Pokemon, 0, len(favorites))
+	favoriteSet := make(map[string]struct{}, len(favorites))
+	for _, favoriteID := range favorites {
+		favoriteSet[normalizePokemonID(favoriteID)] = struct{}{}
+		pokemon, err := h.pokemonUseCase.GetPokemonScreenDetails(ctx, favoriteID, userID)
+		if err != nil {
+			continue
+		}
+		items = append(items, domain.Pokemon{
+			ID:           pokemon.ID,
+			Name:         pokemon.Name,
+			Number:       pokemon.Number,
+			Types:        mapScreenTypesToNames(pokemon.Types),
+			ImageURL:     pokemon.ImageURL,
+			ElementColor: pokemon.ElementColor,
+		})
 	}
-	RespondJSON(w, http.StatusOK, response)
+
+	sort.Slice(items, func(i, j int) bool {
+		return items[i].Number < items[j].Number
+	})
+
+	page := &domain.PokemonPage{Content: items}
+	RespondJSON(w, http.StatusOK, h.responseBuilder.BuildFavoritesResponse(page, favoriteSet, true))
 }
 
 func (h *Handler) withAuth(handler func(w http.ResponseWriter, r *http.Request)) http.HandlerFunc {
@@ -595,4 +640,143 @@ func (h *Handler) RequireAuth(handler func(w http.ResponseWriter, r *http.Reques
 		}
 		handler(w, r)
 	}
+}
+
+func (h *Handler) loadHomePokemonPage(
+	ctx context.Context,
+	page int,
+	pageSize int,
+	userID string,
+	searchValue string,
+	selectedType string,
+) (*domain.PokemonPage, error) {
+	items := make([]domain.Pokemon, 0, len(homePokemonNumbers))
+	for _, pokemonID := range homePokemonNumbers {
+		pokemon, err := h.pokemonUseCase.GetPokemonScreenDetails(ctx, pokemonID, userID)
+		if err != nil {
+			continue
+		}
+
+		items = append(items, domain.Pokemon{
+			ID:           pokemon.ID,
+			Name:         pokemon.Name,
+			Number:       pokemon.Number,
+			Types:        mapScreenTypesToNames(pokemon.Types),
+			ImageURL:     pokemon.ImageURL,
+			ElementColor: pokemon.ElementColor,
+		})
+	}
+
+	filtered := make([]domain.Pokemon, 0, len(items))
+	searchTerm := strings.ToLower(strings.TrimSpace(searchValue))
+	selectedType = strings.TrimSpace(selectedType)
+
+	for _, pokemon := range items {
+		if searchTerm != "" {
+			name := strings.ToLower(strings.TrimSpace(pokemon.Name))
+			number := normalizePokemonID(pokemon.Number)
+			if !strings.Contains(name, searchTerm) && !strings.Contains(number, searchTerm) {
+				continue
+			}
+		}
+
+		if selectedType != "" && selectedType != "Todos os tipos" && !hasPokemonType(pokemon.Types, selectedType) {
+			continue
+		}
+
+		filtered = append(filtered, pokemon)
+	}
+
+	return &domain.PokemonPage{Content: filtered}, nil
+}
+
+func sortHomePokemonPage(page *domain.PokemonPage, selectedOrdering string) {
+	if page == nil {
+		return
+	}
+
+	switch selectedOrdering {
+	case "Maior número":
+		sort.Slice(page.Content, func(i, j int) bool { return page.Content[i].Number > page.Content[j].Number })
+	case "A-Z":
+		sort.Slice(page.Content, func(i, j int) bool { return page.Content[i].Name < page.Content[j].Name })
+	case "Z-A":
+		sort.Slice(page.Content, func(i, j int) bool { return page.Content[i].Name > page.Content[j].Name })
+	default:
+		sort.Slice(page.Content, func(i, j int) bool { return page.Content[i].Number < page.Content[j].Number })
+	}
+}
+
+func filterHomePokemonByRegion(page *domain.PokemonPage, region string) {
+	if page == nil || strings.TrimSpace(region) == "" {
+		return
+	}
+
+	filtered := make([]domain.Pokemon, 0, len(page.Content))
+	for _, pokemon := range page.Content {
+		if matchesRegion(pokemon.Number, region) {
+			filtered = append(filtered, pokemon)
+		}
+	}
+	page.Content = filtered
+}
+
+func matchesRegion(number string, region string) bool {
+	number = normalizePokemonID(number)
+	switch strings.ToLower(strings.TrimSpace(region)) {
+	case "kanto":
+		return inNumbers(number, "1", "2", "3", "4", "5", "6", "7", "8", "9", "15", "25", "35", "51", "95", "108", "109", "151")
+	case "johto":
+		return inNumbers(number, "245")
+	case "hoenn":
+		return inNumbers(number, "306", "384")
+	case "sinnoh":
+		return inNumbers(number, "448")
+	case "unova":
+		return inNumbers(number, "497", "571", "609", "613")
+	case "alola":
+		return inNumbers(number, "733")
+	default:
+		return true
+	}
+}
+
+func inNumbers(number string, values ...string) bool {
+	for _, item := range values {
+		if number == item {
+			return true
+		}
+	}
+	return false
+}
+
+func selectedOrDefault(value string, fallback string) string {
+	if strings.TrimSpace(value) == "" {
+		return fallback
+	}
+	return value
+}
+
+func mapScreenTypesToNames(types []domain.Type) []string {
+	result := make([]string, len(types))
+	for i, item := range types {
+		result[i] = item.Name
+	}
+	return result
+}
+
+func hasPokemonType(types []string, target string) bool {
+	target = strings.TrimSpace(target)
+	for _, item := range types {
+		if strings.EqualFold(strings.TrimSpace(item), target) {
+			return true
+		}
+	}
+	return false
+}
+
+var homePokemonNumbers = []string{
+	"1", "2", "3", "4", "5", "6", "7", "8", "9",
+	"15", "25", "35", "51", "95", "108", "109", "151",
+	"245", "306", "384", "448", "497", "571", "609", "613", "733",
 }

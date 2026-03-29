@@ -42,6 +42,21 @@ func (r *PokemonCatalogServiceRepository) GetByID(ctx context.Context, id string
 	return &out, nil
 }
 
+func (r *PokemonCatalogServiceRepository) GetDetailByID(ctx context.Context, id string) (*domain.PokemonScreenDetail, error) {
+	path := fmt.Sprintf("%s/v1/pokemon-details/%s", r.baseURL, url.PathEscape(id))
+
+	var out domain.PokemonScreenDetail
+	status, err := r.getJSON(ctx, path, &out)
+	if err != nil {
+		if status == http.StatusNotFound {
+			return nil, domain.ErrPokemonNotFound
+		}
+		return nil, err
+	}
+
+	return &out, nil
+}
+
 func (r *PokemonCatalogServiceRepository) GetAll(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error) {
 	endpoint := fmt.Sprintf("%s/v1/pokemons?page=%d&size=%d", r.baseURL, page, pageSize)
 	var out domain.PokemonPage
@@ -75,6 +90,16 @@ func (r *PokemonCatalogServiceRepository) GetByType(ctx context.Context, typeFil
 func (r *PokemonCatalogServiceRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
 	endpoint := fmt.Sprintf("%s/v1/types", r.baseURL)
 	var out []domain.Type
+	_, err := r.getJSON(ctx, endpoint, &out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (r *PokemonCatalogServiceRepository) ListRegions(ctx context.Context) ([]domain.Region, error) {
+	endpoint := fmt.Sprintf("%s/v1/regions", r.baseURL)
+	var out []domain.Region
 	_, err := r.getJSON(ctx, endpoint, &out)
 	if err != nil {
 		return nil, err

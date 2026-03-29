@@ -181,11 +181,11 @@ func TestGetPokemonDetailsHandler(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	var response dto.PokemonDetailDTO
+	var response dto.PokemonDetailScreenResponse
 	err := json.Unmarshal(w.Body.Bytes(), &response)
 	assert.NoError(t, err)
 	assert.Equal(t, "Pikachu", response.Name)
-	assert.Equal(t, "025", response.Number)
+	assert.Equal(t, "Nº025", response.Number)
 }
 
 func TestGetHomeHandler(t *testing.T) {
@@ -206,15 +206,95 @@ func TestGetHomeHandler(t *testing.T) {
 	var response dto.HomeResponse
 	err := json.Unmarshal(w.Body.Bytes(), &response)
 	assert.NoError(t, err)
+	assert.Equal(t, "Pokédex", response.Title)
 	assert.Equal(t, "Procurar Pokémon...", response.Search.Placeholder)
-	assert.Equal(t, "Todos os tipos", response.Filters.Types.Title)
+	assert.Equal(t, "Tipos", response.Filters.Types.Title)
+	assert.Equal(t, "Todos os tipos", response.Filters.Types.Selected)
 	assert.NotEmpty(t, response.Filters.Types.Items)
 	assert.Equal(t, "Ordenação", response.Filters.Ordering.Title)
-	assert.Len(t, response.Filters.Ordering.Items, 1)
+	assert.Equal(t, "Menor número", response.Filters.Ordering.Selected)
+	assert.Len(t, response.Filters.Ordering.Items, 4)
 	assert.Greater(t, len(response.Pokemons), 0)
 	assert.Equal(t, "Nº001", response.Pokemons[0].Number)
 	assert.NotEmpty(t, response.Pokemons[0].Sprites.URL)
 	assert.NotEmpty(t, response.Pokemons[0].Sprites.BackgroundColor)
+}
+
+func TestGetHomeHandlerWithFilters(t *testing.T) {
+	pokemonRepo := mocks.NewMockPokemonRepository()
+	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
+	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil)
+
+	req := httptest.NewRequest("GET", "/api/v1/home?q=char&type=Fire&order=A-Z&region=kanto", nil)
+	w := httptest.NewRecorder()
+
+	handler.GetHome(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response dto.HomeResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.NoError(t, err)
+	assert.Equal(t, "char", response.Search.Value)
+	assert.Equal(t, "Fire", response.Filters.Types.Selected)
+	assert.Equal(t, "A-Z", response.Filters.Ordering.Selected)
+	assert.Equal(t, "kanto", response.Filters.Region.Selected)
+	assert.Len(t, response.Pokemons, 1)
+	if len(response.Pokemons) > 0 {
+		assert.Equal(t, "Charmander", response.Pokemons[0].Name)
+	}
+}
+
+func TestGetHomeHandlerWithDescendingNumberOrdering(t *testing.T) {
+	pokemonRepo := mocks.NewMockPokemonRepository()
+	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
+	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil)
+
+	req := httptest.NewRequest("GET", "/api/v1/home?order=Maior+n%C3%BAmero", nil)
+	w := httptest.NewRecorder()
+
+	handler.GetHome(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response dto.HomeResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.NoError(t, err)
+	assert.GreaterOrEqual(t, len(response.Pokemons), 3)
+	assert.Equal(t, "Nº025", response.Pokemons[0].Number)
+	assert.Equal(t, "Nº004", response.Pokemons[1].Number)
+	assert.Equal(t, "Nº001", response.Pokemons[2].Number)
+}
+
+func TestGetRegionsHandler(t *testing.T) {
+	pokemonRepo := mocks.NewMockPokemonRepository()
+	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
+	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil)
+
+	req := httptest.NewRequest("GET", "/api/v1/regions", nil)
+	w := httptest.NewRecorder()
+
+	handler.GetRegions(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response dto.RegionsResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.NoError(t, err)
+	assert.Equal(t, "Regiões", response.Title)
+	assert.GreaterOrEqual(t, len(response.Regions), 8)
+	assert.Equal(t, "kanto", response.Regions[0].ID)
+	assert.Equal(t, "Kanto", response.Regions[0].Name)
+	assert.Equal(t, "1º Geração", response.Regions[0].Generation)
 }
 
 func TestGetMeHandler(t *testing.T) {
@@ -234,16 +314,13 @@ func TestGetMeHandler(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	var response struct {
-		Authenticated bool   `json:"authenticated"`
-		UserID        string `json:"user_id"`
-		Email         string `json:"email"`
-	}
+	var response dto.ProfileResponse
 	err := json.Unmarshal(w.Body.Bytes(), &response)
 	assert.NoError(t, err)
 	assert.True(t, response.Authenticated)
-	assert.Equal(t, "user123", response.UserID)
-	assert.Equal(t, "user123@example.com", response.Email)
+	assert.NotNil(t, response.User)
+	assert.Equal(t, "user123@example.com", response.User.Email)
+	assert.NotEmpty(t, response.Sections)
 }
 
 func TestGetMeWithoutAuth(t *testing.T) {
@@ -261,7 +338,88 @@ func TestGetMeWithoutAuth(t *testing.T) {
 	handler.RegisterRoutes(mux)
 	mux.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusUnauthorized, w.Code)
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response dto.ProfileResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.NoError(t, err)
+	assert.False(t, response.Authenticated)
+	assert.NotNil(t, response.Header)
+	assert.Equal(t, "Entre ou Cadastre-se", response.Header.Title)
+}
+
+func TestGetFavoritesWithoutAuthReturnsScreenState(t *testing.T) {
+	pokemonRepo := mocks.NewMockPokemonRepository()
+	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
+	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil)
+
+	req := httptest.NewRequest("GET", "/api/v1/me/favorites", nil)
+	w := httptest.NewRecorder()
+
+	handler.GetUserFavorites(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response dto.FavoritesResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.NoError(t, err)
+	assert.Equal(t, "unauthenticated", response.State)
+	assert.NotNil(t, response.Message)
+}
+
+func TestGetFavoritesWithAuthAndEmptyListReturnsEmptyState(t *testing.T) {
+	pokemonRepo := mocks.NewMockPokemonRepository()
+	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
+	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil)
+
+	req := httptest.NewRequest("GET", "/api/v1/me/favorites", nil)
+	req = req.WithContext(httpadapter.SetUserID(req.Context(), "user-empty"))
+	w := httptest.NewRecorder()
+
+	handler.GetUserFavorites(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response dto.FavoritesResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.NoError(t, err)
+	assert.Equal(t, "empty", response.State)
+	assert.NotNil(t, response.Message)
+	assert.Empty(t, response.Pokemons)
+}
+
+func TestGetFavoritesWithAuthAndDataReturnsHasDataState(t *testing.T) {
+	pokemonRepo := mocks.NewMockPokemonRepository()
+	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
+	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+
+	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil)
+
+	err := favoriteRepo.AddFavorite(context.Background(), "user-data", "25")
+	assert.NoError(t, err)
+
+	req := httptest.NewRequest("GET", "/api/v1/me/favorites", nil)
+	req = req.WithContext(httpadapter.SetUserID(req.Context(), "user-data"))
+	w := httptest.NewRecorder()
+
+	handler.GetUserFavorites(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	var response dto.FavoritesResponse
+	err = json.Unmarshal(w.Body.Bytes(), &response)
+	assert.NoError(t, err)
+	assert.Equal(t, "has_data", response.State)
+	assert.Len(t, response.Pokemons, 1)
+	assert.Equal(t, "Pikachu", response.Pokemons[0].Name)
+	assert.True(t, response.Pokemons[0].IsFavorite)
 }
 
 func TestAddFavoriteWithoutAuth(t *testing.T) {

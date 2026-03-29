@@ -123,7 +123,7 @@ bruno/
 │   └── logout.yml             # POST /auth/logout - Encerrar
 ├── app/
 │   ├── home.yml               # GET /home - Home da pokedex
-│   ├── pokemon-details.yml    # GET /pokemons/{id} - Tela de detalhe
+│   ├── pokemon-details.yml    # GET /pokemons/{id}/details - Tela de detalhe
 │   ├── regions.yml            # GET /regions - Lista de regiões
 │   ├── favorites.yml          # GET /me/favorites - Aba de favoritos
 │   └── profile.yml            # GET /me - Aba de perfil
@@ -212,7 +212,7 @@ Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa m
 #### **E.1. Home da Pokedex**
 1. Abra `app > home.yml`
 2. Clique em **Send**
-3. Use este request como base para a futura API da home orientada ao Figma
+3. A resposta já vem moldada para a tela da Pokédex, com busca, filtros e a coleção curada de cards do app
 
 #### **F. Buscar Pokémon**
 1. Abra `pokemons > search.yml`
@@ -229,22 +229,22 @@ Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa m
 #### **G.1. Tela de Detalhe do App**
 1. Abra `app > pokemon-details.yml`
 2. Ajuste o ID conforme necessário
-3. Use este request como base para a futura resposta orientada à UI
+3. Valide o payload orientado à UI (about, weaknesses, evolutions e isFavorite)
 
 #### **G.2. Regiões**
 1. Abra `app > regions.yml`
 2. Clique em **Send**
-3. Use este request como base para a futura aba de regiões
+3. Valide o contrato da aba de regiões (`title` + `regions[]`)
 
 #### **G.3. Favoritos**
 1. Abra `app > favorites.yml`
 2. Clique em **Send**
-3. Use este request como base para a aba de favoritos do app
+3. Valide os estados de tela: `unauthenticated`, `empty` e `has_data`
 
 #### **G.4. Perfil**
 1. Abra `app > profile.yml`
 2. Clique em **Send**
-3. Use este request como base para a aba de perfil
+3. Valide os estados da tela de conta (`authenticated: false/true`)
 
 #### **H. Adicionar Favorito (Autenticado)** 🔒
 1. Certifique-se que `authToken` está configurado (passo C)
@@ -321,8 +321,8 @@ pm.test("Response tem access_token", function() {
 ### Protected (requerem Bearer token)
 - `POST {{baseUrl}}/v1/auth/refresh` (header: Authorization)
 - `POST {{baseUrl}}/v1/auth/logout` (header: Authorization)
-- `POST {{baseUrl}}/api/v1/pokemons/{id}/favorite` (header: Authorization)
-- `DELETE {{baseUrl}}/api/v1/pokemons/{id}/favorite` (header: Authorization)
+- `POST {{baseUrl}}/v1/pokemons/{id}/favorite` (header: Authorization)
+- `DELETE {{baseUrl}}/v1/pokemons/{id}/favorite` (header: Authorization)
 
 ## 💡 Dicas
 

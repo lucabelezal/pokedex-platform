@@ -32,27 +32,32 @@ As tabs principais esperadas hoje são:
 
 Nem todas precisam existir imediatamente como endpoints independentes, mas elas servem como mapa de evolução da API do BFF.
 
-## Direção Das Próximas APIs
+## Rotas Atuais Do App
 
-As próximas entregas de API devem priorizar:
+No gateway local (Kong), os endpoints do BFF são expostos no prefixo `/v1`.
 
-- home da pokedex
-- detalhe do Pokémon
+- `GET /v1/home`
+- `GET /v1/pokemons/{id}/details`
+- `GET /v1/regions`
+- `GET /v1/me`
+- `GET /v1/me/favorites`
 
-Esses contratos devem ser moldados a partir da necessidade da interface, mesmo quando os dados canônicos vierem do `pokemon-catalog-service`.
+Internamente, o serviço mantém as rotas com prefixo `/api/v1`.
 
-## Contrato Inicial Da Home
+## Contrato Atual Da Home
 
-Estrutura sugerida para a resposta da tela principal:
+Estrutura atual da resposta da tela principal:
 
 ```json
 {
+  "title": "Pokédex",
   "search": {
     "placeholder": "Procurar Pokémon..."
   },
   "filters": {
     "types": {
-      "title": "Todos os tipos",
+      "title": "Tipos",
+      "selected": "Todos os tipos",
       "items": [
         { "title": "Água" },
         { "title": "Fantasma" }
@@ -60,8 +65,19 @@ Estrutura sugerida para a resposta da tela principal:
     },
     "ordering": {
       "title": "Ordenação",
+      "selected": "Menor número",
       "items": [
-        { "title": "Menor número" }
+        { "title": "Menor número" },
+        { "title": "Maior número" },
+        { "title": "A-Z" },
+        { "title": "Z-A" }
+      ]
+    },
+    "region": {
+      "title": "Regiões",
+      "items": [
+        { "title": "Kanto" },
+        { "title": "Johto" }
       ]
     }
   },
@@ -80,6 +96,7 @@ Estrutura sugerida para a resposta da tela principal:
         }
       ],
       "sprites": {
+        "url": "https://...",
         "backgroundColor": "63BC5A"
       },
       "isFavorite": false
@@ -91,19 +108,122 @@ Estrutura sugerida para a resposta da tela principal:
 ## Observações De Modelagem Para A Home
 
 - `search.placeholder` é parte da experiência da tela e faz sentido vir do BFF.
-- `filters` podem ser enriquecidos pelo BFF mesmo que sua fonte original venha do catálogo.
+- `filters` são controlados pelo BFF a partir da necessidade da tela.
 - `types[].color` representa a cor visual associada ao tipo.
 - em `sprites.backgroundColor`, a cor representa o fundo visual do card atrás da imagem.
+- a home atual usa uma coleção curada de 26 pokémons para seguir o Figma, em vez de expor a paginação bruta do catálogo.
 
-## Direção Para O Detalhe
+## Contrato Atual De Detalhe
 
-A tela de detalhe deve ser carregada ao clicar em um Pokémon da home.
+Estrutura atual da tela de detalhe:
 
-O contrato de detalhe deve seguir a mesma lógica:
+```json
+{
+  "number": "Nº001",
+  "name": "Bulbasaur",
+  "types": [
+    { "title": "Grama", "color": "7AC74C" },
+    { "title": "Venenoso", "color": "A33EA1" }
+  ],
+  "description": "Há uma semente de planta nas costas desde o dia em que este Pokémon nasce. A semente cresce lentamente.",
+  "sprites": {
+    "url": "https://...",
+    "backgroundColor": "7AC74C"
+  },
+  "about": {
+    "weight": { "label": "Peso", "value": "6,9 kg" },
+    "height": { "label": "Altura", "value": "0,7 m" },
+    "category": { "label": "Categoria", "value": "Seed" },
+    "abilities": { "label": "Habilidade", "items": ["Overgrow"] },
+    "gender": { "label": "Gênero", "male": "87,5%", "female": "12,5%" }
+  },
+  "weaknesses": [
+    { "title": "Fogo", "color": "EE8130" }
+  ],
+  "evolutions": [
+    {
+      "number": "Nº001",
+      "name": "Bulbasaur",
+      "types": [
+        { "title": "Grama", "color": "7AC74C" },
+        { "title": "Venenoso", "color": "A33EA1" }
+      ],
+      "sprites": { "url": "https://..." }
+    }
+  ],
+  "isFavorite": false
+}
+```
 
-- dados canônicos vêm do `pokemon-catalog-service`
-- favoritos e sinais de experiência podem ser enriquecidos no BFF
-- a resposta final deve ser organizada para a UI, e não como espelho puro do serviço interno
+## Contrato Atual De Regiões
+
+```json
+{
+  "title": "Regiões",
+  "regions": [
+    { "id": "kanto", "name": "Kanto", "generation": "1º Geração" },
+    { "id": "johto", "name": "Johto", "generation": "2º Geração" }
+  ]
+}
+```
+
+## Contrato Atual De Favoritos
+
+O endpoint retorna estado de tela orientado à UI:
+
+- `state = "unauthenticated"`
+- `state = "empty"`
+- `state = "has_data"`
+
+Exemplo não autenticado:
+
+```json
+{
+  "title": "Favoritos",
+  "state": "unauthenticated",
+  "message": {
+    "title": "Você precisa entrar em uma conta para fazer isso.",
+    "description": "Para acessar essa funcionalidade, é necessário fazer login ou criar uma conta. Faça isso agora!",
+    "cta": { "label": "Entre ou Cadastre-se", "variant": "primary" }
+  },
+  "pokemons": []
+}
+```
+
+## Contrato Atual De Perfil
+
+O endpoint também retorna estado de tela:
+
+- não autenticado: `authenticated = false` com `header` e `actions`
+- autenticado: `authenticated = true` com `user`, `sections`, `actions` e `footer`
+
+Exemplo não autenticado:
+
+```json
+{
+  "title": "Conta",
+  "authenticated": false,
+  "header": {
+    "title": "Entre ou Cadastre-se",
+    "description": "Mantenha sua Pokédex atualizada e participe desse mundo."
+  },
+  "actions": [
+    { "label": "Entre ou Cadastre-se", "variant": "primary" }
+  ]
+}
+```
+
+## Diretriz De Modelagem UI-Oriented
+
+Neste projeto, o BFF deve devolver payloads orientados à tela, incluindo:
+
+- títulos e labels de blocos
+- estados de tela
+- mensagens de vazio e autenticação
+- ações de UI (ex.: CTA)
+- listas prontas para renderização
+
+Isso mantém o frontend focado em renderização e interação, e reduz montagem de contrato no cliente.
 
 ## Diagrama De Comunicação Do BFF
 

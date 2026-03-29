@@ -74,6 +74,52 @@ func (m *MockPokemonRepository) GetByID(ctx context.Context, id string) (*domain
 	return pokemon, nil
 }
 
+func (m *MockPokemonRepository) GetDetailByID(ctx context.Context, id string) (*domain.PokemonScreenDetail, error) {
+	pokemon, err := m.GetByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	category := "Seed"
+	abilities := []string{"Overgrow"}
+	weaknesses := []domain.Type{{Name: "Fogo", Color: "#EE8130"}}
+	if pokemon.ID == "25" {
+		category = "Mouse"
+		abilities = []string{"Static"}
+		weaknesses = []domain.Type{{Name: "Terrestre", Color: "#E2BF65"}}
+	}
+	if pokemon.ID == "4" {
+		category = "Lizard"
+		abilities = []string{"Blaze"}
+		weaknesses = []domain.Type{{Name: "Água", Color: "#6390F0"}}
+	}
+
+	genderMale := 87.5
+	genderFemale := 12.5
+
+	return &domain.PokemonScreenDetail{
+		ID:           pokemon.ID,
+		Name:         pokemon.Name,
+		Number:       pokemon.Number,
+		Types:        convertMockTypes(pokemon.Types),
+		Description:  pokemon.Description,
+		ImageURL:     pokemon.ImageURL,
+		ElementColor: pokemon.ElementColor,
+		Height:       pokemon.Height,
+		Weight:       pokemon.Weight,
+		Category:     category,
+		Abilities:    abilities,
+		GenderMale:   &genderMale,
+		GenderFemale: &genderFemale,
+		Weaknesses:   weaknesses,
+		Evolutions: []domain.Evolution{
+			{ID: pokemon.ID, Number: pokemon.Number, Name: pokemon.Name, ImageURL: pokemon.ImageURL, Types: convertMockTypes(pokemon.Types)},
+		},
+		Region:     "Kanto",
+		Generation: "1º Geração",
+	}, nil
+}
+
 func (m *MockPokemonRepository) GetAll(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error) {
 	m.mu.RLock()
 	defer m.mu.RUnlock()
@@ -162,6 +208,45 @@ func (m *MockPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, e
 		{Name: "Elétrico", Color: "#F7D02C"},
 		{Name: "Voador", Color: "#A98FF3"},
 	}, nil
+}
+
+func (m *MockPokemonRepository) ListRegions(ctx context.Context) ([]domain.Region, error) {
+	_ = ctx
+	return []domain.Region{
+		{ID: "kanto", Name: "Kanto", Generation: "1º Geração"},
+		{ID: "johto", Name: "Johto", Generation: "2º Geração"},
+		{ID: "hoenn", Name: "Hoenn", Generation: "3º Geração"},
+		{ID: "sinnoh", Name: "Sinnoh", Generation: "4º Geração"},
+		{ID: "unova", Name: "Unova", Generation: "5º Geração"},
+		{ID: "kalos", Name: "Kalos", Generation: "6º Geração"},
+		{ID: "alola", Name: "Alola", Generation: "7º Geração"},
+		{ID: "galar", Name: "Galar", Generation: "8º Geração"},
+	}, nil
+}
+
+func convertMockTypes(types []string) []domain.Type {
+	result := make([]domain.Type, len(types))
+	for i, item := range types {
+		result[i] = domain.Type{Name: item, Color: mockTypeColor(item)}
+	}
+	return result
+}
+
+func mockTypeColor(name string) string {
+	switch name {
+	case "Grass", "Grama":
+		return "#7AC74C"
+	case "Poison", "Venenoso":
+		return "#A33EA1"
+	case "Fire", "Fogo":
+		return "#EE8130"
+	case "Electric", "Elétrico":
+		return "#F7D02C"
+	case "Water", "Água":
+		return "#6390F0"
+	default:
+		return "#A9AC86"
+	}
 }
 
 type MockFavoriteRepository struct {

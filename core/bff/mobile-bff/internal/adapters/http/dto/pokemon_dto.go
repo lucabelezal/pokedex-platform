@@ -95,6 +95,7 @@ type RichPokemonListResponse struct {
 
 type HomeSearchDTO struct {
 	Placeholder string `json:"placeholder"`
+	Value       string `json:"value,omitempty"`
 }
 
 type HomeFilterItemDTO struct {
@@ -102,13 +103,15 @@ type HomeFilterItemDTO struct {
 }
 
 type HomeFilterGroupDTO struct {
-	Title string              `json:"title"`
-	Items []HomeFilterItemDTO `json:"items"`
+	Title    string              `json:"title"`
+	Selected string              `json:"selected,omitempty"`
+	Items    []HomeFilterItemDTO `json:"items"`
 }
 
 type HomeFiltersDTO struct {
 	Types    HomeFilterGroupDTO `json:"types"`
 	Ordering HomeFilterGroupDTO `json:"ordering"`
+	Region   HomeFilterGroupDTO `json:"region,omitempty"`
 }
 
 type HomePokemonTypeDTO struct {
@@ -131,9 +134,115 @@ type HomePokemonDTO struct {
 
 // HomeResponse representa dados para a tela de pokedex/home
 type HomeResponse struct {
+	Title    string           `json:"title"`
 	Search   HomeSearchDTO    `json:"search"`
 	Filters  HomeFiltersDTO   `json:"filters"`
 	Pokemons []HomePokemonDTO `json:"pokemons"`
+}
+
+type ScreenActionDTO struct {
+	Label   string `json:"label"`
+	Variant string `json:"variant,omitempty"`
+}
+
+type ScreenMessageDTO struct {
+	Title       string           `json:"title"`
+	Description string           `json:"description,omitempty"`
+	CTA         *ScreenActionDTO `json:"cta,omitempty"`
+}
+
+type RegionItemDTO struct {
+	ID         string `json:"id"`
+	Name       string `json:"name"`
+	Generation string `json:"generation"`
+}
+
+type RegionsResponse struct {
+	Title   string          `json:"title"`
+	Regions []RegionItemDTO `json:"regions"`
+}
+
+type FavoritesResponse struct {
+	Title    string            `json:"title"`
+	State    string            `json:"state"`
+	Message  *ScreenMessageDTO `json:"message,omitempty"`
+	Pokemons []HomePokemonDTO  `json:"pokemons"`
+}
+
+type ProfileSectionItemDTO struct {
+	Label       string `json:"label"`
+	Value       string `json:"value,omitempty"`
+	Description string `json:"description,omitempty"`
+	Type        string `json:"type,omitempty"`
+}
+
+type ProfileSectionDTO struct {
+	Title string                  `json:"title"`
+	Items []ProfileSectionItemDTO `json:"items"`
+}
+
+type ProfileHeaderDTO struct {
+	Title       string `json:"title,omitempty"`
+	Description string `json:"description,omitempty"`
+}
+
+type ProfileUserDTO struct {
+	Name  string `json:"name,omitempty"`
+	Email string `json:"email,omitempty"`
+}
+
+type ProfileResponse struct {
+	Title         string              `json:"title"`
+	Authenticated bool                `json:"authenticated"`
+	Header        *ProfileHeaderDTO   `json:"header,omitempty"`
+	User          *ProfileUserDTO     `json:"user,omitempty"`
+	Sections      []ProfileSectionDTO `json:"sections,omitempty"`
+	Actions       []ScreenActionDTO   `json:"actions,omitempty"`
+	Footer        *ScreenMessageDTO   `json:"footer,omitempty"`
+}
+
+type DetailInfoValueDTO struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
+
+type DetailAbilitiesDTO struct {
+	Label string   `json:"label"`
+	Items []string `json:"items"`
+}
+
+type DetailGenderDTO struct {
+	Label  string `json:"label"`
+	Male   string `json:"male,omitempty"`
+	Female string `json:"female,omitempty"`
+}
+
+type DetailAboutDTO struct {
+	Weight    DetailInfoValueDTO `json:"weight"`
+	Height    DetailInfoValueDTO `json:"height"`
+	Category  DetailInfoValueDTO `json:"category"`
+	Abilities DetailAbilitiesDTO `json:"abilities"`
+	Gender    DetailGenderDTO    `json:"gender"`
+}
+
+type DetailEvolutionDTO struct {
+	Number  string                `json:"number"`
+	Name    string                `json:"name"`
+	Types   []HomePokemonTypeDTO  `json:"types"`
+	Sprites HomePokemonSpritesDTO `json:"sprites"`
+	Trigger *DetailInfoValueDTO   `json:"trigger,omitempty"`
+}
+
+type PokemonDetailScreenResponse struct {
+	Number      string                `json:"number"`
+	Name        string                `json:"name"`
+	Types       []HomePokemonTypeDTO  `json:"types"`
+	Description string                `json:"description"`
+	Sprites     HomePokemonSpritesDTO `json:"sprites"`
+	About       DetailAboutDTO        `json:"about"`
+	Weaknesses  []HomePokemonTypeDTO  `json:"weaknesses"`
+	Evolutions  []DetailEvolutionDTO  `json:"evolutions"`
+	IsFavorite  bool                  `json:"isFavorite"`
 }
 
 // FavoriteRequest representa uma requisição para adicionar um favorito

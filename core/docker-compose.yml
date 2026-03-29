@@ -10,6 +10,7 @@ services:
     volumes:
       - ./infra/postgres/schema/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
       - ./infra/postgres/seeds/init-data.sql:/docker-entrypoint-initdb.d/02_init-data.sql:ro
+      - ./infra/postgres/seeds/screen-pokedex-sample.sql:/docker-entrypoint-initdb.d/03_screen-pokedex-sample.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-pokedex} -d ${POSTGRES_DB:-pokedex_dev_db}"]
       interval: 10s

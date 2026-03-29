@@ -32,3 +32,41 @@ type Type struct {
 	Name  string `json:"name"`
 	Color string `json:"color"`
 }
+
+// Region representa uma regiao e sua geracao para a UI.
+type Region struct {
+	ID         string `json:"id"`
+	Name       string `json:"name"`
+	Generation string `json:"generation"`
+}
+
+// Evolution representa um item da cadeia evolutiva.
+type Evolution struct {
+	ID       string `json:"id"`
+	Number   string `json:"number"`
+	Name     string `json:"name"`
+	ImageURL string `json:"imageUrl"`
+	Types    []Type `json:"types"`
+	Trigger  string `json:"trigger,omitempty"`
+}
+
+// PokemonDetail representa os dados ricos de um pokemon no catalogo.
+type PokemonDetail struct {
+	ID           string      `json:"id"`
+	Name         string      `json:"name"`
+	Number       string      `json:"number"`
+	Types        []Type      `json:"types"`
+	Description  string      `json:"description"`
+	ImageURL     string      `json:"imageUrl"`
+	ElementColor string      `json:"elementColor"`
+	Height       float64     `json:"height"`
+	Weight       float64     `json:"weight"`
+	Category     string      `json:"category"`
+	Abilities    []string    `json:"abilities"`
+	GenderMale   *float64    `json:"genderMale,omitempty"`
+	GenderFemale *float64    `json:"genderFemale,omitempty"`
+	Weaknesses   []Type      `json:"weaknesses"`
+	Evolutions   []Evolution `json:"evolutions"`
+	Region       string      `json:"region,omitempty"`
+	Generation   string      `json:"generation,omitempty"`
+}

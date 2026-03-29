@@ -3,6 +3,8 @@ package repository
 import (
 	"context"
 	"errors"
+	"fmt"
+	"strings"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 
@@ -51,6 +53,31 @@ func (r *PostgresPokemonRepository) GetByID(ctx context.Context, id string) (*do
 	}
 
 	return &pokemon, nil
+}
+
+func (r *PostgresPokemonRepository) GetDetailByID(ctx context.Context, id string) (*domain.PokemonScreenDetail, error) {
+	pokemon, err := r.GetByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &domain.PokemonScreenDetail{
+		ID:           pokemon.ID,
+		Name:         pokemon.Name,
+		Number:       pokemon.Number,
+		Types:        postgresDomainTypes(pokemon.Types),
+		Description:  pokemon.Description,
+		ImageURL:     pokemon.ImageURL,
+		ElementColor: pokemon.ElementColor,
+		Height:       pokemon.Height,
+		Weight:       pokemon.Weight,
+		Category:     "",
+		Abilities:    []string{},
+		Weaknesses:   []domain.Type{},
+		Evolutions: []domain.Evolution{
+			{ID: pokemon.ID, Number: pokemon.Number, Name: pokemon.Name, ImageURL: pokemon.ImageURL, Types: postgresDomainTypes(pokemon.Types)},
+		},
+	}, nil
 }
 
 // GetAll recupera todos os Pokémons com paginação
@@ -343,4 +370,85 @@ func (r *PostgresPokemonRepository) ListTypes(ctx context.Context) ([]domain.Typ
 	}
 
 	return types, rows.Err()
+}
+
+func (r *PostgresPokemonRepository) ListRegions(ctx context.Context) ([]domain.Region, error) {
+	rows, err := r.db.Query(ctx, `
+		SELECT name
+		FROM regions
+		WHERE id <= 8
+		ORDER BY id ASC
+	`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	regions := make([]domain.Region, 0)
+	index := 1
+	for rows.Next() {
+		var name string
+		if err := rows.Scan(&name); err != nil {
+			return nil, err
+		}
+		regions = append(regions, domain.Region{
+			ID:         strings.ToLower(name),
+			Name:       name,
+			Generation: fmt.Sprintf("%dº Geração", index),
+		})
+		index++
+	}
+
+	return regions, rows.Err()
+}
+
+func postgresDomainTypes(names []string) []domain.Type {
+	result := make([]domain.Type, len(names))
+	for i, name := range names {
+		result[i] = domain.Type{Name: name, Color: postgresTypeColor(name)}
+	}
+	return result
+}
+
+func postgresTypeColor(name string) string {
+	switch name {
+	case "Normal":
+		return "#A8A77A"
+	case "Fogo":
+		return "#EE8130"
+	case "Água":
+		return "#6390F0"
+	case "Elétrico":
+		return "#F7D02C"
+	case "Grama":
+		return "#7AC74C"
+	case "Gelo":
+		return "#96D9D6"
+	case "Lutador":
+		return "#C22E28"
+	case "Venenoso":
+		return "#A33EA1"
+	case "Terrestre":
+		return "#E2BF65"
+	case "Voador":
+		return "#A98FF3"
+	case "Psíquico":
+		return "#F95587"
+	case "Inseto":
+		return "#A6B91A"
+	case "Pedra":
+		return "#B6A136"
+	case "Fantasma":
+		return "#735797"
+	case "Dragão":
+		return "#6F35FC"
+	case "Sombrio", "Noturno":
+		return "#705746"
+	case "Aço", "Metal":
+		return "#B7B7CE"
+	case "Fada":
+		return "#D685AD"
+	default:
+		return "#A9AC86"
+	}
 }

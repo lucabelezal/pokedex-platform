@@ -57,6 +57,15 @@ func (s *PokemonService) GetPokemonDetails(ctx context.Context, pokemonID, userI
 	return detail, nil
 }
 
+func (s *PokemonService) GetPokemonScreenDetails(ctx context.Context, pokemonID, userID string) (*domain.PokemonScreenDetail, error) {
+	detail, err := s.pokemonRepo.GetDetailByID(ctx, pokemonID)
+	if err != nil {
+		return nil, err
+	}
+
+	return detail, nil
+}
+
 func (s *PokemonService) SearchPokemons(ctx context.Context, query string, page, pageSize int, userID string) (*domain.PokemonPage, error) {
 	page, pageSize = validatePagination(page, pageSize)
 	return s.pokemonRepo.Search(ctx, query, page, pageSize)
@@ -73,6 +82,10 @@ func (s *PokemonService) GetHomeData(ctx context.Context, page, pageSize int, us
 
 func (s *PokemonService) ListTypes(ctx context.Context) ([]domain.Type, error) {
 	return s.pokemonRepo.ListTypes(ctx)
+}
+
+func (s *PokemonService) ListRegions(ctx context.Context) ([]domain.Region, error) {
+	return s.pokemonRepo.ListRegions(ctx)
 }
 
 type FavoriteService struct {

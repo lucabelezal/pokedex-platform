@@ -34,6 +34,8 @@ func NewMux(pokemonRepo repository.PokemonRepository) *http.ServeMux {
 	mux.HandleFunc("GET /v1/pokemons/search", h.searchPokemons)
 	mux.HandleFunc("GET /v1/pokemons/type/{type}", h.filterByType)
 	mux.HandleFunc("GET /v1/types", h.listTypes)
+	mux.HandleFunc("GET /v1/regions", h.listRegions)
+	mux.HandleFunc("GET /v1/pokemon-details/{id}", h.getPokemonDetailByID)
 	mux.HandleFunc("GET /v1/pokemons/{id}", h.getPokemonByID)
 	return mux
 }
@@ -136,6 +138,42 @@ func (h *Handler) listTypes(w http.ResponseWriter, r *http.Request) {
 	data, err := h.pokemonRepo.ListTypes(ctx)
 	if err != nil {
 		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao listar tipos"})
+		return
+	}
+
+	respondJSON(w, http.StatusOK, data)
+}
+
+func (h *Handler) listRegions(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	data, err := h.pokemonRepo.ListRegions(ctx)
+	if err != nil {
+		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao listar regioes"})
+		return
+	}
+
+	respondJSON(w, http.StatusOK, data)
+}
+
+func (h *Handler) getPokemonDetailByID(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	id := strings.TrimSpace(r.PathValue("id"))
+	if id == "" {
+		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "id obrigatorio"})
+		return
+	}
+
+	data, err := h.pokemonRepo.GetDetailByID(ctx, id)
+	if err != nil {
+		if err == repository.ErrPokemonNotFound {
+			respondJSON(w, http.StatusNotFound, map[string]string{"error": "pokemon nao encontrado"})
+			return
+		}
+		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao buscar detalhes do pokemon"})
 		return
 	}
 

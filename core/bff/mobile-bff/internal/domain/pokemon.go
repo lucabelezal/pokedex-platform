@@ -27,6 +27,41 @@ type Type struct {
 	Color string
 }
 
+type Region struct {
+	ID         string
+	Name       string
+	Generation string
+}
+
+type Evolution struct {
+	ID       string
+	Number   string
+	Name     string
+	ImageURL string
+	Types    []Type
+	Trigger  string
+}
+
+type PokemonScreenDetail struct {
+	ID           string
+	Name         string
+	Number       string
+	Types        []Type
+	Description  string
+	ImageURL     string
+	ElementColor string
+	Height       float64
+	Weight       float64
+	Category     string
+	Abilities    []string
+	GenderMale   *float64
+	GenderFemale *float64
+	Weaknesses   []Type
+	Evolutions   []Evolution
+	Region       string
+	Generation   string
+}
+
 // PokemonDetail contém dados enriquecidos de Pokémon para visualização detalhada
 type PokemonDetail struct {
 	Number      string

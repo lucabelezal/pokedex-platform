@@ -85,7 +85,12 @@ func (b *EnrichedResponseBuilder) BuildHomePageResponse(
 		types = nil
 	}
 
-	return b.responseBuilder.BuildHomePageResponseWithTypes(page, types, favoriteSet)
+	regions, err := b.pokemonRepo.ListRegions(ctx)
+	if err != nil {
+		regions = nil
+	}
+
+	return b.responseBuilder.BuildHomePageResponseWithTypes(page, types, regions, favoriteSet, "", "Todos os tipos", "Menor número", "")
 }
 
 // BuildFavoritePokemonResponse constrói resposta para operações de favoritos
