@@ -1,0 +1,18 @@
+info:
+  name: home-search-and-filters
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{baseUrl}}/v1/home?q=char&type=Fogo&order=A-Z&region=kanto"
+  headers:
+    - name: Authorization
+      value: "Bearer {{authToken}}"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

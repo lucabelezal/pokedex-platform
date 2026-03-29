@@ -123,6 +123,9 @@ bruno/
 │   └── logout.yml             # POST /auth/logout - Encerrar
 ├── app/
 │   ├── home.yml               # GET /home - Home da pokedex
+│   ├── home-search-and-filters.yml # GET /home com query params combinados
+│   ├── home-filter-region.yml  # GET /home com filtro por região
+│   ├── home-ordering.yml       # GET /home com ordenação
 │   ├── pokemon-details.yml    # GET /pokemons/{id}/details - Tela de detalhe
 │   ├── regions.yml            # GET /regions - Lista de regiões
 │   ├── favorites.yml          # GET /me/favorites - Aba de favoritos
@@ -213,6 +216,26 @@ Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa m
 1. Abra `app > home.yml`
 2. Clique em **Send**
 3. A resposta já vem moldada para a tela da Pokédex, com busca, filtros e a coleção curada de cards do app
+
+#### **E.2. Busca e Filtros Da Home (mesmo endpoint)**
+Use o mesmo endpoint `GET {{baseUrl}}/v1/home` com query params:
+
+- Busca: `?q=char`
+- Tipo: `?type=Fogo`
+- Ordenação: `?order=A-Z`
+- Região: `?region=kanto`
+- Combinado: `?q=char&type=Fogo&order=A-Z&region=kanto`
+
+Exemplo rápido no terminal:
+
+```bash
+curl -s "http://localhost:8000/v1/home?region=kanto" | jq '.pokemons | length'
+```
+
+Importante:
+
+- Use `.../v1/home` sem barra final em depuração por terminal.
+- `.../v1/home/` pode retornar resposta diferente no gateway e quebrar `jq`.
 
 #### **F. Buscar Pokémon**
 1. Abra `pokemons > search.yml`
@@ -314,6 +337,7 @@ pm.test("Response tem access_token", function() {
 - `GET {{baseUrl}}/v1/health`
 - `POST {{baseUrl}}/v1/auth/signup`
 - `POST {{baseUrl}}/v1/auth/login`
+- `GET {{baseUrl}}/v1/home?q={termo}&type={tipo}&order={ordem}&region={regiao}`
 - `GET {{baseUrl}}/v1/pokemons?page=0&size=20`
 - `GET {{baseUrl}}/v1/pokemons/search?q=termo`
 - `GET {{baseUrl}}/v1/pokemons/{id}`
@@ -355,6 +379,7 @@ bru run . --env local
 - [ ] Signup cria conta com sucesso (201)
 - [ ] Login autentica e retorna token (200)
 - [ ] Listar Pokémon retorna 20 primeiros (200)
+- [ ] Home aceita busca/filtros por query params (200)
 - [ ] Busca por nome funciona (200)
 - [ ] Detalhe de Pokémon retorna estrutura completa (200)
 - [ ] Adicionar favorito funciona autenticado (200)

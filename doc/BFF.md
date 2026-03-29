@@ -113,6 +113,35 @@ Estrutura atual da resposta da tela principal:
 - em `sprites.backgroundColor`, a cor representa o fundo visual do card atrás da imagem.
 - a home atual usa uma coleção curada de 26 pokémons para seguir o Figma, em vez de expor a paginação bruta do catálogo.
 
+## Consulta Da Home Por Query Params
+
+O endpoint da home é único e aceita filtros por query string:
+
+- `GET /v1/home`
+
+Parâmetros suportados:
+
+- `q`: busca por nome e número.
+- `type`: filtra por tipo.
+- `order`: ordenação da lista (`Menor número`, `Maior número`, `A-Z`, `Z-A`).
+- `region`: filtra por região.
+
+Exemplos de uso:
+
+```text
+GET /v1/home?q=char
+GET /v1/home?type=Fogo
+GET /v1/home?order=A-Z
+GET /v1/home?region=kanto
+GET /v1/home?q=char&type=Fogo&order=A-Z&region=kanto
+```
+
+Observações:
+
+- no consumo externo via gateway, use `/v1`.
+- internamente no serviço, as rotas seguem `/api/v1`.
+- evite barra final em `home/` durante debug por linha de comando para não confundir o parse da resposta.
+
 ## Contrato Atual De Detalhe
 
 Estrutura atual da tela de detalhe:
