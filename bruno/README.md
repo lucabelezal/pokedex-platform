@@ -127,15 +127,14 @@ bruno/
 │   ├── home-filter-region.yml  # GET /home com filtro por região
 │   ├── home-ordering.yml       # GET /home com ordenação
 │   ├── pokemon-details.yml    # GET /pokemons/{id}/details - Tela de detalhe
+│   ├── pokemon-list.yml       # GET /pokemons - Lista base da pokedex
+│   ├── pokemon-search.yml     # GET /pokemons/search - Busca por nome
+│   ├── pokemon-details-raw.yml # GET /pokemons/{id} - Detalhe bruto
+│   ├── pokemon-add-favorite.yml # POST /pokemons/{id}/favorite
+│   ├── pokemon-remove-favorite.yml # DELETE /pokemons/{id}/favorite
 │   ├── regions.yml            # GET /regions - Lista de regiões
 │   ├── favorites.yml          # GET /me/favorites - Aba de favoritos
 │   └── profile.yml            # GET /me - Aba de perfil
-└── pokemons/
-    ├── list.yml               # GET /pokemons - Listar (paginado)
-    ├── search.yml             # GET /pokemons/search - Buscar por nome
-    ├── details.yml            # GET /pokemons/{id} - Detalhes de um
-    ├── add-favorite.yml       # POST /pokemons/{id}/favorite - Adicionar favorito
-    └── remove-favorite.yml    # DELETE /pokemons/{id}/favorite - Remover favorito
 ```
 
 ## 🚀 Começando Rápido
@@ -208,7 +207,7 @@ Todas as requisições usam `{{baseUrl}}` automaticamente, então não precisa m
 4. Resposta: novo token + dados do usuário (status 200)
 
 #### **E. Listar Pokémon (Public)**
-1. Abra `pokemons > list.yml`
+1. Abra `pokedex > pokemon-list.yml`
 2. Clique em **Send**
 3. Veja os primeiros 20 Pokémon (não requer autenticação)
 
@@ -238,13 +237,13 @@ Importante:
 - `.../v1/home/` pode retornar resposta diferente no gateway e quebrar `jq`.
 
 #### **F. Buscar Pokémon**
-1. Abra `pokemons > search.yml`
+1. Abra `pokedex > pokemon-search.yml`
 2. Modifique a query na URL: `?q=charizard` (ao invés de pikachu)
 3. Clique em **Send**
 4. Veja resultados filtrados
 
 #### **G. Ver Detalhes de um Pokémon**
-1. Abra `pokemons > details.yml`
+1. Abra `pokedex > pokemon-details-raw.yml`
 2. Mude o ID na URL (ex: `/25` para Pikachu, `/1` para Bulbasaur)
 3. Clique em **Send**
 4. Veja estrutura completa com stats, tipos, etc
@@ -271,13 +270,13 @@ Importante:
 
 #### **H. Adicionar Favorito (Autenticado)** 🔒
 1. Certifique-se que `authToken` está configurado (passo C)
-2. Abra `pokemons > add-favorite.yml`
+2. Abra `pokedex > pokemon-add-favorite.yml`
 3. Modifique o ID se quiser (ex: 6 para Charizard)
 4. Clique em **Send**
 5. Resposta: `{"status": "ok"}` (status 200)
 
 #### **I. Remover Favorito (Autenticado)** 🔒
-1. Abra `pokemons > remove-favorite.yml`
+1. Abra `pokedex > pokemon-remove-favorite.yml`
 2. Clique em **Send**
 3. Resposta: `{"message": "favorito removido"}` (status 200)
 

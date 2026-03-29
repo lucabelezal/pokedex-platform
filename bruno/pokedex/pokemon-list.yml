@@ -1,11 +1,11 @@
 info:
-  name: remove-favorite
+  name: pokemon-list
   type: http
-  seq: 5
+  seq: 10
 
 http:
-  method: DELETE
-  url: "{{baseUrl}}/api/v1/pokemons/25/favorite"
+  method: GET
+  url: "{{baseUrl}}/v1/pokemons?page=0&size=20"
   headers:
     - name: Authorization
       value: "Bearer {{authToken}}"
