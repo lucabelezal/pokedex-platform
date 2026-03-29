@@ -18,6 +18,7 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 
 ```text
 .
+├── bruno/
 ├── core/
 │   ├── app/
 │   │   └── pokemon-catalog-service/
@@ -35,6 +36,8 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 │   └── docker-compose.yml
 └── doc/
 ```
+
+A pasta `bruno/` concentra a colecao de requisicoes de API da plataforma para testes manuais.
 
 ## Documentacao
 
@@ -55,10 +58,67 @@ A implementacao executavel da plataforma fica em `core/`.
 
 - [Pokémon App By Junior Saraiva](https://www.figma.com/pt-br/comunidade/file/1202971127473077147/pokedex-pokemon-app)
 
+## Testes De API Com Bruno
+
+Para executar as colecoes da pasta `bruno/`, instale o Bruno:
+
+- Site oficial: https://www.usebruno.com/
+- Guia local da colecao: `bruno/README.md`
+
 ## Como Executar
 
 ```bash
 docker compose -p pokedex -f core/docker-compose.yml up --build
+```
+
+### Pre-requisitos Operacionais Do BFF
+
+Para o `mobile-bff` iniciar corretamente, o `pokemon-catalog-service` precisa estar disponivel.
+
+- Variavel obrigatoria no runtime do BFF: `POKEMON_CATALOG_SERVICE_URL`
+- Em execucao via `core/docker-compose.yml`, essa variavel ja e configurada automaticamente.
+- O Postgres no BFF permanece como suporte de persistencia de favoritos, enquanto catalogo e detalhes de Pokemon sao lidos do `pokemon-catalog-service`.
+
+### Fluxo Rapido Recomendado (Local)
+
+1. Subir stack completa:
+
+```bash
+docker compose -p pokedex -f core/docker-compose.yml up --build
+```
+
+2. Validar saude principal:
+
+```bash
+curl http://localhost:8000/bff/health
+```
+
+3. Validar home e detalhe via gateway:
+
+```bash
+curl "http://localhost:8000/v1/home"
+curl "http://localhost:8000/v1/pokemons/1/details"
+```
+
+### Automacao Com Makefile (raiz)
+
+Foi adicionado um `Makefile` na raiz para simplificar operacao local da plataforma:
+
+```bash
+make doctor
+make up
+make health
+make home
+make detail
+make logs
+make down
+```
+
+Checagem da variavel obrigatoria do BFF:
+
+```bash
+make verify-bff-env   # informa status e orienta como corrigir
+make check-bff-env    # falha se nao estiver configurada
 ```
 
 ### Endpoints
