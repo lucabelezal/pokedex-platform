@@ -12,7 +12,7 @@ O Kong é o ponto de entrada da plataforma. Ele fornece uma camada pública úni
 
 ## Configuração Atual
 
-O repositório usa uma configuração declarativa do Kong em `core/gateway/kong/kong.yml`.
+O repositório usa uma configuração declarativa do Kong em [core/gateway/kong/kong.yml](../core/gateway/kong/kong.yml).
 
 No momento:
 

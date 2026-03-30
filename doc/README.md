@@ -11,12 +11,12 @@ Este diretório centraliza a documentação arquitetural da Plataforma Pokedex.
 
 ## Documentos
 
-- `SYSTEM-OVERVIEW.md`: visão geral da plataforma.
-- `BFF.md`: papel e responsabilidades do Backend for Frontend.
-- `GATEWAY.md`: papel do Kong como ponto de entrada.
-- `INFRA.md`: infraestrutura, fluxo de dados e limites operacionais.
-- `DECISIONS.md`: decisões arquiteturais atuais e trade-offs.
-- `SOLID-AND-PATTERNS.md`: princípios SOLID conectados a patterns, com exemplos em Go.
+- [SYSTEM-OVERVIEW.md](SYSTEM-OVERVIEW.md): visão geral da plataforma.
+- [BFF.md](BFF.md): papel e responsabilidades do Backend for Frontend.
+- [GATEWAY.md](GATEWAY.md): papel do Kong como ponto de entrada.
+- [INFRA.md](INFRA.md): infraestrutura, fluxo de dados e limites operacionais.
+- [DECISIONS.md](DECISIONS.md): decisões arquiteturais atuais e trade-offs.
+- [SOLID-AND-PATTERNS.md](SOLID-AND-PATTERNS.md): princípios SOLID conectados a patterns, com exemplos em Go.
 
 ## Convenção De Nomes
 

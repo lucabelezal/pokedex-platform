@@ -41,16 +41,16 @@ A pasta `bruno/` concentra a colecao de requisicoes de API da plataforma para te
 
 ## Documentacao
 
-A documentacao arquitetural do projeto fica em `doc/`.
-A implementacao executavel da plataforma fica em `core/`.
+A documentacao arquitetural do projeto fica em [doc/](doc/).
+A implementacao executavel da plataforma fica em [core/](core/).
 
-- Visao geral: `doc/SYSTEM-OVERVIEW.md`
-- BFF: `doc/BFF.md`
-- Gateway: `doc/GATEWAY.md`
-- Infraestrutura: `doc/INFRA.md`
-- Decisoes arquiteturais: `doc/DECISIONS.md`
-- SOLID e patterns: `doc/SOLID-AND-PATTERNS.md`
-- Visao do runtime: `core/README.md`
+- Visao geral: [doc/SYSTEM-OVERVIEW.md](doc/SYSTEM-OVERVIEW.md)
+- BFF: [doc/BFF.md](doc/BFF.md)
+- Gateway: [doc/GATEWAY.md](doc/GATEWAY.md)
+- Infraestrutura: [doc/INFRA.md](doc/INFRA.md)
+- Decisoes arquiteturais: [doc/DECISIONS.md](doc/DECISIONS.md)
+- SOLID e patterns: [doc/SOLID-AND-PATTERNS.md](doc/SOLID-AND-PATTERNS.md)
+- Visao do runtime: [core/README.md](core/README.md)
 
 ## UI/UX Design
 
@@ -63,7 +63,7 @@ A implementacao executavel da plataforma fica em `core/`.
 Para executar as colecoes da pasta `bruno/`, instale o Bruno:
 
 - Site oficial: https://www.usebruno.com/
-- Guia local da colecao: `bruno/README.md`
+- Guia local da colecao: [bruno/README.md](bruno/README.md)
 
 ## Como Executar
 

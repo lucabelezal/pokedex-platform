@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-O diretório `core/infra/` contém os ativos técnicos compartilhados necessários para executar a plataforma localmente e em ambientes containerizados.
+O diretório [core/infra/](../core/infra/) contém os ativos técnicos compartilhados necessários para executar a plataforma localmente e em ambientes containerizados.
 
 ## PostgreSQL
 
@@ -10,10 +10,10 @@ O PostgreSQL é usado como principal armazenamento persistente.
 
 ### Arquivos
 
-- `core/infra/postgres/schema/schema.sql`: schema do banco de dados.
-- `core/infra/postgres/seeds/init-data.sql`: seed gerada.
-- `core/infra/postgres/source-json/`: fonte de verdade do conteúdo do catálogo.
-- `core/infra/postgres/json2sql/`: ferramenta que converte arquivos JSON de origem em seed SQL.
+- [core/infra/postgres/schema/schema.sql](../core/infra/postgres/schema/schema.sql): schema do banco de dados.
+- [core/infra/postgres/seeds/init-data.sql](../core/infra/postgres/seeds/init-data.sql): seed gerada.
+- [core/infra/postgres/source-json/](../core/infra/postgres/source-json/): fonte de verdade do conteúdo do catálogo.
+- [core/infra/postgres/json2sql/](../core/infra/postgres/json2sql/): ferramenta que converte arquivos JSON de origem em seed SQL.
 
 ### Pipeline Atual De Dados
 
@@ -39,7 +39,7 @@ Isso deveria continuar sendo documentado de forma explícita conforme o projeto 
 
 ## Docker Compose
 
-O `core/docker-compose.yml` descreve a topologia local completa:
+O [core/docker-compose.yml](../core/docker-compose.yml) descreve a topologia local completa:
 
 - PostgreSQL
 - Redis

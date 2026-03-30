@@ -36,7 +36,7 @@ docker compose -p pokedex -f core/docker-compose.yml up --build
 
 ## Documentação Relacionada
 
-- `../README.md`
-- `../doc/SYSTEM-OVERVIEW.md`
-- `../doc/BFF.md`
-- `../doc/INFRA.md`
+- [../README.md](../README.md)
+- [../doc/SYSTEM-OVERVIEW.md](../doc/SYSTEM-OVERVIEW.md)
+- [../doc/BFF.md](../doc/BFF.md)
+- [../doc/INFRA.md](../doc/INFRA.md)
