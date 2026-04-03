@@ -1,3 +1,15 @@
+---
+name: golang-style-google
+description: >-
+  Google Go Style Guide for Go projects. Covers naming (packages, functions, receivers, initialisms),
+  godoc comments, indent error flow, variable declarations, error wrapping with %w vs %v,
+  interface definition placement, goroutine lifecycle, and import grouping.
+  Use when writing or reviewing Go code for style, naming decisions, comment quality, or idiomatic patterns.
+  Trigger examples: "naming convention", "receiver name", "godoc comment", "error wrapping",
+  "indent error flow", "import grouping", "Go style", "initialism", "interface placement".
+  Do NOT use for testing patterns (use golang-testing) or security (use golang-security).
+---
+
 # Google Go Style Guide — Skill
 
 > Baseado em: Google Go Style Guide, Google Go Style Decisions e Google Go Best Practices

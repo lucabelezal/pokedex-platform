@@ -1,3 +1,17 @@
+---
+name: golang-style-uber
+description: >-
+  Uber Go Style Guide for production Go code. Covers performance patterns (slice/map pre-allocation,
+  strconv over fmt), struct initialization, error handling (no silent discards, wrapping, sentinel errors),
+  goroutines with context and lifecycle, mutex placement, channel sizing, context rules, and
+  functional options pattern.
+  Use when writing performance-sensitive Go code, reviewing production patterns, or implementing
+  constructors with optional parameters.
+  Trigger examples: "pre-allocate slice", "functional options", "channel buffer", "mutex",
+  "struct initialization", "production Go", "Uber style", "context in struct".
+  Do NOT use for test patterns (use golang-testing) or API design (use go-api-design).
+---
+
 # Uber Go Style Guide — Skill
 
 > Baseado em: [Uber Go Style Guide](https://github.com/uber-go/guide/blob/master/style.md)
