@@ -19,32 +19,56 @@ core/bff/mobile-bff
 ### Padrao Hexagonal (Ports and Adapters)
 
 ```text
-domain/                    # Regras de negocio (independente de framework)
-├─ pokemon.go              # Modelos (Pokemon, PokemonDetail etc.)
-└─ errors.go               # Erros de dominio
-
-ports/                     # Contratos (interfaces)
-├─ repository.go           # Portas de acesso a dados
-└─ usecase.go              # Portas de casos de uso
-
-service/                   # Servicos de aplicacao
-└─ pokemon_service.go      # Operacoes de Pokemon e favoritos
-
-adapters/
-├─ http/                   # Adapter de entrada HTTP
-│  ├─ handlers.go          # Endpoints REST
-│  ├─ middleware.go        # Auth e CORS
-│  ├─ response_builder.go  # Conversao dominio -> DTO
-│  └─ dto/                 # Objetos de transferencia
-└─ repository/             # Adapter PostgreSQL
-   ├─ pokemon_repository.go
-   ├─ favorite_repository.go
-   └─ database.go          # Pool de conexao
+internal/
+├─ domain/                          # Hexagono: entidades e erros de dominio
+│  ├─ auth_session.go
+│  ├─ errors.go
+│  └─ pokemon.go
+│
+├─ ports/
+│  ├─ inbound/                      # Contratos que adaptadores HTTP consomem
+│  │  ├─ auth_usecase.go            # AuthUseCase
+│  │  ├─ favorite_usecase.go        # FavoriteUseCase
+│  │  ├─ pokemon_usecase.go         # PokemonUseCase
+│  │  └─ token_validator.go         # TokenValidator (usado pelo middleware)
+│  └─ outbound/                     # Contratos que os servicos exigem de recursos externos
+│     ├─ auth.go                    # AuthProvider
+│     ├─ favorite_repository.go     # FavoriteRepository
+│     └─ pokemon_repository.go      # PokemonRepository
+│
+├─ service/                         # Hexagono: implementacoes dos casos de uso
+│  ├─ auth_service.go
+│  ├─ favorite_service.go
+│  └─ pokemon_service.go
+│
+├─ adapters/
+│  ├─ inbound/
+│  │  └─ http/                      # Adaptadores de entrada: handlers HTTP (pkg httphandler)
+│  │     ├─ handler.go              # Registro de rotas
+│  │     ├─ auth_handler.go
+│  │     ├─ favorite_handler.go
+│  │     ├─ home_handler.go
+│  │     ├─ pokemon_handler.go
+│  │     ├─ middleware.go           # Auth, CORS, rate-limit, request logger
+│  │     ├─ response_builder.go
+│  │     └─ dto/
+│  └─ outbound/
+│     ├─ http/                      # Clientes HTTP externos
+│     │  ├─ auth_service_client.go  # implementa outbound.AuthProvider e inbound.TokenValidator
+│     │  └─ pokemon_catalog_client.go # implementa outbound.PokemonRepository
+│     └─ postgres/                  # Adaptadores PostgreSQL
+│        ├─ database.go             # Pool de conexao (pgx/v5)
+│        ├─ favorite_repository.go  # implementa outbound.FavoriteRepository
+│        └─ pokemon_repository.go   # implementa outbound.PokemonRepository
+│
+└─ infrastructure/
+   └─ logger/                       # Setup do slog (LOG_LEVEL, LOG_FORMAT)
+      └─ logger.go
 
 tests/
-├─ unit/                   # Testes unitarios
-├─ integration/            # Testes de integracao com banco
-└─ mocks/                  # Repositorios fake
+├─ unit/                            # Testes unitarios (sem infraestrutura)
+├─ integration/                     # Testes com banco PostgreSQL real
+└─ mocks/                           # Repositorios fake para testes
 ```
 
 ## Endpoints
@@ -115,11 +139,24 @@ O BFF atende o contrato rico do front, enquanto o `pokemon-catalog-service` conc
 
 ## Como Executar
 
+### Variaveis de Ambiente
+
+| Variavel | Obrigatoria | Descricao |
+|---|---|---|
+| `POKEMON_CATALOG_SERVICE_URL` | Sim | URL base do `pokemon-catalog-service` |
+| `JWT_SECRET` | Sim | Chave para validacao de tokens JWT |
+| `AUTH_SERVICE_URL` | Nao | URL do `auth-service` (funcionalidades de auth) |
+| `DATABASE_URL` | Nao | PostgreSQL para favoritos (usa mock se ausente) |
+| `MOBILE_BFF_PORT` | Nao | Porta HTTP (padrao: 8080) |
+| `LOG_LEVEL` | Nao | Nivel de log: `debug`, `info`, `warn`, `error` (padrao: `info`) |
+| `LOG_FORMAT` | Nao | Formato de log: `json` (padrao) ou `text` (legivel no terminal) |
+
 ### Modo local (com catalog service)
 
 ```bash
 export MOBILE_BFF_PORT=8080
 export POKEMON_CATALOG_SERVICE_URL="http://localhost:8081"
+export LOG_FORMAT=text   # saida legivel no terminal
 go run ./cmd/server/main.go
 ```
 

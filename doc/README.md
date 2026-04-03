@@ -17,6 +17,7 @@ Este diretório centraliza a documentação arquitetural da Plataforma Pokedex.
 - [INFRA.md](INFRA.md): infraestrutura, fluxo de dados e limites operacionais.
 - [DECISIONS.md](DECISIONS.md): decisões arquiteturais atuais e trade-offs.
 - [SOLID-AND-PATTERNS.md](SOLID-AND-PATTERNS.md): princípios SOLID conectados a patterns, com exemplos em Go.
+- [architecture/hexagonal.md](architecture/hexagonal.md): guia detalhado da arquitetura hexagonal aplicada ao `mobile-bff`.
 
 ## Convenção De Nomes
 

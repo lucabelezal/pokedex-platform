@@ -78,42 +78,63 @@ O `mobile-bff` implementa a arquitetura hexagonal da seguinte forma:
 
 ```
 internal/
-├── domain/                        # Hexágono: entidades e erros de domínio
-│   ├── auth_session.go            # AuthSession (movida dos ports para o domínio)
+├── domain/                              # Hexágono: entidades e erros de domínio
+│   ├── auth_session.go
 │   ├── errors.go
 │   └── pokemon.go
 │
 ├── ports/
-│   ├── inbound/                   # Contratos que os adaptadores inbound consomem
-│   │   └── usecase.go             # PokemonUseCase, FavoriteUseCase, AuthUseCase
-│   └── outbound/                  # Contratos que a aplicação exige de recursos externos
-│       ├── auth.go                # AuthProvider
-│       └── repository.go         # PokemonRepository, FavoriteRepository
+│   ├── inbound/                         # Contratos que os adaptadores inbound consomem
+│   │   ├── auth_usecase.go              # AuthUseCase
+│   │   ├── favorite_usecase.go          # FavoriteUseCase
+│   │   ├── pokemon_usecase.go           # PokemonUseCase
+│   │   └── token_validator.go           # TokenValidator (usado pelo AuthMiddleware)
+│   └── outbound/                        # Contratos que a aplicação exige de recursos externos
+│       ├── auth.go                      # AuthProvider
+│       ├── favorite_repository.go       # FavoriteRepository
+│       └── pokemon_repository.go        # PokemonRepository
 │
-├── service/                       # Hexágono: implementações dos casos de uso
-│   ├── auth_service.go            # implementa inbound.AuthUseCase
-│   └── pokemon_service.go         # implementa inbound.PokemonUseCase e FavoriteUseCase
+├── service/                             # Hexágono: implementações dos casos de uso
+│   ├── auth_service.go                  # implementa inbound.AuthUseCase
+│   ├── favorite_service.go              # implementa inbound.FavoriteUseCase
+│   └── pokemon_service.go              # implementa inbound.PokemonUseCase
 │
-└── adapters/
-    ├── http/                      # Adaptadores inbound: recebem requisições externas
-    │   ├── handlers.go            # depende de inbound.*
-    │   └── enriched_response_builder.go
-    └── repository/               # Adaptadores outbound: acessam recursos externos
-        ├── auth_service_client.go # implementa outbound.AuthProvider
-        └── mock_repository.go    # implementa outbound.PokemonRepository e FavoriteRepository
+├── adapters/
+│   ├── inbound/
+│   │   └── http/                        # Adaptadores inbound (pkg httphandler)
+│   │       ├── handler.go               # Registro de rotas — depende de inbound.*
+│   │       ├── auth_handler.go
+│   │       ├── favorite_handler.go
+│   │       ├── home_handler.go
+│   │       ├── pokemon_handler.go
+│   │       ├── middleware.go            # Auth, CORS, rate-limit, RequestLoggerMiddleware
+│   │       ├── response_builder.go
+│   │       └── dto/
+│   └── outbound/
+│       ├── http/                        # Clientes HTTP externos
+│       │   ├── auth_service_client.go   # implementa outbound.AuthProvider e inbound.TokenValidator
+│       │   └── pokemon_catalog_client.go # implementa outbound.PokemonRepository
+│       └── postgres/                    # Adaptadores PostgreSQL
+│           ├── database.go              # Pool de conexão (pgx/v5)
+│           ├── favorite_repository.go   # implementa outbound.FavoriteRepository
+│           └── pokemon_repository.go    # implementa outbound.PokemonRepository
+│
+└── infrastructure/
+    └── logger/                          # Setup do slog estruturado (LOG_LEVEL, LOG_FORMAT)
+        └── logger.go
 ```
 
 **Regra de dependência aplicada:**
 
 ```
-adapters/http  →  ports/inbound  ←  service
-                                        │
-                                   ports/outbound
-                                        │
-                                  adapters/repository
+adapters/inbound/http  →  ports/inbound  ←  service
+                                               │
+                                          ports/outbound
+                                               │
+                                   adapters/outbound/{http,postgres}
 ```
 
-Os handlers HTTP importam apenas `ports/inbound`. Os serviços (casos de uso) importam `ports/outbound`. Os adaptadores de repositório implementam `ports/outbound`. Nenhuma camada interna depende de uma camada externa.
+Os handlers HTTP importam apenas `ports/inbound`. Os serviços importam `ports/outbound`. Os adaptadores outbound implementam `ports/outbound`. O pacote `infrastructure/logger` é inicializado em `main()` e não é importado por nenhuma camada de negócio.
 
 ---
 
@@ -166,10 +187,11 @@ Use este checklist ao adicionar código novo:
 
 - [ ] O domínio (`domain/`) não importa nenhum pacote externo a ele mesmo.
 - [ ] Os casos de uso (`service/`) importam apenas `domain/` e `ports/outbound/`.
-- [ ] Os adaptadores inbound (`adapters/http/`) importam apenas `ports/inbound/`.
-- [ ] Os adaptadores outbound (`adapters/repository/`) implementam `ports/outbound/` e importam apenas `domain/`.
+- [ ] Os adaptadores inbound (`adapters/inbound/http/`) importam apenas `ports/inbound/`.
+- [ ] Os adaptadores outbound (`adapters/outbound/`) implementam `ports/outbound/` e importam apenas `domain/`.
 - [ ] Nenhum handler HTTP importa diretamente um repositório concreto.
 - [ ] Novas entidades de domínio vivem em `domain/`, não em `ports/`.
+- [ ] Integrações externas novas entram em `adapters/outbound/http/` e normalizam erros no próprio adapter.
 
 ---
 
