@@ -13,22 +13,22 @@ import (
 
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/http/dto"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
-	"pokedex-platform/core/bff/mobile-bff/internal/ports"
+	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 )
 
 type Handler struct {
-	pokemonUseCase  ports.PokemonUseCase
-	favoriteUseCase ports.FavoriteUseCase
-	authUseCase     ports.AuthUseCase
+	pokemonUseCase  inbound.PokemonUseCase
+	favoriteUseCase inbound.FavoriteUseCase
+	authUseCase     inbound.AuthUseCase
 	responseBuilder *ResponseBuilder
 }
 
 const maxAuthPayloadBytes int64 = 8 * 1024
 
 func NewHandler(
-	pokemonUseCase ports.PokemonUseCase,
-	favoriteUseCase ports.FavoriteUseCase,
-	authUseCase ports.AuthUseCase,
+	pokemonUseCase inbound.PokemonUseCase,
+	favoriteUseCase inbound.FavoriteUseCase,
+	authUseCase inbound.AuthUseCase,
 ) *Handler {
 	return &Handler{
 		pokemonUseCase:  pokemonUseCase,

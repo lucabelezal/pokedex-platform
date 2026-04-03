@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
-	"pokedex-platform/core/bff/mobile-bff/internal/ports"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
 	"pokedex-platform/core/bff/mobile-bff/tests/mocks"
 
@@ -13,20 +12,20 @@ import (
 )
 
 type stubAuthProvider struct {
-	session   *ports.AuthSession
+	session   *domain.AuthSession
 	err       error
 	logoutErr error
 }
 
-func (s *stubAuthProvider) Signup(ctx context.Context, email, password string) (*ports.AuthSession, error) {
+func (s *stubAuthProvider) Signup(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	return s.session, s.err
 }
 
-func (s *stubAuthProvider) Login(ctx context.Context, email, password string) (*ports.AuthSession, error) {
+func (s *stubAuthProvider) Login(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	return s.session, s.err
 }
 
-func (s *stubAuthProvider) Refresh(ctx context.Context, token string) (*ports.AuthSession, error) {
+func (s *stubAuthProvider) Refresh(ctx context.Context, token string) (*domain.AuthSession, error) {
 	return s.session, s.err
 }
 
@@ -228,7 +227,7 @@ func TestAuthServiceWithoutProvider(t *testing.T) {
 }
 
 func TestAuthServiceLoginPropagatesProviderResponse(t *testing.T) {
-	expected := &ports.AuthSession{
+	expected := &domain.AuthSession{
 		AccessToken: "token-123",
 		TokenType:   "Bearer",
 		ExpiresIn:   900,

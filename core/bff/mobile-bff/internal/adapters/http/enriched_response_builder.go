@@ -4,20 +4,20 @@ import (
 	"context"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/http/dto"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
-	"pokedex-platform/core/bff/mobile-bff/internal/ports"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
 // EnrichedResponseBuilder constrói respostas enriquecidas com favoritos e informações adicionais
 type EnrichedResponseBuilder struct {
 	responseBuilder *ResponseBuilder
-	favoriteRepo    ports.FavoriteRepository
-	pokemonRepo     ports.PokemonRepository
+	favoriteRepo    outbound.FavoriteRepository
+	pokemonRepo     outbound.PokemonRepository
 }
 
 // NewEnrichedResponseBuilder cria um novo construtor de respostas enriquecidas
 func NewEnrichedResponseBuilder(
-	favoriteRepo ports.FavoriteRepository,
-	pokemonRepo ports.PokemonRepository,
+	favoriteRepo outbound.FavoriteRepository,
+	pokemonRepo outbound.PokemonRepository,
 ) *EnrichedResponseBuilder {
 	return &EnrichedResponseBuilder{
 		responseBuilder: NewResponseBuilder(),

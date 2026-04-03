@@ -11,7 +11,6 @@ import (
 	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/http"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/http/dto"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
-	"pokedex-platform/core/bff/mobile-bff/internal/ports"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
 	"pokedex-platform/core/bff/mobile-bff/tests/mocks"
 
@@ -19,20 +18,20 @@ import (
 )
 
 type stubAuthUseCase struct {
-	session   *ports.AuthSession
+	session   *domain.AuthSession
 	err       error
 	logoutErr error
 }
 
-func (s *stubAuthUseCase) Signup(ctx context.Context, email, password string) (*ports.AuthSession, error) {
+func (s *stubAuthUseCase) Signup(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	return s.session, s.err
 }
 
-func (s *stubAuthUseCase) Login(ctx context.Context, email, password string) (*ports.AuthSession, error) {
+func (s *stubAuthUseCase) Login(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	return s.session, s.err
 }
 
-func (s *stubAuthUseCase) Refresh(ctx context.Context, token string) (*ports.AuthSession, error) {
+func (s *stubAuthUseCase) Refresh(ctx context.Context, token string) (*domain.AuthSession, error) {
 	return s.session, s.err
 }
 
@@ -470,7 +469,7 @@ func TestSignupReturnsCreatedWhenAuthSucceeds(t *testing.T) {
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 	authUseCase := &stubAuthUseCase{
-		session: &ports.AuthSession{
+		session: &domain.AuthSession{
 			AccessToken:  "token-123",
 			RefreshToken: "refresh-123",
 			TokenType:    "Bearer",

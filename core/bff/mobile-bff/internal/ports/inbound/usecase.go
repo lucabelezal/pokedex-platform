@@ -1,4 +1,4 @@
-package ports
+package inbound
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 )
 
-// PokemonUseCase define casos de uso para operações de Pokémon
+// PokemonUseCase define casos de uso para operacoes de Pokemon
 type PokemonUseCase interface {
 	ListPokemons(ctx context.Context, page, pageSize int, userID string) (*domain.PokemonPage, error)
 	GetPokemonDetails(ctx context.Context, pokemonID, userID string) (*domain.PokemonDetail, error)
@@ -18,17 +18,17 @@ type PokemonUseCase interface {
 	ListRegions(ctx context.Context) ([]domain.Region, error)
 }
 
-// FavoriteUseCase define casos de uso para operações de Favorito
+// FavoriteUseCase define casos de uso para operacoes de Favorito
 type FavoriteUseCase interface {
 	AddFavorite(ctx context.Context, userID, pokemonID string) error
 	RemoveFavorite(ctx context.Context, userID, pokemonID string) error
 	GetUserFavorites(ctx context.Context, userID string) ([]string, error)
 }
 
-// AuthUseCase define casos de uso para autenticação e sessão.
+// AuthUseCase define casos de uso para autenticacao e sessao.
 type AuthUseCase interface {
-	Signup(ctx context.Context, email, password string) (*AuthSession, error)
-	Login(ctx context.Context, email, password string) (*AuthSession, error)
-	Refresh(ctx context.Context, token string) (*AuthSession, error)
+	Signup(ctx context.Context, email, password string) (*domain.AuthSession, error)
+	Login(ctx context.Context, email, password string) (*domain.AuthSession, error)
+	Refresh(ctx context.Context, token string) (*domain.AuthSession, error)
 	Logout(ctx context.Context, token string) error
 }

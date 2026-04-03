@@ -4,17 +4,17 @@ import (
 	"context"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
-	"pokedex-platform/core/bff/mobile-bff/internal/ports"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
 type PokemonService struct {
-	pokemonRepo  ports.PokemonRepository
-	favoriteRepo ports.FavoriteRepository
+	pokemonRepo  outbound.PokemonRepository
+	favoriteRepo outbound.FavoriteRepository
 }
 
 func NewPokemonService(
-	pokemonRepo ports.PokemonRepository,
-	favoriteRepo ports.FavoriteRepository,
+	pokemonRepo outbound.PokemonRepository,
+	favoriteRepo outbound.FavoriteRepository,
 ) *PokemonService {
 	return &PokemonService{
 		pokemonRepo:  pokemonRepo,
@@ -89,13 +89,13 @@ func (s *PokemonService) ListRegions(ctx context.Context) ([]domain.Region, erro
 }
 
 type FavoriteService struct {
-	favoriteRepo ports.FavoriteRepository
-	pokemonRepo  ports.PokemonRepository
+	favoriteRepo outbound.FavoriteRepository
+	pokemonRepo  outbound.PokemonRepository
 }
 
 func NewFavoriteService(
-	favoriteRepo ports.FavoriteRepository,
-	pokemonRepo ports.PokemonRepository,
+	favoriteRepo outbound.FavoriteRepository,
+	pokemonRepo outbound.PokemonRepository,
 ) *FavoriteService {
 	return &FavoriteService{
 		favoriteRepo: favoriteRepo,

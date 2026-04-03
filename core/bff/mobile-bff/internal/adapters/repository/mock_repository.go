@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
-	"pokedex-platform/core/bff/mobile-bff/internal/ports"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
 type MockPokemonRepository struct {
@@ -328,5 +328,5 @@ func contains(s, substr string) bool {
 	return false
 }
 
-var _ ports.PokemonRepository = (*MockPokemonRepository)(nil)
-var _ ports.FavoriteRepository = (*MockFavoriteRepository)(nil)
+var _ outbound.PokemonRepository = (*MockPokemonRepository)(nil)
+var _ outbound.FavoriteRepository = (*MockFavoriteRepository)(nil)

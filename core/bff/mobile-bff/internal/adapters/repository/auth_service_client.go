@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
-	"pokedex-platform/core/bff/mobile-bff/internal/ports"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
 // AuthServiceClient fornece cliente HTTP para comunicação com auth-service
@@ -66,7 +66,7 @@ func NewAuthServiceClientWithHTTPClient(baseURL string, httpClient *http.Client)
 }
 
 // Signup chama o endpoint de signup do auth-service
-func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) (*ports.AuthSession, error) {
+func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	if c.baseURL == "" {
 		return nil, domain.ErrAuthUnavailable
 	}
@@ -108,7 +108,7 @@ func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) 
 		return nil, fmt.Errorf("failed to parse signup response: %w", err)
 	}
 
-	return &ports.AuthSession{
+	return &domain.AuthSession{
 		AccessToken:  authResp.AccessToken,
 		RefreshToken: authResp.RefreshToken,
 		TokenType:    authResp.TokenType,
@@ -119,7 +119,7 @@ func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) 
 }
 
 // Login chama o endpoint de login do auth-service
-func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (*ports.AuthSession, error) {
+func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	if c.baseURL == "" {
 		return nil, domain.ErrAuthUnavailable
 	}
@@ -161,7 +161,7 @@ func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (
 		return nil, fmt.Errorf("failed to parse login response: %w", err)
 	}
 
-	return &ports.AuthSession{
+	return &domain.AuthSession{
 		AccessToken:  authResp.AccessToken,
 		RefreshToken: authResp.RefreshToken,
 		TokenType:    authResp.TokenType,
@@ -172,7 +172,7 @@ func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (
 }
 
 // Refresh chama o endpoint de refresh do auth-service
-func (c *AuthServiceClient) Refresh(ctx context.Context, token string) (*ports.AuthSession, error) {
+func (c *AuthServiceClient) Refresh(ctx context.Context, token string) (*domain.AuthSession, error) {
 	if c.baseURL == "" {
 		return nil, domain.ErrAuthUnavailable
 	}
@@ -204,7 +204,7 @@ func (c *AuthServiceClient) Refresh(ctx context.Context, token string) (*ports.A
 		return nil, fmt.Errorf("failed to parse refresh response: %w", err)
 	}
 
-	return &ports.AuthSession{
+	return &domain.AuthSession{
 		AccessToken:  authResp.AccessToken,
 		RefreshToken: authResp.RefreshToken,
 		TokenType:    authResp.TokenType,
@@ -261,4 +261,4 @@ func mapAuthError(statusCode int, operation string) error {
 	}
 }
 
-var _ ports.AuthProvider = (*AuthServiceClient)(nil)
+var _ outbound.AuthProvider = (*AuthServiceClient)(nil)

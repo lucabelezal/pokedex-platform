@@ -10,7 +10,7 @@ import (
 	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/http"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/repository"
 	"pokedex-platform/core/bff/mobile-bff/internal/config"
-	"pokedex-platform/core/bff/mobile-bff/internal/ports"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
 )
 
@@ -18,8 +18,8 @@ func main() {
 	cfg := config.LoadConfig()
 
 	// Inicializar repositórios com fallback para mocks
-	var pokemonRepo ports.PokemonRepository
-	var favoriteRepo ports.FavoriteRepository
+	var pokemonRepo outbound.PokemonRepository
+	var favoriteRepo outbound.FavoriteRepository
 	var db *repository.Database
 
 	if strings.TrimSpace(cfg.PokemonCatalogServiceURL) == "" {
