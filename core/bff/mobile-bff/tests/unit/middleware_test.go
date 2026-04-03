@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/http"
+	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/stretchr/testify/assert"

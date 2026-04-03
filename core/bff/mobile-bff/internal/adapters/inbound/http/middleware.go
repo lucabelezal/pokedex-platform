@@ -1,4 +1,4 @@
-package http
+package httphandler
 
 import (
 	"context"
@@ -76,7 +76,6 @@ func isAuthRateLimitedPath(path string) bool {
 			return true
 		}
 	}
-
 	return false
 }
 
@@ -168,8 +167,8 @@ func extractTokenFromRequest(r *http.Request) (string, error) {
 	return "", nil
 }
 
-// RequireAuth é um middleware que exige autenticação
-func RequireAuth(next http.Handler) http.Handler {
+// RequireAuthMiddleware é um middleware que exige autenticação.
+func RequireAuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		userID := getUserIDFromContext(r.Context())
 		if userID == "" {
@@ -180,7 +179,7 @@ func RequireAuth(next http.Handler) http.Handler {
 	})
 }
 
-// CORSMiddleware adiciona headers CORS
+// CORSMiddleware adiciona headers CORS.
 func CORSMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := strings.TrimSpace(r.Header.Get("Origin"))
@@ -263,7 +262,6 @@ func extractUserEmailFromClaims(claims jwt.MapClaims) string {
 	if email, ok := claims["email"].(string); ok {
 		return strings.TrimSpace(email)
 	}
-
 	return ""
 }
 
@@ -279,6 +277,7 @@ func getUserIDFromContext(ctx context.Context) string {
 	return userID
 }
 
+// SetUserID armazena um userID no contexto.
 func SetUserID(ctx context.Context, userID string) context.Context {
 	return context.WithValue(ctx, UserIDContextKey, userID)
 }
@@ -291,14 +290,17 @@ func getUserEmailFromContext(ctx context.Context) string {
 	return userEmail
 }
 
+// SetUserEmail armazena um email no contexto.
 func SetUserEmail(ctx context.Context, userEmail string) context.Context {
 	return context.WithValue(ctx, UserEmailContextKey, userEmail)
 }
 
+// GetUserEmail retorna o email do usuário do contexto.
 func GetUserEmail(ctx context.Context) string {
 	return getUserEmailFromContext(ctx)
 }
 
+// GetUserID retorna o userID do contexto.
 func GetUserID(ctx context.Context) string {
 	return getUserIDFromContext(ctx)
 }
@@ -446,7 +448,6 @@ func isAllowedOrigin(origin string) bool {
 	if len(allowedOrigins) == 0 {
 		return false
 	}
-
 	return slices.Contains(allowedOrigins, origin)
 }
 

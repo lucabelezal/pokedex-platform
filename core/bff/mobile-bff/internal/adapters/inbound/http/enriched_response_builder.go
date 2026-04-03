@@ -1,8 +1,9 @@
-package http
+package httphandler
 
 import (
 	"context"
-	"pokedex-platform/core/bff/mobile-bff/internal/adapters/http/dto"
+
+	"pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http/dto"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )

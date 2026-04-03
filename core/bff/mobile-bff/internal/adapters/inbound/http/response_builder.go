@@ -1,17 +1,20 @@
-package http
+package httphandler
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"pokedex-platform/core/bff/mobile-bff/internal/adapters/http/dto"
-	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 	"strconv"
 	"strings"
+
+	"pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http/dto"
+	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 )
 
+// ResponseBuilder constrói as respostas HTTP da aplicação.
 type ResponseBuilder struct{}
 
+// NewResponseBuilder cria um novo ResponseBuilder.
 func NewResponseBuilder() *ResponseBuilder {
 	return &ResponseBuilder{}
 }
@@ -379,18 +382,18 @@ func (rb *ResponseBuilder) BuildPokemonDetailScreenResponse(
 	}
 }
 
-func detailBackgroundColor(fallback string, types []dto.HomePokemonTypeDTO) string {
-	if len(types) > 0 {
-		return types[0].Color
-	}
-	return normalizeHexColor(fallback)
-}
-
 func (rb *ResponseBuilder) BuildHealthResponse() *dto.HealthResponse {
 	return &dto.HealthResponse{
 		Status:  "ok",
 		Service: "mobile-bff",
 	}
+}
+
+func detailBackgroundColor(fallback string, types []dto.HomePokemonTypeDTO) string {
+	if len(types) > 0 {
+		return types[0].Color
+	}
+	return normalizeHexColor(fallback)
 }
 
 func getTypeColor(typeStr string) string {
@@ -557,12 +560,14 @@ func buildDisplayName(email string) string {
 	return local
 }
 
+// RespondJSON serializa e envia a resposta em JSON.
 func RespondJSON(w http.ResponseWriter, status int, payload interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(payload)
 }
 
+// RespondError envia uma resposta de erro padronizada.
 func RespondError(w http.ResponseWriter, status int, message string, code string) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)

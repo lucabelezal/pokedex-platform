@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/http"
+	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http"
 	httpclient "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/http"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/postgres"
 	"pokedex-platform/core/bff/mobile-bff/internal/config"

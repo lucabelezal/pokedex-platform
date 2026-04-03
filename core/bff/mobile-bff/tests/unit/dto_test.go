@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/http"
-	"pokedex-platform/core/bff/mobile-bff/internal/adapters/http/dto"
+	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http"
+	"pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http/dto"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 
 	"github.com/stretchr/testify/assert"
