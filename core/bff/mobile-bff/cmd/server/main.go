@@ -76,7 +76,7 @@ func main() {
 	var handler http.Handler = mux
 	handler = httpadapter.CORSMiddleware(handler)
 	handler = httpadapter.AuthRateLimitMiddleware(handler)
-	handler = httpadapter.AuthMiddleware(handler)
+	handler = httpadapter.AuthMiddleware(authClient, handler)
 
 	// Iniciar servidor
 	srv := &http.Server{

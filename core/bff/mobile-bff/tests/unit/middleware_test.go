@@ -1,6 +1,7 @@
 package unit
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -11,6 +12,16 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/stretchr/testify/assert"
 )
+
+// tokenValidatorStub implementa inbound.TokenValidator para testes.
+type tokenValidatorStub struct {
+	active bool
+	err    error
+}
+
+func (s *tokenValidatorStub) IsTokenActive(_ context.Context, _ string) (bool, error) {
+	return s.active, s.err
+}
 
 func TestAuthMiddlewareWithToken(t *testing.T) {
 	t.Setenv("JWT_SECRET", "test-secret")
@@ -28,7 +39,7 @@ func TestAuthMiddlewareWithToken(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	middleware := httpadapter.AuthMiddleware(handler)
+	middleware := httpadapter.AuthMiddleware(&tokenValidatorStub{active: true}, handler)
 
 	req := httptest.NewRequest("GET", "/test", nil)
 	req.Header.Set("Authorization", "Bearer "+tokenString)
@@ -46,7 +57,7 @@ func TestAuthMiddlewareWithInvalidToken(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	middleware := httpadapter.AuthMiddleware(handler)
+	middleware := httpadapter.AuthMiddleware(&tokenValidatorStub{active: true}, handler)
 
 	req := httptest.NewRequest("GET", "/test", nil)
 	req.Header.Set("Authorization", "Bearer token-invalido")
@@ -62,7 +73,7 @@ func TestAuthMiddlewareWithoutToken(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	middleware := httpadapter.AuthMiddleware(handler)
+	middleware := httpadapter.AuthMiddleware(&tokenValidatorStub{active: true}, handler)
 
 	req := httptest.NewRequest("GET", "/test", nil)
 	w := httptest.NewRecorder()
@@ -88,7 +99,7 @@ func TestAuthMiddlewareWithCookieToken(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	middleware := httpadapter.AuthMiddleware(handler)
+	middleware := httpadapter.AuthMiddleware(&tokenValidatorStub{active: true}, handler)
 
 	req := httptest.NewRequest("GET", "/test", nil)
 	req.AddCookie(&http.Cookie{Name: "auth_token", Value: tokenString})
@@ -113,7 +124,7 @@ func TestAuthMiddlewareHeaderHasPriorityOverCookie(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	middleware := httpadapter.AuthMiddleware(handler)
+	middleware := httpadapter.AuthMiddleware(&tokenValidatorStub{active: true}, handler)
 
 	req := httptest.NewRequest("GET", "/test", nil)
 	req.Header.Set("Authorization", "Bearer token-invalido")

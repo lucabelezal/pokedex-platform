@@ -229,3 +229,46 @@ func mapAuthError(statusCode int, operation string) error {
 }
 
 var _ outbound.AuthProvider = (*AuthServiceClient)(nil)
+
+type tokenIntrospectionResponse struct {
+	Active bool `json:"active"`
+}
+
+// IsTokenActive verifica junto ao auth-service se um token está ativo.
+// Se AUTH_SERVICE_URL não estiver configurado, assume token ativo.
+func (c *AuthServiceClient) IsTokenActive(ctx context.Context, token string) (bool, error) {
+	if c.baseURL == "" {
+		return true, nil
+	}
+
+	reqCtx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(reqCtx, http.MethodPost, c.baseURL+"/v1/auth/introspect", nil)
+	if err != nil {
+		return false, fmt.Errorf("falha ao criar requisicao de introspeccao: %w", err)
+	}
+	req.Header.Set("Authorization", "Bearer "+token)
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return false, fmt.Errorf("auth introspect indisponivel: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return false, fmt.Errorf("auth introspect retornou status %d", resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return false, fmt.Errorf("falha ao ler resposta de introspeccao: %w", err)
+	}
+
+	var introspection tokenIntrospectionResponse
+	if err := json.Unmarshal(body, &introspection); err != nil {
+		return false, fmt.Errorf("falha ao parsear resposta de introspeccao: %w", err)
+	}
+
+	return introspection.Active, nil
+}

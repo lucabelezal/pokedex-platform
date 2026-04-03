@@ -2,10 +2,8 @@ package httphandler
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"log"
 	"net"
 	"net/http"
@@ -17,6 +15,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 )
 
 type contextKey string
@@ -55,10 +54,6 @@ type authRateLimiter struct {
 	window            time.Duration
 	now               func() time.Time
 	lastCleanupBucket int64
-}
-
-type tokenIntrospectionResponse struct {
-	Active bool `json:"active"`
 }
 
 func isPublicPath(path string) bool {
@@ -102,7 +97,7 @@ func AuthRateLimitMiddleware(next http.Handler) http.Handler {
 
 // AuthMiddleware extrai e valida o token JWT da requisição.
 // Rotas públicas (health e auth/*) passam sem validação.
-func AuthMiddleware(next http.Handler) http.Handler {
+func AuthMiddleware(validator inbound.TokenValidator, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if isPublicPath(r.URL.Path) {
 			next.ServeHTTP(w, r)
@@ -124,7 +119,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 				return
 			}
 
-			active, activeErr := isTokenActiveWithAuthService(r.Context(), tokenString)
+			active, activeErr := validator.IsTokenActive(r.Context(), tokenString)
 			if activeErr != nil {
 				RespondError(w, http.StatusServiceUnavailable, "auth service unavailable", "AUTH_UNAVAILABLE")
 				return
@@ -403,44 +398,6 @@ func getAuthRateLimitWindow() time.Duration {
 	}
 
 	return time.Duration(value) * time.Second
-}
-
-func isTokenActiveWithAuthService(ctx context.Context, token string) (bool, error) {
-	baseURL := strings.TrimRight(strings.TrimSpace(os.Getenv("AUTH_SERVICE_URL")), "/")
-	if baseURL == "" {
-		return true, nil
-	}
-
-	requestCtx, cancel := context.WithTimeout(ctx, 2*time.Second)
-	defer cancel()
-
-	req, err := http.NewRequestWithContext(requestCtx, http.MethodPost, baseURL+"/v1/auth/introspect", nil)
-	if err != nil {
-		return false, err
-	}
-	req.Header.Set("Authorization", "Bearer "+token)
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return false, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return false, fmt.Errorf("auth introspect retornou status %d", resp.StatusCode)
-	}
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return false, err
-	}
-
-	var introspection tokenIntrospectionResponse
-	if err := json.Unmarshal(body, &introspection); err != nil {
-		return false, err
-	}
-
-	return introspection.Active, nil
 }
 
 func isAllowedOrigin(origin string) bool {
