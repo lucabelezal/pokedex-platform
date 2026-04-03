@@ -30,12 +30,14 @@
 
 ## Hexagonal no mobile-bff
 - Preserve a direcao das dependencias:
-  - adapters de entrada dependem de use cases
-  - use cases dependem de ports
-  - adapters externos implementam ports
+  - adapters inbound (HTTP) dependem de `ports/inbound` (use cases)
+  - use cases dependem de `ports/outbound` (repositorios e clientes externos)
+  - adapters outbound implementam `ports/outbound`
+  - estrutura: `adapters/http` → `ports/inbound` ← `service` → `ports/outbound` ← `adapters/repository`
 - Nao faca handlers HTTP dependerem diretamente de clients concretos de infraestrutura.
 - Nao use `tests/` como dependencia de runtime.
 - Ao introduzir integracoes externas, normalize erros no adapter externo ou na camada de aplicacao, nao no handler HTTP.
+- Novas entidades de dominio vivem em `domain/`, nao em `ports/`.
 
 ## Convencao de commits (obrigatorio)
 - Use sempre Conventional Commits.
@@ -58,3 +60,13 @@
 ## Colaboracao com CI
 - Se o workflow de validacao de commits falhar, ajuste a mensagem para o padrao Conventional Commits.
 - Em revisoes, priorize padrao de commit, clareza da descricao e impacto da mudanca.
+
+## Convencoes Go (obrigatorio)
+- **Receiver**: 1-2 letras, abreviacao do tipo. Use `c` para `Client`, `s` para `Service`. Nunca `this` ou `self`.
+- **Sem prefixo Get**: `Count()` nao `GetCount()`; `Name()` nao `GetName()`. Excecao: `GetXxx` aceito em interface `net/http.ResponseWriter`.
+- **Initialisms uppercase**: `ID`, `DB`, `URL`, `HTTP`, `JSON`, `gRPC`. Nunca `Id`, `Db`, `Url`.
+- **Error strings**: minusculas, sem ponto final. `"token invalido"` nao `"Token invalido."`.
+- **Indent error flow**: retorne o erro imediatamente; o caminho feliz fica sem aninhamento.
+- **Wrapping de erros**: use `%w` para erros que o chamador possa inspecionar com `errors.Is`/`errors.As`; use `%v` apenas para anotacao sem inspecao.
+- **Declaracao de variavel**: `var x T` para zero value explicito; `x := value` quando inicializa com valor nao-zero.
+- **Goroutines**: documente quando a goroutine termina. Use `context.Context` para controlar o ciclo de vida. Nunca lance goroutines sem uma estrategia de finalizacao.

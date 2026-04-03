@@ -41,16 +41,19 @@ Todos os serviços em Go com `net/http`, sem frameworks pesados. Arquitetura hex
 
 ```
 internal/
-  domain/     ← entidades, value objects, regras de negócio puras
-  ports/      ← interfaces (input: use cases; output: repos, clients externos)
+  domain/     ← entidades, erros de domínio, AuthSession
+  ports/
+    inbound/  ← contratos que adapters inbound consomem (use cases)
+    outbound/ ← contratos que o domínio exige de recursos externos (repos, clients)
   service/    ← implementação dos use cases
   adapters/
-    http/     ← adapter de entrada
-    postgres/ ← adapter de saída
-    redis/    ← adapter de saída
+    http/     ← adapter de entrada (inbound)
+    repository/ ← adapters de saída (outbound)
 ```
 
-**Regra de ouro**: dependências apontam para dentro. `adapters/` dependem de `ports/`. `ports/` não conhecem `adapters/`.
+**Regra de ouro**: dependências apontam para dentro. `adapters/http/` depende de `ports/inbound/`. `service/` depende de `ports/outbound/`. `ports/` não conhece `adapters/`.
+
+Ver `doc/architecture/hexagonal.md` para a documentação completa.
 
 ---
 
@@ -163,3 +166,5 @@ type GetFavoritesQuery struct { UserID string }
 
 ## Skills disponíveis
 Carregue `go-architecture-review` para revisão de estrutura de pacotes e `go-api-design` para design de endpoints. Para segurança arquitetural, carregue `go-security-audit`.
+Carregue `golang-style-google` para decisões de naming, comentários e estilo idiomático.
+Carregue `golang-style-uber` para padrões de performance, inicialização de structs e goroutines.

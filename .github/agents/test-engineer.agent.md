@@ -64,6 +64,8 @@ for _, tt := range tests {
 
 ## Skills disponíveis
 Carregue `go-test-quality` para filosofia geral e `go-test-table-driven` para refatoração de tabelas.
+Carregue `golang-style-google` para nomenclatura, comentários e estilo canônico.
+Carregue `golang-style-uber` para padrões de performance, mutexes e slices em testes.
 
 ## Output esperado
 Código de teste compilável, com comentários em PT-BR explicando o comportamento testado. Inclua coverage dos happy path e dos principais casos de erro.
