@@ -18,9 +18,34 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 
 ```text
 .
+├── .github/
+│   ├── copilot-instructions.md   # Instruções globais para o Copilot
+│   ├── agents/                   # Agentes especializados do projeto
+│   │   ├── database-architect.agent.md
+│   │   ├── debugger.agent.md
+│   │   ├── devops-engineer.agent.md
+│   │   ├── documentation-writer.agent.md
+│   │   ├── project-planner.agent.md
+│   │   ├── security-auditor.agent.md
+│   │   └── test-engineer.agent.md
+│   ├── skills/                   # Skills Go e backend carregadas sob demanda
+│   │   ├── go-api-design/
+│   │   ├── go-architecture-review/
+│   │   ├── go-error-handling/
+│   │   ├── go-security-audit/
+│   │   ├── go-test-quality/
+│   │   ├── go-test-table-driven/
+│   │   ├── golang-database/
+│   │   ├── golang-documentation/
+│   │   ├── golang-error-handling/
+│   │   ├── golang-linter/
+│   │   ├── golang-security/
+│   │   └── golang-testing/
+│   └── workflows/                # Pipelines de CI
 ├── bruno/
 ├── core/
 │   ├── app/
+│   │   ├── auth-service/
 │   │   └── pokemon-catalog-service/
 │   ├── bff/
 │   │   └── mobile-bff/
@@ -38,6 +63,10 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 ```
 
 A pasta `bruno/` concentra a colecao de requisicoes de API da plataforma para testes manuais.
+
+A pasta `.github/` concentra toda a customizacao de agentes de IA do projeto: instrucoes
+globais do Copilot, agentes especializados (`agents/`) e skills Go carregadas sob demanda
+(`skills/`). Essa e a fonte canonica — nao ha configuracao de agente fora desta pasta.
 
 ## Documentacao
 

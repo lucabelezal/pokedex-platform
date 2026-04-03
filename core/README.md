@@ -7,10 +7,12 @@ Este diretório concentra o código executável e os ativos de infraestrutura da
 ```text
 core/
 ├── app/           # Serviços internos de backend
+│   ├── auth-service/
+│   └── pokemon-catalog-service/
 ├── bff/           # Aplicações Backend for Frontend
+│   └── mobile-bff/
 ├── gateway/       # Configuração do API Gateway
 ├── infra/         # Ativos compartilhados de infraestrutura
-├── bruno/         # Coleção de requisições de API
 ├── observability/ # Ativos de observabilidade e operação
 └── docker-compose.yml
 ```
@@ -21,7 +23,7 @@ A pasta `core/` mantém os artefatos de implementação reunidos para que a raiz
 
 ## Áreas Principais
 
-- `app/`: capacidades de negócio encapsuladas em serviços, como `auth-service` e `pokemon-catalog-service`.
+- `app/`: capacidades de negócio encapsuladas em serviços: `auth-service` (autenticação e ciclo de vida de token) e `pokemon-catalog-service` (catálogo canônico de Pokémons).
 - `bff/`: camada de composição voltada ao cliente, atualmente o `mobile-bff`.
 - `gateway/`: configuração declarativa do Kong.
 - `infra/`: schema do PostgreSQL, seeds, arquivos-fonte em JSON, configuração do Redis e ferramentas de dados.
