@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"pokedex-platform/core/bff/mobile-bff/internal/adapters/repository"
+	httpclient "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/http"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 
 	"github.com/stretchr/testify/assert"
@@ -19,8 +19,8 @@ func (f roundTripFunc) RoundTrip(r *http.Request) (*http.Response, error) {
 	return f(r)
 }
 
-func newTestAuthClient(fn roundTripFunc) *repository.AuthServiceClient {
-	return repository.NewAuthServiceClientWithHTTPClient("http://auth-service.test", &http.Client{
+func newTestAuthClient(fn roundTripFunc) *httpclient.AuthServiceClient {
+	return httpclient.NewAuthServiceClientWithHTTPClient("http://auth-service.test", &http.Client{
 		Transport: fn,
 	})
 }

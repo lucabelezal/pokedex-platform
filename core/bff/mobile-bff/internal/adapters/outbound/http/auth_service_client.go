@@ -1,4 +1,4 @@
-package repository
+package httpclient
 
 import (
 	"bytes"
@@ -13,26 +13,23 @@ import (
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
-// AuthServiceClient fornece cliente HTTP para comunicação com auth-service
+// AuthServiceClient fornece cliente HTTP para comunicação com auth-service.
 type AuthServiceClient struct {
 	baseURL    string
 	httpClient *http.Client
 }
 
-// SignupRequest é o corpo da requisição de signup
-type SignupRequest struct {
+type signupRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
-// LoginRequest é o corpo da requisição de login
-type LoginRequest struct {
+type loginRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
-// AuthResponse é a resposta do auth-service
-type AuthResponse struct {
+type authResponse struct {
 	AccessToken  string `json:"accessToken"`
 	RefreshToken string `json:"refreshToken"`
 	TokenType    string `json:"tokenType"`
@@ -41,51 +38,39 @@ type AuthResponse struct {
 	Email        string `json:"email"`
 }
 
-// ErrorResponse é a resposta de erro do auth-service
-type ErrorResponse struct {
-	Error string `json:"error"`
-}
-
-// NewAuthServiceClient cria um novo cliente de auth-service
+// NewAuthServiceClient cria um novo cliente de auth-service.
 func NewAuthServiceClient(baseURL string) *AuthServiceClient {
 	return NewAuthServiceClientWithHTTPClient(baseURL, &http.Client{
 		Timeout: 10 * time.Second,
 	})
 }
 
-// NewAuthServiceClientWithHTTPClient creates a client with an injected HTTP client.
+// NewAuthServiceClientWithHTTPClient cria um cliente com HTTP client injetado.
 func NewAuthServiceClientWithHTTPClient(baseURL string, httpClient *http.Client) *AuthServiceClient {
 	if httpClient == nil {
 		httpClient = &http.Client{Timeout: 10 * time.Second}
 	}
-
 	return &AuthServiceClient{
 		baseURL:    baseURL,
 		httpClient: httpClient,
 	}
 }
 
-// Signup chama o endpoint de signup do auth-service
+// Signup chama o endpoint de signup do auth-service.
 func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	if c.baseURL == "" {
 		return nil, domain.ErrAuthUnavailable
 	}
 
-	req := SignupRequest{
-		Email:    email,
-		Password: password,
-	}
-
-	body, err := json.Marshal(req)
+	body, err := json.Marshal(signupRequest{Email: email, Password: password})
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal signup request: %w", err)
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/v1/auth/signup", bytes.NewReader(body))
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, c.baseURL+"/v1/auth/signup", bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create signup request: %w", err)
 	}
-
 	httpReq.Header.Set("Content-Type", "application/json")
 
 	resp, err := c.httpClient.Do(httpReq)
@@ -103,42 +88,29 @@ func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) 
 		return nil, mapAuthError(resp.StatusCode, "signup")
 	}
 
-	var authResp AuthResponse
-	if err := json.Unmarshal(respBody, &authResp); err != nil {
+	var ar authResponse
+	if err := json.Unmarshal(respBody, &ar); err != nil {
 		return nil, fmt.Errorf("failed to parse signup response: %w", err)
 	}
 
-	return &domain.AuthSession{
-		AccessToken:  authResp.AccessToken,
-		RefreshToken: authResp.RefreshToken,
-		TokenType:    authResp.TokenType,
-		ExpiresIn:    authResp.ExpiresIn,
-		UserID:       authResp.UserID,
-		Email:        authResp.Email,
-	}, nil
+	return toAuthSession(ar), nil
 }
 
-// Login chama o endpoint de login do auth-service
+// Login chama o endpoint de login do auth-service.
 func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	if c.baseURL == "" {
 		return nil, domain.ErrAuthUnavailable
 	}
 
-	req := LoginRequest{
-		Email:    email,
-		Password: password,
-	}
-
-	body, err := json.Marshal(req)
+	body, err := json.Marshal(loginRequest{Email: email, Password: password})
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal login request: %w", err)
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/v1/auth/login", bytes.NewReader(body))
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, c.baseURL+"/v1/auth/login", bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create login request: %w", err)
 	}
-
 	httpReq.Header.Set("Content-Type", "application/json")
 
 	resp, err := c.httpClient.Do(httpReq)
@@ -156,32 +128,24 @@ func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (
 		return nil, mapAuthError(resp.StatusCode, "login")
 	}
 
-	var authResp AuthResponse
-	if err := json.Unmarshal(respBody, &authResp); err != nil {
+	var ar authResponse
+	if err := json.Unmarshal(respBody, &ar); err != nil {
 		return nil, fmt.Errorf("failed to parse login response: %w", err)
 	}
 
-	return &domain.AuthSession{
-		AccessToken:  authResp.AccessToken,
-		RefreshToken: authResp.RefreshToken,
-		TokenType:    authResp.TokenType,
-		ExpiresIn:    authResp.ExpiresIn,
-		UserID:       authResp.UserID,
-		Email:        authResp.Email,
-	}, nil
+	return toAuthSession(ar), nil
 }
 
-// Refresh chama o endpoint de refresh do auth-service
+// Refresh chama o endpoint de refresh do auth-service.
 func (c *AuthServiceClient) Refresh(ctx context.Context, token string) (*domain.AuthSession, error) {
 	if c.baseURL == "" {
 		return nil, domain.ErrAuthUnavailable
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/v1/auth/refresh", nil)
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, c.baseURL+"/v1/auth/refresh", nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create refresh request: %w", err)
 	}
-
 	httpReq.Header.Set("Authorization", "Bearer "+token)
 
 	resp, err := c.httpClient.Do(httpReq)
@@ -199,32 +163,24 @@ func (c *AuthServiceClient) Refresh(ctx context.Context, token string) (*domain.
 		return nil, mapAuthError(resp.StatusCode, "refresh")
 	}
 
-	var authResp AuthResponse
-	if err := json.Unmarshal(respBody, &authResp); err != nil {
+	var ar authResponse
+	if err := json.Unmarshal(respBody, &ar); err != nil {
 		return nil, fmt.Errorf("failed to parse refresh response: %w", err)
 	}
 
-	return &domain.AuthSession{
-		AccessToken:  authResp.AccessToken,
-		RefreshToken: authResp.RefreshToken,
-		TokenType:    authResp.TokenType,
-		ExpiresIn:    authResp.ExpiresIn,
-		UserID:       authResp.UserID,
-		Email:        authResp.Email,
-	}, nil
+	return toAuthSession(ar), nil
 }
 
-// Logout chama o endpoint de logout do auth-service
+// Logout chama o endpoint de logout do auth-service.
 func (c *AuthServiceClient) Logout(ctx context.Context, token string) error {
 	if c.baseURL == "" {
 		return domain.ErrAuthUnavailable
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/v1/auth/logout", nil)
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, c.baseURL+"/v1/auth/logout", nil)
 	if err != nil {
 		return fmt.Errorf("failed to create logout request: %w", err)
 	}
-
 	httpReq.Header.Set("Authorization", "Bearer "+token)
 
 	resp, err := c.httpClient.Do(httpReq)
@@ -238,6 +194,17 @@ func (c *AuthServiceClient) Logout(ctx context.Context, token string) error {
 	}
 
 	return nil
+}
+
+func toAuthSession(ar authResponse) *domain.AuthSession {
+	return &domain.AuthSession{
+		AccessToken:  ar.AccessToken,
+		RefreshToken: ar.RefreshToken,
+		TokenType:    ar.TokenType,
+		ExpiresIn:    ar.ExpiresIn,
+		UserID:       ar.UserID,
+		Email:        ar.Email,
+	}
 }
 
 func mapAuthError(statusCode int, operation string) error {

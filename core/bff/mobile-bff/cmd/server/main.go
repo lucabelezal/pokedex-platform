@@ -8,10 +8,12 @@ import (
 	"time"
 
 	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/http"
-	"pokedex-platform/core/bff/mobile-bff/internal/adapters/repository"
+	httpclient "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/http"
+	"pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/postgres"
 	"pokedex-platform/core/bff/mobile-bff/internal/config"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
+	"pokedex-platform/core/bff/mobile-bff/tests/mocks"
 )
 
 func main() {
@@ -20,7 +22,7 @@ func main() {
 	// Inicializar repositórios com fallback para mocks
 	var pokemonRepo outbound.PokemonRepository
 	var favoriteRepo outbound.FavoriteRepository
-	var db *repository.Database
+	var db *postgres.Database
 
 	if strings.TrimSpace(cfg.PokemonCatalogServiceURL) == "" {
 		log.Fatal("POKEMON_CATALOG_SERVICE_URL obrigatoria para iniciar o mobile-bff")
@@ -29,7 +31,7 @@ func main() {
 		log.Fatal("JWT_SECRET obrigatoria para iniciar o mobile-bff")
 	}
 
-	pokemonRepo = repository.NewPokemonCatalogServiceRepository(cfg.PokemonCatalogServiceURL)
+	pokemonRepo = httpclient.NewPokemonCatalogServiceRepository(cfg.PokemonCatalogServiceURL)
 	log.Printf("Using pokemon-catalog-service catalog from %s", cfg.PokemonCatalogServiceURL)
 
 	if cfg.DatabaseURL != "" {
@@ -37,12 +39,12 @@ func main() {
 		defer cancel()
 
 		var err error
-		db, err = repository.NewDatabase(ctx, cfg.DatabaseURL)
+		db, err = postgres.NewDatabase(ctx, cfg.DatabaseURL)
 		if err != nil {
 			log.Printf("Warning: PostgreSQL unavailable for favorites, using mock favorites: %v", err)
-			favoriteRepo = repository.NewMockFavoriteRepository()
+			favoriteRepo = mocks.NewMockFavoriteRepository()
 		} else {
-			favoriteRepo = repository.NewPostgresFavoriteRepository(db.Pool)
+			favoriteRepo = postgres.NewPostgresFavoriteRepository(db.Pool)
 		}
 	}
 
@@ -54,7 +56,7 @@ func main() {
 		if cfg.DatabaseURL == "" {
 			log.Println("No DATABASE_URL set, using mock favorites")
 		}
-		favoriteRepo = repository.NewMockFavoriteRepository()
+		favoriteRepo = mocks.NewMockFavoriteRepository()
 	}
 
 	// Configurar serviços
@@ -62,7 +64,7 @@ func main() {
 	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo)
 
 	// Configurar cliente de auth-service
-	authClient := repository.NewAuthServiceClient(cfg.AuthServiceURL)
+	authClient := httpclient.NewAuthServiceClient(cfg.AuthServiceURL)
 	authService := service.NewAuthService(authClient)
 
 	// Configurar handlers HTTP

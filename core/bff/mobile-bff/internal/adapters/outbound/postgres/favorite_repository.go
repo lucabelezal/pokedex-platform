@@ -1,4 +1,4 @@
-package repository
+package postgres
 
 import (
 	"context"
@@ -11,17 +11,17 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// PostgresFavoriteRepository implementa a interface FavoriteRepository usando PostgreSQL
+// PostgresFavoriteRepository implementa a interface FavoriteRepository usando PostgreSQL.
 type PostgresFavoriteRepository struct {
 	db *pgxpool.Pool
 }
 
-// NewPostgresFavoriteRepository cria um novo repositório PostgreSQL de favoritos
+// NewPostgresFavoriteRepository cria um novo repositório PostgreSQL de favoritos.
 func NewPostgresFavoriteRepository(db *pgxpool.Pool) *PostgresFavoriteRepository {
 	return &PostgresFavoriteRepository{db: db}
 }
 
-// AddFavorite adiciona um Pokémon aos favoritos do usuário
+// AddFavorite adiciona um Pokémon aos favoritos do usuário.
 func (r *PostgresFavoriteRepository) AddFavorite(ctx context.Context, userID, pokemonID string) error {
 	isFav, err := r.IsFavorite(ctx, userID, pokemonID)
 	if err != nil {
@@ -40,7 +40,7 @@ func (r *PostgresFavoriteRepository) AddFavorite(ctx context.Context, userID, po
 	return err
 }
 
-// RemoveFavorite remove um Pokémon dos favoritos do usuário
+// RemoveFavorite remove um Pokémon dos favoritos do usuário.
 func (r *PostgresFavoriteRepository) RemoveFavorite(ctx context.Context, userID, pokemonID string) error {
 	query := `
 		DELETE FROM user_favorites
@@ -59,7 +59,7 @@ func (r *PostgresFavoriteRepository) RemoveFavorite(ctx context.Context, userID,
 	return nil
 }
 
-// IsFavorite verifica se um Pokémon está nos favoritos do usuário
+// IsFavorite verifica se um Pokémon está nos favoritos do usuário.
 func (r *PostgresFavoriteRepository) IsFavorite(ctx context.Context, userID, pokemonID string) (bool, error) {
 	query := `
 		SELECT 1 FROM user_favorites
@@ -69,7 +69,6 @@ func (r *PostgresFavoriteRepository) IsFavorite(ctx context.Context, userID, pok
 
 	var exists int
 	err := r.db.QueryRow(ctx, query, userID, pokemonID).Scan(&exists)
-
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return false, nil
@@ -80,7 +79,7 @@ func (r *PostgresFavoriteRepository) IsFavorite(ctx context.Context, userID, pok
 	return true, nil
 }
 
-// GetUserFavorites recupera todos os IDs de Pokémons favoritos do usuário
+// GetUserFavorites recupera todos os IDs de Pokémons favoritos do usuário.
 func (r *PostgresFavoriteRepository) GetUserFavorites(ctx context.Context, userID string) ([]string, error) {
 	if userID == "" {
 		return []string{}, nil
@@ -114,11 +113,10 @@ func (r *PostgresFavoriteRepository) GetUserFavorites(ctx context.Context, userI
 	return favorites, rows.Err()
 }
 
-// isValidUUID verifica se uma string é um UUID válido no formato xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (36 caracteres com hífens)
+// isValidUUID verifica se uma string é um UUID válido no formato xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.
 func isValidUUID(s string) bool {
 	if len(s) != 36 {
 		return false
 	}
-	// Verificar posições de hífens (formato 8-4-4-4-12)
 	return s[8] == '-' && s[13] == '-' && s[18] == '-' && s[23] == '-'
 }

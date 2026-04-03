@@ -1,4 +1,4 @@
-package repository
+package httpclient
 
 import (
 	"context"
@@ -12,11 +12,13 @@ import (
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 )
 
+// PokemonCatalogServiceRepository é o cliente HTTP para o pokemon-catalog-service.
 type PokemonCatalogServiceRepository struct {
 	baseURL string
 	client  *http.Client
 }
 
+// NewPokemonCatalogServiceRepository cria um novo cliente do pokemon-catalog-service.
 func NewPokemonCatalogServiceRepository(baseURL string) *PokemonCatalogServiceRepository {
 	trimmed := strings.TrimRight(strings.TrimSpace(baseURL), "/")
 	return &PokemonCatalogServiceRepository{
