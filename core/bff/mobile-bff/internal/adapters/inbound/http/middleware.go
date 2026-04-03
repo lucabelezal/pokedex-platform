@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
+	"log/slog"
 	"net"
 	"net/http"
 	"os"
@@ -14,8 +14,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/golang-jwt/jwt/v5"
 	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type contextKey string
@@ -74,6 +75,36 @@ func isAuthRateLimitedPath(path string) bool {
 	return false
 }
 
+type statusResponseWriter struct {
+	http.ResponseWriter
+	status int
+}
+
+func (rw *statusResponseWriter) WriteHeader(status int) {
+	rw.status = status
+	rw.ResponseWriter.WriteHeader(status)
+}
+
+// RequestLoggerMiddleware loga cada requisicao HTTP com metodo, path, status e duracao.
+// Health checks sao ignorados para evitar ruido nos dashboards.
+func RequestLoggerMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/health" || r.URL.Path == "/api/v1/health" {
+			next.ServeHTTP(w, r)
+			return
+		}
+		start := time.Now()
+		rw := &statusResponseWriter{ResponseWriter: w, status: http.StatusOK}
+		next.ServeHTTP(rw, r)
+		slog.InfoContext(r.Context(), "http_request",
+			"method", r.Method,
+			"path", r.URL.Path,
+			"status", rw.status,
+			"duration_ms", time.Since(start).Milliseconds(),
+		)
+	})
+}
+
 // AuthRateLimitMiddleware limita tentativas por IP nas rotas públicas de autenticação.
 func AuthRateLimitMiddleware(next http.Handler) http.Handler {
 	limiter := newAuthRateLimiter(getAuthRateLimitRequests(), getAuthRateLimitWindow())
@@ -86,7 +117,7 @@ func AuthRateLimitMiddleware(next http.Handler) http.Handler {
 
 		clientID := clientIdentifier(r)
 		if !limiter.Allow(clientID) {
-			log.Printf("auth_audit action=rate_limit outcome=blocked client_ip=%q path=%q", clientID, r.URL.Path)
+			slog.Warn("auth_audit", "action", "rate_limit", "outcome", "blocked", "client_ip", clientID, "path", r.URL.Path)
 			RespondError(w, http.StatusTooManyRequests, "muitas tentativas, tente novamente em instantes", "TOO_MANY_REQUESTS")
 			return
 		}

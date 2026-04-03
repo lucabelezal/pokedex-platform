@@ -2,8 +2,9 @@ package main
 
 import (
 	"context"
-	"log"
+	"log/slog"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -11,12 +12,15 @@ import (
 	httpclient "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/http"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/postgres"
 	"pokedex-platform/core/bff/mobile-bff/internal/config"
+	applogger "pokedex-platform/core/bff/mobile-bff/internal/infrastructure/logger"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
 	"pokedex-platform/core/bff/mobile-bff/tests/mocks"
 )
 
 func main() {
+	applogger.Setup("mobile-bff")
+
 	cfg := config.LoadConfig()
 
 	// Inicializar repositórios com fallback para mocks
@@ -25,14 +29,16 @@ func main() {
 	var db *postgres.Database
 
 	if strings.TrimSpace(cfg.PokemonCatalogServiceURL) == "" {
-		log.Fatal("POKEMON_CATALOG_SERVICE_URL obrigatoria para iniciar o mobile-bff")
+		slog.Error("configuracao invalida", "motivo", "POKEMON_CATALOG_SERVICE_URL obrigatoria")
+		os.Exit(1)
 	}
 	if strings.TrimSpace(cfg.JWTSecret) == "" {
-		log.Fatal("JWT_SECRET obrigatoria para iniciar o mobile-bff")
+		slog.Error("configuracao invalida", "motivo", "JWT_SECRET obrigatoria")
+		os.Exit(1)
 	}
 
 	pokemonRepo = httpclient.NewPokemonCatalogServiceRepository(cfg.PokemonCatalogServiceURL)
-	log.Printf("Using pokemon-catalog-service catalog from %s", cfg.PokemonCatalogServiceURL)
+	slog.Info("pokemon catalog configurado", "url", cfg.PokemonCatalogServiceURL)
 
 	if cfg.DatabaseURL != "" {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -41,7 +47,7 @@ func main() {
 		var err error
 		db, err = postgres.NewDatabase(ctx, cfg.DatabaseURL)
 		if err != nil {
-			log.Printf("Warning: PostgreSQL unavailable for favorites, using mock favorites: %v", err)
+			slog.Warn("postgres indisponivel, usando mock de favoritos", "error", err)
 			favoriteRepo = mocks.NewMockFavoriteRepository()
 		} else {
 			favoriteRepo = postgres.NewPostgresFavoriteRepository(db.Pool)
@@ -54,7 +60,7 @@ func main() {
 
 	if favoriteRepo == nil {
 		if cfg.DatabaseURL == "" {
-			log.Println("No DATABASE_URL set, using mock favorites")
+			slog.Info("database_url nao configurada, usando mock de favoritos")
 		}
 		favoriteRepo = mocks.NewMockFavoriteRepository()
 	}
@@ -77,6 +83,7 @@ func main() {
 	handler = httpadapter.CORSMiddleware(handler)
 	handler = httpadapter.AuthRateLimitMiddleware(handler)
 	handler = httpadapter.AuthMiddleware(authClient, handler)
+	handler = httpadapter.RequestLoggerMiddleware(handler)
 
 	// Iniciar servidor
 	srv := &http.Server{
@@ -88,8 +95,9 @@ func main() {
 		IdleTimeout:       30 * time.Second,
 	}
 
-	log.Printf("mobile-bff listening on %s", srv.Addr)
+	slog.Info("servidor iniciado", "addr", srv.Addr)
 	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatalf("server error: %v", err)
+		slog.Error("servidor encerrado com erro", "error", err)
+		os.Exit(1)
 	}
 }
