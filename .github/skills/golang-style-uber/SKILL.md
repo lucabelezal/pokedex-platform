@@ -14,7 +14,7 @@ description: >-
 
 # Uber Go Style Guide — Skill
 
-> Baseado em: [Uber Go Style Guide](https://github.com/uber-go/guide/blob/master/style.md)
+> Baseado em: [Uber Go Style Guide — PT-BR](https://github.com/alcir-junior-caju/uber-go-style-guide-pt-br)
 
 ## Quando usar esta skill
 
@@ -312,5 +312,5 @@ func NewAuthServiceClient(baseURL string, opts ...ClientOption) *AuthServiceClie
 
 ## Fontes
 
-- [Uber Go Style Guide](https://github.com/uber-go/guide/blob/master/style.md)
-- Princípios de engenharia de software da Uber (2023)
+- [Uber Go Style Guide — PT-BR](https://github.com/alcir-junior-caju/uber-go-style-guide-pt-br)
+- [Uber Go Style Guide (original)](https://github.com/uber-go/guide/blob/master/style.md)
