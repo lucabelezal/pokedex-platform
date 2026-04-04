@@ -12,109 +12,109 @@ description: >-
 
 # Google Go Style Guide — Skill
 
-> Baseado em: Google Go Style Guide, Google Go Style Decisions e Google Go Best Practices
+> Based on: Google Go Style Guide, Google Go Style Decisions, and Google Go Best Practices
 
-## Quando usar esta skill
+## When to use this skill
 
-Carregue esta skill ao:
-- Revisar ou escrever código Go que precisa seguir o estilo canônico do Google
-- Fazer code review com foco em clareza e idiomaticidade
-- Resolver dúvidas sobre naming, organização de packages, comentários ou erros
-- Decidir entre várias formas idiomáticas de expressar a mesma coisa em Go
+Load this skill when:
+- Reviewing or writing Go code that needs to follow Google's canonical style
+- Doing code review focused on clarity and idiomaticity
+- Resolving questions about naming, package organization, comments, or errors
+- Deciding between several idiomatic ways to express the same thing in Go
 
 ---
 
 ## 1. Naming
 
-### Pacotes
+### Packages
 
-- Nome do pacote: **singular, minúsculo, sem underscore**. Ex.: `user`, `pokemon`, `auth`.
-- Evite nomes genéricos: `util`, `common`, `helpers` — dificultam descoberta e causam conflitos.
-- O nome do pacote é parte da API: `auth.Service`, `pokemon.Repository`. Não repita o pacote no nome do símbolo.
-  - ✅ `auth.NewService()` — em vez de `auth.NewAuthService()`
-  - ✅ `pokemon.Repository` — em vez de `pokemon.PokemonRepository`
+- Package name: **singular, lowercase, no underscore**. Ex.: `user`, `pokemon`, `auth`.
+- Avoid generic names: `util`, `common`, `helpers` — they hinder discoverability and cause conflicts.
+- The package name is part of the API: `auth.Service`, `pokemon.Repository`. Don’t repeat the package in the symbol name.
+  - ✅ `auth.NewService()` — instead of `auth.NewAuthService()`
+  - ✅ `pokemon.Repository` — instead of `pokemon.PokemonRepository`
 
-### Funções e métodos
+### Functions and methods
 
-- Nomes curtos e descritivos: o escopo de uso determina o comprimento apropriado.
-- **Sem prefixo `Get`** para getters simples: `Name()` não `GetName()`, `Count()` não `GetCount()`.
-- Construtores: `New` + tipo. Ex.: `NewPokemonService`, `NewHandler`.
-- Predicados booleanos: `Is`, `Has`, `Can`, `Should`. Ex.: `IsFavorite`, `HasAccess`.
+- Short, descriptive names: the scope of use determines the appropriate length.
+- **No `Get` prefix** for simple getters: `Name()` not `GetName()`, `Count()` not `GetCount()`.
+- Constructors: `New` + type. Ex.: `NewPokemonService`, `NewHandler`.
+- Boolean predicates: `Is`, `Has`, `Can`, `Should`. Ex.: `IsFavorite`, `HasAccess`.
 
-### Variáveis e campos
+### Variables and fields
 
-- Nomes de variáveis de loop curtos são aceitáveis: `i`, `j`, `k`, `v`.
-- **Initialisms** sempre em caixa completa: `ID`, `URL`, `HTTP`, `JSON`, `gRPC`, `DB`, `API`.
+- Short loop variable names are acceptable: `i`, `j`, `k`, `v`.
+- **Initialisms** always in full case: `ID`, `URL`, `HTTP`, `JSON`, `gRPC`, `DB`, `API`.
   - ✅ `userID`, `baseURL`, `httpClient`, `jsonData`
-  - ❌ `userId`, `baseUrl`, `httpClient` (incorreto apenas se `http` for initialism isolado)
-- Receivers: 1-2 letras, abreviação do tipo. Nunca `this`, `self`, `me`.
+  - ❌ `userId`, `baseUrl`, `httpClient` (incorrect only when `http` is an isolated initialism)
+- Receivers: 1-2 letters, abbreviation of the type. Never `this`, `self`, `me`.
   ```go
-  // Correto
+  // Correct
   func (s *PokemonService) ListPokemons(...) {}
   func (c *AuthServiceClient) Login(...) {}
 
-  // Incorreto
+  // Incorrect
   func (this *PokemonService) ListPokemons(...) {}
   func (self *AuthServiceClient) Login(...) {}
   ```
 
-### Erros
+### Errors
 
-- Variáveis de erro como sentinel: prefixo `Err`. Ex.: `ErrNotFound`, `ErrInvalidToken`.
-- Tipos de erro customizados: sufixo `Error`. Ex.: `ValidationError`, `NotFoundError`.
-- Strings de erro: **minúsculas, sem ponto final**.
-  - ✅ `"pokemon não encontrado"`
-  - ❌ `"Pokemon não encontrado."` — será concatenada com contexto adicional
+- Error sentinel variables: `Err` prefix. Ex.: `ErrNotFound`, `ErrInvalidToken`.
+- Custom error types: `Error` suffix. Ex.: `ValidationError`, `NotFoundError`.
+- Error strings: **lowercase, no trailing period**.
+  - ✅ `"pokemon not found"`
+  - ❌ `"Pokemon not found."` — will be concatenated with additional context
 
 ---
 
-## 2. Comentários
+## 2. Comments
 
 ### Godoc
 
-Todo símbolo exportado deve ter comentário godoc começando pelo nome:
+Every exported symbol must have a godoc comment starting with its name:
 
 ```go
-// PokemonService gerencia operações de listagem e busca de Pokémons.
+// PokemonService manages listing and search operations for Pokémons.
 type PokemonService struct { ... }
 
-// ListPokemons retorna uma página de Pokémons com informações de favoritos.
-// Retorna ErrInvalidPage se page for negativo.
+// ListPokemons returns a page of Pokémons with favorites information.
+// Returns ErrInvalidPage if page is negative.
 func (s *PokemonService) ListPokemons(ctx context.Context, page, pageSize int, userID string) (*domain.PokemonPage, error) { ... }
 ```
 
-### Frases completas, primeira letra maiúscula
+### Complete sentences, first letter uppercase
 
 ```go
-// Correto: frase completa começando com o nome do símbolo
-// ParseConfig lê a configuração do ambiente.
+// Correct: full sentence starting with the symbol name
+// ParseConfig reads the configuration from the environment.
 
-// Incorreto: fragmento
-// lê a configuração do ambiente
+// Incorrect: fragment
+// reads the configuration from the environment
 ```
 
-### Não documente o óbvio
+### Don't document the obvious
 
 ```go
-// Ruim: repete o código
-// i é o índice do loop
+// Bad: repeats the code
+// i is the loop index
 for i := range items { ... }
 
-// Bom: explica o porquê
-// reverse percorre de trás para frente para evitar cópia do slice
+// Good: explains the why
+// reverse iterates backwards to avoid copying the slice
 for i := len(items) - 1; i >= 0; i-- { ... }
 ```
 
 ---
 
-## 3. Estrutura de Controle
+## 3. Control Flow
 
 ### Indent error flow
 
-Retorne cedo ao encontrar um erro; o caminho normal não deve estar dentro de um `else`:
+Return early when encountering an error; the happy path should not be inside an `else`:
 
 ```go
-// ✅ Correto: caminho feliz sem aninhamento
+// ✅ Correct: happy path without nesting
 func (s *Service) GetPokemon(ctx context.Context, id string) (*domain.Pokemon, error) {
     if id == "" {
         return nil, domain.ErrInvalidInput
@@ -122,20 +122,20 @@ func (s *Service) GetPokemon(ctx context.Context, id string) (*domain.Pokemon, e
 
     pokemon, err := s.repo.GetByID(ctx, id)
     if err != nil {
-        return nil, fmt.Errorf("buscar pokemon %s: %w", id, err)
+        return nil, fmt.Errorf("fetch pokemon %s: %w", id, err)
     }
 
     return pokemon, nil
 }
 
-// ❌ Incorreto: caminho feliz aninhado no else
+// ❌ Incorrect: happy path nested in else
 func (s *Service) GetPokemon(ctx context.Context, id string) (*domain.Pokemon, error) {
     if id != "" {
         pokemon, err := s.repo.GetByID(ctx, id)
         if err == nil {
             return pokemon, nil
         } else {
-            return nil, fmt.Errorf("buscar pokemon %s: %w", id, err)
+            return nil, fmt.Errorf("fetch pokemon %s: %w", id, err)
         }
     } else {
         return nil, domain.ErrInvalidInput
@@ -145,10 +145,10 @@ func (s *Service) GetPokemon(ctx context.Context, id string) (*domain.Pokemon, e
 
 ### Switch vs if-else
 
-Prefira `switch` quando houver 3+ ramos sobre a mesma variável ou expressão:
+Prefer `switch` when there are 3+ branches on the same variable or expression:
 
 ```go
-// ✅ Correto
+// ✅ Correct
 switch resp.StatusCode {
 case http.StatusOK:
     return parseOK(body)
@@ -157,26 +157,26 @@ case http.StatusNotFound:
 case http.StatusUnauthorized:
     return nil, domain.ErrInvalidToken
 default:
-    return nil, fmt.Errorf("status inesperado: %d", resp.StatusCode)
+    return nil, fmt.Errorf("unexpected status: %d", resp.StatusCode)
 }
 ```
 
 ---
 
-## 4. Declaração de Variáveis
+## 4. Variable Declarations
 
-Use o estilo que melhor comunica a intenção:
+Use the style that best communicates intention:
 
 ```go
-// var x T — zero value explícito e intencional
+// var x T — explicit and intentional zero value
 var count int
 var repo PokemonRepository
 
-// x := value — inicializa com valor não-zero
+// x := value — initializes with non-zero value
 name := "Pikachu"
 client := &http.Client{Timeout: 5 * time.Second}
 
-// x := T{} — quando precisa do tipo visível no lado esquerdo
+// x := T{} — when the type needs to be visible on the left side
 handler := Handler{
     pokemonUseCase: svc,
 }
@@ -184,19 +184,19 @@ handler := Handler{
 
 ---
 
-## 5. Wrapping de Erros
+## 5. Error Wrapping
 
 ```go
-// %w — quando o chamador pode ou deve inspecionar o erro com errors.Is / errors.As
+// %w — when the caller can or should inspect the error with errors.Is / errors.As
 if err := s.repo.Save(ctx, pokemon); err != nil {
-    return fmt.Errorf("salvar pokemon: %w", err)
+    return fmt.Errorf("save pokemon: %w", err)
 }
 
-// %v — quando é só anotação de contexto, sem necessidade de inspeção
-log.Printf("operação concluída com aviso: %v", err)
+// %v — when it's just context annotation, without need for inspection
+log.Printf("operation completed with warning: %v", err)
 ```
 
-**Regra**: use `%w` por padrão em retornos de erro; `%v` apenas em logs onde a cadeia de erro não importa.
+**Rule**: use `%w` by default in error returns; `%v` only in logs where the error chain doesn’t matter.
 
 ---
 
@@ -234,14 +234,14 @@ var _ inbound.AuthUseCase = (*AuthService)(nil)
 
 ## 7. Goroutines
 
-- **Documente o ciclo de vida**: quando a goroutine termina e quem é responsável.
-- Use `context.Context` para sinalizar cancelamento.
-- Nunca lance goroutines sem estratégia de finalização (WaitGroup, canal, context).
+- **Document the lifecycle**: when the goroutine terminates and who is responsible.
+- Use `context.Context` to signal cancellation.
+- Never launch goroutines without a termination strategy (WaitGroup, channel, context).
 
 ```go
-// ✅ Correto: ciclo de vida documentado, context usado para cancelamento
+// ✅ Correct: lifecycle documented, context used for cancellation
 func (s *Scheduler) Start(ctx context.Context) {
-    // encerra quando ctx for cancelado
+    // terminates when ctx is cancelled
     go func() {
         for {
             select {
@@ -257,18 +257,18 @@ func (s *Scheduler) Start(ctx context.Context) {
 
 ---
 
-## 8. Organização do Código
+## 8. Code Organization
 
-### Ordem dos elementos em um arquivo
+### Order of elements in a file
 
-1. Declaração do pacote + godoc do pacote (se aplicável)
-2. Imports (stdlib / external / internal, separados por linha em branco)
-3. Constantes
-4. Variáveis de pacote
-5. Tipos + construtores
-6. Métodos
+1. Package declaration + package godoc (if applicable)
+2. Imports (stdlib / external / internal, separated by blank lines)
+3. Constants
+4. Package variables
+5. Types + constructors
+6. Methods
 
-### Grupos de import
+### Import groups
 
 ```go
 import (
@@ -277,10 +277,10 @@ import (
     "fmt"
     "net/http"
 
-    // externos
+    // external
     "github.com/stretchr/testify/assert"
 
-    // internos
+    // internal
     "pokedex-platform/core/bff/mobile-bff/internal/domain"
     inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 )
@@ -288,7 +288,7 @@ import (
 
 ---
 
-## Fontes
+## Sources
 
 - [Google Go Style Guide](https://google.github.io/styleguide/go/guide)
 - [Google Go Style Decisions](https://google.github.io/styleguide/go/decisions)

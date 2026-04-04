@@ -14,81 +14,81 @@ description: >-
 
 # Uber Go Style Guide — Skill
 
-> Baseado em: [Uber Go Style Guide — PT-BR](https://github.com/alcir-junior-caju/uber-go-style-guide-pt-br)
+> Based on: [Uber Go Style Guide — PT-BR](https://github.com/alcir-junior-caju/uber-go-style-guide-pt-br)
 
-## Quando usar esta skill
+## When to use this skill
 
-Carregue esta skill ao:
-- Precisar de orientações práticas e opinionadas sobre código Go de produção
-- Revisar código com foco em performance, segurança e clareza operacional
-- Tomar decisões sobre mutexes, slices, maps, panics e logging
-- Escrever código Go que precisa escalar e ser mantido por equipes grandes
+Load this skill when:
+- You need practical, opinionated guidance on production Go code
+- Reviewing code with a focus on performance, safety, and operational clarity
+- Making decisions about mutexes, slices, maps, panics, and logging
+- Writing Go code that needs to scale and be maintained by large teams
 
 ---
 
-## 1. Diretrizes de Performance
+## 1. Performance Guidelines
 
-### Inicialize maps e slices com capacidade conhecida
+### Initialize maps and slices with known capacity
 
 ```go
-// ✅ Correto: evita realocações
+// ✅ Correct: avoids reallocations
 pokemons := make([]domain.Pokemon, 0, len(ids))
 index := make(map[string]*domain.Pokemon, len(ids))
 
-// ❌ Incorreto: realoca conforme cresce
+// ❌ Incorrect: reallocates as it grows
 var pokemons []domain.Pokemon
 index := map[string]*domain.Pokemon{}
 ```
 
-### Prefira `strconv` a `fmt` para conversões numéricas
+### Prefer `strconv` over `fmt` for numeric conversions
 
 ```go
-// ✅ Mais rápido
+// ✅ Faster
 s := strconv.Itoa(42)
 n, err := strconv.Atoi("42")
 
-// ❌ Mais lento
+// ❌ Slower
 s := fmt.Sprintf("%d", 42)
 ```
 
-### Evite strings de formato em erros constantes
+### Avoid format strings in constant errors
 
 ```go
-// ✅ Sem alocação de string
-const errMsg = "token expirado"
+// ✅ No string allocation
+const errMsg = "token expired"
 
-// ❌ Aloca nova string a cada chamada se for Sprintf
-err := fmt.Errorf("token expirado")  // aceitável; sem Sprintf é ok
+// ❌ Allocates a new string per call if using Sprintf
+err := fmt.Errorf("token expired")  // acceptable; without Sprintf is ok
 ```
 
 ---
 
-## 2. Inicialização de Structs
+## 2. Struct Initialization
 
-### Sempre use nomes de campos ao inicializar structs
+### Always use field names when initializing structs
 
 ```go
-// ✅ Correto: legível e resistente a mudanças de ordem de campos
+// ✅ Correct: readable and resilient to field order changes
 svc := &PokemonService{
     pokemonRepo:  repo,
     favoriteRepo: favoriteRepo,
 }
 
-// ❌ Incorreto: quebra silenciosamente se a ordem dos campos mudar
+// ❌ Incorrect: breaks silently if field order changes
 svc := &PokemonService{repo, favoriteRepo}
 ```
 
-### Omita campos zero-value ao inicializar
+### Omit zero-value fields when initializing
 
 ```go
-// ✅ Limpo
+// ✅ Clean
 cfg := Config{
     Host:    "localhost",
     Port:    8080,
 }
-// Timeout fica como zero value (0)
+// Timeout stays as zero value (0)
 
-// ❌ Verboso sem necessidade
+// ❌ Unnecessarily verbose
 cfg := Config{
     Host:    "localhost",
     Port:    8080,
@@ -98,42 +98,42 @@ cfg := Config{
 
 ---
 
-## 3. Erros
+## 3. Errors
 
-### Nunca descarte erros silenciosamente
+### Never silently discard errors
 
 ```go
-// ❌ Silencia o erro — proibido em código de produção
+// ❌ Silences the error — forbidden in production code
 _ = repo.Save(ctx, pokemon)
 
-// ✅ Pelo menos logue o erro se não puder retorná-lo
+// ✅ At least log the error if you cannot return it
 if err := repo.Save(ctx, pokemon); err != nil {
-    log.Printf("falha ao salvar pokemon: %v", err)
+    log.Printf("failed to save pokemon: %v", err)
 }
 ```
 
-### Wrapping consistente
+### Consistent wrapping
 
 ```go
-// ✅ Adicione contexto com %w para preservar a cadeia
+// ✅ Add context with %w to preserve the error chain
 if err := s.authProvider.Login(ctx, email, password); err != nil {
-    return nil, fmt.Errorf("autenticar usuário %s: %w", email, err)
+    return nil, fmt.Errorf("authenticate user %s: %w", email, err)
 }
 ```
 
-### Tipos de erro vs sentinel errors
+### Error types vs sentinel errors
 
-Use **sentinel errors** (`var ErrX = errors.New(...)`) para erros esperados que os chamadores verificam:
+Use **sentinel errors** (`var ErrX = errors.New(...)`) for expected errors that callers check:
 
 ```go
 var (
-    ErrNotFound       = errors.New("não encontrado")
-    ErrInvalidToken   = errors.New("token inválido")
-    ErrAlreadyExists  = errors.New("já existe")
+    ErrNotFound       = errors.New("not found")
+    ErrInvalidToken   = errors.New("invalid token")
+    ErrAlreadyExists  = errors.New("already exists")
 )
 ```
 
-Use **tipos de erro** quando precisar transportar dados adicionais:
+Use **error types** when you need to carry additional data:
 
 ```go
 type ValidationError struct {
@@ -142,36 +142,36 @@ type ValidationError struct {
 }
 
 func (e *ValidationError) Error() string {
-    return fmt.Sprintf("campo %s: %s", e.Field, e.Message)
+    return fmt.Sprintf("field %s: %s", e.Field, e.Message)
 }
 ```
 
 ---
 
-## 4. Channels e Goroutines
+## 4. Channels and Goroutines
 
-### Goroutine com tamanho explícito de canal
+### Goroutine with explicit channel size
 
 ```go
-// ✅ Buffer explícito — razão documentada
-// canal com buffer de 1 para evitar bloqueio do produtor
+// ✅ Explicit buffer — reason documented
+// buffered channel of 1 to avoid blocking the producer
 results := make(chan *domain.Pokemon, 1)
 
-// ❌ Canal sem buffer quando o receptor pode demorar — causa bloqueio
+// ❌ Unbuffered channel when the receiver may be slow — causes blocking
 results := make(chan *domain.Pokemon)
 ```
 
-### Evite goroutines em funções Init
+### Avoid goroutines in Init functions
 
-`init()` é executado cedo demais; goroutines lançadas ali são difíceis de controlar:
+`init()` runs too early; goroutines launched there are hard to control:
 
 ```go
-// ❌ Proibido
+// ❌ Forbidden
 func init() {
     go backgroundWorker()
 }
 
-// ✅ Inicie explicitamente, com context
+// ✅ Start explicitly, with context
 func NewScheduler(ctx context.Context) *Scheduler {
     s := &Scheduler{}
     go s.run(ctx)
@@ -181,19 +181,19 @@ func NewScheduler(ctx context.Context) *Scheduler {
 
 ---
 
-## 5. Mutex e Sincronização
+## 5. Mutex and Synchronization
 
-### Incorpore mutex junto ao que ele protege
+### Embed mutex next to what it protects
 
 ```go
-// ✅ Claro: o mutex protege os campos abaixo dele
+// ✅ Clear: the mutex protects the fields below it
 type MockPokemonRepository struct {
     mu       sync.RWMutex
     pokemons map[string]*domain.Pokemon
 }
 ```
 
-### Prefira `sync.RWMutex` quando leituras são mais frequentes que escritas
+### Prefer `sync.RWMutex` when reads are more frequent than writes
 
 ```go
 func (m *MockPokemonRepository) GetByID(ctx context.Context, id string) (*domain.Pokemon, error) {
@@ -211,24 +211,24 @@ func (m *MockPokemonRepository) Save(ctx context.Context, p *domain.Pokemon) err
 
 ---
 
-## 6. Slices e Maps
+## 6. Slices and Maps
 
-### Nunca retorne nil slice e non-nil slice como equivalentes
+### Never return nil slice and non-nil slice as equivalent
 
 ```go
-// ✅ Sempre retorne slice vazio, não nil, quando não há itens
+// ✅ Always return an empty slice, not nil, when there are no items
 func (s *Service) GetUserFavorites(ctx context.Context, userID string) ([]string, error) {
     if userID == "" {
-        return []string{}, nil  // não nil
+        return []string{}, nil  // not nil
     }
     // ...
 }
 ```
 
-### Copie maps e slices ao receber ou retornar (boundary da API)
+### Copy maps and slices when receiving or returning (API boundary)
 
 ```go
-// ✅ Faz cópia para evitar que o chamador mute o estado interno
+// ✅ Makes a copy to prevent the caller from mutating internal state
 func (m *MockPokemonRepository) GetAll() []domain.Pokemon {
     m.mu.RLock()
     defer m.mu.RUnlock()
@@ -243,49 +243,49 @@ func (m *MockPokemonRepository) GetAll() []domain.Pokemon {
 
 ## 7. Context
 
-### `context.Context` é sempre o primeiro parâmetro
+### `context.Context` is always the first parameter
 
 ```go
-// ✅ Correto
+// ✅ Correct
 func (s *PokemonService) GetPokemonDetails(ctx context.Context, id string) (*domain.PokemonDetail, error)
 
-// ❌ Incorreto
+// ❌ Incorrect
 func (s *PokemonService) GetPokemonDetails(id string, ctx context.Context) (*domain.PokemonDetail, error)
 ```
 
-### Nunca armazene context em struct
+### Never store context in a struct
 
-Context pertence ao fluxo de uma requisição, não ao estado de um objeto:
+Context belongs to a request's flow, not to an object's state:
 
 ```go
-// ❌ Proibido
+// ❌ Forbidden
 type Service struct {
     ctx context.Context
 }
 
-// ✅ Correto: passe como parâmetro
+// ✅ Correct: pass as parameter
 func (s *Service) Do(ctx context.Context) error { ... }
 ```
 
 ---
 
-## 8. Linting e Ferramentas
+## 8. Linting and Tools
 
-O Uber recomenda o uso das seguintes ferramentas para reforçar o estilo:
+Uber recommends the following tools to enforce style:
 
-| Ferramenta | Propósito |
-|------------|-----------|
-| `golangci-lint` | Lint agregado com múltiplos linters |
-| `errcheck` | Detecta erros descartados |
-| `staticcheck` | Análise estática avançada |
-| `go vet` | Análise básica do compilador |
-| `gofmt` / `goimports` | Formatação e imports |
+| Tool | Purpose |
+|------|---------|
+| `golangci-lint` | Aggregated lint with multiple linters |
+| `errcheck` | Detects discarded errors |
+| `staticcheck` | Advanced static analysis |
+| `go vet` | Basic compiler analysis |
+| `gofmt` / `goimports` | Formatting and imports |
 
 ---
 
-## 9. Padrões de Opções para Construtores
+## 9. Constructor Options Pattern
 
-Quando um construtor tiver muitos parâmetros opcionais, use functional options:
+When a constructor has many optional parameters, use functional options:
 
 ```go
 type ClientOption func(*AuthServiceClient)
@@ -310,7 +310,7 @@ func NewAuthServiceClient(baseURL string, opts ...ClientOption) *AuthServiceClie
 
 ---
 
-## Fontes
+## Sources
 
 - [Uber Go Style Guide — PT-BR](https://github.com/alcir-junior-caju/uber-go-style-guide-pt-br)
 - [Uber Go Style Guide (original)](https://github.com/uber-go/guide/blob/master/style.md)
