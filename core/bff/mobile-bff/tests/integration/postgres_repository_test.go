@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"pokedex-platform/core/bff/mobile-bff/internal/adapters/repository"
+	repository "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/postgres"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 
 	"github.com/stretchr/testify/assert"

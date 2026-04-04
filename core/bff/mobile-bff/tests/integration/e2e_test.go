@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/http"
-	"pokedex-platform/core/bff/mobile-bff/internal/adapters/repository"
+	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http"
+	repository "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/postgres"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
 
 	"github.com/stretchr/testify/assert"
