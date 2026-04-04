@@ -1287,9 +1287,12 @@ Nunca use `pokedex-service` (legado).
 
 ## Referências
 
-- [Uber Go Style Guide (PT-BR)](https://github.com/uber-go/guide/blob/master/style.md)
-- [Google Go Style Guide](https://google.github.io/styleguide/go/guide)
-- [Google Go Style Decisions](https://google.github.io/styleguide/go/decisions)
-- [Google Go Best Practices](https://google.github.io/styleguide/go/best-practices)
-- [Effective Go](https://go.dev/doc/effective_go)
-- [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments)
+| Documento | Link | Normativo | Canônico |
+|-----------|------|:---------:|:--------:|
+| Uber Go Style Guide (PT-BR) | https://github.com/alcir-junior-caju/uber-go-style-guide-pt-br | — | — |
+| Google Go Style Guide | https://google.github.io/styleguide/go/guide | ✅ | ✅ |
+| Google Go Style Decisions | https://google.github.io/styleguide/go/decisions | ✅ | ❌ |
+| Google Go Best Practices | https://google.github.io/styleguide/go/best-practices | ❌ | ❌ |
+| Google Go Style (visão geral) | https://google.github.io/styleguide/go | — | — |
+| Effective Go | https://go.dev/doc/effective_go | — | — |
+| Go Code Review Comments | https://github.com/golang/go/wiki/CodeReviewComments | — | — |
