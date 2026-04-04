@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -105,7 +106,7 @@ func (r *PostgresPokemonRepository) GetAll(ctx context.Context, page, pageSize i
 	}
 	defer rows.Close()
 
-	var pokemons []domain.Pokemon
+	pokemons := make([]domain.Pokemon, 0)
 	for rows.Next() {
 		var pokemon domain.Pokemon
 		err := rows.Scan(
@@ -178,7 +179,7 @@ func (r *PostgresPokemonRepository) Search(ctx context.Context, query string, pa
 	}
 	defer rows.Close()
 
-	var pokemons []domain.Pokemon
+	pokemons := make([]domain.Pokemon, 0)
 	for rows.Next() {
 		var pokemon domain.Pokemon
 		err := rows.Scan(
@@ -251,7 +252,7 @@ func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter st
 	}
 	defer rows.Close()
 
-	var pokemons []domain.Pokemon
+	pokemons := make([]domain.Pokemon, 0)
 	for rows.Next() {
 		var pokemon domain.Pokemon
 		err := rows.Scan(
@@ -327,7 +328,7 @@ func (r *PostgresPokemonRepository) GetFavorites(ctx context.Context, userID str
 	}
 	defer rows.Close()
 
-	var favorites []string
+	favorites := make([]string, 0)
 	for rows.Next() {
 		var pokemonID string
 		if err := rows.Scan(&pokemonID); err != nil {
@@ -444,3 +445,5 @@ func postgresTypeColor(name string) string {
 		return "#A9AC86"
 	}
 }
+
+var _ outbound.PokemonRepository = (*PostgresPokemonRepository)(nil)

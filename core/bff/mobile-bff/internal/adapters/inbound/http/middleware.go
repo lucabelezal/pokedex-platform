@@ -39,8 +39,8 @@ var authRateLimitedPaths = []string{
 }
 
 const (
-	defaultAuthRateLimitRequests      = 20
-	defaultAuthRateLimitWindowSeconds = 60
+	defaultAuthRateLimitRequests = 20
+	defaultAuthRateLimitWindow   = 60 * time.Second
 )
 
 type rateLimitWindow struct {
@@ -336,7 +336,7 @@ func newAuthRateLimiter(maxRequests int, window time.Duration) *authRateLimiter 
 		maxRequests = defaultAuthRateLimitRequests
 	}
 	if window <= 0 {
-		window = time.Duration(defaultAuthRateLimitWindowSeconds) * time.Second
+		window = defaultAuthRateLimitWindow
 	}
 
 	return &authRateLimiter{
@@ -420,12 +420,12 @@ func getAuthRateLimitRequests() int {
 func getAuthRateLimitWindow() time.Duration {
 	raw := strings.TrimSpace(os.Getenv("AUTH_RATE_LIMIT_WINDOW_SECONDS"))
 	if raw == "" {
-		return time.Duration(defaultAuthRateLimitWindowSeconds) * time.Second
+		return defaultAuthRateLimitWindow
 	}
 
 	value, err := strconv.Atoi(raw)
 	if err != nil || value <= 0 {
-		return time.Duration(defaultAuthRateLimitWindowSeconds) * time.Second
+		return defaultAuthRateLimitWindow
 	}
 
 	return time.Duration(value) * time.Second

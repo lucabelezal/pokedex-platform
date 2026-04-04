@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -101,7 +102,7 @@ func (r *PostgresFavoriteRepository) GetUserFavorites(ctx context.Context, userI
 	}
 	defer rows.Close()
 
-	var favorites []string
+	favorites := make([]string, 0)
 	for rows.Next() {
 		var pokemonID string
 		if err := rows.Scan(&pokemonID); err != nil {
@@ -120,3 +121,5 @@ func isValidUUID(s string) bool {
 	}
 	return s[8] == '-' && s[13] == '-' && s[18] == '-' && s[23] == '-'
 }
+
+var _ outbound.FavoriteRepository = (*PostgresFavoriteRepository)(nil)

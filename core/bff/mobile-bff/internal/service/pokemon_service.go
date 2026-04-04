@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
+	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
@@ -156,3 +157,5 @@ func getTypeColor(typeStr string) string {
 	}
 	return "#A9AC86"
 }
+
+var _ inbound.PokemonUseCase = (*PokemonService)(nil)

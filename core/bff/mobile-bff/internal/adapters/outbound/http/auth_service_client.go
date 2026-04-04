@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
+	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
@@ -228,8 +229,6 @@ func mapAuthError(statusCode int, operation string) error {
 	}
 }
 
-var _ outbound.AuthProvider = (*AuthServiceClient)(nil)
-
 type tokenIntrospectionResponse struct {
 	Active bool `json:"active"`
 }
@@ -272,3 +271,6 @@ func (c *AuthServiceClient) IsTokenActive(ctx context.Context, token string) (bo
 
 	return introspection.Active, nil
 }
+
+var _ outbound.AuthProvider = (*AuthServiceClient)(nil)
+var _ inbound.TokenValidator = (*AuthServiceClient)(nil)

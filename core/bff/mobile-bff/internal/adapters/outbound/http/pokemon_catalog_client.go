@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
 // PokemonCatalogServiceRepository é o cliente HTTP para o pokemon-catalog-service.
@@ -138,3 +139,5 @@ func (r *PokemonCatalogServiceRepository) getJSON(ctx context.Context, endpoint 
 	}
 	return resp.StatusCode, nil
 }
+
+var _ outbound.PokemonRepository = (*PokemonCatalogServiceRepository)(nil)

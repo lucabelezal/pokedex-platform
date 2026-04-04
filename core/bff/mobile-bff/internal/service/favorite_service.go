@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
@@ -36,3 +37,5 @@ func (s *FavoriteService) RemoveFavorite(ctx context.Context, userID, pokemonID 
 func (s *FavoriteService) GetUserFavorites(ctx context.Context, userID string) ([]string, error) {
 	return s.favoriteRepo.GetUserFavorites(ctx, userID)
 }
+
+var _ inbound.FavoriteUseCase = (*FavoriteService)(nil)
