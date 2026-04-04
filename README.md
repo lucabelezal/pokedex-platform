@@ -21,6 +21,7 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 ├── .github/
 │   ├── copilot-instructions.md   # Instruções globais para o Copilot
 │   ├── agents/                   # Agentes especializados do projeto
+│   │   ├── backend-architect.agent.md
 │   │   ├── database-architect.agent.md
 │   │   ├── debugger.agent.md
 │   │   ├── devops-engineer.agent.md
@@ -33,6 +34,7 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 │   │   ├── go-architecture-review/
 │   │   ├── go-error-handling/
 │   │   ├── go-security-audit/
+│   │   ├── go-style-combined/        # ★ referência canônica de estilo Go do projeto
 │   │   ├── go-test-quality/
 │   │   ├── go-test-table-driven/
 │   │   ├── golang-database/
@@ -40,6 +42,8 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 │   │   ├── golang-error-handling/
 │   │   ├── golang-linter/
 │   │   ├── golang-security/
+│   │   ├── golang-style-google/
+│   │   ├── golang-style-uber/
 │   │   └── golang-testing/
 │   └── workflows/                # Pipelines de CI
 ├── bruno/

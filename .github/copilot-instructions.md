@@ -64,9 +64,17 @@
 ## Convencoes Go (obrigatorio)
 - **Receiver**: 1-2 letras, abreviacao do tipo. Use `c` para `Client`, `s` para `Service`. Nunca `this` ou `self`.
 - **Sem prefixo Get**: `Count()` nao `GetCount()`; `Name()` nao `GetName()`. Excecao: `GetXxx` aceito em interface `net/http.ResponseWriter`.
-- **Initialisms uppercase**: `ID`, `DB`, `URL`, `HTTP`, `JSON`, `gRPC`. Nunca `Id`, `Db`, `Url`.
+- **Initialisms uppercase**: `ID`, `DB`, `URL`, `HTTP`, `JSON`. Para `gRPC`: exported = `GRPC`, unexported = `gRPC`. Nunca `Id`, `Db`, `Url`, `Grpc`.
 - **Error strings**: minusculas, sem ponto final. `"token invalido"` nao `"Token invalido."`.
 - **Indent error flow**: retorne o erro imediatamente; o caminho feliz fica sem aninhamento.
 - **Wrapping de erros**: use `%w` para erros que o chamador possa inspecionar com `errors.Is`/`errors.As`; use `%v` apenas para anotacao sem inspecao.
 - **Declaracao de variavel**: `var x T` para zero value explicito; `x := value` quando inicializa com valor nao-zero.
 - **Goroutines**: documente quando a goroutine termina. Use `context.Context` para controlar o ciclo de vida. Nunca lance goroutines sem uma estrategia de finalizacao.
+- **Slices via JSON**: use `make([]T, 0)` em repositorios e use cases que retornam slices via API/JSON. Evita serializar `null` em vez de `[]`.
+- **Interface compliance**: declare `var _ Interface = (*Struct)(nil)` ao final de cada arquivo de adaptador e servico. Torna erros de implementacao visiveis em tempo de compilacao.
+- **Constantes de tempo**: use `time.Duration` diretamente. Ex.: `const timeout = 30 * time.Second`. Nunca `int` com cast posterior.
+- **Testes**: prefira table-driven tests (`t.Run`) quando multiplos casos compartilham a mesma logica de verificacao. Nunca declare campos na struct de teste que nao sao usados no corpo do subtest.
+
+## Guia de estilo canonico
+Para qualquer revisao ou escrita de codigo Go, carregue a skill `go-style-combined` (`.github/skills/go-style-combined/SKILL.md`).
+Ela e a sintese definitiva do Uber Go Style Guide + Google Go Style Guide com as decisoes especificas deste projeto.
