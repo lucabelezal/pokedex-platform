@@ -13,6 +13,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func isIntegrationEnv() bool {
+	return os.Getenv("TEST_DATABASE_URL") != "" || os.Getenv("DATABASE_URL") != ""
+}
+
 func urlBancoTeste() string {
 	if v := os.Getenv("TEST_DATABASE_URL"); v != "" {
 		return v
@@ -26,25 +30,29 @@ func urlBancoTeste() string {
 func setupTestDB(t *testing.T) *repository.Database {
 	t.Helper()
 
+	if !isIntegrationEnv() {
+		t.Skip("pulando testes de integração: DATABASE_URL ou TEST_DATABASE_URL não configurados")
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	db, err := repository.NewDatabase(ctx, urlBancoTeste())
 	if err != nil {
-		t.Skipf("Pulando testes de integração (banco indisponível): %v", err)
+		t.Fatalf("falha ao conectar no banco de testes: %v", err)
 	}
 
 	_, _ = db.Pool.Exec(ctx, `CREATE EXTENSION IF NOT EXISTS pgcrypto`)
 	_, err = db.Pool.Exec(ctx, `TRUNCATE TABLE favorites, users, pokemons RESTART IDENTITY CASCADE`)
 	if err != nil {
 		db.Close()
-		t.Skipf("Pulando testes de integração (falha ao preparar banco): %v", err)
+		t.Fatalf("falha ao preparar banco de testes: %v", err)
 	}
 
 	_, err = db.Pool.Exec(ctx, `INSERT INTO users (id, email) VALUES ('user-teste', 'teste@local') ON CONFLICT (id) DO NOTHING`)
 	if err != nil {
 		db.Close()
-		t.Skipf("Pulando testes de integração (falha ao inserir usuário): %v", err)
+		t.Fatalf("falha ao inserir usuario de teste: %v", err)
 	}
 
 	return db
