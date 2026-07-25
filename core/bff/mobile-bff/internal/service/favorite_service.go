@@ -8,15 +8,17 @@ import (
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
-// FavoriteCatalogProvider abstrai a busca de detalhes de Pokémon favoritos.
+// FavoriteCatalogProvider abstrai operações de favoritos via catalog-service.
 type FavoriteCatalogProvider interface {
 	GetFavoriteDetails(ctx context.Context, ids []string) ([]domain.Pokemon, error)
+	AddFavorite(ctx context.Context, userID, pokemonID string) error
+	RemoveFavorite(ctx context.Context, userID, pokemonID string) error
 }
 
 type FavoriteService struct {
-	favoriteRepo     outbound.FavoriteRepository
-	pokemonRepo      outbound.PokemonRepository
-	favoriteCatalog  FavoriteCatalogProvider
+	favoriteRepo    outbound.FavoriteRepository
+	pokemonRepo     outbound.PokemonRepository
+	favoriteCatalog FavoriteCatalogProvider
 }
 
 func NewFavoriteService(
@@ -36,10 +38,16 @@ func (s *FavoriteService) AddFavorite(ctx context.Context, userID, pokemonID str
 		return err
 	}
 
+	if s.favoriteCatalog != nil {
+		return s.favoriteCatalog.AddFavorite(ctx, userID, pokemonID)
+	}
 	return s.favoriteRepo.AddFavorite(ctx, userID, pokemonID)
 }
 
 func (s *FavoriteService) RemoveFavorite(ctx context.Context, userID, pokemonID string) error {
+	if s.favoriteCatalog != nil {
+		return s.favoriteCatalog.RemoveFavorite(ctx, userID, pokemonID)
+	}
 	return s.favoriteRepo.RemoveFavorite(ctx, userID, pokemonID)
 }
 

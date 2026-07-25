@@ -62,6 +62,8 @@ func NewMux(pokemonRepo repository.PokemonRepository) *http.ServeMux {
 	mux.HandleFunc("GET /v1/pokemon-details/{id}", h.getPokemonDetailByID)
 	mux.HandleFunc("GET /v1/pokemons/{id}", h.getPokemonByID)
 	mux.HandleFunc("GET /v1/pokemons/favorites", h.getFavoritesBatch)
+	mux.HandleFunc("POST /v1/pokemons/{id}/favorite", h.addFavorite)
+	mux.HandleFunc("DELETE /v1/pokemons/{id}/favorite", h.removeFavorite)
 	return mux
 }
 
@@ -236,6 +238,62 @@ func (h *Handler) getFavoritesBatch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondJSON(w, http.StatusOK, data)
+}
+
+func (h *Handler) addFavorite(w http.ResponseWriter, r *http.Request) {
+	userID := r.Header.Get("X-User-ID")
+	if userID == "" {
+		respondJSON(w, http.StatusUnauthorized, map[string]string{"error": "autenticacao obrigatoria"})
+		return
+	}
+
+	pokemonID := r.PathValue("id")
+	if pokemonID == "" {
+		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "id do pokemon obrigatorio"})
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	if err := h.pokemonRepo.AddFavorite(ctx, userID, pokemonID); err != nil {
+		if err == repository.ErrFavoriteAlreadyExists {
+			respondJSON(w, http.StatusConflict, map[string]string{"error": "favorito ja existe"})
+			return
+		}
+		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao adicionar favorito"})
+		return
+	}
+
+	respondJSON(w, http.StatusOK, map[string]string{"message": "favorito adicionado"})
+}
+
+func (h *Handler) removeFavorite(w http.ResponseWriter, r *http.Request) {
+	userID := r.Header.Get("X-User-ID")
+	if userID == "" {
+		respondJSON(w, http.StatusUnauthorized, map[string]string{"error": "autenticacao obrigatoria"})
+		return
+	}
+
+	pokemonID := r.PathValue("id")
+	if pokemonID == "" {
+		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "id do pokemon obrigatorio"})
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	if err := h.pokemonRepo.RemoveFavorite(ctx, userID, pokemonID); err != nil {
+		if err == repository.ErrFavoriteNotFound {
+			respondJSON(w, http.StatusNotFound, map[string]string{"error": "favorito nao encontrado"})
+			return
+		}
+		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao remover favorito"})
+		return
+	}
+
+	respondJSON(w, http.StatusOK, map[string]string{"message": "favorito removido"})
 }
 
 func respondJSON(w http.ResponseWriter, status int, payload any) {

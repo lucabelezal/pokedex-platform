@@ -15,6 +15,8 @@ import (
 )
 
 var ErrPokemonNotFound = errors.New("pokemon nao encontrado")
+var ErrFavoriteAlreadyExists = errors.New("favorito ja existe")
+var ErrFavoriteNotFound = errors.New("favorito nao encontrado")
 
 type PokemonRepository interface {
 	GetAll(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error)
@@ -25,6 +27,8 @@ type PokemonRepository interface {
 	GetDetailByID(ctx context.Context, id string) (*domain.PokemonDetail, error)
 	ListTypes(ctx context.Context) ([]domain.Type, error)
 	ListRegions(ctx context.Context) ([]domain.Region, error)
+	AddFavorite(ctx context.Context, userID, pokemonID string) error
+	RemoveFavorite(ctx context.Context, userID, pokemonID string) error
 }
 
 type PostgresPokemonRepository struct {
@@ -550,6 +554,14 @@ func (r *InMemoryPokemonRepository) GetByIDs(ctx context.Context, ids []string) 
 	return result, nil
 }
 
+func (r *InMemoryPokemonRepository) AddFavorite(ctx context.Context, userID, pokemonID string) error {
+	return nil
+}
+
+func (r *InMemoryPokemonRepository) RemoveFavorite(ctx context.Context, userID, pokemonID string) error {
+	return nil
+}
+
 func (r *InMemoryPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
 	_ = ctx
 	return []domain.Type{
@@ -671,6 +683,37 @@ func readRows(rows pgx.Rows) ([]domain.Pokemon, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+func (r *PostgresPokemonRepository) AddFavorite(ctx context.Context, userID, pokemonID string) error {
+	query := `
+		INSERT INTO user_favorites (user_id, pokemon_id, created_at)
+		VALUES ($1::UUID, $2::BIGINT, now())
+		ON CONFLICT (user_id, pokemon_id) DO NOTHING
+	`
+	ct, err := r.db.Exec(ctx, query, userID, pokemonID)
+	if err != nil {
+		return fmt.Errorf("erro ao adicionar favorito: %w", err)
+	}
+	if ct.RowsAffected() == 0 {
+		return ErrFavoriteAlreadyExists
+	}
+	return nil
+}
+
+func (r *PostgresPokemonRepository) RemoveFavorite(ctx context.Context, userID, pokemonID string) error {
+	query := `
+		DELETE FROM user_favorites
+		WHERE user_id = $1::UUID AND pokemon_id = $2::BIGINT
+	`
+	ct, err := r.db.Exec(ctx, query, userID, pokemonID)
+	if err != nil {
+		return fmt.Errorf("erro ao remover favorito: %w", err)
+	}
+	if ct.RowsAffected() == 0 {
+		return ErrFavoriteNotFound
+	}
+	return nil
 }
 
 func NewPool(ctx context.Context, databaseURL string) (*pgxpool.Pool, error) {

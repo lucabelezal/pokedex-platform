@@ -61,3 +61,55 @@ func (c *FavoriteCatalogClient) GetFavoriteDetails(ctx context.Context, ids []st
 
 	return result, nil
 }
+
+// AddFavorite adiciona um Pokémon aos favoritos via catalog-service.
+func (c *FavoriteCatalogClient) AddFavorite(ctx context.Context, userID, pokemonID string) error {
+	endpoint := fmt.Sprintf("%s/v1/pokemons/%s/favorite", c.baseURL, url.PathEscape(pokemonID))
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, endpoint, nil)
+	if err != nil {
+		return fmt.Errorf("erro ao criar requisicao de adicionar favorito: %w", err)
+	}
+	req.Header.Set("X-User-ID", userID)
+
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return fmt.Errorf("erro ao adicionar favorito: %w", err)
+	}
+	defer resp.Body.Close()
+
+	switch resp.StatusCode {
+	case http.StatusOK, http.StatusCreated:
+		return nil
+	case http.StatusConflict:
+		return domain.ErrFavoriteAlreadyExists
+	default:
+		return fmt.Errorf("catalog-service retornou status %d ao adicionar favorito", resp.StatusCode)
+	}
+}
+
+// RemoveFavorite remove um Pokémon dos favoritos via catalog-service.
+func (c *FavoriteCatalogClient) RemoveFavorite(ctx context.Context, userID, pokemonID string) error {
+	endpoint := fmt.Sprintf("%s/v1/pokemons/%s/favorite", c.baseURL, url.PathEscape(pokemonID))
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, endpoint, nil)
+	if err != nil {
+		return fmt.Errorf("erro ao criar requisicao de remover favorito: %w", err)
+	}
+	req.Header.Set("X-User-ID", userID)
+
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return fmt.Errorf("erro ao remover favorito: %w", err)
+	}
+	defer resp.Body.Close()
+
+	switch resp.StatusCode {
+	case http.StatusOK:
+		return nil
+	case http.StatusNotFound:
+		return domain.ErrFavoriteNotFound
+	default:
+		return fmt.Errorf("catalog-service retornou status %d ao remover favorito", resp.StatusCode)
+	}
+}

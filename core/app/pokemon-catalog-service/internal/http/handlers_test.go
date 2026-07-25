@@ -20,6 +20,8 @@ type stubPokemonRepo struct {
 	getDetailByIDFn func(ctx context.Context, id string) (*domain.PokemonDetail, error)
 	listTypesFn     func(ctx context.Context) ([]domain.Type, error)
 	listRegionsFn   func(ctx context.Context) ([]domain.Region, error)
+	addFavoriteFn   func(ctx context.Context, userID, pokemonID string) error
+	removeFavoriteFn func(ctx context.Context, userID, pokemonID string) error
 }
 
 func (s *stubPokemonRepo) GetAll(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error) {
@@ -76,6 +78,20 @@ func (s *stubPokemonRepo) ListRegions(ctx context.Context) ([]domain.Region, err
 		return s.listRegionsFn(ctx)
 	}
 	return []domain.Region{}, nil
+}
+
+func (s *stubPokemonRepo) AddFavorite(ctx context.Context, userID, pokemonID string) error {
+	if s.addFavoriteFn != nil {
+		return s.addFavoriteFn(ctx, userID, pokemonID)
+	}
+	return nil
+}
+
+func (s *stubPokemonRepo) RemoveFavorite(ctx context.Context, userID, pokemonID string) error {
+	if s.removeFavoriteFn != nil {
+		return s.removeFavoriteFn(ctx, userID, pokemonID)
+	}
+	return nil
 }
 
 func pokemonPage(items []domain.Pokemon) *domain.PokemonPage {

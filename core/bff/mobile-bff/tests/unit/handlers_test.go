@@ -19,7 +19,10 @@ import (
 )
 
 type stubFavoriteCatalogProvider struct {
-	repo outbound.PokemonRepository
+	repo         outbound.PokemonRepository
+	favoriteRepo outbound.FavoriteRepository
+	addFavoriteErr    error
+	removeFavoriteErr error
 }
 
 func (s *stubFavoriteCatalogProvider) GetFavoriteDetails(ctx context.Context, ids []string) ([]domain.Pokemon, error) {
@@ -32,6 +35,26 @@ func (s *stubFavoriteCatalogProvider) GetFavoriteDetails(ctx context.Context, id
 		result = append(result, *p)
 	}
 	return result, nil
+}
+
+func (s *stubFavoriteCatalogProvider) AddFavorite(ctx context.Context, userID, pokemonID string) error {
+	if s.addFavoriteErr != nil {
+		return s.addFavoriteErr
+	}
+	if s.favoriteRepo != nil {
+		return s.favoriteRepo.AddFavorite(ctx, userID, pokemonID)
+	}
+	return nil
+}
+
+func (s *stubFavoriteCatalogProvider) RemoveFavorite(ctx context.Context, userID, pokemonID string) error {
+	if s.removeFavoriteErr != nil {
+		return s.removeFavoriteErr
+	}
+	if s.favoriteRepo != nil {
+		return s.favoriteRepo.RemoveFavorite(ctx, userID, pokemonID)
+	}
+	return nil
 }
 
 type stubAuthUseCase struct {
@@ -414,7 +437,7 @@ func TestGetFavoritesWithAuthAndDataReturnsHasDataState(t *testing.T) {
 	pokemonRepo := mocks.NewMockPokemonRepository()
 	favoriteRepo := mocks.NewMockFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
-	favoriteCatalog := &stubFavoriteCatalogProvider{repo: pokemonRepo}
+	favoriteCatalog := &stubFavoriteCatalogProvider{repo: pokemonRepo, favoriteRepo: favoriteRepo}
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, favoriteCatalog)
 
 	handler := httpadapter.NewHandler(pokemonSvc, favoriteSvc, nil)
