@@ -1,51 +1,60 @@
-# Roteiro de Aprendizado Go — Pokedex Platform
+# Roteiro de Aprendizado — Go para Desenvolvedores iOS/Swift
 
-Este roteiro integra **6 recursos** para você aprender Go de forma progressiva, aplicando
-as convenções da Pokedex Platform desde o primeiro código.
+## Sua missão
 
-## Os 6 recursos
+Você é desenvolvedor iOS com experiência em Swift e quer aprender Go para atuar no backend.
+Este roteiro foi desenhado para você: cada conceito é explicado do zero, com exemplos funcionais,
+e fazendo pontes com Swift sempre que isso acelera o entendimento.
 
-| # | Recurso | Tipo | Use para... |
-|---|---------|------|------------|
-| 1 | **Curso** (98 aulas) | Videoaulas práticas | Aprender sintaxe e conceitos passo a passo |
-| 2 | **[Roadmap.sh](https://roadmap.sh/golang)** | Checklist visual | Verificar cobertura e descobrir tópicos avançados |
-| 3 | **[Effective Go](https://go.dev/doc/effective_go)** | Documento canônico | Entender os idiomas e a filosofia da linguagem |
-| 4 | **[Go by Example](https://gobyexample.com)** | Exemplos anotados | Ver e executar código idiomático de cada conceito |
-| 5 | **[golang.com.br/aprenda](https://golang.com.br/aprenda/)** | Hub em português | Tutoriais, trilhas, cheatsheet, comunidade e mercado BR |
-| 6 | **[Guia de Estilo](../guia-estilo/README.md)** | Regras do projeto | Saber como escrever código na Pokedex Platform |
+Ao final das 5 fases você terá autonomia para ler, escrever e contribuir com código Go idiomático
+— o mesmo padrão usado no mobile-bff e nos demais serviços da Pokedex Platform.
 
-## Como usar este roteiro
+## Como usar
 
-Para cada fase, siga esta ordem:
+Cada fase é um arquivo `.md` autossuficiente. Você não precisa de links externos, cursos ou vídeos.
+Leia na ordem. Execute os exemplos no seu terminal. Faça os exercícios.
 
-| Passo | Ação |
-|-------|------|
-| 1 | **Assista as aulas do curso** — entenda o conceito |
-| 2 | **Execute os exemplos do Go by Example** — veja o código funcionando |
-| 3 | **Leia as seções do Effective Go** — entenda os idiomas e o "pensar em Go" |
-| 4 | **Confira o roadmap.sh** — veja onde está e o que falta |
-| 5 | **Leia as regras do styleguide** — aplique as convenções do projeto |
-| 6 | **Faça o exercício prático** — consolide o conhecimento no código real |
+| Etapa | O que fazer |
+|-------|------------|
+| 1 | **Ler** a explicação do conceito — entenda o "por quê" |
+| 2 | **Executar** os exemplos de código — `go run exemplo.go` |
+| 3 | **Ler** a seção "Atenção" — evite as pegadinhas |
+| 4 | **Fazer** o exercício prático — consolide o aprendizado |
+| 5 | **Consultar** o [glossário](GLOSSARIO.md) e o [cheatsheet](CHEATSHEET.md) como referência |
 
-## Ordem de leitura do styleguide
+## O que esperar em cada fase
 
-| Após a fase... | Leia no styleguide... | Por quê |
-|----------------|----------------------|---------|
-| 01 — Fundamentos | `guide.md` (completo) | Regras fundamentais: MixedCaps, receivers, initialisms, nomes de pacotes |
-| 02 — Controle & Coleções | `decisions.md#estrutura-de-código` + `#declarações-e-inicialização` | Controle de fluxo, slices, maps, structs |
-| 03 — Structs & Interfaces | `decisions.md#interfaces` + `#erros` | Interface compliance, wrapping, error flow |
-| 04 — Concorrência | `decisions.md#concorrência` | Goroutines, canais, mutex, context |
-| 05 — Testes & Web | `best-practices.md` + `regras-projeto.md` | Testes table-driven, arquitetura hexagonal, CI/CD |
+| Fase | Arquivo | Conceitos | Linha de chegada |
+|------|---------|-----------|-----------------|
+| 01 | [fase-01-fundamentos.md](fase-01-fundamentos.md) | Tipos, zero values, variáveis, constantes, ponteiros, funções, `fmt`, `iota` | Você escreve e executa programas Go simples |
+| 02 | [fase-02-controle-colecoes.md](fase-02-controle-colecoes.md) | `if`/`else`, `for`, `switch`, `defer`, arrays, slices, maps, strings | Você manipula coleções e controla fluxo com idiomática Go |
+| 03 | [fase-03-structs-interfaces.md](fase-03-structs-interfaces.md) | Structs, métodos, embedding, interfaces, generics, erros, JSON, pacotes | Você modela domínios com structs e interfaces; trata erros corretamente |
+| 04 | [fase-04-concorrencia.md](fase-04-concorrencia.md) | Goroutines, channels, `select`, `sync`, `context` | Você escreve código concorrente seguro e com cancelamento |
+| 05 | [fase-05-testes-web.md](fase-05-testes-web.md) | Testes, `net/http`, `database/sql`, toolchain, deploy | Você testa, serve HTTP, acessa banco e compila para produção |
 
-## Visão geral das fases
+## Pontes Swift → Go
 
-| Fase | Arquivo | Curso | Go by Example | Foco do styleguide |
-|------|---------|-------|---------------|-------------------|
-| 01 | [fase-01-fundamentos.md](fase-01-fundamentos.md) | Aulas 1–26 | 6 exemplos | `guide.md` |
-| 02 | [fase-02-controle-colecoes.md](fase-02-controle-colecoes.md) | Aulas 27–43 | 13 exemplos | `decisions.md` (estrutura + declarações) |
-| 03 | [fase-03-structs-interfaces.md](fase-03-structs-interfaces.md) | Aulas 44–71 | 25 exemplos | `decisions.md` (interfaces + erros) |
-| 04 | [fase-04-concorrencia.md](fase-04-concorrencia.md) | Aulas 72–84 | 19 exemplos | `decisions.md` (concorrência) |
-| 05 | [fase-05-testes-web.md](fase-05-testes-web.md) | Aulas 85–98 | 21 exemplos | `best-practices.md` + `regras-projeto.md` |
+Alguns conceitos são mais fáceis de entender quando você conhece o equivalente em Swift:
+
+| Swift | Go | Nota |
+|-------|-----|------|
+| `protocol` | `interface` | Em Go a implementação é **implícita** — não se declara conformidade |
+| `struct` (value type) | `struct` | Igual — value type, copiado na atribuição |
+| `class` (reference type) | Ponteiro para struct (`*T`) | Go não tem classes. Use `*Struct` quando precisar de referência |
+| `enum` com associated values | `iota` + `switch type` | Go não tem enums com valores associados; use constantes + type switch |
+| `Result<T, Error>` | `(T, error)` | Retorno múltiplo — o padrão Go para success/failure |
+| `guard let` / `if let` | `if err != nil` + comma ok | Padrão "happy path" — trate o erro primeiro |
+| `async/await` + `Task` | Goroutines + channels + `context` | Concorrência é mais explícita e poderosa em Go |
+| `extension` | Funções no mesmo pacote | Não existe `extension`. Adicione funções ao tipo no mesmo pacote |
+| ARC (retain/release) | Garbage Collector | Sem `weak`, `unowned`. O GC cuida de tudo |
+| `throws` / `try` / `catch` | `error` como valor de retorno | Não há exceções. Erro é um valor como outro qualquer |
+| `Optional<T>` | Ponteiro (`*T`) ou comma ok | Go não tem Optional. Use ponteiros ou o segundo valor de retorno |
+| `typealias` | `type MeuTipo TipoBase` | Igual — cria um tipo nomeado distinto |
+
+## Referências rápidas
+
+- [GLOSSARIO.md](GLOSSARIO.md) — dicionário de termos Go com equivalente Swift
+- [CHEATSHEET.md](CHEATSHEET.md) — sintaxe rápida para consulta diária
 
 ## Progresso
 
@@ -56,14 +65,3 @@ Para cada fase, siga esta ordem:
 | 03 — Structs & Interfaces | ⬜ Pendente | |
 | 04 — Concorrência | ⬜ Pendente | |
 | 05 — Testes & Web | ⬜ Pendente | |
-
----
-
-## Referências rápidas
-
-- [Tour of Go](https://go.dev/tour/list) — tour interativo oficial
-- [Go Playground](https://go.dev/play/) — execute Go no browser
-- [Go Spec](https://go.dev/ref/spec) — especificação da linguagem
-- [Standard Library](https://pkg.go.dev/std) — documentação dos pacotes padrão
-- [Go Wiki — CodeReviewComments](https://github.com/golang/go/wiki/CodeReviewComments) — checklist de revisão de código
-- [golang.com.br/aprenda](https://golang.com.br/aprenda/) — hub da comunidade Go Brasil: tutoriais, trilhas, cheatsheet, vagas e mercado
