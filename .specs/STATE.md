@@ -28,10 +28,10 @@
 
 ## Handoff
 
-- **Feature**: production-readiness
-- **Phase / Task**: CONCLUÍDO — 30/30 tasks implementados
-- **Completed**: Todos os 30 tasks dos 3 batches
-- **Last commit**: 39ee1ee (rate limiter Redis)
+- **Feature**: production-readiness + test-coverage-and-favorites
+- **Phase / Task**: CONCLUÍDO — 30/30 + 3/3 gaps resolvidos
+- **Completed**: Todos os tasks, todas as lessons endereçadas
+- **Last commit**: 541767b (migração escritas favoritos)
 - **Blockers**: none
 - **Uncommitted files**: none
 - **Branch**: main
