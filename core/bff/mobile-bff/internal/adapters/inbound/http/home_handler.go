@@ -100,45 +100,38 @@ func (h *Handler) loadHomePokemonPage(
 	searchValue string,
 	selectedType string,
 ) (*domain.PokemonPage, error) {
-	const fetchSize = 100
-	items := make([]domain.Pokemon, 0, fetchSize)
+	searchTerm := strings.TrimSpace(searchValue)
+	typeFilter := strings.TrimSpace(selectedType)
 
-	for page := 0; ; page++ {
-		pokemonPage, err := h.pokemonUseCase.ListPokemons(ctx, page, fetchSize, userID)
-		if err != nil {
-			return nil, err
-		}
-		if pokemonPage == nil || len(pokemonPage.Content) == 0 {
-			break
-		}
+	const page = 0
+	const pageSize = 200
 
-		items = append(items, pokemonPage.Content...)
-		if !pokemonPage.HasNext {
-			break
-		}
+	var result *domain.PokemonPage
+	var err error
+
+	if searchTerm != "" {
+		result, err = h.pokemonUseCase.SearchPokemons(ctx, searchTerm, page, pageSize, userID)
+	} else if typeFilter != "" && typeFilter != "Todos os tipos" {
+		result, err = h.pokemonUseCase.FilterByType(ctx, typeFilter, page, pageSize, userID)
+	} else {
+		result, err = h.pokemonUseCase.ListPokemons(ctx, page, pageSize, userID)
 	}
 
-	filtered := make([]domain.Pokemon, 0, len(items))
-	searchTerm := strings.ToLower(strings.TrimSpace(searchValue))
-	selectedType = strings.TrimSpace(selectedType)
+	if err != nil {
+		return nil, err
+	}
 
-	for _, pokemon := range items {
-		if searchTerm != "" {
-			name := strings.ToLower(strings.TrimSpace(pokemon.Name))
-			number := normalizePokemonID(pokemon.Number)
-			if !strings.Contains(name, searchTerm) && !strings.Contains(number, searchTerm) {
-				continue
+	if result != nil && typeFilter != "" && typeFilter != "Todos os tipos" && searchTerm != "" {
+		filtered := make([]domain.Pokemon, 0, len(result.Content))
+		for _, pokemon := range result.Content {
+			if hasPokemonType(pokemon.Types, typeFilter) {
+				filtered = append(filtered, pokemon)
 			}
 		}
-
-		if selectedType != "" && selectedType != "Todos os tipos" && !hasPokemonType(pokemon.Types, selectedType) {
-			continue
-		}
-
-		filtered = append(filtered, pokemon)
+		result.Content = filtered
 	}
 
-	return &domain.PokemonPage{Content: filtered}, nil
+	return result, nil
 }
 
 func paginateHomePokemonPage(page *domain.PokemonPage, currentPage, pageSize int) {

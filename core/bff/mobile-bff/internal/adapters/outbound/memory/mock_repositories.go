@@ -2,6 +2,7 @@ package memory
 
 import (
 	"context"
+	"strings"
 	"sync"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
@@ -255,12 +256,7 @@ func convertMockTypes(types []string) []domain.Type {
 }
 
 func mockContains(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
+	return strings.Contains(strings.ToLower(s), strings.ToLower(substr))
 }
 
 var _ outbound.PokemonRepository = (*PokemonRepository)(nil)
