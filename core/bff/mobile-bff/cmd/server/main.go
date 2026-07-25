@@ -80,6 +80,7 @@ func main() {
 
 	// Aplicar middleware
 	var handler http.Handler = mux
+	handler = httpadapter.SecureHeadersMiddleware(handler)
 	handler = httpadapter.CORSMiddleware(handler)
 	handler = httpadapter.AuthRateLimitMiddleware(handler)
 	handler = httpadapter.AuthMiddleware(authClient, handler)
