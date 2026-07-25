@@ -21,15 +21,12 @@ func main() {
 	if cfg.DatabaseURL != "" {
 		pool, err := repository.NewPool(ctx, cfg.DatabaseURL)
 		if err != nil {
-			log.Printf("falha ao conectar no postgres, usando fallback em memoria: %v", err)
-			pokemonRepo = repository.NewInMemoryPokemonRepository()
-		} else {
-			defer pool.Close()
-			pokemonRepo = repository.NewPostgresPokemonRepository(pool)
+			log.Fatalf("falha ao conectar no postgres: %v", err)
 		}
+		defer pool.Close()
+		pokemonRepo = repository.NewPostgresPokemonRepository(pool)
 	} else {
-		log.Println("DATABASE_URL ausente, usando fallback em memoria")
-		pokemonRepo = repository.NewInMemoryPokemonRepository()
+		log.Fatal("DATABASE_URL e obrigatoria para o catalog-service")
 	}
 
 	mux := apphttp.NewMux(pokemonRepo)
