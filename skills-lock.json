@@ -1,6 +1,18 @@
 {
   "version": 1,
   "skills": {
+    "blog-post": {
+      "source": "langchain-ai/deepagents",
+      "sourceType": "github",
+      "skillPath": "examples/content-builder-agent/skills/blog-post/SKILL.md",
+      "computedHash": "4a695b9be73d15798cf887a5c55732a8247e4926d2ce3d844c97ae57c44bb3f2"
+    },
+    "blog-writing-guide": {
+      "source": "getsentry/skills",
+      "sourceType": "github",
+      "skillPath": "skills/blog-writing-guide/SKILL.md",
+      "computedHash": "f885b9890d8a1c43e8ed0386e2ef2c17e941a403aa354513d6b844e99229ffb7"
+    },
     "golang-benchmark": {
       "source": "samber/cc-skills-golang",
       "sourceType": "github",
@@ -276,6 +288,12 @@
       "sourceType": "github",
       "skillPath": "skills/golang-uber-fx/SKILL.md",
       "computedHash": "4b77c609828aa3de034247b1c19d2ed2230be89015cc930dfe1ee0bfe2be1b48"
+    },
+    "teach": {
+      "source": "vinvcn/mattpocock-skills-zh-cn",
+      "sourceType": "github",
+      "skillPath": "skills/productivity/teach/SKILL.md",
+      "computedHash": "1da603b7e694c69015d7cd846d2703fd673340f5f12bc2d863af0ca549ad8934"
     }
   }
 }
