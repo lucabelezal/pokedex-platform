@@ -15,7 +15,7 @@ type Database struct {
 // NewDatabase cria uma nova conexão com o banco de dados.
 func NewDatabase(ctx context.Context, databaseURL string) (*Database, error) {
 	if databaseURL == "" {
-		databaseURL = "postgres://user:password@localhost:5432/pokedex"
+		return nil, nil
 	}
 
 	pool, err := pgxpool.New(ctx, databaseURL)
