@@ -115,14 +115,6 @@ func (r *PokemonCatalogServiceRepository) ListRegions(ctx context.Context) ([]do
 	return out, nil
 }
 
-func (r *PokemonCatalogServiceRepository) GetFavorites(ctx context.Context, userID string, page, pageSize int) ([]string, error) {
-	_ = ctx
-	_ = userID
-	_ = page
-	_ = pageSize
-	return []string{}, nil
-}
-
 func (r *PokemonCatalogServiceRepository) getJSON(ctx context.Context, endpoint string, out any) (int, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
 	if err != nil {

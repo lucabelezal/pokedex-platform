@@ -40,7 +40,16 @@ func NewUserRepository(db *pgxpool.Pool) *UserRepository {
 }
 
 func NewPool(ctx context.Context, databaseURL string) (*pgxpool.Pool, error) {
-	pool, err := pgxpool.New(ctx, databaseURL)
+	cfg, err := pgxpool.ParseConfig(databaseURL)
+	if err != nil {
+		return nil, err
+	}
+	cfg.MaxConns = 20
+	cfg.MinConns = 5
+	cfg.MaxConnLifetime = 30 * time.Minute
+	cfg.HealthCheckPeriod = 1 * time.Minute
+
+	pool, err := pgxpool.NewWithConfig(ctx, cfg)
 	if err != nil {
 		return nil, err
 	}

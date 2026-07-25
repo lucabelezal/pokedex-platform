@@ -153,10 +153,6 @@ func (m *PokemonRepository) GetByType(ctx context.Context, typeFilter string, pa
 	}, nil
 }
 
-func (m *PokemonRepository) GetFavorites(_ context.Context, _ string, _, _ int) ([]string, error) {
-	return []string{}, nil
-}
-
 func (m *PokemonRepository) ListTypes(_ context.Context) ([]domain.Type, error) {
 	return []domain.Type{
 		{Name: "Água", Color: "#6390F0"},

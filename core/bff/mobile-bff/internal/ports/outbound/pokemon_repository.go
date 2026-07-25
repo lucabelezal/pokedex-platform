@@ -15,5 +15,4 @@ type PokemonRepository interface {
 	GetByType(ctx context.Context, typeFilter string, page, pageSize int) (*domain.PokemonPage, error)
 	ListTypes(ctx context.Context) ([]domain.Type, error)
 	ListRegions(ctx context.Context) ([]domain.Region, error)
-	GetFavorites(ctx context.Context, userID string, page, pageSize int) ([]string, error)
 }

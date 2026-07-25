@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 
 	"pokedex-platform/core/app/pokemon-catalog-service/internal/domain"
 
@@ -677,7 +678,16 @@ func NewPool(ctx context.Context, databaseURL string) (*pgxpool.Pool, error) {
 		return nil, fmt.Errorf("database url vazio")
 	}
 
-	pool, err := pgxpool.New(ctx, databaseURL)
+	cfg, err := pgxpool.ParseConfig(databaseURL)
+	if err != nil {
+		return nil, err
+	}
+	cfg.MaxConns = 20
+	cfg.MinConns = 5
+	cfg.MaxConnLifetime = 30 * time.Minute
+	cfg.HealthCheckPeriod = 1 * time.Minute
+
+	pool, err := pgxpool.NewWithConfig(ctx, cfg)
 	if err != nil {
 		return nil, err
 	}
