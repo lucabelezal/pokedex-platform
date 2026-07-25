@@ -535,3 +535,22 @@ func RespondError(w http.ResponseWriter, status int, message string, code string
 	}
 	_ = json.NewEncoder(w).Encode(err)
 }
+
+// RespondDegraded envia resposta 503 indicando que o serviço está degradado.
+func RespondDegraded(w http.ResponseWriter, service string) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusServiceUnavailable)
+	err := dto.ErrorResponse{
+		Error:   "SERVICE_UNAVAILABLE",
+		Message: "servico de " + service + " temporariamente indisponivel",
+		Code:    http.StatusServiceUnavailable,
+	}
+	resp := struct {
+		dto.ErrorResponse
+		Degraded bool `json:"degraded"`
+	}{
+		ErrorResponse: err,
+		Degraded:      true,
+	}
+	_ = json.NewEncoder(w).Encode(resp)
+}

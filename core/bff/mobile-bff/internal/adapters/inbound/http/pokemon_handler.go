@@ -2,6 +2,7 @@ package httphandler
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"strings"
 	"time"
@@ -31,6 +32,10 @@ func (h *Handler) ListPokemons(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
+		if errors.Is(err, domain.ErrServiceUnavailable) {
+			RespondDegraded(w, "catalogo")
+			return
+		}
 		RespondError(w, http.StatusInternalServerError, "falha ao listar pokemons", "INTERNAL_ERROR")
 		return
 	}
@@ -57,6 +62,10 @@ func (h *Handler) SearchPokemons(w http.ResponseWriter, r *http.Request) {
 
 	pokemonPage, err := h.pokemonUseCase.SearchPokemons(ctx, query, page, pageSize, userID)
 	if err != nil {
+		if errors.Is(err, domain.ErrServiceUnavailable) {
+			RespondDegraded(w, "catalogo")
+			return
+		}
 		RespondError(w, http.StatusInternalServerError, "falha ao buscar pokemons", "INTERNAL_ERROR")
 		return
 	}
@@ -83,6 +92,10 @@ func (h *Handler) GetPokemonDetails(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if err == domain.ErrPokemonNotFound {
 			RespondError(w, http.StatusNotFound, "pokemon nao encontrado", "NOT_FOUND")
+			return
+		}
+		if errors.Is(err, domain.ErrServiceUnavailable) {
+			RespondDegraded(w, "catalogo")
 			return
 		}
 		RespondError(w, http.StatusInternalServerError, "falha ao obter detalhes do pokemon", "INTERNAL_ERROR")

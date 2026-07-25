@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -12,6 +13,8 @@ import (
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
+
+	"github.com/sony/gobreaker/v2"
 )
 
 // AuthServiceClient fornece cliente HTTP para comunicação com auth-service.
@@ -64,6 +67,17 @@ func NewAuthServiceClientWithHTTPClient(baseURL string, httpClient *CircuitBreak
 	}
 }
 
+func (c *AuthServiceClient) do(req *http.Request) (*http.Response, error) {
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		if errors.Is(err, gobreaker.ErrOpenState) {
+			return nil, fmt.Errorf("%w: auth-service", domain.ErrServiceUnavailable)
+		}
+		return nil, err
+	}
+	return resp, nil
+}
+
 // Signup chama o endpoint de signup do auth-service.
 func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) (*domain.AuthSession, error) {
 	if c.baseURL == "" {
@@ -81,7 +95,7 @@ func (c *AuthServiceClient) Signup(ctx context.Context, email, password string) 
 	}
 	httpReq.Header.Set("Content-Type", "application/json")
 
-	resp, err := c.httpClient.Do(httpReq)
+	resp, err := c.do(httpReq)
 	if err != nil {
 		return nil, domain.ErrAuthUnavailable
 	}
@@ -121,7 +135,7 @@ func (c *AuthServiceClient) Login(ctx context.Context, email, password string) (
 	}
 	httpReq.Header.Set("Content-Type", "application/json")
 
-	resp, err := c.httpClient.Do(httpReq)
+	resp, err := c.do(httpReq)
 	if err != nil {
 		return nil, domain.ErrAuthUnavailable
 	}
@@ -156,7 +170,7 @@ func (c *AuthServiceClient) Refresh(ctx context.Context, token string) (*domain.
 	}
 	httpReq.Header.Set("Authorization", "Bearer "+token)
 
-	resp, err := c.httpClient.Do(httpReq)
+	resp, err := c.do(httpReq)
 	if err != nil {
 		return nil, domain.ErrAuthUnavailable
 	}
@@ -191,7 +205,7 @@ func (c *AuthServiceClient) Logout(ctx context.Context, token string) error {
 	}
 	httpReq.Header.Set("Authorization", "Bearer "+token)
 
-	resp, err := c.httpClient.Do(httpReq)
+	resp, err := c.do(httpReq)
 	if err != nil {
 		return domain.ErrAuthUnavailable
 	}
@@ -256,7 +270,7 @@ func (c *AuthServiceClient) IsTokenActive(ctx context.Context, token string) (bo
 	}
 	req.Header.Set("Authorization", "Bearer "+token)
 
-	resp, err := c.httpClient.Do(req)
+	resp, err := c.do(req)
 	if err != nil {
 		return false, fmt.Errorf("auth introspect indisponivel: %w", err)
 	}

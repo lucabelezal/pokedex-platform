@@ -14,4 +14,5 @@ var (
 	ErrInvalidInput          = errors.New("dados invalidos")
 	ErrInvalidToken          = errors.New("token invalido")
 	ErrAuthUnavailable       = errors.New("auth service indisponivel")
+	ErrServiceUnavailable    = errors.New("servico temporariamente indisponivel")
 )

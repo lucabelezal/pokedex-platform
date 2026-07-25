@@ -3,6 +3,7 @@ package httpclient
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -11,6 +12,8 @@ import (
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
+
+	"github.com/sony/gobreaker/v2"
 )
 
 // PokemonCatalogServiceRepository é o cliente HTTP para o pokemon-catalog-service.
@@ -128,6 +131,9 @@ func (r *PokemonCatalogServiceRepository) getJSON(ctx context.Context, endpoint 
 
 	resp, err := r.client.Do(req)
 	if err != nil {
+		if errors.Is(err, gobreaker.ErrOpenState) {
+			return 0, fmt.Errorf("%w: pokemon-catalog-service", domain.ErrServiceUnavailable)
+		}
 		return 0, err
 	}
 	defer resp.Body.Close()
