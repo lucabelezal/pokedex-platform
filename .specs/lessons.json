@@ -3,6 +3,61 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 1,
-  "lessons": []
+  "next_id": 4,
+  "lessons": [
+    {
+      "id": "L-001",
+      "key": "ac_gap::pokemon catalog service precisa de testes unitarios com mock repository",
+      "text": "pokemon-catalog-service precisa de testes unitarios com mock repository",
+      "signal": "ac_gap",
+      "scope": "testing",
+      "status": "candidate",
+      "features": [
+        "production-readiness"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "PR-25 (testing)"
+      ],
+      "created": "2026-07-25T20:48:22Z",
+      "last_seen": "2026-07-25T20:48:22Z"
+    },
+    {
+      "id": "L-002",
+      "key": "ac_gap::auth service precisa de testes table driven para signup e login",
+      "text": "auth-service precisa de testes table-driven para Signup e Login",
+      "signal": "ac_gap",
+      "scope": "testing",
+      "status": "candidate",
+      "features": [
+        "production-readiness"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "PR-26 (testing)"
+      ],
+      "created": "2026-07-25T20:48:22Z",
+      "last_seen": "2026-07-25T20:48:22Z"
+    },
+    {
+      "id": "L-003",
+      "key": "spec_deviation::escritas de favoritos ainda via postgresfavoriterepository migra o requer endpoint rest no catalog service",
+      "text": "Escritas de favoritos ainda via PostgresFavoriteRepository. Migração requer endpoint REST no catalog-service.",
+      "signal": "spec_deviation",
+      "scope": "architecture",
+      "status": "candidate",
+      "features": [
+        "production-readiness"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "PR-11 (architecture)"
+      ],
+      "created": "2026-07-25T20:48:22Z",
+      "last_seen": "2026-07-25T20:48:22Z"
+    }
+  ]
 }

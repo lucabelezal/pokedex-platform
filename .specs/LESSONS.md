@@ -14,7 +14,23 @@ _none_
 
 Seen once or not yet corroborated. Tracked, not trusted.
 
-_none_
+### L-001 — pokemon-catalog-service precisa de testes unitarios com mock repository
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `testing` · harmful: 0
+- features: production-readiness
+- evidence: PR-25 (testing)
+- last seen: 2026-07-25T20:48:22Z
+
+### L-002 — auth-service precisa de testes table-driven para Signup e Login
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `testing` · harmful: 0
+- features: production-readiness
+- evidence: PR-26 (testing)
+- last seen: 2026-07-25T20:48:22Z
+
+### L-003 — Escritas de favoritos ainda via PostgresFavoriteRepository. Migração requer endpoint REST no catalog-service.
+- signal: `spec_deviation` · recurrence: 1 feature(s) · scope: `architecture` · harmful: 0
+- features: production-readiness
+- evidence: PR-11 (architecture)
+- last seen: 2026-07-25T20:48:22Z
 
 ## Quarantined (failed when applied — ignore)
 
