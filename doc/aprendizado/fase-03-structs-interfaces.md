@@ -181,6 +181,207 @@ func (p Pokemon) Descreve() string { return fmt.Sprintf("lvl %d", p.Level) }
 
 ---
 
+## Como ler código Go
+
+Antes de continuar para interfaces e erros, você precisa dominar uma skill
+fundamental: **ler e navegar código Go**. As perguntas mais comuns de quem
+está começando são exatamente sobre isso.
+
+Vamos dissecar uma função real, passo a passo:
+
+```go
+func (s *Service) LevelUp(ctx context.Context, id string) error {
+    p, err := s.repo.FindByID(ctx, id)
+    if err != nil {
+        return fmt.Errorf("level up: %w", err)
+    }
+    p.Level++
+    return s.repo.Save(ctx, p)
+}
+```
+
+### Passo 1 — Entenda o receiver: `func (s *Service)`
+
+`(s *Service)` é o **receiver** — o equivalente ao `self` do Swift. Toda função
+com receiver é um **método** que pertence a um tipo.
+
+```go
+// Função (sem receiver) — não pertence a tipo nenhum
+func LevelUp(p *Pokemon) { p.Level++ }
+
+// Método (com receiver) — pertence ao tipo *Service
+func (s *Service) LevelUp(ctx context.Context, id string) error { ... }
+//   ^^^^^^^^^^^ receiver
+//   s é uma variável local que referencia a instância de Service
+//   *Service significa que o método recebe um ponteiro (pode modificar)
+```
+
+Dentro do método, `s` é como o `self` de Swift — você acessa campos e outros
+métodos através dele: `s.repo`, `s.cache`, `s.OutroMetodo()`.
+
+**Por que `s`?** Convenção Go: receiver com 1-2 letras — a primeira do tipo.
+`Service` → `s`, `Client` → `c`, `Handler` → `h`. **Nunca** `this` ou `self`.
+
+### Passo 2 — Descubra o que é `s.repo`
+
+`s.repo` é um **campo** da struct `Service`. Para saber o tipo dele, vá até a
+definição da struct:
+
+```go
+type Service struct {
+    repo PokemonRepository   // ← aqui! repo é do tipo PokemonRepository
+}
+
+// PokemonRepository é uma interface
+type PokemonRepository interface {
+    FindByID(ctx context.Context, id string) (*Pokemon, error)
+    Save(ctx context.Context, p *Pokemon) error
+}
+```
+
+`PokemonRepository` é uma **interface** — um contrato. `Service` não sabe se
+o repository real é PostgreSQL, HTTP ou memória. Sabe apenas que ele tem os
+métodos `FindByID` e `Save`.
+
+### Passo 3 — Leia a assinatura para saber o que retorna
+
+```go
+FindByID(ctx context.Context, id string) (*Pokemon, error)
+//        ─────── parâmetros ──────    ──── retornos ────
+//                                     *Pokemon = um Pokémon ou nil
+//                                     error    = erro ou nil
+```
+
+O padrão Go: **se pode falhar, retorna `(resultado, error)`**.
+
+| Situação | `p` | `err` | Significado |
+|----------|-----|-------|-------------|
+| Sucesso | Pokémon válido | `nil` | Deu certo, use `p` |
+| Falha | `nil` | não-nil | Deu errado, trate `err` |
+
+**Regra:** se `err != nil`, o primeiro valor **não é confiável**. Trate o erro
+e não use o valor.
+
+### Passo 4 — Entenda o fluxo da função
+
+Agora lemos a função linha a linha, no fluxo real de execução:
+
+```go
+func (s *Service) LevelUp(ctx context.Context, id string) error {
+    // LINHA 1: chama o repository. Pattern: resultado, erro := chamada()
+    p, err := s.repo.FindByID(ctx, id)
+
+    // LINHA 2: indent error flow — trate o erro PRIMEIRO
+    if err != nil {
+        // LINHA 3: wrap do erro com contexto adicional
+        // %w preserva o erro original para errors.Is/errors.As
+        return fmt.Errorf("level up: %w", err)
+    }
+
+    // LINHA 4: happy path — se chegou aqui, p é válido
+    p.Level++
+
+    // LINHA 5: Save também retorna error.
+    // Como LevelUp retorna error, podemos retornar o resultado direto.
+    return s.repo.Save(ctx, p)
+}
+```
+
+Fluxo visual:
+
+```
+FindByID(ctx, id)
+    │
+    ├── err != nil? ──→ return err (wrap)
+    │
+    └── sucesso: p.Level++
+                      │
+                      └── return Save(ctx, p)
+                               │
+                               ├── err != nil? ──→ return err
+                               └── nil ──→ return nil
+```
+
+### Passo 5 — Por que `ctx context.Context` sempre primeiro?
+
+Context é o **primeiro parâmetro** de toda função que faz I/O (banco, HTTP,
+arquivos). É **convenção da linguagem** — você encontra isso em TODO código Go.
+
+```go
+func (s *Service) LevelUp(ctx context.Context, id string) error {
+//                          ^^^ sempre primeiro, sempre chamado ctx
+```
+
+Context carrega três coisas:
+- **Deadline/timeout** — "esta operação tem 5 segundos"
+- **Cancelamento** — "usuário fechou a aba, cancela tudo"
+- **Valores** — tracing ID, user ID (use com moderação)
+
+Sem context, você não tem timeout nem cancelamento. Toda operação de I/O
+deve recebê-lo e propagá-lo.
+
+### Passo 6 — Por que `return s.repo.Save(ctx, p)` funciona direto?
+
+Porque os tipos batem:
+
+```go
+func (s *Service) LevelUp(...) error {  // retorna error
+    // ...
+    return s.repo.Save(ctx, p)          // Save retorna error também
+}
+```
+
+`Save` retorna `error`. `LevelUp` retorna `error`. Você pode retornar o
+resultado de `Save` diretamente — é idiomático e limpo.
+
+Se `LevelUp` retornasse `(int, error)` e `Save` retornasse `error`, você
+precisaria tratar:
+
+```go
+func (s *Service) LevelUp(...) (int, error) {
+    // ...
+    if err := s.repo.Save(ctx, p); err != nil {
+        return 0, fmt.Errorf("save: %w", err)
+    }
+    return p.Level, nil
+}
+```
+
+### Resumo: como ler qualquer função Go
+
+```
+1. Olhe o receiver   → que tipo é? (s *Service → struct Service)
+2. Olhe os parâmetros → o que entra? (ctx, id)
+3. Olhe o retorno     → o que sai? (error)
+4. Siga o fluxo       → erro primeiro, happy path depois
+5. Para cada chamada  → vá na definição da interface, leia a assinatura
+```
+
+Exemplo prático de navegação no projeto real:
+
+```
+Handler → chama svc.GetByID(ctx, id)
+           │
+           └─ vá para ports/inbound/pokemon_usecase.go
+              │  type PokemonUseCase interface {
+              │      GetByID(ctx context.Context, id string) (*PokemonDetail, error)
+              │  }
+              │
+              └─ implementação em service/pokemon_service.go
+                 │  func (s *PokemonService) GetByID(...)
+                 │      s.repo.GetByID(ctx, id)
+                 │      └─ vá para ports/outbound/pokemon_repository.go
+                 │         type PokemonRepository interface {
+                 │             GetByID(ctx context.Context, id string) (*Pokemon, error)
+                 │         }
+                 │
+                 └─ implementações concretas em adapters/outbound/
+                    ├── postgres/pokemon_repository.go
+                    └── http/pokemon_catalog_client.go
+```
+
+---
+
 ## Embedding (Composição)
 
 Go não tem herança. O mecanismo de reuso é **embedding** (composição):
