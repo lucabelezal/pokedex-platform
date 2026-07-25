@@ -10,13 +10,26 @@ import (
 
 	"pokedex-platform/core/app/auth-service/internal/config"
 	authhttp "pokedex-platform/core/app/auth-service/internal/http"
+	"pokedex-platform/core/app/auth-service/internal/observability"
 	"pokedex-platform/core/app/auth-service/internal/repository"
 	"pokedex-platform/core/app/auth-service/internal/service"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
 	setupLogger()
 	cfg := config.Load()
+
+	tp, err := observability.InitTracer(context.Background(), "auth-service", os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT"))
+	if err != nil {
+		slog.Warn("falha ao inicializar tracing", "error", err)
+	}
+	defer func() {
+		if tp != nil {
+			_ = observability.ShutdownTracer(context.Background(), tp)
+		}
+	}()
 	if strings.TrimSpace(cfg.DatabaseURL) == "" {
 		slog.Error("DATABASE_URL nao configurada")
 		os.Exit(1)
@@ -43,9 +56,17 @@ func main() {
 
 	mux := authhttp.NewMux(authService)
 	mux.HandleFunc("GET /ready", authhttp.ReadyHandler(pool))
+	mux.HandleFunc("GET /metrics", func(w http.ResponseWriter, r *http.Request) {
+		promhttp.Handler().ServeHTTP(w, r)
+	})
+
+	var handler http.Handler = mux
+	handler = observability.TracingMiddleware("auth-service")(handler)
+	handler = observability.MetricsMiddleware(handler)
+
 	srv := &http.Server{
 		Addr:              ":" + cfg.Port,
-		Handler:           mux,
+		Handler:           handler,
 		ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,

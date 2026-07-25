@@ -14,14 +14,29 @@ import (
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/postgres"
 	"pokedex-platform/core/bff/mobile-bff/internal/config"
 	applogger "pokedex-platform/core/bff/mobile-bff/internal/infrastructure/logger"
+	"pokedex-platform/core/bff/mobile-bff/internal/infrastructure/observability"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
 	applogger.Setup("mobile-bff")
 
 	cfg := config.LoadConfig()
+
+	tp, err := observability.InitTracer(context.Background(), "mobile-bff", os.Getenv("OTEL_EXPORTER_OTLP_ENDPOINT"))
+	if err != nil {
+		slog.Warn("falha ao inicializar tracing", "error", err)
+	}
+	defer func() {
+		if tp != nil {
+			if err := observability.ShutdownTracer(context.Background(), tp); err != nil {
+				slog.Error("falha ao finalizar tracing", "error", err)
+			}
+		}
+	}()
 
 	// Inicializar repositórios com fallback para mocks
 	var pokemonRepo outbound.PokemonRepository
@@ -78,9 +93,16 @@ func main() {
 	h := httpadapter.NewHandler(pokemonService, favoriteService, authService)
 	h.RegisterRoutes(mux)
 
+	mux.HandleFunc("GET /health", h.Health)
+	mux.HandleFunc("GET /metrics", func(w http.ResponseWriter, r *http.Request) {
+		promhttp.Handler().ServeHTTP(w, r)
+	})
+
 	// Aplicar middleware
 	var handler http.Handler = mux
 	handler = httpadapter.SecureHeadersMiddleware(handler)
+	handler = observability.TracingMiddleware("mobile-bff")(handler)
+	handler = observability.MetricsMiddleware(handler)
 	handler = httpadapter.CORSMiddleware(handler)
 	handler = httpadapter.AuthRateLimitMiddleware(handler)
 	handler = httpadapter.AuthMiddleware(authClient, handler)
