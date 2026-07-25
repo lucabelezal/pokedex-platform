@@ -6,7 +6,7 @@ Você é desenvolvedor iOS com experiência em Swift e quer aprender Go para atu
 Este roteiro foi desenhado para você: cada conceito é explicado do zero, com exemplos funcionais,
 e fazendo pontes com Swift sempre que isso acelera o entendimento.
 
-Ao final das 5 fases você terá autonomia para ler, escrever e contribuir com código Go idiomático
+Ao final das 6 fases você terá autonomia para ler, escrever e contribuir com código Go idiomático
 — o mesmo padrão usado no mobile-bff e nos demais serviços da Pokedex Platform.
 
 ## Como usar
@@ -30,7 +30,8 @@ Leia na ordem. Execute os exemplos no seu terminal. Faça os exercícios.
 | 02 | [fase-02-controle-colecoes.md](fase-02-controle-colecoes.md) | `if`/`else`, `for`, `switch`, `defer`, arrays, slices, maps, strings | Você manipula coleções e controla fluxo com idiomática Go |
 | 03 | [fase-03-structs-interfaces.md](fase-03-structs-interfaces.md) | Structs, métodos, embedding, interfaces, generics, erros, JSON, pacotes | Você modela domínios com structs e interfaces; trata erros corretamente |
 | 04 | [fase-04-concorrencia.md](fase-04-concorrencia.md) | Goroutines, channels, `select`, `sync`, `context` | Você escreve código concorrente seguro e com cancelamento |
-| 05 | [fase-05-testes-web.md](fase-05-testes-web.md) | Testes, `net/http`, `database/sql`, toolchain, deploy | Você testa, serve HTTP, acessa banco e compila para produção |
+| 05 | [fase-05-testes-web.md](fase-05-testes-web.md) | Testes, `net/http`, `database/sql`, toolchain, graceful shutdown | Você testa, serve HTTP, acessa banco e compila para produção |
+| 06 | [fase-06-biblioteca-padrao.md](fase-06-biblioteca-padrao.md) | `time`, arquivos, `flag`, `slog`, `sort`, `panic`/`recover`, URL, Base64, templates, rate limiting | Você domina os pacotes utilitários do dia a dia backend |
 
 ## Pontes Swift → Go
 
@@ -65,3 +66,4 @@ Alguns conceitos são mais fáceis de entender quando você conhece o equivalent
 | 03 — Structs & Interfaces | ⬜ Pendente | |
 | 04 — Concorrência | ⬜ Pendente | |
 | 05 — Testes & Web | ⬜ Pendente | |
+| 06 — Biblioteca Padrão | ⬜ Pendente | |
