@@ -745,6 +745,208 @@ for HTML (protege contra XSS automaticamente).
 
 ---
 
+## SHA256 Hashes
+
+Hashing é essencial em backends: senhas, tokens, verificação de integridade, cache keys.
+
+```go
+package main
+
+import (
+    "crypto/sha256"
+    "fmt"
+)
+
+func main() {
+    texto := "Pikachu usa Choque do Trovão!"
+
+    hash := sha256.Sum256([]byte(texto))
+    fmt.Printf("Hash (raw):  %x\n", hash)   // hexadecimal
+    fmt.Printf("Hash (hex):  %s\n", fmt.Sprintf("%x", hash))
+    fmt.Printf("Hash (b64):  %s\n", base64Hash(hash))
+}
+```
+
+**Atenção:** `sha256.Sum256` retorna um array `[32]byte`, não um slice. Use `hash[:]`
+se precisar passar para funções que aceitam `[]byte`.
+
+### HMAC — Hash com chave secreta
+
+Para autenticação de mensagens (ex: assinar tokens, verificar webhooks):
+
+```go
+package main
+
+import (
+    "crypto/hmac"
+    "crypto/sha256"
+    "encoding/hex"
+    "fmt"
+)
+
+func main() {
+    mensagem := "pokemon_id=25&acao=capturar"
+    chaveSecreta := []byte("super-secret-key")
+
+    mac := hmac.New(sha256.New, chaveSecreta)
+    mac.Write([]byte(mensagem))
+    assinatura := hex.EncodeToString(mac.Sum(nil))
+
+    fmt.Println("Assinatura HMAC-SHA256:", assinatura)
+
+    // verificação (em outra ponta, com a mesma chave)
+    mac2 := hmac.New(sha256.New, chaveSecreta)
+    mac2.Write([]byte(mensagem))
+    assinaturaEsperada := hex.EncodeToString(mac2.Sum(nil))
+
+    if hmac.Equal(mac.Sum(nil), mac2.Sum(nil)) {
+        fmt.Println("Assinatura válida")
+    } else {
+        fmt.Println("Assinatura inválida")
+    }
+}
+```
+
+**Atenção:** Sempre use `hmac.Equal` para comparar HMACs — ele faz comparação
+em tempo constante, resistente a timing attacks. **Nunca** use `==` para comparar
+hashes ou assinaturas.
+
+### Senhas — bcrypt
+
+Para senhas de usuários, use bcrypt (não SHA256 puro — é rápido demais e vulnerável a brute force):
+
+```go
+package main
+
+import (
+    "fmt"
+    "golang.org/x/crypto/bcrypt"
+)
+
+func main() {
+    senha := "treinador123"
+
+    // hash — cost é o fator de trabalho (quanto maior, mais lento)
+    hash, err := bcrypt.GenerateFromPassword([]byte(senha), bcrypt.DefaultCost)
+    if err != nil {
+        fmt.Println("Erro:", err)
+        return
+    }
+    fmt.Println("Hash bcrypt:", string(hash))
+
+    // verificação
+    err = bcrypt.CompareHashAndPassword(hash, []byte("treinador123"))
+    fmt.Println("Senha correta:", err == nil)  // true
+
+    err = bcrypt.CompareHashAndPassword(hash, []byte("senha-errada"))
+    fmt.Println("Senha incorreta:", err == nil) // false
+}
+```
+
+### Swift vs Go — hashing
+
+```swift
+// Swift — CryptoKit (iOS 13+)
+import CryptoKit
+let hash = SHA256.hash(data: "Pikachu".data(using: .utf8)!)
+print(hash.compactMap { String(format: "%02x", $0) }.joined())
+```
+
+```go
+// Go — crypto/sha256
+hash := sha256.Sum256([]byte("Pikachu"))
+fmt.Printf("%x\n", hash)
+```
+
+---
+
+## Expressões Regulares — `regexp`
+
+Validação de inputs, parsing de logs, extração de padrões. Tudo com o pacote `regexp`.
+
+```go
+package main
+
+import (
+    "fmt"
+    "regexp"
+)
+
+func main() {
+    texto := "Pikachu (lvl 25) capturado por Ash em Pallet Town"
+
+    // MustCompile — compila em tempo de inicialização (panic se inválida)
+    re := regexp.MustCompile(`\(lvl (\d+)\)`)
+
+    // FindString — primeira ocorrência
+    fmt.Println("FindString:", re.FindString(texto))  // "(lvl 25)"
+
+    // FindStringSubmatch — grupos de captura
+    matches := re.FindStringSubmatch(texto)
+    fmt.Println("Match completo:", matches[0])         // "(lvl 25)"
+    fmt.Println("Grupo 1 (nível):", matches[1])        // "25"
+
+    // FindAllString — todas as ocorrências
+    re2 := regexp.MustCompile(`[A-Z]\w+`)
+    nomes := re2.FindAllString(texto, -1)              // -1 = todas
+    fmt.Println("Nomes:", nomes)                        // [Pikachu Ash Pallet Town]
+
+    // ReplaceAllString — substituição
+    censurado := regexp.MustCompile(`\d+`).ReplaceAllString(texto, "**")
+    fmt.Println("Censurado:", censurado)                // "Pikachu (lvl **) ..."
+
+    // MatchString — verifica se casa
+    isEmail := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+    fmt.Println("Email válido:", isEmail.MatchString("ash@pallet.com"))  // true
+    fmt.Println("Email inválido:", isEmail.MatchString("nao-e-email"))   // false
+}
+```
+
+### Funções mais usadas
+
+| Método | Retorna | Exemplo |
+|--------|---------|---------|
+| `FindString(s)` | Primeira ocorrência | `"(lvl 25)"` |
+| `FindStringSubmatch(s)` | Grupos de captura `[]string` | `["(lvl 25)", "25"]` |
+| `FindAllString(s, n)` | Até `n` ocorrências (`-1` = todas) | `["Pikachu", "Ash", ...]` |
+| `MatchString(s)` | `bool` | `true` |
+| `ReplaceAllString(s, repl)` | String com substituições | `"Pikachu ..."` |
+| `Split(s, n)` | `[]string` split pela regex | `["a", "b", "c"]` |
+
+### Compilação: `MustCompile` vs `Compile`
+
+```go
+// MustCompile — panic se a regex for inválida (use em var globais)
+var reNome = regexp.MustCompile(`^[A-Z][a-z]+$`)
+
+// Compile — retorna error se a regex for inválida (use em funções)
+re, err := regexp.Compile(padraoDoUsuario)
+if err != nil {
+    return fmt.Errorf("regex inválida: %w", err)
+}
+```
+
+**Atenção:** `MustCompile` faz sentido para regexes constantes, declaradas no
+nível do pacote. Se o padrão vem de input do usuário ou configuração, use `Compile`.
+
+### Swift vs Go — regex
+
+```swift
+// Swift — NSRegularExpression (verbose)
+let pattern = #"\(lvl (\d+)\)"#
+let regex = try! NSRegularExpression(pattern: pattern)
+let range = NSRange(texto.startIndex..., in: texto)
+let match = regex.firstMatch(in: texto, range: range)
+```
+
+```go
+// Go — regexp (conciso)
+re := regexp.MustCompile(`\(lvl (\d+)\)`)
+matches := re.FindStringSubmatch(texto)
+```
+
+---
+
 ## Rate Limiting básico
 
 Implementação simples com `ticker`:

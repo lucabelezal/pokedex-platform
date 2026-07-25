@@ -31,7 +31,7 @@ Leia na ordem. Execute os exemplos no seu terminal. Faça os exercícios.
 | 03 | [fase-03-structs-interfaces.md](fase-03-structs-interfaces.md) | Structs, métodos, embedding, interfaces, generics, erros, JSON, pacotes | Você modela domínios com structs e interfaces; trata erros corretamente |
 | 04 | [fase-04-concorrencia.md](fase-04-concorrencia.md) | Goroutines, channels, `select`, `sync`, `context` | Você escreve código concorrente seguro e com cancelamento |
 | 05 | [fase-05-testes-web.md](fase-05-testes-web.md) | Testes, `net/http`, `database/sql`, toolchain, graceful shutdown | Você testa, serve HTTP, acessa banco e compila para produção |
-| 06 | [fase-06-biblioteca-padrao.md](fase-06-biblioteca-padrao.md) | `time`, arquivos, `flag`, `slog`, `sort`, `panic`/`recover`, URL, Base64, templates, rate limiting | Você domina os pacotes utilitários do dia a dia backend |
+| 06 | [fase-06-biblioteca-padrao.md](fase-06-biblioteca-padrao.md) | `time`, arquivos, `flag`, `slog`, `sort`, `panic`/`recover`, SHA256/HMAC, regexp, URL, Base64, templates, rate limiting | Você domina os pacotes utilitários do dia a dia backend |
 
 ## Pontes Swift → Go
 
