@@ -17,6 +17,7 @@ import (
 	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/redis/go-redis/v9"
 )
 
 type contextKey string
@@ -107,7 +108,21 @@ func RequestLoggerMiddleware(next http.Handler) http.Handler {
 
 // AuthRateLimitMiddleware limita tentativas por IP nas rotas públicas de autenticação.
 func AuthRateLimitMiddleware(next http.Handler) http.Handler {
-	limiter := newAuthRateLimiter(getAuthRateLimitRequests(), getAuthRateLimitWindow())
+	var limiter rateLimiter
+
+	if redisURL := os.Getenv("REDIS_URL"); redisURL != "" {
+		opts, err := redis.ParseURL(redisURL)
+		if err != nil {
+			slog.Warn("REDIS_URL invalida, usando rate limit in-memory")
+		} else {
+			client := redis.NewClient(opts)
+			limiter = newRedisRateLimiter(client, getAuthRateLimitRequests(), getAuthRateLimitWindow())
+		}
+	}
+
+	if limiter == nil {
+		limiter = newInMemoryRateLimiter(getAuthRateLimitRequests(), getAuthRateLimitWindow())
+	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !isAuthRateLimitedPath(r.URL.Path) {
@@ -116,7 +131,7 @@ func AuthRateLimitMiddleware(next http.Handler) http.Handler {
 		}
 
 		clientID := clientIdentifier(r)
-		if !limiter.Allow(clientID) {
+		if !limiter.Allow(r.Context(), clientID) {
 			slog.Warn("auth_audit", "action", "rate_limit", "outcome", "blocked", "client_ip", clientID, "path", r.URL.Path)
 			RespondError(w, http.StatusTooManyRequests, "muitas tentativas, tente novamente em instantes", "TOO_MANY_REQUESTS")
 			return
