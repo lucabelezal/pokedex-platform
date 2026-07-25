@@ -3,22 +3,31 @@ package service
 import (
 	"context"
 
+	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
+// FavoriteCatalogProvider abstrai a busca de detalhes de Pokémon favoritos.
+type FavoriteCatalogProvider interface {
+	GetFavoriteDetails(ctx context.Context, ids []string) ([]domain.Pokemon, error)
+}
+
 type FavoriteService struct {
-	favoriteRepo outbound.FavoriteRepository
-	pokemonRepo  outbound.PokemonRepository
+	favoriteRepo     outbound.FavoriteRepository
+	pokemonRepo      outbound.PokemonRepository
+	favoriteCatalog  FavoriteCatalogProvider
 }
 
 func NewFavoriteService(
 	favoriteRepo outbound.FavoriteRepository,
 	pokemonRepo outbound.PokemonRepository,
+	favoriteCatalog FavoriteCatalogProvider,
 ) *FavoriteService {
 	return &FavoriteService{
-		favoriteRepo: favoriteRepo,
-		pokemonRepo:  pokemonRepo,
+		favoriteRepo:    favoriteRepo,
+		pokemonRepo:     pokemonRepo,
+		favoriteCatalog: favoriteCatalog,
 	}
 }
 
@@ -36,6 +45,13 @@ func (s *FavoriteService) RemoveFavorite(ctx context.Context, userID, pokemonID 
 
 func (s *FavoriteService) GetUserFavorites(ctx context.Context, userID string) ([]string, error) {
 	return s.favoriteRepo.GetUserFavorites(ctx, userID)
+}
+
+func (s *FavoriteService) GetFavoriteDetails(ctx context.Context, ids []string) ([]domain.Pokemon, error) {
+	if s.favoriteCatalog == nil {
+		return []domain.Pokemon{}, nil
+	}
+	return s.favoriteCatalog.GetFavoriteDetails(ctx, ids)
 }
 
 var _ inbound.FavoriteUseCase = (*FavoriteService)(nil)

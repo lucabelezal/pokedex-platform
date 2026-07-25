@@ -87,21 +87,26 @@ func (h *Handler) GetUserFavorites(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	items := make([]domain.Pokemon, 0, len(favorites))
 	favoriteSet := make(map[string]struct{}, len(favorites))
-	for _, favoriteID := range favorites {
-		favoriteSet[normalizePokemonID(favoriteID)] = struct{}{}
-		pokemon, err := h.pokemonUseCase.GetPokemonScreenDetails(ctx, favoriteID, userID)
-		if err != nil {
-			continue
-		}
+	for _, favID := range favorites {
+		favoriteSet[normalizePokemonID(favID)] = struct{}{}
+	}
+
+	details, err := h.favoriteUseCase.GetFavoriteDetails(ctx, favorites)
+	if err != nil {
+		RespondError(w, http.StatusInternalServerError, "falha ao obter detalhes dos favoritos", "INTERNAL_ERROR")
+		return
+	}
+
+	items := make([]domain.Pokemon, 0, len(details))
+	for i := range details {
 		items = append(items, domain.Pokemon{
-			ID:           pokemon.ID,
-			Name:         pokemon.Name,
-			Number:       pokemon.Number,
-			Types:        mapScreenTypesToNames(pokemon.Types),
-			ImageURL:     pokemon.ImageURL,
-			ElementColor: pokemon.ElementColor,
+			ID:           details[i].ID,
+			Name:         details[i].Name,
+			Number:       details[i].Number,
+			Types:        details[i].Types,
+			ImageURL:     details[i].ImageURL,
+			ElementColor: details[i].ElementColor,
 		})
 	}
 

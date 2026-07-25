@@ -44,7 +44,7 @@ func TestE2EFavoritosNoServico(t *testing.T) {
 	pokemonRepo := repository.NewPostgresPokemonRepository(db.Pool)
 	favoriteRepo := repository.NewPostgresFavoriteRepository(db.Pool)
 	pokemonService := service.NewPokemonService(pokemonRepo, favoriteRepo)
-	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

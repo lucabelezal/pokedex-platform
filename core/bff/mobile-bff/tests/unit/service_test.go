@@ -138,7 +138,7 @@ func TestPokemonServiceSearchPokemons(t *testing.T) {
 func TestFavoriteServiceAddFavorite(t *testing.T) {
 	pokemonRepo := mocks.NewMockPokemonRepository()
 	favoriteRepo := mocks.NewMockFavoriteRepository()
-	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
 	tests := []struct {
 		name      string
@@ -181,7 +181,7 @@ func TestFavoriteServiceAddFavorite(t *testing.T) {
 func TestFavoriteServiceRemoveFavorite(t *testing.T) {
 	pokemonRepo := mocks.NewMockPokemonRepository()
 	favoriteRepo := mocks.NewMockFavoriteRepository()
-	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
 	ctx := context.Background()
 	userID := "user123"
@@ -201,7 +201,7 @@ func TestFavoriteServiceRemoveFavorite(t *testing.T) {
 func TestFavoriteServiceGetUserFavorites(t *testing.T) {
 	pokemonRepo := mocks.NewMockPokemonRepository()
 	favoriteRepo := mocks.NewMockFavoriteRepository()
-	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
 	ctx := context.Background()
 	userID := "user123"

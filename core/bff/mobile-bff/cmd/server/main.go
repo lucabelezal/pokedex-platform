@@ -67,7 +67,7 @@ func main() {
 
 	// Configurar serviços
 	pokemonService := service.NewPokemonService(pokemonRepo, favoriteRepo)
-	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo)
+	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo, httpclient.NewFavoriteCatalogClient(cfg.PokemonCatalogServiceURL))
 
 	// Configurar cliente de auth-service
 	authClient := httpclient.NewAuthServiceClient(cfg.AuthServiceURL)
