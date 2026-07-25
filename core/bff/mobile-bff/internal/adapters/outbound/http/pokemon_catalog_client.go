@@ -16,17 +16,19 @@ import (
 // PokemonCatalogServiceRepository é o cliente HTTP para o pokemon-catalog-service.
 type PokemonCatalogServiceRepository struct {
 	baseURL string
-	client  *http.Client
+	client  *CircuitBreakerClient
 }
 
 // NewPokemonCatalogServiceRepository cria um novo cliente do pokemon-catalog-service.
 func NewPokemonCatalogServiceRepository(baseURL string) *PokemonCatalogServiceRepository {
 	trimmed := strings.TrimRight(strings.TrimSpace(baseURL), "/")
+	cfg := DefaultCircuitBreakerConfig("pokemon-catalog-service")
+	cfg.RetryBackoff = []time.Duration{1 * time.Second, 3 * time.Second, 10 * time.Second}
 	return &PokemonCatalogServiceRepository{
 		baseURL: trimmed,
-		client: &http.Client{
+		client: NewCircuitBreakerClient(&http.Client{
 			Timeout: 5 * time.Second,
-		},
+		}, cfg),
 	}
 }
 

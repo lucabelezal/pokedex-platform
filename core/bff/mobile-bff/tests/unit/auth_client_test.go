@@ -20,9 +20,12 @@ func (f roundTripFunc) RoundTrip(r *http.Request) (*http.Response, error) {
 }
 
 func newTestAuthClient(fn roundTripFunc) *httpclient.AuthServiceClient {
-	return httpclient.NewAuthServiceClientWithHTTPClient("http://auth-service.test", &http.Client{
+	cfg := httpclient.DefaultCircuitBreakerConfig("auth-service-test")
+	cfg.RetryMax = 0
+	cb := httpclient.NewCircuitBreakerClient(&http.Client{
 		Transport: fn,
-	})
+	}, cfg)
+	return httpclient.NewAuthServiceClientWithHTTPClient("http://auth-service.test", cb)
 }
 
 func jsonResponse(status int, body string) *http.Response {

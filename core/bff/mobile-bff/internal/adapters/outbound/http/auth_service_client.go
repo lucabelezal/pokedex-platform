@@ -17,7 +17,7 @@ import (
 // AuthServiceClient fornece cliente HTTP para comunicação com auth-service.
 type AuthServiceClient struct {
 	baseURL    string
-	httpClient *http.Client
+	httpClient *CircuitBreakerClient
 }
 
 type signupRequest struct {
@@ -41,15 +41,22 @@ type authResponse struct {
 
 // NewAuthServiceClient cria um novo cliente de auth-service.
 func NewAuthServiceClient(baseURL string) *AuthServiceClient {
-	return NewAuthServiceClientWithHTTPClient(baseURL, &http.Client{
-		Timeout: 10 * time.Second,
-	})
+	cfg := DefaultCircuitBreakerConfig("auth-service")
+	return &AuthServiceClient{
+		baseURL: baseURL,
+		httpClient: NewCircuitBreakerClient(&http.Client{
+			Timeout: 10 * time.Second,
+		}, cfg),
+	}
 }
 
 // NewAuthServiceClientWithHTTPClient cria um cliente com HTTP client injetado.
-func NewAuthServiceClientWithHTTPClient(baseURL string, httpClient *http.Client) *AuthServiceClient {
+func NewAuthServiceClientWithHTTPClient(baseURL string, httpClient *CircuitBreakerClient) *AuthServiceClient {
 	if httpClient == nil {
-		httpClient = &http.Client{Timeout: 10 * time.Second}
+		cfg := DefaultCircuitBreakerConfig("auth-service")
+		httpClient = NewCircuitBreakerClient(&http.Client{
+			Timeout: 10 * time.Second,
+		}, cfg)
 	}
 	return &AuthServiceClient{
 		baseURL:    baseURL,
