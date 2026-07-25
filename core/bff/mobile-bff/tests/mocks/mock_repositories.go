@@ -254,20 +254,7 @@ func convertMockTypes(types []string) []domain.Type {
 }
 
 func mockTypeColor(name string) string {
-	switch name {
-	case "Grass", "Grama":
-		return "#7AC74C"
-	case "Poison", "Venenoso":
-		return "#A33EA1"
-	case "Fire", "Fogo":
-		return "#EE8130"
-	case "Electric", "Elétrico":
-		return "#F7D02C"
-	case "Water", "Água":
-		return "#6390F0"
-	default:
-		return "#A9AC86"
-	}
+	return domain.TypeColor(name)
 }
 
 func mockContains(s, substr string) bool {

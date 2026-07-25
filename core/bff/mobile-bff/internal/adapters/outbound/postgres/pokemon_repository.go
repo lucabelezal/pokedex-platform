@@ -404,46 +404,7 @@ func postgresDomainTypes(names []string) []domain.Type {
 }
 
 func postgresTypeColor(name string) string {
-	switch name {
-	case "Normal":
-		return "#A8A77A"
-	case "Fogo":
-		return "#EE8130"
-	case "Água":
-		return "#6390F0"
-	case "Elétrico":
-		return "#F7D02C"
-	case "Grama":
-		return "#7AC74C"
-	case "Gelo":
-		return "#96D9D6"
-	case "Lutador":
-		return "#C22E28"
-	case "Venenoso":
-		return "#A33EA1"
-	case "Terrestre":
-		return "#E2BF65"
-	case "Voador":
-		return "#A98FF3"
-	case "Psíquico":
-		return "#F95587"
-	case "Inseto":
-		return "#A6B91A"
-	case "Pedra":
-		return "#B6A136"
-	case "Fantasma":
-		return "#735797"
-	case "Dragão":
-		return "#6F35FC"
-	case "Sombrio", "Noturno":
-		return "#705746"
-	case "Aço", "Metal":
-		return "#B7B7CE"
-	case "Fada":
-		return "#D685AD"
-	default:
-		return "#A9AC86"
-	}
+	return domain.TypeColor(name)
 }
 
 var _ outbound.PokemonRepository = (*PostgresPokemonRepository)(nil)

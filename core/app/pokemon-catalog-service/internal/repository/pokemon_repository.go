@@ -1046,31 +1046,5 @@ var pokemonDescriptionOverrides = map[string]string{
 }
 
 func typeColor(typeName string) string {
-	colors := map[string]string{
-		"Normal":    "#A8A77A",
-		"Fogo":      "#EE8130",
-		"Água":      "#6390F0",
-		"Elétrico":  "#F7D02C",
-		"Grama":     "#7AC74C",
-		"Gelo":      "#96D9D6",
-		"Lutador":   "#C22E28",
-		"Venenoso":  "#A33EA1",
-		"Terrestre": "#E2BF65",
-		"Voador":    "#A98FF3",
-		"Psíquico":  "#F95587",
-		"Inseto":    "#A6B91A",
-		"Pedra":     "#B6A136",
-		"Fantasma":  "#735797",
-		"Dragão":    "#6F35FC",
-		"Noturno":   "#705746",
-		"Sombrio":   "#705746",
-		"Metal":     "#B7B7CE",
-		"Aço":       "#B7B7CE",
-		"Fada":      "#D685AD",
-	}
-
-	if color, ok := colors[typeName]; ok {
-		return color
-	}
-	return "#A9AC86"
+	return domain.TypeColor(typeName)
 }
