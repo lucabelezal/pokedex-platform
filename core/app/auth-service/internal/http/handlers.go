@@ -17,7 +17,16 @@ import (
 )
 
 type Handler struct {
-	authService *service.AuthService
+	authService AuthService
+}
+
+// AuthService define a interface para o serviço de autenticação.
+type AuthService interface {
+	Signup(ctx context.Context, email, password string) (*service.AuthResult, error)
+	Login(ctx context.Context, email, password string) (*service.AuthResult, error)
+	Refresh(ctx context.Context, token string) (*service.AuthResult, error)
+	Logout(ctx context.Context, token string) error
+	IsAccessTokenActive(ctx context.Context, tokenString string) (bool, error)
 }
 
 type authRequest struct {
@@ -59,8 +68,8 @@ type introspectResponse struct {
 
 const maxAuthRequestBodyBytes int64 = 8 * 1024
 
-func NewMux(authService *service.AuthService) *http.ServeMux {
-	h := &Handler{authService: authService}
+func NewMux(authSvc AuthService) *http.ServeMux {
+	h := &Handler{authService: authSvc}
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /health", h.health)
 	mux.HandleFunc("POST /v1/auth/signup", h.signup)

@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 
@@ -14,6 +15,33 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 )
+
+type stubAuthService struct {
+	signupResult *service.AuthResult
+	signupErr    error
+	loginResult  *service.AuthResult
+	loginErr     error
+}
+
+func (s *stubAuthService) Signup(ctx context.Context, email, password string) (*service.AuthResult, error) {
+	return s.signupResult, s.signupErr
+}
+
+func (s *stubAuthService) Login(ctx context.Context, email, password string) (*service.AuthResult, error) {
+	return s.loginResult, s.loginErr
+}
+
+func (s *stubAuthService) Refresh(ctx context.Context, token string) (*service.AuthResult, error) {
+	return nil, errors.New("not implemented")
+}
+
+func (s *stubAuthService) Logout(ctx context.Context, token string) error {
+	return errors.New("not implemented")
+}
+
+func (s *stubAuthService) IsAccessTokenActive(ctx context.Context, tokenString string) (bool, error) {
+	return true, nil
+}
 
 type stubAuthRepo struct {
 	isAccessTokenRevokedFn func(ctx context.Context, jti string) (bool, error)
@@ -163,4 +191,126 @@ func mustSignToken(t *testing.T, secret, jti string, expiresAt time.Time) string
 	}
 
 	return signed
+}
+
+func TestSignup(t *testing.T) {
+	tests := []struct {
+		name       string
+		signupRes  *service.AuthResult
+		signupErr  error
+		wantStatus int
+	}{
+		{
+			name: "sucesso",
+			signupRes: &service.AuthResult{
+				UserID:       "user-1",
+				Email:        "ash@kanto.dev",
+				AccessToken:  "access-token",
+				RefreshToken: "refresh-token",
+			},
+			wantStatus: http.StatusCreated,
+		},
+		{
+			name:       "email duplicado",
+			signupErr:  repository.ErrUserAlreadyExist,
+			wantStatus: http.StatusConflict,
+		},
+		{
+			name:       "senha curta",
+			signupErr:  service.ErrInvalidInput,
+			wantStatus: http.StatusBadRequest,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			svc := &stubAuthService{
+				signupResult: tt.signupRes,
+				signupErr:    tt.signupErr,
+			}
+			mux := NewMux(svc)
+
+			body := strings.NewReader(`{"email":"ash@kanto.dev","password":"pikapika"}`)
+			req := httptest.NewRequest(http.MethodPost, "/v1/auth/signup", body)
+			req.Header.Set("Content-Type", "application/json")
+			w := httptest.NewRecorder()
+
+			mux.ServeHTTP(w, req)
+
+			if w.Code != tt.wantStatus {
+				t.Errorf("status = %d, want %d", w.Code, tt.wantStatus)
+			}
+
+			if tt.wantStatus == http.StatusCreated {
+				var result service.AuthResult
+				if err := json.Unmarshal(w.Body.Bytes(), &result); err != nil {
+					t.Fatalf("falha ao decodificar: %v", err)
+				}
+				if result.UserID == "" {
+					t.Error("UserID vazio")
+				}
+			}
+		})
+	}
+}
+
+func TestLogin(t *testing.T) {
+	tests := []struct {
+		name       string
+		loginRes   *service.AuthResult
+		loginErr   error
+		wantStatus int
+	}{
+		{
+			name: "sucesso",
+			loginRes: &service.AuthResult{
+				UserID:       "user-1",
+				Email:        "ash@kanto.dev",
+				AccessToken:  "access-token",
+				RefreshToken: "refresh-token",
+			},
+			wantStatus: http.StatusOK,
+		},
+		{
+			name:       "senha incorreta",
+			loginErr:   service.ErrInvalidCredentials,
+			wantStatus: http.StatusUnauthorized,
+		},
+		{
+			name:       "entrada invalida",
+			loginErr:   service.ErrInvalidInput,
+			wantStatus: http.StatusBadRequest,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			svc := &stubAuthService{
+				loginResult: tt.loginRes,
+				loginErr:    tt.loginErr,
+			}
+			mux := NewMux(svc)
+
+			body := strings.NewReader(`{"email":"ash@kanto.dev","password":"pikapika"}`)
+			req := httptest.NewRequest(http.MethodPost, "/v1/auth/login", body)
+			req.Header.Set("Content-Type", "application/json")
+			w := httptest.NewRecorder()
+
+			mux.ServeHTTP(w, req)
+
+			if w.Code != tt.wantStatus {
+				t.Errorf("status = %d, want %d", w.Code, tt.wantStatus)
+			}
+
+			if tt.wantStatus == http.StatusOK {
+				var result service.AuthResult
+				if err := json.Unmarshal(w.Body.Bytes(), &result); err != nil {
+					t.Fatalf("falha ao decodificar: %v", err)
+				}
+				if result.AccessToken == "" {
+					t.Error("AccessToken vazio")
+				}
+			}
+		})
+	}
 }
