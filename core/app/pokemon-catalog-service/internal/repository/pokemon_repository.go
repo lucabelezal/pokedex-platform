@@ -20,6 +20,7 @@ type PokemonRepository interface {
 	Search(ctx context.Context, query string, page, pageSize int) (*domain.PokemonPage, error)
 	GetByType(ctx context.Context, typeFilter string, page, pageSize int) (*domain.PokemonPage, error)
 	GetByID(ctx context.Context, id string) (*domain.Pokemon, error)
+	GetByIDs(ctx context.Context, ids []string) ([]domain.Pokemon, error)
 	GetDetailByID(ctx context.Context, id string) (*domain.PokemonDetail, error)
 	ListTypes(ctx context.Context) ([]domain.Type, error)
 	ListRegions(ctx context.Context) ([]domain.Region, error)
@@ -241,6 +242,73 @@ func (r *PostgresPokemonRepository) GetByID(ctx context.Context, id string) (*do
 	}
 
 	return &p, nil
+}
+
+func (r *PostgresPokemonRepository) GetByIDs(ctx context.Context, ids []string) ([]domain.Pokemon, error) {
+	if len(ids) == 0 {
+		return []domain.Pokemon{}, nil
+	}
+
+	query := `
+		SELECT
+			p.id::text,
+			p.name,
+			p.number,
+			COALESCE(array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL), ARRAY[]::text[]),
+			COALESCE(p.height::double precision, 0),
+			COALESCE(p.weight::double precision, 0),
+			COALESCE(p.description, ''),
+			COALESCE(
+				jsonb_extract_path_text(p.sprites, 'other', 'home', 'front_default'),
+				jsonb_extract_path_text(p.sprites, 'other', 'official-artwork', 'front_default'),
+				p.sprites->>'front_default',
+				''
+			),
+			COALESCE((array_agg(t.color ORDER BY t.id) FILTER (WHERE t.color IS NOT NULL))[1], '#A9AC86'),
+			COALESCE((array_agg(t.name ORDER BY t.id) FILTER (WHERE t.name IS NOT NULL))[1], ''),
+			now(),
+			now()
+		FROM pokemons p
+		LEFT JOIN pokemon_types pt ON pt.pokemon_id = p.id
+		LEFT JOIN types t ON t.id = pt.type_id
+		WHERE p.id::text = ANY($1)
+		GROUP BY p.id, p.name, p.number, p.height, p.weight, p.description, p.sprites
+		ORDER BY p.id
+	`
+
+	rows, err := r.db.Query(ctx, query, ids)
+	if err != nil {
+		return nil, fmt.Errorf("erro ao buscar pokemons por ids: %w", err)
+	}
+	defer rows.Close()
+
+	result := make([]domain.Pokemon, 0)
+	for rows.Next() {
+		var p domain.Pokemon
+		if err := rows.Scan(
+			&p.ID,
+			&p.Name,
+			&p.Number,
+			&p.Types,
+			&p.Height,
+			&p.Weight,
+			&p.Description,
+			&p.ImageURL,
+			&p.ElementColor,
+			&p.ElementType,
+			&p.CreatedAt,
+			&p.UpdatedAt,
+		); err != nil {
+			return nil, fmt.Errorf("erro ao escanear pokemon: %w", err)
+		}
+		result = append(result, p)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("erro ao iterar resultados: %w", err)
+	}
+
+	return result, nil
 }
 
 func (r *PostgresPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
@@ -465,6 +533,20 @@ func (r *InMemoryPokemonRepository) GetByID(ctx context.Context, id string) (*do
 		}
 	}
 	return nil, ErrPokemonNotFound
+}
+
+func (r *InMemoryPokemonRepository) GetByIDs(ctx context.Context, ids []string) ([]domain.Pokemon, error) {
+	_ = ctx
+	result := make([]domain.Pokemon, 0)
+	for _, id := range ids {
+		for _, p := range r.items {
+			if p.ID == id || p.Number == id {
+				result = append(result, p)
+				break
+			}
+		}
+	}
+	return result, nil
 }
 
 func (r *InMemoryPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {

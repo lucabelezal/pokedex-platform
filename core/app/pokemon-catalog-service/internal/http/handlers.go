@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"pokedex-platform/core/app/pokemon-catalog-service/internal/domain"
 	"pokedex-platform/core/app/pokemon-catalog-service/internal/repository"
 )
 
@@ -37,6 +38,7 @@ func NewMux(pokemonRepo repository.PokemonRepository) *http.ServeMux {
 	mux.HandleFunc("GET /v1/regions", h.listRegions)
 	mux.HandleFunc("GET /v1/pokemon-details/{id}", h.getPokemonDetailByID)
 	mux.HandleFunc("GET /v1/pokemons/{id}", h.getPokemonByID)
+	mux.HandleFunc("GET /v1/pokemons/favorites", h.getFavoritesBatch)
 	return mux
 }
 
@@ -174,6 +176,39 @@ func (h *Handler) getPokemonDetailByID(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao buscar detalhes do pokemon"})
+		return
+	}
+
+	respondJSON(w, http.StatusOK, data)
+}
+
+func (h *Handler) getFavoritesBatch(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	idsParam := strings.TrimSpace(r.URL.Query().Get("ids"))
+	if idsParam == "" {
+		respondJSON(w, http.StatusOK, []domain.Pokemon{})
+		return
+	}
+
+	ids := strings.Split(idsParam, ",")
+	if len(ids) > 100 {
+		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "maximo de 100 IDs por requisicao"})
+		return
+	}
+
+	trimmedIDs := make([]string, 0, len(ids))
+	for _, id := range ids {
+		tid := strings.TrimSpace(id)
+		if tid != "" {
+			trimmedIDs = append(trimmedIDs, tid)
+		}
+	}
+
+	data, err := h.pokemonRepo.GetByIDs(ctx, trimmedIDs)
+	if err != nil {
+		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao buscar pokemons"})
 		return
 	}
 
