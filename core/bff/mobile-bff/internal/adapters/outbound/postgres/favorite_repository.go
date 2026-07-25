@@ -24,21 +24,19 @@ func NewPostgresFavoriteRepository(db *pgxpool.Pool) *PostgresFavoriteRepository
 
 // AddFavorite adiciona um Pokémon aos favoritos do usuário.
 func (r *PostgresFavoriteRepository) AddFavorite(ctx context.Context, userID, pokemonID string) error {
-	isFav, err := r.IsFavorite(ctx, userID, pokemonID)
-	if err != nil {
-		return err
-	}
-	if isFav {
-		return domain.ErrFavoriteAlreadyExists
-	}
-
 	query := `
 		INSERT INTO user_favorites (user_id, pokemon_id, created_at)
 		VALUES ($1::UUID, $2, $3)
 		ON CONFLICT (user_id, pokemon_id) DO NOTHING
 	`
-	_, err = r.db.Exec(ctx, query, userID, pokemonID, time.Now())
-	return err
+	ct, err := r.db.Exec(ctx, query, userID, pokemonID, time.Now())
+	if err != nil {
+		return err
+	}
+	if ct.RowsAffected() == 0 {
+		return domain.ErrFavoriteAlreadyExists
+	}
+	return nil
 }
 
 // RemoveFavorite remove um Pokémon dos favoritos do usuário.
