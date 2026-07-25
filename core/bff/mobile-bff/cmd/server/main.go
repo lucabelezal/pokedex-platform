@@ -10,12 +10,12 @@ import (
 
 	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http"
 	httpclient "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/http"
+	"pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/memory"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/postgres"
 	"pokedex-platform/core/bff/mobile-bff/internal/config"
 	applogger "pokedex-platform/core/bff/mobile-bff/internal/infrastructure/logger"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
-	"pokedex-platform/core/bff/mobile-bff/tests/mocks"
 )
 
 func main() {
@@ -48,7 +48,7 @@ func main() {
 		db, err = postgres.NewDatabase(ctx, cfg.DatabaseURL)
 		if err != nil {
 			slog.Warn("postgres indisponivel, usando mock de favoritos", "error", err)
-			favoriteRepo = mocks.NewMockFavoriteRepository()
+			favoriteRepo = memory.NewFavoriteRepository()
 		} else {
 			favoriteRepo = postgres.NewPostgresFavoriteRepository(db.Pool)
 		}
@@ -62,7 +62,7 @@ func main() {
 		if cfg.DatabaseURL == "" {
 			slog.Info("database_url nao configurada, usando mock de favoritos")
 		}
-		favoriteRepo = mocks.NewMockFavoriteRepository()
+		favoriteRepo = memory.NewFavoriteRepository()
 	}
 
 	// Configurar serviços
