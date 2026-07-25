@@ -64,6 +64,12 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 │   │   └── redis/
 │   └── docker-compose.yml
 └── doc/
+    ├── BFF.md
+    ├── GATEWAY.md
+    ├── INFRA.md
+    ├── bff/                       # padrao BFF (System Design)
+    ├── redis/                     # Redis com Go (cache, streaming, operacoes)
+    └── referencias/               # indice de artigos de System Design
 ```
 
 A pasta `bruno/` concentra a colecao de requisicoes de API da plataforma para testes manuais.
@@ -77,6 +83,8 @@ globais do Copilot, agentes especializados (`agents/`) e skills Go carregadas so
 A documentacao arquitetural do projeto fica em [doc/](doc/).
 A implementacao executavel da plataforma fica em [core/](core/).
 
+### Plataforma
+
 - Visao geral: [doc/SYSTEM-OVERVIEW.md](doc/SYSTEM-OVERVIEW.md)
 - BFF: [doc/BFF.md](doc/BFF.md)
 - Gateway: [doc/GATEWAY.md](doc/GATEWAY.md)
@@ -84,6 +92,12 @@ A implementacao executavel da plataforma fica em [core/](core/).
 - Decisoes arquiteturais: [doc/DECISIONS.md](doc/DECISIONS.md)
 - SOLID e patterns: [doc/SOLID-AND-PATTERNS.md](doc/SOLID-AND-PATTERNS.md)
 - Visao do runtime: [core/README.md](core/README.md)
+
+### Guias tematicos
+
+- [doc/bff/](doc/bff/) — padrao BFF: API Composition, canais, microfrontends, resiliencia
+- [doc/redis/](doc/redis/) — Redis com Go: cache, streaming, Pub/Sub, pipelines, Cluster, ElastiCache
+- [doc/referencias/fidelis.md](doc/referencias/fidelis.md) — indice curado de System Design por relevancia
 
 ## UI/UX Design
 
