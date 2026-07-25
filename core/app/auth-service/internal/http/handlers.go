@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
+	"log/slog"
 	"net"
 	"net/http"
 	"strings"
@@ -242,11 +242,11 @@ func logAuthAudit(r *http.Request, action, outcome string, args ...any) {
 	}
 
 	if message != "" {
-		log.Printf("auth_audit action=%s outcome=%s client_ip=%q %s", action, outcome, clientIP, message)
+		slog.Warn("auth_audit", "action", action, "outcome", outcome, "client_ip", clientIP, "message", message)
 		return
 	}
 
-	log.Printf("auth_audit action=%s outcome=%s client_ip=%q", action, outcome, clientIP)
+	slog.Warn("auth_audit", "action", action, "outcome", outcome, "client_ip", clientIP)
 }
 
 func authClientIP(r *http.Request) string {

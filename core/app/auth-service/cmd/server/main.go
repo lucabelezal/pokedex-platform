@@ -2,8 +2,9 @@ package main
 
 import (
 	"context"
-	"log"
+	"log/slog"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -14,12 +15,15 @@ import (
 )
 
 func main() {
+	setupLogger()
 	cfg := config.Load()
 	if strings.TrimSpace(cfg.DatabaseURL) == "" {
-		log.Fatal("DATABASE_URL nao configurada")
+		slog.Error("DATABASE_URL nao configurada")
+		os.Exit(1)
 	}
 	if strings.TrimSpace(cfg.JWTSecret) == "" {
-		log.Fatal("JWT_SECRET nao configurada")
+		slog.Error("JWT_SECRET nao configurada")
+		os.Exit(1)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -27,7 +31,8 @@ func main() {
 
 	pool, err := repository.NewPool(ctx, cfg.DatabaseURL)
 	if err != nil {
-		log.Fatalf("falha ao conectar no banco: %v", err)
+		slog.Error("falha ao conectar no banco", "error", err)
+		os.Exit(1)
 	}
 	defer pool.Close()
 
@@ -46,10 +51,34 @@ func main() {
 		IdleTimeout:       30 * time.Second,
 	}
 
-	log.Printf("auth-service listening on :%s", cfg.Port)
+	slog.Info("servidor iniciado", "addr", srv.Addr, "service", "auth-service")
 	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatalf("auth-service server error: %v", err)
+		slog.Error("servidor encerrado com erro", "error", err)
+		os.Exit(1)
 	}
+}
+
+func setupLogger() {
+	level := slog.LevelInfo
+	if v := os.Getenv("LOG_LEVEL"); v != "" {
+		switch v {
+		case "debug":
+			level = slog.LevelDebug
+		case "warn":
+			level = slog.LevelWarn
+		case "error":
+			level = slog.LevelError
+		}
+	}
+
+	format := os.Getenv("LOG_FORMAT")
+	var handler slog.Handler
+	if format == "text" {
+		handler = slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: level})
+	} else {
+		handler = slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: level})
+	}
+	slog.SetDefault(slog.New(handler))
 }
 
 func startAuthCleanupJob(userRepo *repository.UserRepository, intervalMins int) {
@@ -67,11 +96,11 @@ func startAuthCleanupJob(userRepo *repository.UserRepository, intervalMins int) 
 		defer cancel()
 
 		if err := userRepo.CleanupExpiredAuthArtifacts(ctx); err != nil {
-			log.Printf("auth cleanup falhou: %v", err)
+			slog.Warn("auth cleanup falhou", "error", err)
 			return
 		}
 
-		log.Printf("auth cleanup executado com sucesso")
+		slog.Debug("auth cleanup executado com sucesso")
 	}
 
 	runCleanup()
