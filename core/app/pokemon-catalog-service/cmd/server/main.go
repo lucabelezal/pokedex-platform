@@ -9,6 +9,8 @@ import (
 	"pokedex-platform/core/app/pokemon-catalog-service/internal/config"
 	apphttp "pokedex-platform/core/app/pokemon-catalog-service/internal/http"
 	"pokedex-platform/core/app/pokemon-catalog-service/internal/repository"
+
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {
@@ -18,18 +20,23 @@ func main() {
 	defer cancel()
 
 	var pokemonRepo repository.PokemonRepository
+	var dbPool *pgxpool.Pool
 	if cfg.DatabaseURL != "" {
 		pool, err := repository.NewPool(ctx, cfg.DatabaseURL)
 		if err != nil {
 			log.Fatalf("falha ao conectar no postgres: %v", err)
 		}
 		defer pool.Close()
+		dbPool = pool
 		pokemonRepo = repository.NewPostgresPokemonRepository(pool)
 	} else {
 		log.Fatal("DATABASE_URL e obrigatoria para o catalog-service")
 	}
 
 	mux := apphttp.NewMux(pokemonRepo)
+	if dbPool != nil {
+		mux.HandleFunc("GET /ready", apphttp.ReadyHandler(dbPool))
+	}
 
 	srv := &http.Server{
 		Addr:         ":" + cfg.Port,

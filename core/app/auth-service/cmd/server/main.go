@@ -42,6 +42,7 @@ func main() {
 	startAuthCleanupJob(userRepo, cfg.CleanupIntervalMins)
 
 	mux := authhttp.NewMux(authService)
+	mux.HandleFunc("GET /ready", authhttp.ReadyHandler(pool))
 	srv := &http.Server{
 		Addr:              ":" + cfg.Port,
 		Handler:           mux,

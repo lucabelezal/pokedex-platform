@@ -30,6 +30,29 @@ type healthResponse struct {
 	Service string `json:"service"`
 }
 
+type readyResponse struct {
+	Status  string `json:"status"`
+	Service string `json:"service"`
+}
+
+// Pinger abstrai a verificação de saúde do banco de dados.
+type Pinger interface {
+	Ping(ctx context.Context) error
+}
+
+func ReadyHandler(db Pinger) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+		defer cancel()
+
+		if err := db.Ping(ctx); err != nil {
+			respondJSON(w, http.StatusServiceUnavailable, readyResponse{Status: "degraded", Service: "auth-service"})
+			return
+		}
+		respondJSON(w, http.StatusOK, readyResponse{Status: "ready", Service: "auth-service"})
+	}
+}
+
 type introspectResponse struct {
 	Active bool `json:"active"`
 }
