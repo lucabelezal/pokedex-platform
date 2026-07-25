@@ -301,49 +301,6 @@ func (r *PostgresPokemonRepository) GetByType(ctx context.Context, typeFilter st
 	}, nil
 }
 
-func (r *PostgresPokemonRepository) GetFavorites(ctx context.Context, userID string, page, pageSize int) ([]string, error) {
-	if userID == "" {
-		return []string{}, nil
-	}
-
-	if pageSize <= 0 {
-		pageSize = 20
-	}
-	if pageSize > 100 {
-		pageSize = 100
-	}
-	if page < 0 {
-		page = 0
-	}
-
-	offset := page * pageSize
-
-	query := `
-		SELECT pokemon_id
-		FROM favorites
-		WHERE user_id = $1
-		ORDER BY created_at DESC
-		LIMIT $2 OFFSET $3
-	`
-
-	rows, err := r.db.Query(ctx, query, userID, pageSize, offset)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	favorites := make([]string, 0)
-	for rows.Next() {
-		var pokemonID string
-		if err := rows.Scan(&pokemonID); err != nil {
-			return nil, err
-		}
-		favorites = append(favorites, pokemonID)
-	}
-
-	return favorites, rows.Err()
-}
-
 func (r *PostgresPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
 	query := `
 		SELECT name, color
