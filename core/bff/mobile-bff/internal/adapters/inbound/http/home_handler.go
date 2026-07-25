@@ -174,14 +174,22 @@ func sortHomePokemonPage(page *domain.PokemonPage, selectedOrdering string) {
 
 	switch selectedOrdering {
 	case "Maior número":
-		sort.Slice(page.Content, func(i, j int) bool { return page.Content[i].Number > page.Content[j].Number })
+		sort.Slice(page.Content, func(i, j int) bool { return parseNumber(page.Content[i].Number) > parseNumber(page.Content[j].Number) })
 	case "A-Z":
 		sort.Slice(page.Content, func(i, j int) bool { return page.Content[i].Name < page.Content[j].Name })
 	case "Z-A":
 		sort.Slice(page.Content, func(i, j int) bool { return page.Content[i].Name > page.Content[j].Name })
 	default:
-		sort.Slice(page.Content, func(i, j int) bool { return page.Content[i].Number < page.Content[j].Number })
+		sort.Slice(page.Content, func(i, j int) bool { return parseNumber(page.Content[i].Number) < parseNumber(page.Content[j].Number) })
 	}
+}
+
+func parseNumber(s string) int {
+	n, err := strconv.Atoi(strings.TrimSpace(s))
+	if err != nil {
+		return 0
+	}
+	return n
 }
 
 func filterHomePokemonByRegion(page *domain.PokemonPage, region string) {
