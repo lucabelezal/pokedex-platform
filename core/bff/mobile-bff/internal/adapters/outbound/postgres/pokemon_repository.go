@@ -9,6 +9,7 @@ import (
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -46,10 +47,13 @@ func (r *PostgresPokemonRepository) GetByID(ctx context.Context, id string) (*do
 	)
 
 	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, domain.ErrPokemonNotFound
+		}
 		if errors.Is(err, context.Canceled) {
 			return nil, err
 		}
-		return nil, domain.ErrPokemonNotFound
+		return nil, fmt.Errorf("erro ao buscar pokemon %s: %w", id, err)
 	}
 
 	return &pokemon, nil
