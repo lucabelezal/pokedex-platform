@@ -5,7 +5,8 @@ que guia o ecossistema, e o mapeamento de como os 22 padrões GoF se expressam e
 Go idiomático. É a sua referência para **pensar em Go**, não apenas escrever em Go.
 
 **Inspiração:** The Zen of Go (Dave Cheney), Effective Go, Package Names (blog oficial),
-e o repositório [design-patterns-go](../../design-patterns/design-patterns-go/).
+o repositório [design-patterns-go](../../design-patterns/design-patterns-go/) e a
+[documentação completa de padrões em Go](../design-patterns/README.md).
 
 ---
 
@@ -334,3 +335,4 @@ Isso não é um paradigma. É uma disciplina.
 - [Fase 07 — Testes Avançados & Filosofia de Design](fase-07-testes-avancados-design.md) — filosofia e testes
 - [GLOSSARIO.md](GLOSSARIO.md) — dicionário Swift ↔ Go
 - [CHEATSHEET.md](CHEATSHEET.md) — sintaxe rápida
+- [Design Patterns em Go](../design-patterns/README.md) — documentação completa dos 22 padrões GoF em Go idiomático
