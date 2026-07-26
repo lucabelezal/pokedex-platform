@@ -57,6 +57,7 @@ Alguns conceitos são mais fáceis de entender quando você conhece o equivalent
 
 - [GLOSSARIO.md](GLOSSARIO.md) — dicionário de termos Go com equivalente Swift
 - [CHEATSHEET.md](CHEATSHEET.md) — sintaxe rápida para consulta diária
+- [ZEN.md](ZEN.md) — os 10 princípios do Go + mapeamento dos 22 padrões GoF
 
 ## Progresso
 
