@@ -6,6 +6,8 @@ import (
 	"testing"
 	"time"
 
+	"pokedex-platform/core/app/pokemon-catalog-service/internal/domain"
+
 	"github.com/pashagolub/pgxmock/v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -323,11 +325,11 @@ func TestInMemoryPokemonRepository_GetByType(t *testing.T) {
 
 func TestSanitizePage(t *testing.T) {
 	tests := []struct {
-		name       string
-		page       int
-		pageSize   int
-		wantPage   int
-		wantSize   int
+		name     string
+		page     int
+		pageSize int
+		wantPage int
+		wantSize int
 	}{
 		{"negativo", -1, 20, 0, 20},
 		{"zero size", 0, 0, 0, 20},
@@ -341,4 +343,223 @@ func TestSanitizePage(t *testing.T) {
 			assert.Equal(t, tt.wantSize, gotSize)
 		})
 	}
+}
+
+func TestMapTypes(t *testing.T) {
+	tests := []struct {
+		name     string
+		names    []string
+		wantLen  int
+		wantName string
+	}{
+		{"nomes normais", []string{"Fire", "Water"}, 2, "Fire"},
+		{"acerto aço", []string{"Aço"}, 1, "Metal"},
+		{"acerto sombrio", []string{"Sombrio"}, 1, "Noturno"},
+		{"vazio", []string{}, 0, ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			types := mapTypes(tt.names)
+			assert.Len(t, types, tt.wantLen)
+			if tt.wantLen > 0 {
+				assert.Equal(t, tt.wantName, types[0].Name)
+				assert.NotEmpty(t, types[0].Color)
+			}
+		})
+	}
+}
+
+func TestMapTypesWithOverrides(t *testing.T) {
+	types := mapTypesWithOverrides("6", []string{"Fire", "Flying"})
+	assert.Len(t, types, 2)
+}
+
+func TestNormalizeTypeName(t *testing.T) {
+	assert.Equal(t, "Metal", normalizeTypeName("Aço"))
+	assert.Equal(t, "Noturno", normalizeTypeName("Sombrio"))
+	assert.Equal(t, "Fire", normalizeTypeName("  Fire  "))
+}
+
+func TestNormalizeCategory(t *testing.T) {
+	assert.Equal(t, "Seed", normalizeCategory("001", "Seed Pokémon"))
+	assert.Equal(t, "", normalizeCategory("999", ""))
+	assert.Equal(t, "Rato", normalizeCategory("999", "Rato Pokémon"))
+}
+
+func TestNormalizeCondition(t *testing.T) {
+	tests := []struct {
+		in, want string
+	}{
+		{"Subir nivel com felicidade", "Nível de Amizade"},
+		{"Uso de thunder stone", "Pedra do Trovão"},
+		{"Uso de moon stone", "Pedra da Lua"},
+		{"Uso de dusk stone", "Pedra do Anoitecer"},
+		{"Troca", "Trocas"},
+		{"Condicao nao mapeada", "Subir de Nível c/ Rollout"},
+		{"Nivel 32", "Nível 36"},
+		{"Nivel 16", "Nível 16"},
+		{"qualquer coisa", "qualquer coisa"},
+		{"", ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.in, func(t *testing.T) {
+			assert.Equal(t, tt.want, normalizeCondition(tt.in))
+		})
+	}
+}
+
+func TestNormalizeDescription(t *testing.T) {
+	assert.Equal(t, "descrição", normalizeDescription("999", "  descrição  "))
+}
+
+func TestNormalizeAbilities(t *testing.T) {
+	assert.Equal(t, []string{"Overgrow"}, normalizeAbilities("001", []string{"Overgrow"}))
+}
+
+func TestTypeColor(t *testing.T) {
+	assert.Equal(t, "#EE8130", typeColor("Fogo"))
+	assert.Equal(t, "#A9AC86", typeColor("unknown"))
+}
+
+func TestGenerationLabel(t *testing.T) {
+	assert.Equal(t, "1º Geração", generationLabel(1))
+}
+
+func TestPostgresPokemonRepository_GetDetailByID(t *testing.T) {
+	mock := mustMock(t)
+	defer func() { mock.Close() }()
+
+	baseCols := []string{"id", "name", "number", "types", "height", "weight", "description", "image_url", "element_color", "element_type", "created_at", "updated_at"}
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT")).
+		WithArgs("010").
+		WillReturnRows(pgxmock.NewRows(baseCols).
+			AddRow("uuid-10", "Caterpie", "010", []string{"Inseto"}, 0.3, 2.9, "verme", "https://img/10.png", "#A6B91A", "Inseto", time.Now(), time.Now()))
+
+	detailCols := []string{"category", "gender_male", "gender_female", "region", "generation", "evolution_chain_id"}
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT")).
+		WithArgs("010").
+		WillReturnRows(pgxmock.NewRows(detailCols).AddRow("Verme", -1.0, -1.0, "Kanto", "Geração I", int64(1)))
+
+	abilityCols := []string{"name"}
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT DISTINCT a.name")).
+		WithArgs("010").
+		WillReturnRows(pgxmock.NewRows(abilityCols).AddRow("Poeira de Escama"))
+
+	weakCols := []string{"name", "color"}
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT t.name, t.color")).
+		WithArgs("010").
+		WillReturnRows(pgxmock.NewRows(weakCols).AddRow("Fogo", "#EE8130"))
+
+	chainCols := []string{"chain_data"}
+	chainJSON := `{"pokemon":{"id":10,"name":"Caterpie"},"condition":{"description":""},"evolutions_to":[{"pokemon":{"id":11,"name":"Metapod"},"condition":{"description":"Nivel 7"},"evolutions_to":[]}]}`
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT chain_data")).
+		WithArgs(int64(1)).
+		WillReturnRows(pgxmock.NewRows(chainCols).AddRow(chainJSON))
+
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT")).
+		WithArgs("11").
+		WillReturnRows(pgxmock.NewRows(baseCols).
+			AddRow("uuid-11", "Metapod", "011", []string{"Inseto"}, 0.7, 9.9, "casulo", "https://img/11.png", "#A6B91A", "Inseto", time.Now(), time.Now()))
+
+	repo := NewPostgresPokemonRepositoryWithPool(mock)
+	detail, err := repo.GetDetailByID(context.Background(), "010")
+	require.NoError(t, err)
+	assert.Equal(t, "Caterpie", detail.Name)
+	assert.NotNil(t, detail)
+	require.NoError(t, mock.ExpectationsWereMet())
+}
+
+func TestPostgresPokemonRepository_GetDetailByID_NotFounded(t *testing.T) {
+	mock := mustMock(t)
+	defer func() { mock.Close() }()
+
+	baseCols := []string{"id", "name", "number", "types", "height", "weight", "description", "image_url", "element_color", "element_type", "created_at", "updated_at"}
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT")).
+		WithArgs("999").
+		WillReturnRows(pgxmock.NewRows(baseCols))
+
+	repo := NewPostgresPokemonRepositoryWithPool(mock)
+	_, err := repo.GetDetailByID(context.Background(), "999")
+	require.ErrorIs(t, err, ErrPokemonNotFound)
+}
+
+func TestFlattenEvolutionChain(t *testing.T) {
+	root := evolutionNode{
+		Pokemon: struct {
+			ID   int64  `json:"id"`
+			Name string `json:"name"`
+		}{ID: 1, Name: "Bulbasaur"},
+		Condition: struct {
+			Description string `json:"description"`
+		}{Description: ""},
+		EvolutionsTo: []evolutionNode{{
+			Pokemon: struct {
+				ID   int64  `json:"id"`
+				Name string `json:"name"`
+			}{ID: 2, Name: "Ivysaur"},
+			Condition: struct {
+				Description string `json:"description"`
+			}{Description: "Nivel 16"},
+			EvolutionsTo: nil,
+		}},
+	}
+
+	steps := make([]evolutionStep, 0)
+	flattenEvolutionChain(root, "", &steps)
+	assert.Len(t, steps, 2)
+	assert.Equal(t, int64(1), steps[0].ID)
+	assert.Equal(t, "Nivel 16", steps[1].Trigger)
+}
+
+func TestBuildPage(t *testing.T) {
+	page := buildPage([]domain.Pokemon{{ID: "1"}}, 25, 0, 10)
+	assert.Equal(t, int64(25), page.TotalElements)
+	assert.Equal(t, 3, page.TotalPages)
+	assert.True(t, page.HasNext)
+}
+
+func TestPostgresPokemonRepository_BuildEvolutionOverrides_Encontrado(t *testing.T) {
+	mock := mustMock(t)
+	defer func() { mock.Close() }()
+
+	baseCols := []string{"id", "name", "number", "types", "height", "weight", "description", "image_url", "element_color", "element_type", "created_at", "updated_at"}
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT")).
+		WithArgs("1").
+		WillReturnRows(pgxmock.NewRows(baseCols).
+			AddRow("uuid-1", "Bulbasaur", "001", []string{"Grama", "Venenoso"}, 0.7, 6.9, "seed", "https://img/1.png", "#78C850", "Grama", time.Now(), time.Now()))
+
+	repo := NewPostgresPokemonRepositoryWithPool(mock)
+	items := []evolutionOverride{
+		{Number: "1", Name: "Bulbasaur", Types: []string{"Grama", "Venenoso"}},
+	}
+	evos := repo.buildEvolutionOverrides(context.Background(), items)
+	require.Len(t, evos, 1)
+	assert.Equal(t, "Bulbasaur", evos[0].Name)
+	require.NoError(t, mock.ExpectationsWereMet())
+}
+
+func TestPostgresPokemonRepository_BuildEvolutionOverrides_NaoEncontrado(t *testing.T) {
+	mock := mustMock(t)
+	defer func() { mock.Close() }()
+
+	baseCols := []string{"id", "name", "number", "types", "height", "weight", "description", "image_url", "element_color", "element_type", "created_at", "updated_at"}
+	mock.ExpectQuery(regexp.QuoteMeta("SELECT")).
+		WithArgs("999").
+		WillReturnRows(pgxmock.NewRows(baseCols))
+
+	repo := NewPostgresPokemonRepositoryWithPool(mock)
+	items := []evolutionOverride{
+		{Number: "999", Name: "Fake", Types: []string{"Fogo"}},
+	}
+	evos := repo.buildEvolutionOverrides(context.Background(), items)
+	require.Len(t, evos, 1)
+	assert.Equal(t, "Fake", evos[0].Name)
+	// imagem fallback gerada a partir do número
+	assert.Contains(t, evos[0].ImageURL, "999")
+	require.NoError(t, mock.ExpectationsWereMet())
+}
+
+func TestNewPool_ComURIVazia(t *testing.T) {
+	_, err := NewPool(context.Background(), "")
+	require.Error(t, err)
 }
