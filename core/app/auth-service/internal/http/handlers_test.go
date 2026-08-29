@@ -21,6 +21,8 @@ type stubAuthService struct {
 	signupErr    error
 	loginResult  *service.AuthResult
 	loginErr     error
+	refreshFn    func(ctx context.Context, token string) (*service.AuthResult, error)
+	logoutFn     func(ctx context.Context, token string) error
 }
 
 func (s *stubAuthService) Signup(ctx context.Context, email, password string) (*service.AuthResult, error) {
@@ -32,10 +34,16 @@ func (s *stubAuthService) Login(ctx context.Context, email, password string) (*s
 }
 
 func (s *stubAuthService) Refresh(ctx context.Context, token string) (*service.AuthResult, error) {
+	if s.refreshFn != nil {
+		return s.refreshFn(ctx, token)
+	}
 	return nil, errors.New("not implemented")
 }
 
 func (s *stubAuthService) Logout(ctx context.Context, token string) error {
+	if s.logoutFn != nil {
+		return s.logoutFn(ctx, token)
+	}
 	return errors.New("not implemented")
 }
 
@@ -312,5 +320,156 @@ func TestLogin(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+type stubPinger struct {
+	err error
+}
+
+func (s stubPinger) Ping(ctx context.Context) error {
+	return s.err
+}
+
+func TestRefreshHandler(t *testing.T) {
+	tests := []struct {
+		name       string
+		refreshFn  func(ctx context.Context, token string) (*service.AuthResult, error)
+		authHeader string
+		wantStatus int
+	}{
+		{
+			name: "sem token",
+			refreshFn: func(ctx context.Context, token string) (*service.AuthResult, error) {
+				return nil, nil
+			},
+			authHeader: "",
+			wantStatus: http.StatusUnauthorized,
+		},
+		{
+			name: "token invalido",
+			refreshFn: func(ctx context.Context, token string) (*service.AuthResult, error) {
+				return nil, service.ErrInvalidToken
+			},
+			authHeader: "Bearer invalid",
+			wantStatus: http.StatusUnauthorized,
+		},
+		{
+			name: "sucesso",
+			refreshFn: func(ctx context.Context, token string) (*service.AuthResult, error) {
+				return &service.AuthResult{UserID: "user-1", Email: "ash@kanto.dev", AccessToken: "new-access", RefreshToken: "new-refresh"}, nil
+			},
+			authHeader: "Bearer valid-token",
+			wantStatus: http.StatusOK,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			svc := &stubAuthService{refreshFn: tt.refreshFn}
+			mux := NewMux(svc)
+			req := httptest.NewRequest(http.MethodPost, "/v1/auth/refresh", nil)
+			if tt.authHeader != "" {
+				req.Header.Set("Authorization", tt.authHeader)
+			}
+			w := httptest.NewRecorder()
+			mux.ServeHTTP(w, req)
+			if w.Code != tt.wantStatus {
+				t.Errorf("status = %d, want %d", w.Code, tt.wantStatus)
+			}
+		})
+	}
+}
+
+func TestLogoutHandler(t *testing.T) {
+	tests := []struct {
+		name       string
+		logoutFn   func(ctx context.Context, token string) error
+		authHeader string
+		wantStatus int
+	}{
+		{
+			name:       "sem token",
+			logoutFn:   func(ctx context.Context, token string) error { return nil },
+			authHeader: "",
+			wantStatus: http.StatusUnauthorized,
+		},
+		{
+			name:       "token invalido",
+			logoutFn:   func(ctx context.Context, token string) error { return service.ErrInvalidToken },
+			authHeader: "Bearer invalid",
+			wantStatus: http.StatusUnauthorized,
+		},
+		{
+			name:       "erro interno",
+			logoutFn:   func(ctx context.Context, token string) error { return errors.New("db down") },
+			authHeader: "Bearer valid",
+			wantStatus: http.StatusInternalServerError,
+		},
+		{
+			name:       "sucesso",
+			logoutFn:   func(ctx context.Context, token string) error { return nil },
+			authHeader: "Bearer valid",
+			wantStatus: http.StatusOK,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			svc := &stubAuthService{logoutFn: tt.logoutFn}
+			mux := NewMux(svc)
+			req := httptest.NewRequest(http.MethodPost, "/v1/auth/logout", nil)
+			if tt.authHeader != "" {
+				req.Header.Set("Authorization", tt.authHeader)
+			}
+			w := httptest.NewRecorder()
+			mux.ServeHTTP(w, req)
+			if w.Code != tt.wantStatus {
+				t.Errorf("status = %d, want %d", w.Code, tt.wantStatus)
+			}
+		})
+	}
+}
+
+func TestHealthHandlerAuth(t *testing.T) {
+	svc := &stubAuthService{}
+	mux := NewMux(svc)
+	req := httptest.NewRequest(http.MethodGet, "/health", nil)
+	w := httptest.NewRecorder()
+	mux.ServeHTTP(w, req)
+	if w.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+}
+
+func TestReadyHandlerAuth(t *testing.T) {
+	tests := []struct {
+		name       string
+		pingErr    error
+		wantStatus int
+	}{
+		{"banco pronto", nil, http.StatusOK},
+		{"banco indisponivel", errors.New("connection refused"), http.StatusServiceUnavailable},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			h := ReadyHandler(stubPinger{err: tt.pingErr})
+			req := httptest.NewRequest(http.MethodGet, "/ready", nil)
+			w := httptest.NewRecorder()
+			h(w, req)
+			if w.Code != tt.wantStatus {
+				t.Errorf("status = %d, want %d", w.Code, tt.wantStatus)
+			}
+		})
+	}
+}
+
+func TestSignupPayloadInvalido(t *testing.T) {
+	svc := &stubAuthService{}
+	mux := NewMux(svc)
+	req := httptest.NewRequest(http.MethodPost, "/v1/auth/signup", strings.NewReader("{"))
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	mux.ServeHTTP(w, req)
+	if w.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d, want 400", w.Code)
 	}
 }

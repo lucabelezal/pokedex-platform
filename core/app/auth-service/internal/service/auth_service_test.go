@@ -9,6 +9,9 @@ import (
 	"pokedex-platform/core/app/auth-service/internal/repository"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type mockAuthRepository struct {
@@ -213,4 +216,162 @@ func mustSignAccessToken(t *testing.T, secret, jti string, expiresAt time.Time) 
 	}
 
 	return signed
+}
+
+func TestSignupSucesso(t *testing.T) {
+	repo := &mockAuthRepository{
+		createUserFn: func(ctx context.Context, email, passwordHash string) (*repository.User, error) {
+			return &repository.User{ID: "user-1", Email: email, PasswordHash: passwordHash}, nil
+		},
+		storeRefreshTokenFn: func(ctx context.Context, userID, refreshToken string, expiresAt time.Time) error {
+			return nil
+		},
+	}
+	s := NewAuthService(repo, "segredo", 15, 24)
+
+	result, err := s.Signup(context.Background(), "  Ash@Kanto.Dev ", "pikapika123")
+	require.NoError(t, err)
+	assert.Equal(t, "user-1", result.UserID)
+	assert.Equal(t, "ash@kanto.dev", result.Email)
+	assert.NotEmpty(t, result.AccessToken)
+	assert.NotEmpty(t, result.RefreshToken)
+	assert.Equal(t, "Bearer", result.TokenType)
+}
+
+func TestSignupEmailInvalido(t *testing.T) {
+	s := NewAuthService(&mockAuthRepository{}, "segredo", 15, 24)
+	_, err := s.Signup(context.Background(), "email-invalido", "pikapika123")
+	require.ErrorIs(t, err, ErrInvalidInput)
+}
+
+func TestSignupSenhaCurta(t *testing.T) {
+	s := NewAuthService(&mockAuthRepository{}, "segredo", 15, 24)
+	_, err := s.Signup(context.Background(), "ash@kanto.dev", "curta")
+	require.ErrorIs(t, err, ErrInvalidInput)
+}
+
+func TestSignupCreateUserFalha(t *testing.T) {
+	repo := &mockAuthRepository{
+		createUserFn: func(ctx context.Context, email, passwordHash string) (*repository.User, error) {
+			return nil, repository.ErrUserAlreadyExist
+		},
+	}
+	s := NewAuthService(repo, "segredo", 15, 24)
+	_, err := s.Signup(context.Background(), "ash@kanto.dev", "pikapika123")
+	require.ErrorIs(t, err, repository.ErrUserAlreadyExist)
+}
+
+func TestLoginSucesso(t *testing.T) {
+	hash, err := bcrypt.GenerateFromPassword([]byte("pikapika123"), bcrypt.DefaultCost)
+	require.NoError(t, err)
+
+	repo := &mockAuthRepository{
+		getByEmailFn: func(ctx context.Context, email string) (*repository.User, error) {
+			return &repository.User{ID: "user-1", Email: email, PasswordHash: string(hash)}, nil
+		},
+		storeRefreshTokenFn: func(ctx context.Context, userID, refreshToken string, expiresAt time.Time) error {
+			return nil
+		},
+	}
+	s := NewAuthService(repo, "segredo", 15, 24)
+
+	result, err := s.Login(context.Background(), "ash@kanto.dev", "pikapika123")
+	require.NoError(t, err)
+	assert.Equal(t, "user-1", result.UserID)
+	assert.NotEmpty(t, result.AccessToken)
+}
+
+func TestLoginSenhaIncorreta(t *testing.T) {
+	hash, err := bcrypt.GenerateFromPassword([]byte("outra-senha"), bcrypt.DefaultCost)
+	require.NoError(t, err)
+
+	repo := &mockAuthRepository{
+		getByEmailFn: func(ctx context.Context, email string) (*repository.User, error) {
+			return &repository.User{ID: "user-1", Email: email, PasswordHash: string(hash)}, nil
+		},
+	}
+	s := NewAuthService(repo, "segredo", 15, 24)
+
+	_, err = s.Login(context.Background(), "ash@kanto.dev", "senha-errada")
+	require.ErrorIs(t, err, ErrInvalidCredentials)
+}
+
+func TestLoginUsuarioNaoEncontrado(t *testing.T) {
+	repo := &mockAuthRepository{
+		getByEmailFn: func(ctx context.Context, email string) (*repository.User, error) {
+			return nil, repository.ErrUserNotFound
+		},
+	}
+	s := NewAuthService(repo, "segredo", 15, 24)
+
+	_, err := s.Login(context.Background(), "nobody@x.dev", "pikapika123")
+	require.ErrorIs(t, err, ErrInvalidCredentials)
+}
+
+func TestLoginEmailInvalido(t *testing.T) {
+	s := NewAuthService(&mockAuthRepository{}, "segredo", 15, 24)
+	_, err := s.Login(context.Background(), "invalido", "pikapika123")
+	require.ErrorIs(t, err, ErrInvalidInput)
+}
+
+func TestIsValidEmail(t *testing.T) {
+	tests := []struct {
+		email string
+		want  bool
+	}{
+		{"ash@kanto.dev", true},
+		{"ASH@Kanto.dev", true},
+		{"invalido", false},
+		{"", false},
+		{"a@b", true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.email, func(t *testing.T) {
+			assert.Equal(t, tt.want, isValidEmail(tt.email))
+		})
+	}
+}
+
+func TestRefreshTokenVazio(t *testing.T) {
+	s := NewAuthService(&mockAuthRepository{}, "segredo", 15, 24)
+	_, err := s.Refresh(context.Background(), "  ")
+	require.ErrorIs(t, err, ErrInvalidToken)
+}
+
+func TestRefreshSessaoNaoEncontrada(t *testing.T) {
+	repo := &mockAuthRepository{
+		getActiveRefreshFn: func(ctx context.Context, refreshToken string) (*repository.RefreshSession, error) {
+			return nil, repository.ErrRefreshTokenNotFound
+		},
+	}
+	s := NewAuthService(repo, "segredo", 15, 24)
+	_, err := s.Refresh(context.Background(), "refresh-token")
+	require.ErrorIs(t, err, ErrInvalidToken)
+}
+
+func TestRefreshUsuarioNaoEncontrado(t *testing.T) {
+	repo := &mockAuthRepository{
+		getActiveRefreshFn: func(ctx context.Context, refreshToken string) (*repository.RefreshSession, error) {
+			return &repository.RefreshSession{UserID: "user-1", ExpiresAt: time.Now().Add(time.Hour)}, nil
+		},
+		getByIDFn: func(ctx context.Context, userID string) (*repository.User, error) {
+			return nil, repository.ErrUserNotFound
+		},
+	}
+	s := NewAuthService(repo, "segredo", 15, 24)
+	_, err := s.Refresh(context.Background(), "refresh-token")
+	require.ErrorIs(t, err, ErrInvalidToken)
+}
+
+func TestLogoutTokenVazio(t *testing.T) {
+	s := NewAuthService(&mockAuthRepository{}, "segredo", 15, 24)
+	err := s.Logout(context.Background(), "")
+	require.ErrorIs(t, err, ErrInvalidToken)
+}
+
+func TestIsAccessTokenActiveComTokenInvalido(t *testing.T) {
+	s := NewAuthService(&mockAuthRepository{}, "segredo", 15, 24)
+	active, err := s.IsAccessTokenActive(context.Background(), "token-invalido")
+	require.NoError(t, err)
+	assert.False(t, active)
 }
