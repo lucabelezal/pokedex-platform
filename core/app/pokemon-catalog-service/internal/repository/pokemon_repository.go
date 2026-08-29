@@ -11,6 +11,7 @@ import (
 	"pokedex-platform/core/app/pokemon-catalog-service/internal/domain"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -31,11 +32,24 @@ type PokemonRepository interface {
 	RemoveFavorite(ctx context.Context, userID, pokemonID string) error
 }
 
+// DBPool abstrai o pool pgx para permitir mocks em testes.
+type DBPool interface {
+	Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error)
+	QueryRow(ctx context.Context, sql string, args ...any) pgx.Row
+	Exec(ctx context.Context, sql string, args ...any) (pgconn.CommandTag, error)
+	Ping(ctx context.Context) error
+}
+
 type PostgresPokemonRepository struct {
-	db *pgxpool.Pool
+	db DBPool
 }
 
 func NewPostgresPokemonRepository(db *pgxpool.Pool) *PostgresPokemonRepository {
+	return &PostgresPokemonRepository{db: db}
+}
+
+// NewPostgresPokemonRepositoryWithPool cria repositório aceitando qualquer DBPool (incluindo mocks).
+func NewPostgresPokemonRepositoryWithPool(db DBPool) *PostgresPokemonRepository {
 	return &PostgresPokemonRepository{db: db}
 }
 
