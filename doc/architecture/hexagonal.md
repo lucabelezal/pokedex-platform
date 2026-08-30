@@ -81,7 +81,8 @@ internal/
 ├── domain/                              # Hexágono: entidades e erros de domínio
 │   ├── auth_session.go
 │   ├── errors.go
-│   └── pokemon.go
+│   ├── pokemon.go
+│   └── type_colors.go
 │
 ├── ports/
 │   ├── inbound/                         # Contratos que os adaptadores inbound consomem
@@ -91,6 +92,7 @@ internal/
 │   │   └── token_validator.go           # TokenValidator (usado pelo AuthMiddleware)
 │   └── outbound/                        # Contratos que a aplicação exige de recursos externos
 │       ├── auth.go                      # AuthProvider
+│       ├── favorite_catalog.go          # FavoriteCatalogProvider (favoritos via catalog-service)
 │       ├── favorite_repository.go       # FavoriteRepository
 │       └── pokemon_repository.go        # PokemonRepository
 │
@@ -107,21 +109,29 @@ internal/
 │   │       ├── favorite_handler.go
 │   │       ├── home_handler.go
 │   │       ├── pokemon_handler.go
-│   │       ├── middleware.go            # Auth, CORS, rate-limit, RequestLoggerMiddleware
+│   │       ├── middleware.go            # Auth, CORS, rate-limit, SecureHeaders, RequestLogger
+│   │       ├── rate_limiter.go          # Rate limiter (Redis ou in-memory)
 │   │       ├── response_builder.go
 │   │       └── dto/
 │   └── outbound/
 │       ├── http/                        # Clientes HTTP externos
 │       │   ├── auth_service_client.go   # implementa outbound.AuthProvider e inbound.TokenValidator
-│       │   └── pokemon_catalog_client.go # implementa outbound.PokemonRepository
+│       │   ├── favorite_catalog_client.go # implementa outbound.FavoriteRepository e FavoriteCatalogProvider
+│       │   ├── pokemon_catalog_client.go # implementa outbound.PokemonRepository
+│       │   └── circuit_breaker.go       # Circuit breaker compartilhado pelos clients
+│       ├── memory/                      # Adaptadores em memória (fallback + testes)
+│       │   └── mock_repositories.go     # implementa outbound.* sem infra
 │       └── postgres/                    # Adaptadores PostgreSQL
 │           ├── database.go              # Pool de conexão (pgx/v5)
 │           ├── favorite_repository.go   # implementa outbound.FavoriteRepository
 │           └── pokemon_repository.go    # implementa outbound.PokemonRepository
 │
 └── infrastructure/
-    └── logger/                          # Setup do slog estruturado (LOG_LEVEL, LOG_FORMAT)
-        └── logger.go
+    ├── logger/                          # Setup do slog estruturado (LOG_LEVEL, LOG_FORMAT)
+    │   └── logger.go
+    └── observability/                   # Métricas (Prometheus) e tracing (OpenTelemetry)
+        ├── metrics.go
+        └── tracing.go
 ```
 
 **Regra de dependência aplicada:**
@@ -131,10 +141,10 @@ adapters/inbound/http  →  ports/inbound  ←  service
                                                │
                                           ports/outbound
                                                │
-                                   adapters/outbound/{http,postgres}
+                          adapters/outbound/{http,memory,postgres}
 ```
 
-Os handlers HTTP importam apenas `ports/inbound`. Os serviços importam `ports/outbound`. Os adaptadores outbound implementam `ports/outbound`. O pacote `infrastructure/logger` é inicializado em `main()` e não é importado por nenhuma camada de negócio.
+Os handlers HTTP importam apenas `ports/inbound`. Os serviços importam `ports/outbound`. Os adaptadores outbound implementam `ports/outbound`. O pacote `infrastructure/` (logger, observability) é inicializado em `main()` e não é importado por nenhuma camada de negócio.
 
 ---
 
@@ -191,7 +201,7 @@ Use este checklist ao adicionar código novo:
 - [ ] Os adaptadores outbound (`adapters/outbound/`) implementam `ports/outbound/` e importam apenas `domain/`.
 - [ ] Nenhum handler HTTP importa diretamente um repositório concreto.
 - [ ] Novas entidades de domínio vivem em `domain/`, não em `ports/`.
-- [ ] Integrações externas novas entram em `adapters/outbound/http/` e normalizam erros no próprio adapter.
+- [ ] Integrações externas novas entram em `adapters/outbound/` (http, postgres ou memory) e normalizam erros no próprio adapter.
 
 ---
 

@@ -140,7 +140,7 @@ func NewPokemonService(pokemonRepo outbound.PokemonRepository,
 **O ponto-chave:** `pokemon_service.go` **não importa** `adapters/outbound/http` nem `postgres`. Ele só importa `domain`, `ports/inbound`, `ports/outbound`. Isso é o que permite testar com stub:
 
 ```go
-// tests/unit/service_test.go — substitui o adapter real por stub
+// internal/service/service_test.go — substitui o adapter real por stub
 svc := service.NewPokemonService(mockPokemonRepo, mockFavoriteRepo)
 // mockPokemonRepo implementa outbound.PokemonRepository sem banco nenhum
 ```
@@ -182,7 +182,7 @@ mux.HandleFunc("POST /api/v1/pokemons/{id}/favorite", h.RequireAuth(h.AddFavorit
 
 ### 2.5 `adapters/outbound/` — O que o hexágono chama
 
-**O que faz:** implementa as portas outbound. Dois tipos neste projeto:
+**O que faz:** implementa as portas outbound. Três tipos neste projeto:
 
 | Adapter | Pasta | Implementa | Faz |
 |---------|-------|------------|-----|
@@ -228,8 +228,11 @@ if errors.Is(err, pgx.ErrNoRows) {
 // 1. Adapter concreto de catálogo (HTTP client)
 pokemonRepo = httpclient.NewPokemonCatalogServiceRepository(cfg.PokemonCatalogServiceURL)
 
-// 2. Adapter concreto de favoritos (Postgres OU memória, decisão aqui)
-favoriteRepo = postgres.NewPostgresFavoriteRepository(db.Pool)  // ou memory.NewFavoriteRepository()
+// 2. Adapter concreto de favoritos: por padrão via catalog-service (REST);
+//    fallback para Postgres ou memória conforme config (FAVORITES_VIA_CATALOG).
+favoriteRepo = favoriteCatalogClient      // default: httpclient.NewFavoriteCatalogClient(...)
+// favoriteRepo = postgres.NewPostgresFavoriteRepository(db.Pool)   // se FAVORITES_VIA_CATALOG=false
+// favoriteRepo = memory.NewFavoriteRepository()                    // fallback
 
 // 3. Caso de uso recebe as INTERFACES (que na verdade são os adapters)
 pokemonService := service.NewPokemonService(pokemonRepo, favoriteRepo)

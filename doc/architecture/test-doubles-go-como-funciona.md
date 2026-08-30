@@ -77,24 +77,33 @@ mux := NewMux(svc)   // handler recebe o stub como AuthService
 **Real no projeto** — `internal/adapters/outbound/memory/mock_repositories.go`:
 
 ```go
-// Fake: armazena em memória, tem lógica real (append, busca)
+// Fake: armazena em memória, tem lógica real (add, busca, dedup)
 type FavoriteRepository struct {
-    items map[string][]string
+	mu        sync.RWMutex
+	favorites map[string]map[string]bool
 }
 
 func NewFavoriteRepository() *FavoriteRepository {
-    return &FavoriteRepository{items: make(map[string][]string)}
+	return &FavoriteRepository{
+		favorites: make(map[string]map[string]bool),
+	}
 }
 
-func (m *FavoriteRepository) AddFavorite(ctx, userID, pokemonID string) error {
-    m.items[userID] = append(m.items[userID], pokemonID)
-    return nil
+func (m *FavoriteRepository) AddFavorite(_ context.Context, userID, pokemonID string) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+
+	if _, exists := m.favorites[userID]; !exists {
+		m.favorites[userID] = make(map[string]bool)
+	}
+	m.favorites[userID][pokemonID] = true
+	return nil
 }
 ```
 
 **Detalhe importante:** este `memory` package **não é só de teste** — o `main.go` usa como **fallback** quando o Postgres está fora:
 ```go
-// cmd/server/main.go:66
+// cmd/server/main.go:90
 favoriteRepo = memory.NewFavoriteRepository()   // fallback em produção
 ```
 Fake serve teste **e** degradação. Um bom teste é usar exatamente o mesmo fake.
@@ -115,14 +124,15 @@ getAllFn: func(ctx context.Context, page, pageSize int) (*domain.PokemonPage, er
 },
 ```
 
-E no handler test (auth-service) você verifica **o que foi passado**:
+E no handler test (auth-service) você verifica **o que foi passado** — o assert mora no function field que o teste programa, não no método do double:
 ```go
-func (s *stubAuthRepo) IsAccessTokenRevoked(ctx, jti string) (bool, error) {
+// handlers_test.go:99 — o teste "espia" o argumento dentro do fn field
+isAccessTokenRevokedFn: func(ctx context.Context, jti string) (bool, error) {
     if jti != "jti-ativo" {
         t.Fatalf("jti inesperado: %s", jti)   // ASSERT dentro do spy
     }
     return false, nil
-}
+},
 ```
 O spy de verdade teria `Calls []string` e `assert.Equal(t, []string{"25"}, spy.FindByIDCalls)`.
 
@@ -132,7 +142,7 @@ O spy de verdade teria `Calls []string` e `assert.Equal(t, []string{"25"}, spy.F
 
 **Objetivo:** pré-programa comportamento E verifica que foi chamado exatamente como esperado. **Cuidado:** é o mais rígido — muda o código e o teste quebra (por design).
 
-**Real no projeto** — `auth-service/internal/service/auth_service_test.go:14`:
+**Real no projeto** — `auth-service/internal/service/auth_service_test.go:17`:
 
 ```go
 type mockAuthRepository struct {

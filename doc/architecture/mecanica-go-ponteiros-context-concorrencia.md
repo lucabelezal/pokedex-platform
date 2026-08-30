@@ -114,7 +114,7 @@ O benefício: se o cliente HTTP desconectar, o `r.Context()` cancela, o timeout 
 ### 3. Valores — userID via contexto
 
 ```go
-// adapters/inbound/http/middleware.go:187
+// adapters/inbound/http/middleware.go:172
 ctx := context.WithValue(r.Context(), UserIDContextKey, userID)
 ctx = context.WithValue(ctx, UserEmailContextKey, userEmail)
 next.ServeHTTP(w, r.WithContext(ctx))
@@ -122,7 +122,7 @@ next.ServeHTTP(w, r.WithContext(ctx))
 
 O middleware extrai o userID do JWT, coloca no contexto, e o handler lê depois:
 ```go
-// middleware.go:313
+// middleware.go:286
 func getUserIDFromContext(ctx context.Context) string {
     userID, ok := ctx.Value(UserIDContextKey).(string)  // type assertion
     if !ok { return "" }
@@ -278,7 +278,7 @@ pokemons = append(pokemons, p)              // cresce
 
 **Padrão do projeto — retornar slice vazio, não nil:**
 ```go
-// adapters/outbound/postgres/pokemon_repository.go
+// adapters/outbound/postgres/favorite_repository.go
 favorites := make([]string, 0)   // ← NUNCA var favorites []string (que é nil)
 ```
 **Por quê?** `nil` serializa como `null` no JSON; `make([]T,0)` serializa como `[]`. A AGENTS.md exige: "use `make([]T, 0)` ao retornar slices via API/JSON" — para o cliente receber `[]` e não `null`.
