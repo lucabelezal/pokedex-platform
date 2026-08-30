@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -12,7 +13,8 @@ import (
 )
 
 // newCatalogWriteServer sobe um httptest.Server que simula o catalog-service
-// para as rotas de escrita de favoritos, delegando ao repository real do BFF.
+// para as rotas de favoritos (escrita POST/DELETE e listagem GET /v1/favorites),
+// delegando ao repository real do BFF.
 func newCatalogWriteServer(t *testing.T, db *repository.Database) *httptest.Server {
 	t.Helper()
 
@@ -20,9 +22,9 @@ func newCatalogWriteServer(t *testing.T, db *repository.Database) *httptest.Serv
 
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		userID := r.Header.Get("X-User-ID")
-		pokemonID := strings.TrimPrefix(r.URL.Path, "/v1/pokemons/")
-		pokemonID = strings.TrimSuffix(pokemonID, "/favorite")
-
+		if userID == "" {
+			userID = r.URL.Query().Get("user_id")
+		}
 		if userID == "" {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
@@ -30,6 +32,21 @@ func newCatalogWriteServer(t *testing.T, db *repository.Database) *httptest.Serv
 
 		ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 		defer cancel()
+
+		// GET /v1/favorites?user_id=... — lista IDs de favoritos
+		if r.Method == http.MethodGet && r.URL.Path == "/v1/favorites" {
+			ids, err := repo.GetUserFavorites(ctx, userID)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(ids)
+			return
+		}
+
+		pokemonID := strings.TrimPrefix(r.URL.Path, "/v1/pokemons/")
+		pokemonID = strings.TrimSuffix(pokemonID, "/favorite")
 
 		switch r.Method {
 		case http.MethodPost:

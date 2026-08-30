@@ -11,13 +11,13 @@ import (
 
 // CircuitBreakerConfig define os parâmetros de resiliência.
 type CircuitBreakerConfig struct {
-	Name          string
-	MaxRequests   uint32
-	Interval      time.Duration
-	Timeout       time.Duration
-	FailureCount  uint32
-	RetryMax      int
-	RetryBackoff  []time.Duration
+	Name         string
+	MaxRequests  uint32
+	Interval     time.Duration
+	Timeout      time.Duration
+	FailureCount uint32
+	RetryMax     int
+	RetryBackoff []time.Duration
 }
 
 // DefaultCircuitBreakerConfig retorna a configuração padrão.

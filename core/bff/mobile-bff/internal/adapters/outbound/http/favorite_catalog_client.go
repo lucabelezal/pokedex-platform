@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
+	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
 // FavoriteCatalogClient busca detalhes de Pokémon favoritos via catalog-service.
@@ -113,3 +114,57 @@ func (c *FavoriteCatalogClient) RemoveFavorite(ctx context.Context, userID, poke
 		return fmt.Errorf("catalog-service retornou status %d ao remover favorito", resp.StatusCode)
 	}
 }
+
+// GetUserFavorites lista os IDs de Pokémon favoritos do usuário via catalog-service.
+func (c *FavoriteCatalogClient) GetUserFavorites(ctx context.Context, userID string) ([]string, error) {
+	if strings.TrimSpace(userID) == "" {
+		return []string{}, nil
+	}
+
+	endpoint := fmt.Sprintf("%s/v1/favorites?user_id=%s", c.baseURL, url.QueryEscape(userID))
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
+	if err != nil {
+		return nil, fmt.Errorf("erro ao criar requisicao de listar favoritos: %w", err)
+	}
+
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("erro ao listar favoritos: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == http.StatusBadRequest {
+		return []string{}, nil
+	}
+	if resp.StatusCode >= 400 {
+		return nil, fmt.Errorf("catalog-service retornou status %d ao listar favoritos", resp.StatusCode)
+	}
+
+	var ids []string
+	if err := json.NewDecoder(resp.Body).Decode(&ids); err != nil {
+		return nil, fmt.Errorf("erro ao decodificar lista de favoritos: %w", err)
+	}
+	if ids == nil {
+		ids = []string{}
+	}
+
+	return ids, nil
+}
+
+// IsFavorite verifica se um Pokémon está nos favoritos do usuário via catalog-service.
+func (c *FavoriteCatalogClient) IsFavorite(ctx context.Context, userID, pokemonID string) (bool, error) {
+	ids, err := c.GetUserFavorites(ctx, userID)
+	if err != nil {
+		return false, err
+	}
+	for _, id := range ids {
+		if id == pokemonID {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
+var _ outbound.FavoriteRepository = (*FavoriteCatalogClient)(nil)
+var _ outbound.FavoriteCatalogProvider = (*FavoriteCatalogClient)(nil)

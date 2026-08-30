@@ -45,6 +45,9 @@ func (s *FavoriteService) RemoveFavorite(ctx context.Context, userID, pokemonID 
 }
 
 func (s *FavoriteService) GetUserFavorites(ctx context.Context, userID string) ([]string, error) {
+	if s.favoriteCatalog != nil {
+		return s.favoriteCatalog.GetUserFavorites(ctx, userID)
+	}
 	return s.favoriteRepo.GetUserFavorites(ctx, userID)
 }
 

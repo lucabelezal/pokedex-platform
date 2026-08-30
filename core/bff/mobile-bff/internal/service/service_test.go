@@ -1,12 +1,12 @@
-package unit
+package service_test
 
 import (
 	"context"
 	"testing"
 
+	memory "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/memory"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
-	"pokedex-platform/core/bff/mobile-bff/tests/mocks"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -37,8 +37,8 @@ func (s *stubAuthProvider) Logout(ctx context.Context, token string) error {
 }
 
 func TestPokemonServiceListPokemons(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	svc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 
 	ctx := context.Background()
@@ -50,8 +50,8 @@ func TestPokemonServiceListPokemons(t *testing.T) {
 }
 
 func TestPokemonServiceGetPokemonDetails(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	svc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 
 	tests := []struct {
@@ -92,8 +92,8 @@ func TestPokemonServiceGetPokemonDetails(t *testing.T) {
 }
 
 func TestPokemonServiceSearchPokemons(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	svc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 
 	tests := []struct {
@@ -136,8 +136,8 @@ func TestPokemonServiceSearchPokemons(t *testing.T) {
 }
 
 func TestFavoriteServiceAddFavorite(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
 	tests := []struct {
@@ -179,8 +179,8 @@ func TestFavoriteServiceAddFavorite(t *testing.T) {
 }
 
 func TestFavoriteServiceRemoveFavorite(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
 	ctx := context.Background()
@@ -199,8 +199,8 @@ func TestFavoriteServiceRemoveFavorite(t *testing.T) {
 }
 
 func TestFavoriteServiceGetUserFavorites(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	svc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
 	ctx := context.Background()

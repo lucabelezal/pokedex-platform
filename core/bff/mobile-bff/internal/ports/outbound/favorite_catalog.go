@@ -9,6 +9,7 @@ import (
 // FavoriteCatalogProvider abstrai operações de favoritos via catalog-service.
 type FavoriteCatalogProvider interface {
 	GetFavoriteDetails(ctx context.Context, ids []string) ([]domain.Pokemon, error)
+	GetUserFavorites(ctx context.Context, userID string) ([]string, error)
 	AddFavorite(ctx context.Context, userID, pokemonID string) error
 	RemoveFavorite(ctx context.Context, userID, pokemonID string) error
 }

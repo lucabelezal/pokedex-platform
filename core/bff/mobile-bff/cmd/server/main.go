@@ -55,7 +55,17 @@ func main() {
 	pokemonRepo = httpclient.NewPokemonCatalogServiceRepository(cfg.PokemonCatalogServiceURL)
 	slog.Info("pokemon catalog configurado", "url", cfg.PokemonCatalogServiceURL)
 
-	if cfg.DatabaseURL != "" {
+	favoriteCatalogClient := httpclient.NewFavoriteCatalogClient(cfg.PokemonCatalogServiceURL)
+
+	// FAVORITES_VIA_CATALOG (default true): favoritos 100% via catalog-service (REST).
+	// O BFF não conecta ao Postgres para operações de favoritos.
+	// FavoriteCatalogClient implementa FavoriteRepository e FavoriteCatalogProvider.
+	var favoriteProvider outbound.FavoriteCatalogProvider
+	if cfg.FavoritesViaCatalog {
+		favoriteRepo = favoriteCatalogClient
+		favoriteProvider = favoriteCatalogClient
+		slog.Info("favoritos via catalog-service (FAVORITES_VIA_CATALOG=true)")
+	} else if cfg.DatabaseURL != "" {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -82,7 +92,7 @@ func main() {
 
 	// Configurar serviços
 	pokemonService := service.NewPokemonService(pokemonRepo, favoriteRepo)
-	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo, httpclient.NewFavoriteCatalogClient(cfg.PokemonCatalogServiceURL))
+	favoriteService := service.NewFavoriteService(favoriteRepo, pokemonRepo, favoriteProvider)
 
 	// Configurar cliente de auth-service
 	authClient := httpclient.NewAuthServiceClient(cfg.AuthServiceURL)

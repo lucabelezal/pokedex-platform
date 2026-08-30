@@ -1,4 +1,4 @@
-package unit
+package httpclient_test
 
 import (
 	"context"
@@ -114,4 +114,56 @@ func TestFavoriteCatalogClient_RemoveFavorite(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestFavoriteCatalogClient_GetUserFavorites(t *testing.T) {
+	tests := []struct {
+		name    string
+		userID  string
+		status  int
+		body    string
+		wantLen int
+		wantErr bool
+	}{
+		{"sem favoritos", "user-1", http.StatusOK, `[]`, 0, false},
+		{"com favoritos", "user-1", http.StatusOK, `["1","25"]`, 2, false},
+		{"erro 500", "user-1", http.StatusInternalServerError, ``, 0, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				assert.Equal(t, "/v1/favorites", r.URL.Path)
+				assert.Equal(t, "user-1", r.URL.Query().Get("user_id"))
+				w.WriteHeader(tt.status)
+				_, _ = w.Write([]byte(tt.body))
+			}))
+			defer srv.Close()
+
+			client := httpclient.NewFavoriteCatalogClient(srv.URL)
+			ids, err := client.GetUserFavorites(context.Background(), tt.userID)
+			if tt.wantErr {
+				require.Error(t, err)
+				return
+			}
+			require.NoError(t, err)
+			assert.Len(t, ids, tt.wantLen)
+		})
+	}
+}
+
+func TestFavoriteCatalogClient_IsFavorite(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte(`["1","25"]`))
+	}))
+	defer srv.Close()
+
+	client := httpclient.NewFavoriteCatalogClient(srv.URL)
+
+	isFav, err := client.IsFavorite(context.Background(), "user-1", "25")
+	require.NoError(t, err)
+	assert.True(t, isFav)
+
+	isFav, err = client.IsFavorite(context.Background(), "user-1", "999")
+	require.NoError(t, err)
+	assert.False(t, isFav)
 }

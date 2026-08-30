@@ -1,4 +1,4 @@
-package unit
+package httphandler_test
 
 import (
 	"context"
@@ -10,17 +10,17 @@ import (
 
 	httpadapter "pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http"
 	"pokedex-platform/core/bff/mobile-bff/internal/adapters/inbound/http/dto"
+	memory "pokedex-platform/core/bff/mobile-bff/internal/adapters/outbound/memory"
 	"pokedex-platform/core/bff/mobile-bff/internal/domain"
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 	"pokedex-platform/core/bff/mobile-bff/internal/service"
-	"pokedex-platform/core/bff/mobile-bff/tests/mocks"
 
 	"github.com/stretchr/testify/assert"
 )
 
 type stubFavoriteCatalogProvider struct {
-	repo         outbound.PokemonRepository
-	favoriteRepo outbound.FavoriteRepository
+	repo              outbound.PokemonRepository
+	favoriteRepo      outbound.FavoriteRepository
 	addFavoriteErr    error
 	removeFavoriteErr error
 }
@@ -35,6 +35,13 @@ func (s *stubFavoriteCatalogProvider) GetFavoriteDetails(ctx context.Context, id
 		result = append(result, *p)
 	}
 	return result, nil
+}
+
+func (s *stubFavoriteCatalogProvider) GetUserFavorites(ctx context.Context, userID string) ([]string, error) {
+	if s.favoriteRepo != nil {
+		return s.favoriteRepo.GetUserFavorites(ctx, userID)
+	}
+	return []string{}, nil
 }
 
 func (s *stubFavoriteCatalogProvider) AddFavorite(ctx context.Context, userID, pokemonID string) error {
@@ -83,8 +90,8 @@ func (s *stubAuthUseCase) Logout(ctx context.Context, token string) error {
 }
 
 func TestHealthHandler(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -105,8 +112,8 @@ func TestHealthHandler(t *testing.T) {
 }
 
 func TestListPokemonsHandler(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -127,8 +134,8 @@ func TestListPokemonsHandler(t *testing.T) {
 }
 
 func TestListPokemonsHandlerWithAuthenticatedFavorites(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -161,8 +168,8 @@ func TestListPokemonsHandlerWithAuthenticatedFavorites(t *testing.T) {
 }
 
 func TestSearchPokemonsHandler(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -183,8 +190,8 @@ func TestSearchPokemonsHandler(t *testing.T) {
 }
 
 func TestListPokemonsWithTypeFilterHandler(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -205,8 +212,8 @@ func TestListPokemonsWithTypeFilterHandler(t *testing.T) {
 }
 
 func TestGetPokemonDetailsHandler(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -228,8 +235,8 @@ func TestGetPokemonDetailsHandler(t *testing.T) {
 }
 
 func TestGetHomeHandler(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -260,8 +267,8 @@ func TestGetHomeHandler(t *testing.T) {
 }
 
 func TestGetHomeHandlerWithFilters(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -288,8 +295,8 @@ func TestGetHomeHandlerWithFilters(t *testing.T) {
 }
 
 func TestGetHomeHandlerWithDescendingNumberOrdering(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -312,8 +319,8 @@ func TestGetHomeHandlerWithDescendingNumberOrdering(t *testing.T) {
 }
 
 func TestGetRegionsHandler(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -337,8 +344,8 @@ func TestGetRegionsHandler(t *testing.T) {
 }
 
 func TestGetMeHandler(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -363,8 +370,8 @@ func TestGetMeHandler(t *testing.T) {
 }
 
 func TestGetMeWithoutAuth(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -388,8 +395,8 @@ func TestGetMeWithoutAuth(t *testing.T) {
 }
 
 func TestGetFavoritesWithoutAuthReturnsScreenState(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -410,8 +417,8 @@ func TestGetFavoritesWithoutAuthReturnsScreenState(t *testing.T) {
 }
 
 func TestGetFavoritesWithAuthAndEmptyListReturnsEmptyState(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -434,8 +441,8 @@ func TestGetFavoritesWithAuthAndEmptyListReturnsEmptyState(t *testing.T) {
 }
 
 func TestGetFavoritesWithAuthAndDataReturnsHasDataState(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteCatalog := &stubFavoriteCatalogProvider{repo: pokemonRepo, favoriteRepo: favoriteRepo}
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, favoriteCatalog)
@@ -463,8 +470,8 @@ func TestGetFavoritesWithAuthAndDataReturnsHasDataState(t *testing.T) {
 }
 
 func TestAddFavoriteWithoutAuth(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -482,8 +489,8 @@ func TestAddFavoriteWithoutAuth(t *testing.T) {
 }
 
 func TestRemoveFavoriteNotFound(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -505,8 +512,8 @@ func TestRemoveFavoriteNotFound(t *testing.T) {
 }
 
 func TestSignupReturnsCreatedWhenAuthSucceeds(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 	authUseCase := &stubAuthUseCase{
@@ -535,8 +542,8 @@ func TestSignupReturnsCreatedWhenAuthSucceeds(t *testing.T) {
 }
 
 func TestLoginReturnsUnauthorizedForInvalidCredentials(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -556,8 +563,8 @@ func TestLoginReturnsUnauthorizedForInvalidCredentials(t *testing.T) {
 }
 
 func TestRefreshReturnsUnauthorizedForInvalidToken(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
@@ -578,8 +585,8 @@ func TestRefreshReturnsUnauthorizedForInvalidToken(t *testing.T) {
 }
 
 func TestSignupReturnsServiceUnavailableWhenAuthUseCaseIsMissing(t *testing.T) {
-	pokemonRepo := mocks.NewMockPokemonRepository()
-	favoriteRepo := mocks.NewMockFavoriteRepository()
+	pokemonRepo := memory.NewPokemonRepository()
+	favoriteRepo := memory.NewFavoriteRepository()
 	pokemonSvc := service.NewPokemonService(pokemonRepo, favoriteRepo)
 	favoriteSvc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 

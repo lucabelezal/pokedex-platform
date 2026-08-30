@@ -1,4 +1,4 @@
-package unit
+package httphandler_test
 
 import (
 	"context"

@@ -1,4 +1,4 @@
-package unit
+package httpclient_test
 
 import (
 	"net/http"
