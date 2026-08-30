@@ -20,6 +20,7 @@ Este diretório centraliza a documentação arquitetural da Plataforma Pokedex.
 - [DECISIONS.md](DECISIONS.md): decisões arquiteturais atuais e trade-offs.
 - [SOLID-AND-PATTERNS.md](SOLID-AND-PATTERNS.md): princípios SOLID conectados a patterns, com exemplos em Go.
 - [architecture/hexagonal.md](architecture/hexagonal.md): guia detalhado da arquitetura hexagonal aplicada ao `mobile-bff`.
+- [architecture/hexagonal-go-como-funciona.md](architecture/hexagonal-go-como-funciona.md): **teoria hexagonal conectada à mecânica de Go** — cada camada, onde mora no código real, e como interfaces/imports/composição materializam a arquitetura. Bom ponto de partida para quem está aprendendo Go + arquitetura.
 
 ### Guias temáticos
 

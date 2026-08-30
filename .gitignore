@@ -13,8 +13,17 @@ core/bff/mobile-bff/server
 core/infra/postgres/source-json/generated/
 core/infra/postgres/source-json/.local-tools/
 
-# Skills instalados localmente por IDE (a fonte canônica está em .agents/ e skills-lock.json)
-.claude/
+# Harness de avaliacao — resultados por execucao
+harness/eval/results/
+coverage.html
+
+# Artefatos de cobertura e testes gerados localmente
+*.cover
+coverage.out
+
+# Skills/commands instalados por IDE — exceto slash commands do projeto (versionados)
+.claude/*
+!.claude/commands/
 .cursor/
 .windsurf/
 agent/
