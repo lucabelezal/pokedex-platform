@@ -24,6 +24,8 @@ coverage.out
 # Skills/commands instalados por IDE — exceto slash commands do projeto (versionados)
 .claude/*
 !.claude/commands/
+.opencode/*
+!.opencode/commands/
 .cursor/
 .windsurf/
 agent/
