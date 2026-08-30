@@ -53,6 +53,8 @@ jobs:
         include:
           - module: core/app/pokemon-catalog-service
             artifact_name: coverage-app-pokemon-catalog-service
+          - module: core/app/auth-service
+            artifact_name: coverage-app-auth-service
           - module: core/bff/mobile-bff
             artifact_name: coverage-bff-mobile-bff
           - module: core/infra/postgres/json2sql
@@ -117,6 +119,7 @@ jobs:
       matrix:
         module:
           - core/app/pokemon-catalog-service
+          - core/app/auth-service
           - core/bff/mobile-bff
           - core/infra/postgres/json2sql
 

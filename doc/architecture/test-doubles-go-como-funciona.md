@@ -190,7 +190,7 @@ svc := service.NewFavoriteService(favoriteRepo, pokemonRepo, nil)
 
 Para testar **adapters outbound** (clients HTTP), o Go dá `httptest.NewServer`: um servidor HTTP real de verdade que você programa a resposta.
 
-**Real no projeto** — `tests/unit/favorite_catalog_client_test.go:18`:
+**Real no projeto** — `internal/adapters/outbound/http/favorite_catalog_client_test.go:18`:
 
 ```go
 srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -224,8 +224,8 @@ Em JavaScript (Jest) o padrão é `__tests__/` ou `.test.ts` ao lado do código.
 
 | Padrão | Onde | Quem usa no projeto |
 |--------|------|---------------------|
-| **Co-localizado** | `internal/service/auth_service_test.go` ao lado de `auth_service.go` | ✅ auth-service, catalog-service |
-| **Pasta separada** | `tests/unit/`, `tests/integration/` | ✅ mobile-bff |
+| **Co-localizado** | `internal/service/auth_service_test.go` ao lado de `auth_service.go` | ✅ todos os serviços (auth, catalog, bff) |
+| **Pasta separada** | `tests/integration/` | ✅ mobile-bff (integração) |
 
 ### A resposta curta
 
@@ -235,36 +235,37 @@ Em JavaScript (Jest) o padrão é `__tests__/` ou `.test.ts` ao lado do código.
 - Testes de **unidade** (mesmo pacote) têm acesso a funções não exportadas (white-box).
 - O editor "jump to test" funciona por padrão.
 
-**Pasta `tests/` separada** é **exceção**, e o mobile-bff usa por um motivo arquitetural:
+**Pasta `tests/` separada** é **exceção** — usada apenas para **integração** (requer DB real).
 
-### Por que o mobile-bff usa `tests/`?
+### A decisão que foi executada no projeto
 
-O projeto segue hexagonal com `internal/` privado. Separar os testes em `tests/unit/` mantém a estrutura interna limpa e permite um `package unit` de teste externo (black-box). MAS há consequências:
+O mobile-bff **antes** usava `tests/unit/` (package `unit`) separado do código, com `tests/mocks/` re-exportando fakes. Foi **migrado** para o padrão co-localizado:
 
-1. **Testes de `tests/unit/` só veem API exportada** — não acessam funções privadas (`parseNumber`, `isValidUUID`).
-2. **Peso no import:** precisam de `tests/mocks/` e helpers próprios.
-3. **AGENTS.md do projeto declara:** *"O package `tests/` nunca é importado por código de produção"* — é uma regra de fronteira.
+```
+antes:                                       depois:
+tests/unit/handlers_test.go          →  internal/adapters/inbound/http/handlers_test.go
+tests/unit/service_test.go           →  internal/service/service_test.go
+tests/unit/domain_test.go            →  internal/domain/domain_test.go
+tests/unit/auth_client_test.go       →  internal/adapters/outbound/http/auth_service_client_test.go
+tests/mocks/mock_repositories.go     →  internal/adapters/outbound/memory/ (import direto)
+tests/integration/                   →  mantido (padrão correto p/ integração)
+```
 
-### A recomendação concreta para o seu projeto
+**Como ficou sem perder black-box:** os testes migrados usam `package xxx_test` (mesmo diretório, pacote externo). Isso mantém o teste **black-box** (só API pública — como um cliente usaria) MAS co-localizado (navegação fácil, sem `tests/mocks/`). O `internal/` já esconde o que precisa esconder; não é preciso uma pasta separada para isso.
+
+**O que restou em `tests/`:** apenas `tests/integration/` — testes que sobem Postgres real, precisam de env vars e não devem rodar no `go test` comum.
+
+### Recomendação concreta (o estado atual)
 
 | Tipo de teste | Onde colocar | Exemplo |
 |---------------|--------------|---------|
-| **Unit de service/handler/repo** | **co-localizado** (`internal/.../*_test.go`) | auth-service, catalog-service já fazem isso ✅ |
-| **Unit de adapter HTTP client** | co-localizado (ao lado do `.go`) | seria `internal/adapters/outbound/http/xxx_test.go` |
+| **Unit de service/handler/repo** | **co-localizado** (`internal/.../*_test.go`) | `internal/service/service_test.go` ✅ |
+| **Unit de adapter HTTP client** | co-localizado (ao lado do `.go`) | `internal/adapters/outbound/http/*_test.go` ✅ |
 | **Teste de domínio puro** | co-localizado | `internal/domain/domain_test.go` ✅ |
-| **Integração (Postgres real)** | `tests/integration/` (fora de `internal/`) | mobile-bff já faz ✅ |
+| **Integração (Postgres real)** | `tests/integration/` (fora de `internal/`) | mobile-bff ✅ |
 
 **Por que integração separada?** Precisa de build tag (`//go:build integration`), Docker, env vars — não deve rodar no `go test` comum. Isolar em `tests/integration/` deixa claro.
 
-**Caminho de migração sugerido (se quiser seguir o padrão Go):**
-```
-antes:                                depois:
-tests/unit/handlers_test.go  →  internal/adapters/inbound/http/handlers_test.go
-tests/unit/service_test.go   →  internal/service/service_test.go
-tests/mocks/                 →  internal/adapters/outbound/memory/ (já existe!)
-tests/integration/           →  manter (é o padrão correto p/ integração)
-```
-O `tests/unit/` poderia ser dissolvido co-localizando — é o que auth/catalog já fazem, e reduziria o acoplamento de `tests/mocks/`.
 
 ---
 
@@ -294,5 +295,5 @@ assert.Equal(t, 2, len(page.Content))   // comportamento
 - Stub real: `core/app/auth-service/internal/http/handlers_test.go`
 - Mock real: `core/app/auth-service/internal/service/auth_service_test.go`
 - Fake real (produção + teste): `core/bff/mobile-bff/internal/adapters/outbound/memory/mock_repositories.go`
-- httptest real: `core/bff/mobile-bff/tests/unit/favorite_catalog_client_test.go`
+- httptest real: `core/bff/mobile-bff/internal/adapters/outbound/http/favorite_catalog_client_test.go`
 - Regra arquitetural: `AGENTS.md` — "O package `tests/` nunca é importado por código de produção"

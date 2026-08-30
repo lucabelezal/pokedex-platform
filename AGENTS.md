@@ -108,23 +108,44 @@ Agentes especializados em `.github/agents/`:
 
 ## Skills Disponíveis
 
-Skills Go em `.github/skills/`:
+### Skills próprias do projeto — `.github/skills/` (canônicas, com evals)
 
 | Skill | Descrição |
 |-------|-----------|
-| `golang-testing` | Testes unitários, integração, mocks, HTTP testing |
-| `golang-error-handling` | Criação, wrapping, tratamento de erros |
-| `golang-database` | PostgreSQL, transações, performance, scanning |
-| `golang-security` | Auditoria de segurança, secrets, injeção, cookies |
-| `golang-linter` | golangci-lint, configuração, diretivas |
-| `golang-documentation` | Templates de docs, comentários, README |
-| `go-style-combined` | Uber + Google Go Style Guide |
-| `go-api-design` | Design de APIs REST |
-| `go-security-audit` | Auditoria de segurança |
-| `go-test-quality` | Qualidade de testes |
-| `go-test-table-driven` | Testes table-driven |
-| `go-error-handling` | Tratamento de erros |
-| `go-architecture-review` | Revisão de arquitetura |
+| `go-style-combined` | Uber + Google Go Style Guide — referência canônica do projeto |
+| `go-api-design` | Design de APIs REST, handlers, middleware, graceful shutdown |
+| `go-security-audit` | Auditoria de segurança, validação, SQL injection, secrets |
+| `go-test-quality` | Testes de qualidade, helpers, httptest, fuzz, mocks |
+| `go-test-table-driven` | Padrões de table-driven tests |
+| `go-error-handling` | Criação, wrapping, sentinelas, custom errors |
+| `go-architecture-review` | Revisão de arquitetura, layout, direção de dependências |
+
+Cada skill própria possui `evals/evals.json` (prompt + trap + assertions) validado por `harness/eval/run.py`.
+
+### Skills samber — `.agents/skills/` (48 skills, fonte `samber/cc-skills-golang`)
+
+Biblioteca externa versionada via `skills-lock.json` / `.agents/.skill-lock.json`.
+Inclui `golang-testing`, `golang-database`, `golang-security`, `golang-linter`,
+`golang-documentation` e outras. Cada uma possui `SKILL.md` + `references/` + `evals/`.
+
+> `.claude/`, `.cursor/`, `.windsurf/`, `agent/` são espelhos locais gerados por IDE (gitignored).
+> Fonte canônica: `.agents/skills/` + `.github/skills/` — ver `skills-lock.json`.
+
+### Harness de avaliação
+
+- `harness/evals/agents-md.json` — convenções do `AGENTS.md` (pt-BR, hexagonal, commits)
+- `harness/eval/run.py` — runner (Anthropic/OpenAI, stdlib). Ver `harness/eval/README.md`.
+- Comandos: `python3 harness/eval/run.py list|schema|run` ou `make eval`
+
+## Slash Commands
+
+| Command | Uso | Skills orquestradas |
+|---------|-----|---------------------|
+| `/plan-with-sdd [feature]` | Planeja e executa feature via SDD (Specify → Design → Tasks → Execute) com gates deterministicos | `tlc-spec-driven` + `go-style-combined` + `go-architecture-review` + `go-test-quality` |
+| `/refactor [alvo]` | Planeja e executa refactor Go seguro (Plan → Stage → Land) com blast-radius via gopls | `golang-refactoring` + `golang-gopls` + `go-style-combined` |
+
+Comandos instalados em `.claude/commands/` (Claude Code), `.opencode/commands/` (opencode) e `~/.config/opencode/commands/` (global).
+Uso: digite `/plan-with-sdd minha feature` ou `/refactor extrair validacao de ProcessOrder` no chat.
 
 ## CI/CD
 
