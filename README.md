@@ -19,7 +19,6 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 ```text
 .
 ├── .github/
-│   ├── copilot-instructions.md   # Instruções globais para o Copilot
 │   ├── agents/                   # Agentes especializados do projeto
 │   │   ├── backend-architect.agent.md
 │   │   ├── database-architect.agent.md
@@ -46,7 +45,8 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 │   │   ├── golang-style-uber/
 │   │   └── golang-testing/
 │   └── workflows/                # Pipelines de CI
-├── bruno/
+├── .specs/                       # Especificações de features (spec-driven)
+├── bruno/                        # Coleções de teste de API (Bruno)
 ├── core/
 │   ├── app/
 │   │   ├── auth-service/
@@ -62,14 +62,22 @@ Cliente -> Kong -> BFF -> Serviço -> PostgreSQL/Redis
 │   │   │   ├── source-json/
 │   │   │   └── json2sql/
 │   │   └── redis/
+│   ├── observability/            # Ativos de observabilidade e operação
 │   └── docker-compose.yml
-└── doc/
+├── doc/
+    ├── adr/                      # Architecture Decision Records
+    ├── aprendizado/              # Guias de estudo Go em fases
+    ├── architecture/             # Arquitetura hexagonal aplicada ao Go
+    ├── bff/                      # Padrão BFF (System Design)
+    ├── design-patterns/          # Padrões de projeto (Go)
+    ├── guia-estilo/              # Guia e decisões de estilo Go
+    ├── redis/                    # Redis com Go (cache, streaming, operações)
+    ├── referencias/              # Índice de artigos de System Design
     ├── BFF.md
     ├── GATEWAY.md
     ├── INFRA.md
-    ├── bff/                       # padrao BFF (System Design)
-    ├── redis/                     # Redis com Go (cache, streaming, operacoes)
-    └── referencias/               # indice de artigos de System Design
+    └── SYSTEM-OVERVIEW.md
+└── harness/                      # Harness de avaliação de skills
 ```
 
 A pasta `bruno/` concentra a colecao de requisicoes de API da plataforma para testes manuais.
