@@ -90,30 +90,6 @@ func (rb *ResponseBuilder) BuildRichPokemonListResponse(page *domain.PokemonPage
 	}
 }
 
-func (rb *ResponseBuilder) BuildHomeResponse(page *domain.PokemonPage) *dto.RichPokemonListResponse {
-	pokemons := make([]dto.RichPokemonResponse, len(page.Content))
-	for i, p := range page.Content {
-		rich := rb.BuildRichPokemonResponse(&p)
-		pokemons[i] = *rich
-	}
-
-	return &dto.RichPokemonListResponse{
-		Content:       pokemons,
-		TotalElements: page.TotalElements,
-		CurrentPage:   page.CurrentPage,
-		TotalPages:    page.TotalPages,
-		HasNext:       page.HasNext,
-		Search: dto.SearchMetadata{
-			Placeholder: "Procure por um Pokémon...",
-		},
-		Filters: []interface{}{},
-	}
-}
-
-func (rb *ResponseBuilder) BuildHomePageResponse(page *domain.PokemonPage) *dto.HomeResponse {
-	return rb.BuildHomePageResponseWithTypes(page, nil, nil, nil, "", "Todos os tipos", "Menor número", "")
-}
-
 func (rb *ResponseBuilder) BuildHomePageResponseWithTypes(
 	page *domain.PokemonPage,
 	types []domain.Type,

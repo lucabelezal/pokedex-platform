@@ -51,24 +51,24 @@ internal/
 │  │     ├─ pokemon_handler.go
 │  │     ├─ middleware.go           # Auth, CORS, rate-limit, request logger
 │  │     ├─ response_builder.go
+│  │     ├─ rate_limiter.go         # Rate limit em memória ou Redis
 │  │     └─ dto/
 │  └─ outbound/
 │     ├─ http/                      # Clientes HTTP externos
 │     │  ├─ auth_service_client.go  # implementa outbound.AuthProvider e inbound.TokenValidator
-│     │  └─ pokemon_catalog_client.go # implementa outbound.PokemonRepository
+│     │  ├─ pokemon_catalog_client.go # implementa outbound.PokemonRepository
+│     │  └─ favorite_catalog_client.go # implementa outbound.FavoriteCatalog
+│     ├─ memory/                    # Repositorios fake em memória (testes e fallback)
 │     └─ postgres/                  # Adaptadores PostgreSQL
 │        ├─ database.go             # Pool de conexao (pgx/v5)
-│        ├─ favorite_repository.go  # implementa outbound.FavoriteRepository
-│        └─ pokemon_repository.go   # implementa outbound.PokemonRepository
+│        └─ favorite_repository.go  # implementa outbound.FavoriteRepository
 │
 └─ infrastructure/
-   └─ logger/                       # Setup do slog (LOG_LEVEL, LOG_FORMAT)
-      └─ logger.go
+   ├─ logger/                       # Setup do slog (LOG_LEVEL, LOG_FORMAT)
+   └─ observability/                # Tracing OpenTelemetry (OTLP) e métricas
 
 tests/
-├─ unit/                            # Testes unitarios (sem infraestrutura)
-├─ integration/                     # Testes com banco PostgreSQL real
-└─ mocks/                           # Repositorios fake para testes
+└─ integration/                     # Testes com banco PostgreSQL real
 ```
 
 ## Endpoints
@@ -131,9 +131,11 @@ O BFF atende o contrato rico do front, enquanto o `pokemon-catalog-service` conc
 
 ## Stack
 
-- Go 1.24
+- Go 1.25
 - net/http
 - PostgreSQL + pgx/v5
+- Redis (rate limit opcional)
+- OpenTelemetry (tracing OTLP opcional)
 - Testify
 - Docker / Docker Compose
 
@@ -147,7 +149,12 @@ O BFF atende o contrato rico do front, enquanto o `pokemon-catalog-service` conc
 | `JWT_SECRET` | Sim | Chave para validacao de tokens JWT |
 | `AUTH_SERVICE_URL` | Nao | URL do `auth-service` (funcionalidades de auth) |
 | `DATABASE_URL` | Nao | PostgreSQL para favoritos (usa mock se ausente) |
+| `REDIS_URL` | Nao | Redis para rate limit distribuido (usa in-memory se ausente) |
 | `MOBILE_BFF_PORT` | Nao | Porta HTTP (padrao: 8080) |
+| `AUTH_RATE_LIMIT_REQUESTS` | Nao | Limite de requisicoes no rate limit de auth (padrao: 20) |
+| `AUTH_RATE_LIMIT_WINDOW_SECONDS` | Nao | Janela do rate limit de auth em segundos (padrao: 60) |
+| `ALLOWED_ORIGINS` | Nao | Origens CORS permitidas (padrao: localhost) |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | Nao | Endpoint OTLP para tracing (tracing desabilitado se vazio) |
 | `LOG_LEVEL` | Nao | Nivel de log: `debug`, `info`, `warn`, `error` (padrao: `info`) |
 | `LOG_FORMAT` | Nao | Formato de log: `json` (padrao) ou `text` (legivel no terminal) |
 

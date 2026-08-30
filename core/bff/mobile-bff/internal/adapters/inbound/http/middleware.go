@@ -193,18 +193,6 @@ func extractTokenFromRequest(r *http.Request) (string, error) {
 	return "", nil
 }
 
-// RequireAuthMiddleware é um middleware que exige autenticação.
-func RequireAuthMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		userID := getUserIDFromContext(r.Context())
-		if userID == "" {
-			http.Error(w, `{"error":"unauthorized","message":"autenticacao obrigatoria"}`, http.StatusUnauthorized)
-			return
-		}
-		next.ServeHTTP(w, r)
-	})
-}
-
 // CORSMiddleware adiciona headers CORS.
 func CORSMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
