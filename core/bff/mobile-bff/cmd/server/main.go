@@ -93,7 +93,6 @@ func main() {
 	h := httpadapter.NewHandler(pokemonService, favoriteService, authService)
 	h.RegisterRoutes(mux)
 
-	mux.HandleFunc("GET /health", h.Health)
 	mux.HandleFunc("GET /metrics", func(w http.ResponseWriter, r *http.Request) {
 		promhttp.Handler().ServeHTTP(w, r)
 	})
