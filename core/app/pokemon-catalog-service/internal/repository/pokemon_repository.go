@@ -30,6 +30,7 @@ type PokemonRepository interface {
 	ListRegions(ctx context.Context) ([]domain.Region, error)
 	AddFavorite(ctx context.Context, userID, pokemonID string) error
 	RemoveFavorite(ctx context.Context, userID, pokemonID string) error
+	GetUserFavoriteIDs(ctx context.Context, userID string) ([]string, error)
 }
 
 // DBPool abstrai o pool pgx para permitir mocks em testes.
@@ -576,6 +577,11 @@ func (r *InMemoryPokemonRepository) RemoveFavorite(ctx context.Context, userID, 
 	return nil
 }
 
+func (r *InMemoryPokemonRepository) GetUserFavoriteIDs(ctx context.Context, userID string) ([]string, error) {
+	_ = ctx
+	return []string{}, nil
+}
+
 func (r *InMemoryPokemonRepository) ListTypes(ctx context.Context) ([]domain.Type, error) {
 	_ = ctx
 	return []domain.Type{
@@ -728,6 +734,39 @@ func (r *PostgresPokemonRepository) RemoveFavorite(ctx context.Context, userID, 
 		return ErrFavoriteNotFound
 	}
 	return nil
+}
+
+// GetUserFavoriteIDs retorna os IDs de Pokémon favoritos de um usuário.
+func (r *PostgresPokemonRepository) GetUserFavoriteIDs(ctx context.Context, userID string) ([]string, error) {
+	if strings.TrimSpace(userID) == "" {
+		return []string{}, nil
+	}
+
+	rows, err := r.db.Query(ctx, `
+		SELECT pokemon_id::TEXT
+		FROM user_favorites
+		WHERE user_id = $1::UUID
+		ORDER BY created_at DESC
+	`, userID)
+	if err != nil {
+		return nil, fmt.Errorf("erro ao listar favoritos do usuario: %w", err)
+	}
+	defer rows.Close()
+
+	ids := make([]string, 0)
+	for rows.Next() {
+		var id string
+		if err := rows.Scan(&id); err != nil {
+			return nil, fmt.Errorf("erro ao escanear favorito: %w", err)
+		}
+		ids = append(ids, id)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("erro ao iterar favoritos: %w", err)
+	}
+
+	return ids, nil
 }
 
 func NewPool(ctx context.Context, databaseURL string) (*pgxpool.Pool, error) {

@@ -62,6 +62,7 @@ func NewMux(pokemonRepo repository.PokemonRepository) *http.ServeMux {
 	mux.HandleFunc("GET /v1/pokemon-details/{id}", h.getPokemonDetailByID)
 	mux.HandleFunc("GET /v1/pokemons/{id}", h.getPokemonByID)
 	mux.HandleFunc("GET /v1/pokemons/favorites", h.getFavoritesBatch)
+	mux.HandleFunc("GET /v1/favorites", h.getUserFavoriteIDs)
 	mux.HandleFunc("POST /v1/pokemons/{id}/favorite", h.addFavorite)
 	mux.HandleFunc("DELETE /v1/pokemons/{id}/favorite", h.removeFavorite)
 	return mux
@@ -240,13 +241,34 @@ func (h *Handler) getFavoritesBatch(w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, http.StatusOK, data)
 }
 
+func (h *Handler) getUserFavoriteIDs(w http.ResponseWriter, r *http.Request) {
+	userID := strings.TrimSpace(r.URL.Query().Get("user_id"))
+	if userID == "" {
+		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "user_id obrigatorio"})
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	ids, err := h.pokemonRepo.GetUserFavoriteIDs(ctx, userID)
+	if err != nil {
+		respondJSON(w, http.StatusInternalServerError, map[string]string{"error": "falha ao listar favoritos"})
+		return
+	}
+
+	if ids == nil {
+		ids = []string{}
+	}
+	respondJSON(w, http.StatusOK, ids)
+}
+
 func (h *Handler) addFavorite(w http.ResponseWriter, r *http.Request) {
 	userID := r.Header.Get("X-User-ID")
 	if userID == "" {
 		respondJSON(w, http.StatusUnauthorized, map[string]string{"error": "autenticacao obrigatoria"})
 		return
 	}
-
 	pokemonID := r.PathValue("id")
 	if pokemonID == "" {
 		respondJSON(w, http.StatusBadRequest, map[string]string{"error": "id do pokemon obrigatorio"})

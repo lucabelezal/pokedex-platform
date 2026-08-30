@@ -563,3 +563,43 @@ func TestNewPool_ComURIVazia(t *testing.T) {
 	_, err := NewPool(context.Background(), "")
 	require.Error(t, err)
 }
+
+func TestPostgresPokemonRepository_GetUserFavoriteIDs(t *testing.T) {
+	t.Run("user vazio retorna lista vazia", func(t *testing.T) {
+		mock := mustMock(t)
+		defer func() { mock.Close() }()
+		repo := NewPostgresPokemonRepositoryWithPool(mock)
+		ids, err := repo.GetUserFavoriteIDs(context.Background(), "")
+		require.NoError(t, err)
+		assert.Empty(t, ids)
+		require.NoError(t, mock.ExpectationsWereMet())
+	})
+
+	t.Run("com favoritos", func(t *testing.T) {
+		mock := mustMock(t)
+		defer func() { mock.Close() }()
+		mock.ExpectQuery(regexp.QuoteMeta("SELECT pokemon_id::TEXT")).
+			WithArgs("user-1").
+			WillReturnRows(pgxmock.NewRows([]string{"pokemon_id"}).AddRow("1").AddRow("25"))
+
+		repo := NewPostgresPokemonRepositoryWithPool(mock)
+		ids, err := repo.GetUserFavoriteIDs(context.Background(), "user-1")
+		require.NoError(t, err)
+		assert.Equal(t, []string{"1", "25"}, ids)
+		require.NoError(t, mock.ExpectationsWereMet())
+	})
+
+	t.Run("sem favoritos retorna lista vazia", func(t *testing.T) {
+		mock := mustMock(t)
+		defer func() { mock.Close() }()
+		mock.ExpectQuery(regexp.QuoteMeta("SELECT pokemon_id::TEXT")).
+			WithArgs("user-1").
+			WillReturnRows(pgxmock.NewRows([]string{"pokemon_id"}))
+
+		repo := NewPostgresPokemonRepositoryWithPool(mock)
+		ids, err := repo.GetUserFavoriteIDs(context.Background(), "user-1")
+		require.NoError(t, err)
+		assert.Empty(t, ids)
+		require.NoError(t, mock.ExpectationsWereMet())
+	})
+}

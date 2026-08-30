@@ -21,16 +21,17 @@ func (s stubPinger) Ping(ctx context.Context) error {
 }
 
 type stubPokemonRepo struct {
-	getAllFn         func(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error)
-	searchFn         func(ctx context.Context, query string, page, pageSize int) (*domain.PokemonPage, error)
-	getByTypeFn      func(ctx context.Context, typeFilter string, page, pageSize int) (*domain.PokemonPage, error)
-	getByIDFn        func(ctx context.Context, id string) (*domain.Pokemon, error)
-	getByIDsFn       func(ctx context.Context, ids []string) ([]domain.Pokemon, error)
-	getDetailByIDFn  func(ctx context.Context, id string) (*domain.PokemonDetail, error)
-	listTypesFn      func(ctx context.Context) ([]domain.Type, error)
-	listRegionsFn    func(ctx context.Context) ([]domain.Region, error)
-	addFavoriteFn    func(ctx context.Context, userID, pokemonID string) error
-	removeFavoriteFn func(ctx context.Context, userID, pokemonID string) error
+	getAllFn             func(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error)
+	searchFn             func(ctx context.Context, query string, page, pageSize int) (*domain.PokemonPage, error)
+	getByTypeFn          func(ctx context.Context, typeFilter string, page, pageSize int) (*domain.PokemonPage, error)
+	getByIDFn            func(ctx context.Context, id string) (*domain.Pokemon, error)
+	getByIDsFn           func(ctx context.Context, ids []string) ([]domain.Pokemon, error)
+	getDetailByIDFn      func(ctx context.Context, id string) (*domain.PokemonDetail, error)
+	listTypesFn          func(ctx context.Context) ([]domain.Type, error)
+	listRegionsFn        func(ctx context.Context) ([]domain.Region, error)
+	addFavoriteFn        func(ctx context.Context, userID, pokemonID string) error
+	removeFavoriteFn     func(ctx context.Context, userID, pokemonID string) error
+	getUserFavoriteIDsFn func(ctx context.Context, userID string) ([]string, error)
 }
 
 func (s *stubPokemonRepo) GetAll(ctx context.Context, page, pageSize int) (*domain.PokemonPage, error) {
@@ -101,6 +102,13 @@ func (s *stubPokemonRepo) RemoveFavorite(ctx context.Context, userID, pokemonID 
 		return s.removeFavoriteFn(ctx, userID, pokemonID)
 	}
 	return nil
+}
+
+func (s *stubPokemonRepo) GetUserFavoriteIDs(ctx context.Context, userID string) ([]string, error) {
+	if s.getUserFavoriteIDsFn != nil {
+		return s.getUserFavoriteIDsFn(ctx, userID)
+	}
+	return []string{}, nil
 }
 
 func pokemonPage(items []domain.Pokemon) *domain.PokemonPage {
@@ -479,4 +487,67 @@ func TestSearchPokemonsErro(t *testing.T) {
 			t.Fatalf("status = %d, want 500", w.Code)
 		}
 	})
+}
+
+func TestGetUserFavoriteIDs(t *testing.T) {
+	tests := []struct {
+		name       string
+		userID     string
+		idsFn      func(ctx context.Context, userID string) ([]string, error)
+		wantStatus int
+		wantLen    int
+	}{
+		{
+			name:       "sem user_id",
+			userID:     "",
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "com favoritos",
+			userID: "user-1",
+			idsFn: func(ctx context.Context, userID string) ([]string, error) {
+				return []string{"1", "25"}, nil
+			},
+			wantStatus: http.StatusOK,
+			wantLen:    2,
+		},
+		{
+			name:   "sem favoritos retorna lista vazia",
+			userID: "user-1",
+			idsFn: func(ctx context.Context, userID string) ([]string, error) {
+				return []string{}, nil
+			},
+			wantStatus: http.StatusOK,
+			wantLen:    0,
+		},
+		{
+			name:   "erro de repositorio",
+			userID: "user-1",
+			idsFn: func(ctx context.Context, userID string) ([]string, error) {
+				return nil, errors.New("db down")
+			},
+			wantStatus: http.StatusInternalServerError,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			repo := &stubPokemonRepo{getUserFavoriteIDsFn: tt.idsFn}
+			mux := NewMux(repo)
+			req := httptest.NewRequest(http.MethodGet, "/v1/favorites?user_id="+tt.userID, nil)
+			w := httptest.NewRecorder()
+			mux.ServeHTTP(w, req)
+			if w.Code != tt.wantStatus {
+				t.Errorf("status = %d, want %d", w.Code, tt.wantStatus)
+			}
+			if tt.wantStatus == http.StatusOK {
+				var ids []string
+				if err := json.Unmarshal(w.Body.Bytes(), &ids); err != nil {
+					t.Fatalf("erro ao decodificar: %v", err)
+				}
+				if len(ids) != tt.wantLen {
+					t.Errorf("len = %d, want %d", len(ids), tt.wantLen)
+				}
+			}
+		})
+	}
 }
