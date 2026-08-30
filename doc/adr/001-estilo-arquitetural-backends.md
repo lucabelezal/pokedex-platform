@@ -159,6 +159,65 @@ com ports/adapters apenas nos módulos que realmente têm múltiplas saídas —
 
 **Não evoluir** quando a motivação for só "padronizar igual ao BFF" ou "ficar mais clean". Sem driver concreto, a mudança é decoração.
 
+## O teste definitivo para cada abstração
+
+Antes de criar interface, DTO, adapter ou camada, responder:
+
+1. Que dependência estou impedindo?
+2. Que mudança estou tornando barata?
+3. Que teste fica melhor?
+4. Quanta complexidade estou adicionando?
+5. Essa mudança é plausível no horizonte do sistema?
+
+Se as respostas forem "não sei", "talvez" ou "nenhuma", a abstração provavelmente não deveria existir.
+
+## Verificação arquitetural (fitness functions)
+
+Arquitetura documentada é insuficiente. Uma regra como "`domain/` não pode importar infraestrutura" só vale de verdade se algo falha quando violada.
+
+No Go:
+
+- convenções de pacote + `internal/` para ocultar implementação;
+- testes de dependência que percorrem os imports (fitness functions);
+- regras de CI que falham o build em violação;
+- `go list` / análise estática para detectar ciclos ou imports ilegais entre módulos/features.
+
+Transformar cada regra estrutural importante em teste automatizado (ex: "feature A não acessa `internal/` de feature B", "módulos não formam ciclos").
+
+## Métricas para avaliar se a decisão está funcionando
+
+Este ADR não deve ser avaliado só por opinião:
+
+- **Change amplification** — arquivos alterados por feature (alvo: menor que clean clássica);
+- **Navegação** — saltos até a implementação concreta (go-to-definition não deve cair numa interface sem uso);
+- **Velocidade** — tempo médio por feature;
+- **Testes** — tempo de execução da suíte;
+- **Acoplamento** — dependências cruzadas entre módulos/features;
+- **Onboarding** — tempo para novo dev fazer uma mudança pequena.
+
+Não é preciso formalizar todos como dashboard. São preferíveis a argumentos puramente estéticos. Exemplo: `POST /orders` = 3 arquivos (handler/service/repository) vs 10+ na clean clássica. A pergunta é se os 10 compraram uma mudança mais barata; se não, é custo sem retorno.
+
+## Checklist de code review arquitetural
+
+**Interfaces**
+- [ ] Existe uso real da interface?
+- [ ] Há mais de uma implementação relevante (ou DIP real)?
+- [ ] A interface pertence ao consumidor?
+
+**Dependências**
+- [ ] `domain/` conhece framework ou SQL?
+- [ ] Infraestrutura invade application?
+- [ ] Existem dependências circulares?
+
+**DTOs**
+- [ ] Os contratos evoluem independentemente?
+- [ ] Existe múltiplo canal justificando a separação?
+
+**Estrutura**
+- [ ] A feature está fácil de encontrar?
+- [ ] Código que muda junto está próximo?
+- [ ] Existem arquivos que apenas delegam?
+
 ## Nota sobre o ecossistema Spring (referência para futuros projetos)
 
 Para um futuro backend Kotlin/Spring, a mesma lógica aplica: não partir de Clean Architecture como dogma. A via recomendada seria Spring MVC + modularização por domínio (equivalente ao Spring Modulith) + hexagonal seletiva onde houver múltiplas integrações. O próprio ecossistema Spring reforça isso: o Modulith existe justamente para oferecer boundaries por módulo sem impor a cerimônia completa.
