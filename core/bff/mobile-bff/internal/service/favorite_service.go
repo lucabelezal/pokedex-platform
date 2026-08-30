@@ -8,23 +8,16 @@ import (
 	outbound "pokedex-platform/core/bff/mobile-bff/internal/ports/outbound"
 )
 
-// FavoriteCatalogProvider abstrai operações de favoritos via catalog-service.
-type FavoriteCatalogProvider interface {
-	GetFavoriteDetails(ctx context.Context, ids []string) ([]domain.Pokemon, error)
-	AddFavorite(ctx context.Context, userID, pokemonID string) error
-	RemoveFavorite(ctx context.Context, userID, pokemonID string) error
-}
-
 type FavoriteService struct {
 	favoriteRepo    outbound.FavoriteRepository
 	pokemonRepo     outbound.PokemonRepository
-	favoriteCatalog FavoriteCatalogProvider
+	favoriteCatalog outbound.FavoriteCatalogProvider
 }
 
 func NewFavoriteService(
 	favoriteRepo outbound.FavoriteRepository,
 	pokemonRepo outbound.PokemonRepository,
-	favoriteCatalog FavoriteCatalogProvider,
+	favoriteCatalog outbound.FavoriteCatalogProvider,
 ) *FavoriteService {
 	return &FavoriteService{
 		favoriteRepo:    favoriteRepo,

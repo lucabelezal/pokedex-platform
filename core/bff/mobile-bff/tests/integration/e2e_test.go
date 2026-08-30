@@ -49,10 +49,10 @@ func TestE2EFavoritosNoServico(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	err := favoriteService.AddFavorite(ctx, "user-teste", "25")
+	err := favoriteService.AddFavorite(ctx, "22222222-2222-2222-2222-222222222222", "25")
 	require.NoError(t, err)
 
-	detail, err := pokemonService.GetPokemonDetails(ctx, "25", "user-teste")
+	detail, err := pokemonService.GetPokemonDetails(ctx, "25", "22222222-2222-2222-2222-222222222222")
 	require.NoError(t, err)
 	assert.True(t, detail.IsFavorite)
 }

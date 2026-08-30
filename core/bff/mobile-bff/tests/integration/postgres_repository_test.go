@@ -43,13 +43,19 @@ func setupTestDB(t *testing.T) *repository.Database {
 	}
 
 	_, _ = db.Pool.Exec(ctx, `CREATE EXTENSION IF NOT EXISTS pgcrypto`)
-	_, err = db.Pool.Exec(ctx, `TRUNCATE TABLE favorites, users, pokemons RESTART IDENTITY CASCADE`)
+	_, _ = db.Pool.Exec(ctx, `CREATE TABLE IF NOT EXISTS user_favorites (
+		user_id UUID NOT NULL,
+		pokemon_id VARCHAR(255) NOT NULL REFERENCES pokemons(id) ON DELETE CASCADE,
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		PRIMARY KEY (user_id, pokemon_id)
+	)`)
+	_, err = db.Pool.Exec(ctx, `TRUNCATE TABLE user_favorites, favorites, users, pokemons RESTART IDENTITY CASCADE`)
 	if err != nil {
 		db.Close()
 		t.Fatalf("falha ao preparar banco de testes: %v", err)
 	}
 
-	_, err = db.Pool.Exec(ctx, `INSERT INTO users (id, email) VALUES ('user-teste', 'teste@local') ON CONFLICT (id) DO NOTHING`)
+	_, err = db.Pool.Exec(ctx, `INSERT INTO users (id, email) VALUES ('22222222-2222-2222-2222-222222222222', 'teste@local') ON CONFLICT (id) DO NOTHING`)
 	if err != nil {
 		db.Close()
 		t.Fatalf("falha ao inserir usuario de teste: %v", err)
@@ -112,17 +118,17 @@ func TestPostgresFavoriteRepositoryFluxoBasico(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	err := repo.AddFavorite(ctx, "user-teste", "1")
+	err := repo.AddFavorite(ctx, "22222222-2222-2222-2222-222222222222", "1")
 	require.NoError(t, err)
 
-	isFav, err := repo.IsFavorite(ctx, "user-teste", "1")
+	isFav, err := repo.IsFavorite(ctx, "22222222-2222-2222-2222-222222222222", "1")
 	require.NoError(t, err)
 	assert.True(t, isFav)
 
-	err = repo.RemoveFavorite(ctx, "user-teste", "1")
+	err = repo.RemoveFavorite(ctx, "22222222-2222-2222-2222-222222222222", "1")
 	require.NoError(t, err)
 
-	isFav, err = repo.IsFavorite(ctx, "user-teste", "1")
+	isFav, err = repo.IsFavorite(ctx, "22222222-2222-2222-2222-222222222222", "1")
 	require.NoError(t, err)
 	assert.False(t, isFav)
 }
