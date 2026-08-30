@@ -21,17 +21,34 @@
 ### AD-003
 - **Decision**: BFF não acessa mais banco de dados diretamente para favoritos — usa endpoint batch do catalog-service
 - **Reason**: Respeita separação de responsabilidades da arquitetura hexagonal; catalog-service é dono dos dados de Pokémon
-- **Trade-off**: Escritas (add/remove favorites) ainda usam PostgresFavoriteRepository até que um endpoint de escrita seja criado no catalog-service
+- **Trade-off**: Escritas (add/remove favorites) migradas para o catalog-service via REST; leitura de IDs de favoritos ainda via PostgresFavoriteRepository
 - **Scope**: mobile-bff, pokemon-catalog-service
 - **Date**: 2026-07-25
+- **Status**: active
+
+### AD-004
+- **Decision**: Extrair `DBPool` interface (Query/QueryRow/Exec/Ping/Begin) para permitir mocks pgx em testes de repository
+- **Reason**: `pgxmock` não satisfaz `*pgxpool.Pool`; a interface viabiliza testes unitários com cobertura >75% em catalog e auth-service
+- **Trade-off**: Pequena abstração extra; `NewXxxRepository(db *pgxpool.Pool)` mantido para produção, `NewXxxRepositoryWithPool(db DBPool)` para testes
+- **Scope**: pokemon-catalog-service, auth-service
+- **Date**: 2026-08-29
+- **Status**: active
+
+### AD-005
+- **Decision**: `FavoriteCatalogProvider` movido para `ports/outbound/` (era interface definida em `internal/service/`)
+- **Reason**: Pertence ao domínio (outbound port), não à camada de aplicação; respeita regra arquitetural de dependência
+- **Trade-off**: Nenhum — movimento mecânico, testes existentes já usavam stub compatível
+- **Scope**: mobile-bff
+- **Date**: 2026-08-29
 - **Status**: active
 
 ## Handoff
 
 - **Feature**: production-readiness + test-coverage-and-favorites
-- **Phase / Task**: CONCLUÍDO — 30/30 + 3/3 gaps resolvidos
+- **Phase / Task**: CONCLUÍDO — 30/30 + 15/15 tasks (test-coverage-and-favorites-migration)
 - **Completed**: Todos os tasks, todas as lessons endereçadas
-- **Last commit**: 541767b (migração escritas favoritos)
+- **Cobertura**: catalog-service 75.6%, auth-service 79.3% (gaps PR-25/PR-26/PR-11 resolvidos)
+- **Last commit**: 40e7957 (favoritos outbound + testes integração)
 - **Blockers**: none
-- **Uncommitted files**: none
+- **Uncommitted files**: .specs/STATE.md (este)
 - **Branch**: main
