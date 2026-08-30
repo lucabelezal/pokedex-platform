@@ -19,6 +19,7 @@ Este diretório centraliza a documentação arquitetural da Plataforma Pokedex.
 - [INFRA.md](INFRA.md): infraestrutura, fluxo de dados e limites operacionais.
 - [DECISIONS.md](DECISIONS.md): decisões arquiteturais atuais e trade-offs.
 - [SOLID-AND-PATTERNS.md](SOLID-AND-PATTERNS.md): princípios SOLID conectados a patterns, com exemplos em Go.
+- [adr/001-estilo-arquitetural-backends.md](adr/001-estilo-arquitetural-backends.md): ADR sobre o estilo arquitetural dos backends — por que hexagonal no BFF e camadas simples nos services de app, quando evoluir, e o trade-off com Clean Architecture/Spring/Modular Monolith.
 - [architecture/hexagonal.md](architecture/hexagonal.md): guia detalhado da arquitetura hexagonal aplicada ao `mobile-bff`.
 - [architecture/hexagonal-go-como-funciona.md](architecture/hexagonal-go-como-funciona.md): **teoria hexagonal conectada à mecânica de Go** — cada camada, onde mora no código real, e como interfaces/imports/composição materializam a arquitetura. Bom ponto de partida para quem está aprendendo Go + arquitetura.
 - [architecture/mecanica-go-ponteiros-context-concorrencia.md](architecture/mecanica-go-ponteiros-context-concorrencia.md): **mecanismos da linguagem na prática** — ponteiros, `context.Context`, goroutines/concorrência vs paralelismo, generics, slices/maps — todos com exemplos reais do `mobile-bff`.
