@@ -11,7 +11,6 @@ import (
 	"slices"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 
 	inbound "pokedex-platform/core/bff/mobile-bff/internal/ports/inbound"
@@ -43,20 +42,6 @@ const (
 	defaultAuthRateLimitRequests = 20
 	defaultAuthRateLimitWindow   = 60 * time.Second
 )
-
-type rateLimitWindow struct {
-	startedAt time.Time
-	count     int
-}
-
-type authRateLimiter struct {
-	m                 sync.Mutex
-	entries           map[string]rateLimitWindow
-	maxRequests       int
-	window            time.Duration
-	now               func() time.Time
-	lastCleanupBucket int64
-}
 
 func isPublicPath(path string) bool {
 	for _, prefix := range publicPaths {
@@ -344,61 +329,6 @@ func GetUserEmail(ctx context.Context) string {
 // GetUserID retorna o userID do contexto.
 func GetUserID(ctx context.Context) string {
 	return getUserIDFromContext(ctx)
-}
-
-func newAuthRateLimiter(maxRequests int, window time.Duration) *authRateLimiter {
-	if maxRequests <= 0 {
-		maxRequests = defaultAuthRateLimitRequests
-	}
-	if window <= 0 {
-		window = defaultAuthRateLimitWindow
-	}
-
-	return &authRateLimiter{
-		entries:     make(map[string]rateLimitWindow),
-		maxRequests: maxRequests,
-		window:      window,
-		now:         time.Now,
-	}
-}
-
-func (l *authRateLimiter) Allow(clientID string) bool {
-	if clientID == "" {
-		clientID = "unknown"
-	}
-
-	now := l.now()
-	bucket := now.Unix() / int64(l.window.Seconds())
-
-	l.m.Lock()
-	defer l.m.Unlock()
-
-	if bucket != l.lastCleanupBucket {
-		l.cleanupExpired(now)
-		l.lastCleanupBucket = bucket
-	}
-
-	entry, exists := l.entries[clientID]
-	if !exists || now.Sub(entry.startedAt) >= l.window {
-		l.entries[clientID] = rateLimitWindow{startedAt: now, count: 1}
-		return true
-	}
-
-	if entry.count >= l.maxRequests {
-		return false
-	}
-
-	entry.count++
-	l.entries[clientID] = entry
-	return true
-}
-
-func (l *authRateLimiter) cleanupExpired(now time.Time) {
-	for clientID, entry := range l.entries {
-		if now.Sub(entry.startedAt) >= l.window {
-			delete(l.entries, clientID)
-		}
-	}
 }
 
 func clientIdentifier(r *http.Request) string {

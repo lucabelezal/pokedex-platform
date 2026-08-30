@@ -117,11 +117,3 @@ func (h *Handler) GetUserFavorites(w http.ResponseWriter, r *http.Request) {
 	page := &domain.PokemonPage{Content: items}
 	RespondJSON(w, http.StatusOK, h.responseBuilder.BuildFavoritesResponse(page, favoriteSet, true))
 }
-
-func mapScreenTypesToNames(types []domain.Type) []string {
-	result := make([]string, len(types))
-	for i, item := range types {
-		result[i] = item.Name
-	}
-	return result
-}
