@@ -19,9 +19,9 @@
 - **Status**: active
 
 ### AD-003
-- **Decision**: BFF não acessa mais banco de dados diretamente para favoritos — usa endpoint batch do catalog-service
+- **Decision**: BFF não acessa mais banco de dados diretamente para favoritos — usa endpoints REST do catalog-service (batch de detalhes, escrita POST/DELETE, listagem GET /v1/favorites)
 - **Reason**: Respeita separação de responsabilidades da arquitetura hexagonal; catalog-service é dono dos dados de Pokémon
-- **Trade-off**: Escritas (add/remove favorites) migradas para o catalog-service via REST; leitura de IDs de favoritos ainda via PostgresFavoriteRepository
+- **Trade-off**: Controle via flag `FAVORITES_VIA_CATALOG` (default true); rollback para `PostgresFavoriteRepository` setando false
 - **Scope**: mobile-bff, pokemon-catalog-service
 - **Date**: 2026-07-25
 - **Status**: active
@@ -42,13 +42,22 @@
 - **Date**: 2026-08-29
 - **Status**: active
 
+### AD-006
+- **Decision**: Testes unit do mobile-bff migrados de `tests/unit/` para co-localizados (`internal/.../*_test.go`) com `package xxx_test`
+- **Reason**: Padrão idiomatico de Go; mantém black-box (API pública) com navegação fácil; elimina `tests/mocks/` (era alias de `memory`)
+- **Trade-off**: Nenhum — 65→67 testes, nenhum perdido; `tests/integration/` mantido (Postgres real)
+- **Scope**: mobile-bff
+- **Date**: 2026-08-29
+- **Status**: active
+
 ## Handoff
 
 - **Feature**: production-readiness + test-coverage-and-favorites
 - **Phase / Task**: CONCLUÍDO — 30/30 + 15/15 tasks (test-coverage-and-favorites-migration)
 - **Completed**: Todos os tasks, todas as lessons endereçadas
-- **Cobertura**: catalog-service 75.6%, auth-service 79.3% (gaps PR-25/PR-26/PR-11 resolvidos)
-- **Last commit**: 40e7957 (favoritos outbound + testes integração)
+- **Cobertura**: catalog-service 75.8%, auth-service 79.3% (gaps PR-25/PR-26/PR-11 resolvidos)
+- **Favoritos**: 100% via catalog-service (leitura GET /v1/favorites + escrita POST/DELETE), flag `FAVORITES_VIA_CATALOG`
+- **Last commit**: 0cdf90c (endpoint GET /v1/favorites no catalog)
 - **Blockers**: none
-- **Uncommitted files**: .specs/STATE.md (este)
+- **Uncommitted files**: STATE.md (este), .github/workflows/go-ci.yml, AGENTS.md, Makefile, skills-lock.json, harness/, docker-compose.test.yml, evals/
 - **Branch**: main
