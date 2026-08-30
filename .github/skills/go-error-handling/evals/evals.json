@@ -1,0 +1,60 @@
+[
+  {
+    "id": 1,
+    "name": "sentinel-errors-errors-is",
+    "description": "Erros esperados usam sentinel var ErrX e callers checam com errors.Is, nunca com ==",
+    "prompt": "Defina dois erros sentinela `ErrNotFound` e `ErrUnauthorized` num package `domain` e escreva um trecho de codigo que verifica se o erro retornado por `repo.GetByID` e `ErrNotFound` para mapear para 404. Siga as convencoes de erro do projeto.",
+    "trap": "Modelo compara com `err == domain.ErrNotFound` ou define sentinelas como `const`",
+    "assertions": [
+      { "id": "1.1", "text": "Sentinelas declaradas como `var Err... = errors.New(...)` com prefixo Err" },
+      { "id": "1.2", "text": "Checagem usa `errors.Is(err, domain.ErrNotFound)` e nao `==`" },
+      { "id": "1.3", "text": "Mensagem do sentinela em minusculo, sem ponto final" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "wrapping-percent-w-preserva-cadeia",
+    "description": "Propagacao de erro adiciona contexto e preserva cadeia com %w",
+    "prompt": "Escreva a funcao `getPokemon(ctx context.Context, id string) (*Pokemon, error)` que chama `db.QueryRowContext` e, em caso de erro, propaga com contexto (incluindo o id) preservando a cadeia para o chamador usar `errors.Is`. Siga as convencoes de wrapping do projeto.",
+    "trap": "Modelo retorna `fmt.Errorf(\"failed: %v\", err)` (quebra cadeia) ou `return nil, err` sem contexto",
+    "assertions": [
+      { "id": "2.1", "text": "Usa `%w` (nao `%v`) para preservar a cadeia de erro" },
+      { "id": "2.2", "text": "Adiciona contexto descritivo (ex.: id) na mensagem de wrap" },
+      { "id": "2.3", "text": "Nao usa `%v` quando o chamador precisa inspecionar o erro" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "custom-error-type-errors-as",
+    "description": "Erros com dados estruturados usam custom type + errors.As para extracao",
+    "prompt": "Crie um tipo `ValidationError` com campos `Field` e `Message`, implementando `error`, e escreva um trecho que extrai esse tipo de um `error` retornado por uma funcao de validacao para logar o campo invalido. Siga as convencoes de custom error types do projeto.",
+    "trap": "Modelo extrai com type assertion `err.(*ValidationError)` em vez de `errors.As`, ou nomeia `ErrValidationError`",
+    "assertions": [
+      { "id": "3.1", "text": "Custom type tem sufixo `Error` (ex.: `ValidationError`) e implementa `Error() string`" },
+      { "id": "3.2", "text": "Extracao usa `errors.As(err, &valErr)` e nao type assertion direta" },
+      { "id": "3.3", "text": "Campos Field/Message sao exportados e usados no log/tratamento" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "handle-error-exatamente-uma-vez",
+    "description": "Erro e logado OU retornado, nunca ambos (log-and-return anti-pattern)",
+    "prompt": "Escreva a funcao `loadConfig(path string) (*Config, error)` que le um arquivo com `os.ReadFile`. Em caso de erro, siga a regra do projeto sobre onde e como tratar o erro.",
+    "trap": "Modelo faz `log.Printf` e depois `return nil, err` (trata duas vezes)",
+    "assertions": [
+      { "id": "4.1", "text": "Erro e retornado com wrap (`%w`) para o chamador decidir, sem log no mesmo nivel" },
+      { "id": "4.2", "text": "Nao ha `log.Printf` + `return err` no mesmo bloco (log-and-return)" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "errors-join-multiplos-erros",
+    "description": "Multiplos erros de validacao sao agregados com errors.Join (Go 1.20+)",
+    "prompt": "Escreva uma funcao `ValidatePokemons(items []Pokemon) error` que valida cada item (nome e numero obrigatorios) coletando todos os erros de validacao e retornando-os agregados. Siga as convencoes modernas de Go para multiplos erros.",
+    "trap": "Modelo retorna apenas o primeiro erro encontrado, ou concatena strings manualmente",
+    "assertions": [
+      { "id": "5.1", "text": "Coleta multiplos erros em slice e usa `errors.Join` para agregar" },
+      { "id": "5.2", "text": "Retorna nil quando nao ha erros (errors.Join(nilSlice) == nil)" }
+    ]
+  }
+]

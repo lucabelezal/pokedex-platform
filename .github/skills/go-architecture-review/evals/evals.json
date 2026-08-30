@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "domain-zero-deps-inward",
+    "description": "Domain nao importa nada do projeto; dependencias fluem para dentro",
+    "prompt": "Projete a estrutura de pacotes para um novo bounded context `favorites` (entidades, use cases, repositorios) seguindo a regra de direcao de dependencias da skill go-architecture-review. Onde fica a entidade `Favorite`?",
+    "trap": "Modelo faz `domain/favorite.go` importar `store/postgres` ou `handler`, ou coloca entidade em `ports/`",
+    "assertions": [
+      { "id": "1.1", "text": "Entidade `Favorite` fica em `domain/` (ou `internal/domain/`) e nao em `ports/`/`store`" },
+      { "id": "1.2", "text": "`domain/` nao importa pacotes do projeto (store/handler/config)" },
+      { "id": "1.3", "text": "Dependencia flui inward: handlers -> services -> domain <- stores" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "interface-no-consumer",
+    "description": "Interfaces definidas no lado do consumidor (service), nao do produtor (store)",
+    "prompt": "Defina a interface `PokemonRepository` necessaria para o `PokemonService` listar pokemons. Onde a interface deve ser declarada? Mostre a struct `PostgresPokemonRepository` implementando-a. Siga a skill go-architecture-review.",
+    "trap": "Modelo define a interface em `store/postgres` (produtor) e o service importa o store",
+    "assertions": [
+      { "id": "2.1", "text": "Interface `PokemonRepository` declarada no package do consumidor (service/ports), nao no store" },
+      { "id": "2.2", "text": "Store implementa a interface sem importar o package do service (duck typing / import inverso)" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "main-thin-composition-root",
+    "description": "main.go e composition root fino: wire de dependencias e Run(); sem business logic",
+    "prompt": "Escreva o `main.go` do `mobile-bff` que sobe o servidor HTTP com Postgres, repositorios, services e handlers. Siga a regra de wiring da skill go-architecture-review.",
+    "trap": "Modelo coloca regras de negocio, validacao ou queries SQL dentro de `main.go`",
+    "assertions": [
+      { "id": "3.1", "text": "`main.go` apenas carrega config, abre conexoes, faz wire das dependencias e chama `Run`/`ListenAndServe`" },
+      { "id": "3.2", "text": "Nenhuma logica de negocio (regras de dominio, validacao) em `main`" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "evitar-init-side-effects",
+    "description": "init() nao faz side effects (conexao DB, HTTP, goroutine); use construtor explicito",
+    "prompt": "Um colega propoe colocar `func init() { db, _ = sql.Open(\"postgres\", os.Getenv(\"DATABASE_URL\")) }` num package `store`. Avalie segundo a skill go-architecture-review e mostre a alternativa correta.",
+    "trap": "Modelo aceita `init()` com conexao DB como valido",
+    "assertions": [
+      { "id": "4.1", "text": "Rejeita `init()` com side effects e explica por que (testabilidade, dependencia oculta)" },
+      { "id": "4.2", "text": "Propoe `NewStore(dsn string) (*Store, error)` com inicializacao explicita" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "sem-pacote-utils-common",
+    "description": "Pacotes tem proposito unico; nunca utils/common/helpers/models grab-bag",
+    "prompt": "O projeto tem helpers espalhados (formatadores de data, validadores, conversores). Um colega propoe criar `internal/utils/` para agrupa-los. Avalie segundo a skill go-architecture-review.",
+    "trap": "Modelo cria `utils`/`common`/`helpers` e coloca tudo la",
+    "assertions": [
+      { "id": "5.1", "text": "Rejeita `utils`/`common`/`helpers` como grab-bag" },
+      { "id": "5.2", "text": "Propoe pacotes coesos por proposito (ex.: `internal/format`, `internal/validate`, ou manter junto ao dominio relevante)" }
+    ]
+  }
+]

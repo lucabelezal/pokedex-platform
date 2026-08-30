@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "name": "respostas-e-commits-pt-br",
+    "description": "Respostas, explicacoes, commits e comentarios em portugues do Brasil; Conventional Commits",
+    "prompt": "Voce vai abrir um commit para a feature de favoritos. Escreva a mensagem de commit seguindo as regras do AGENTS.md deste projeto.",
+    "trap": "Modelo escreve `feat(favorites): add favorite removal feature` (ingles) ou `Add favorites feature` sem Conventional Commits",
+    "assertions": [
+      { "id": "1.1", "text": "Mensagem segue `tipo(escopo-opcional): descricao curta em portugues` (ex.: `feat(favoritos): adicionar remocao de favorito`)" },
+      { "id": "1.2", "text": "Tipo e um dos permitidos (feat, fix, docs, style, refactor, test, chore, ci, build, perf, revert)" },
+      { "id": "1.3", "text": "Descricao em portugues do Brasil" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "hexagonal-handler-depende-inbound",
+    "description": "Handlers HTTP dependem de ports/inbound (use cases), nunca de clients concretos",
+    "prompt": "Escreva um handler `FavoriteHandler` com metodo `AddFavorite(w http.ResponseWriter, r *http.Request)` que precisa adicionar um favorito. De quem o handler deve depender? Mostre a struct e o construtor. Siga as regras arquiteturais do AGENTS.md (hexagonal).",
+    "trap": "Modelo injeta `*http.AuthServiceClient` ou `*PostgresFavoriteRepository` direto no handler",
+    "assertions": [
+      { "id": "2.1", "text": "Handler depende de interface de `ports/inbound` (ex.: `inbound.FavoriteUseCase`) e nao de client concreto" },
+      { "id": "2.2", "text": "Construtor recebe a interface (ex.: `NewFavoriteHandler(useCase inbound.FavoriteUseCase)`)" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "hexagonal-use-case-depende-outbound",
+    "description": "Use cases dependem de ports/outbound (interfaces), implementados pelos adapters",
+    "prompt": "Escreva o service `FavoriteService` com metodo `AddFavorite(ctx context.Context, userID, pokemonID string) error` que persiste via repositorio. De quem o service deve depender? Siga as regras arquiteturais do AGENTS.md.",
+    "trap": "Modelo importa `adapters/outbound/postgres` direto no service e instancia `PostgresFavoriteRepository`",
+    "assertions": [
+      { "id": "3.1", "text": "Service depende de interface de `ports/outbound` (ex.: `outbound.FavoriteRepository`)" },
+      { "id": "3.2", "text": "Service nao importa package de adapter concreto" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "entidade-dominio-em-domain",
+    "description": "Novas entidades de dominio vivem em domain/, nunca em ports/",
+    "prompt": "Preciso criar a entidade `Favorite` (pokemon favoritado por um usuario) com campos `UserID`, `PokemonID` e `CreatedAt`. Onde esse tipo deve ser declarado? Crie o arquivo. Siga as regras arquiteturais do AGENTS.md.",
+    "trap": "Modelo cria `ports/Favorite.go` ou `ports/outbound/favorite.go`",
+    "assertions": [
+      { "id": "4.1", "text": "Entidade `Favorite` declarada em `domain/` (ex.: `internal/domain/favorite.go`)" },
+      { "id": "4.2", "text": "Nao cria entidade dentro de `ports/`" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "erro-normalizado-adapter-ou-service",
+    "description": "Erros externos normalizados no adapter ou na camada de service, nao no handler",
+    "prompt": "Um client HTTP `PokemonCatalogClient` chama a API externa do catalogo. Quando o catalogo retorna 404, o erro deve virar `domain.ErrPokemonNotFound`. Onde essa normalizacao deve acontecer? Mostre o trecho. Siga a regra de normalizacao de erros do AGENTS.md.",
+    "trap": "Modelo normaliza o erro dentro do handler HTTP com `if statusCode == 404`",
+    "assertions": [
+      { "id": "5.1", "text": "Normalizacao acontece no adapter HTTP (client) ou no service, nao no handler" },
+      { "id": "5.2", "text": "Handler apenas mapeia o erro de dominio ja normalizado para status HTTP" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "tests-package-nunca-importado",
+    "description": "Package tests/ nunca e importado por codigo de producao",
+    "prompt": "Um colega propoe reutilizar um helper de `tests/mocks/mock_repositories.go` importando-o dentro de `internal/service/pokemon_service.go` para evitar duplicacao. Avalie segundo o AGENTS.md.",
+    "trap": "Modelo aceita e adiciona `import \".../tests/mocks\"` em codigo de producao",
+    "assertions": [
+      { "id": "6.1", "text": "Rejeita importar `tests/` em codigo de producao e explica por que" },
+      { "id": "6.2", "text": "Propoe alternativa: mover interface/helper compartilhado para local apropriado ou duplicar mock minimo" }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "go-convencoes-receiver-sem-get-id",
+    "description": "Receiver 1-2 letras, sem prefixo Get, initialisms ID/DB/URL/HTTP/JSON",
+    "prompt": "Escreva a interface `PokemonRepository` com metodos `GetByID` e `Count` e um struct `PostgresPokemonRepository` com receiver e campo de conexao DB. Siga as convencoes Go do AGENTS.md.",
+    "trap": "Modelo escreve `GetCount()`, `GetPokemonById`, receiver `this`/`repo`, campo `Db`/`Url`",
+    "assertions": [
+      { "id": "7.1", "text": "Metodo e `Count()` e `GetByID()` (sem `GetCount`, com `ID` em maiusculo)" },
+      { "id": "7.2", "text": "Receiver com 1-2 letras (ex.: `r`, `p`) e nao `this`/`self`" },
+      { "id": "7.3", "text": "Initialisms em caixa correta (`DB`, `URL` se houver)" }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "spec-driven-artefatos-em-specs",
+    "description": "Features seguem fluxo spec-driven com artefatos em .specs/features/[feature]/",
+    "prompt": "Vamos iniciar a feature `favorites-batch-read`. Onde devem ficar os artefatos `spec.md`, `design.md`, `tasks.md` e `validation.md`? E onde fica o estado global do projeto? Responda conforme o AGENTS.md.",
+    "trap": "Modelo propoe criar artefatos em `doc/` ou `docs/features/` e ignora `.specs/STATE.md`",
+    "assertions": [
+      { "id": "8.1", "text": "Artefatos em `.specs/features/favorites-batch-read/` (spec.md, design.md, tasks.md, validation.md)" },
+      { "id": "8.2", "text": "Estado global em `.specs/STATE.md` (Decisions + Handoff)" },
+      { "id": "8.3", "text": "Fluxo Specify -> Design -> Tasks -> Execute mencionado" }
+    ]
+  }
+]

@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "name": "map-internal-error-http-status",
+    "description": "Erros internos mapeados para status HTTP no handler boundary, sem vazar detalhes",
+    "prompt": "Escreva um handler HTTP `handleGetPokemon(w http.ResponseWriter, r *http.Request)` que chama `store.GetByID` e mapeia `domain.ErrNotFound` para 404 e outros erros para 500 sem vazar a mensagem interna ao cliente. Siga o pattern de error response da skill go-api-design.",
+    "trap": "Modelo retorna `http.Error(w, err.Error(), 500)` vazando detalhes internos, ou nao distingue 404 de 500",
+    "assertions": [
+      { "id": "1.1", "text": "Usa `errors.Is(err, domain.ErrNotFound)` para mapear 404" },
+      { "id": "1.2", "text": "Erros genericos mapeados para 500 com mensagem generica (nao vaza `err.Error()`)" },
+      { "id": "1.3", "text": "Resposta de erro em JSON consistente (`map[string]string{\"error\": ...}` ou helper `respondError`/`respondJSON`)" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "graceful-shutdown",
+    "description": "Servidor HTTP com graceful shutdown via signal + Shutdown com timeout",
+    "prompt": "Escreva a funcao `main` que sobe um `http.Server` na porta :8080, trata SIGINT/SIGTERM e faz graceful shutdown com timeout de 30s. Siga o pattern de shutdown da skill go-api-design. Exit apenas em main.",
+    "trap": "Modelo usa `os.Exit` no meio da logica ou nao chama `srv.Shutdown`, apenas mata o processo",
+    "assertions": [
+      { "id": "2.1", "text": "Aguarda sinal via `signal.Notify` com canal bufferizado e `syscall.SIGINT`/`SIGTERM`" },
+      { "id": "2.2", "text": "Faz `srv.Shutdown` com `context.WithTimeout` de 30s" },
+      { "id": "2.3", "text": "Distingue `http.ErrServerClosed` do erro de `ListenAndServe` (nao trata como erro fatal)" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "recurso-plural-kebab-version",
+    "description": "URLs usam plural, kebab-case, versao no path; sem verbos",
+    "prompt": "Projete as rotas REST para o recurso de favoritos de pokemon de um usuario (listar favoritos, adicionar favorito, remover favorito) seguindo as convencoes de URL da skill go-api-design.",
+    "trap": "Modelo cria `/api/favorite`, `/api/searchFavorites`, `/addFavorite` (singular/verbo/sem versao)",
+    "assertions": [
+      { "id": "3.1", "text": "Recursos em plural (`/favorites`, `/users/{id}/favorites`)" },
+      { "id": "3.2", "text": "Versao no path (`/api/v1/...`)" },
+      { "id": "3.3", "text": "Sem verbos na URL; acao expressa pelo metodo HTTP (GET/POST/DELETE)" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "middleware-recoverer-outermost",
+    "description": "Middleware Recoverer deve ser o mais externo; ordem correta de encadeamento",
+    "prompt": "Escreva o encadeamento de middlewares para um router chi que usa: Recoverer, RequestID, Logger, Auth e RateLimit antes do handler. Siga a ordem recomendada da skill go-api-design.",
+    "trap": "Modelo coloca Recoverer depois de Logger/Auth (nao mais externo), deixando panics sem captura",
+    "assertions": [
+      { "id": "4.1", "text": "Recoverer e o middleware mais externo (primeiro a envolver o handler)" },
+      { "id": "4.2", "text": "Middlewares seguem ordem: Recoverer -> RequestID -> Logger -> Auth -> RateLimit -> Handler" },
+      { "id": "4.3", "text": "Cada middleware segue assinatura `func(http.Handler) http.Handler`" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "limit-request-body-size",
+    "description": "Body de request limitado com MaxBytesReader antes do Decode",
+    "prompt": "Escreva um handler `handleCreatePokemon` que decodifica JSON do body em `CreatePokemonRequest`, valida e persiste. Proteja contra payloads gigantes conforme a skill go-api-design.",
+    "trap": "Modelo decodifica direto sem limitar o tamanho do body",
+    "assertions": [
+      { "id": "5.1", "text": "Limita o body com `http.MaxBytesReader(w, r.Body, N)` antes de `json.NewDecoder`" },
+      { "id": "5.2", "text": "Retorna 400 quando o body excede o limite ou JSON e invalido" }
+    ]
+  }
+]

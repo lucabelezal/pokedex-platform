@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "test-behavior-not-implementation",
+    "description": "Testa comportamento via API publica, nao detalhes internos (campos privados, ordem de chamadas internas)",
+    "prompt": "Escreva testes para um `UserCache` com metodos `Get(id string) (*User, bool)`, `Set(id string, user *User)` e `Len() int` (campo interno `data map[string]*User`). Verifique que o cache armazena e recupera corretamente. Siga a filosofia de teste da skill go-test-quality.",
+    "trap": "Modelo acessa `cache.data` diretamente para verificar estado interno",
+    "assertions": [
+      { "id": "1.1", "text": "Testa via API publica Get/Set/Len apenas" },
+      { "id": "1.2", "text": "Nao acessa campo interno `data` nem verifica ordem de chamadas privadas" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "helper-t-helper-e-cleanup",
+    "description": "Helpers de teste chamam t.Helper() e usam t.Cleanup para teardown",
+    "prompt": "Escreva um helper `setupTestDB(t *testing.T) *sql.DB` que abre uma conexao de teste e garante fechamento ao fim do teste. Siga as convencoes de helpers da skill go-test-quality.",
+    "trap": "Modelo omite `t.Helper()` e usa `defer db.Close()` no helper (nao propaga corretamente quando t.FailNow)",
+    "assertions": [
+      { "id": "2.1", "text": "Helper chama `t.Helper()` como primeira linha" },
+      { "id": "2.2", "text": "Usa `t.Cleanup(func(){ db.Close() })` em vez de `defer` para teardown" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "httptest-newrecorder",
+    "description": "Testes de handler HTTP usam httptest.NewRecorder, nao servidor real",
+    "prompt": "Escreva testes para um handler `HandleGetPokemon(w http.ResponseWriter, r *http.Request)` que retorna 200 com JSON do pokemon ou 404. Siga o pattern de handler testing da skill go-test-quality.",
+    "trap": "Modelo sobe servidor real com `httptest.NewServer` ou `http.ListenAndServe` para teste unitario",
+    "assertions": [
+      { "id": "3.1", "text": "Usa `httptest.NewRecorder` e `httptest.NewRequest`" },
+      { "id": "3.2", "text": "Verifica `rec.Code` e decodifica `rec.Body` para validar resposta" },
+      { "id": "3.3", "text": "Cobre ao menos 2 status codes (200 e 404)" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "nome-teste-como-bug-report",
+    "description": "Nomes de teste descrevem cenario como frase; falha ja diz o que quebrou",
+    "prompt": "Escreva dois testes para `TransferFunds(from, to *Account, amount int) error` cobrindo saldo insuficiente e sucesso. Siga a convencao de nomenclatura da skill go-test-quality.",
+    "trap": "Modelo nomeia `TestTransferFunds`, `TestTransferFunds_Success`, `Test1` sem descrever cenario",
+    "assertions": [
+      { "id": "4.1", "text": "Nomes descrevem cenario (ex.: `TestTransferFunds_InsufficientBalance`, `TestTransferFunds_Succeeds`)" },
+      { "id": "4.2", "text": "Cada teste verifica um comportamento distinto com asserts significativos" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "fuzz-para-input-nao-confiavel",
+    "description": "Funcoes que recebem input nao confiavel ganham fuzz test com f.Add e property assertions",
+    "prompt": "Escreva testes para a funcao `SanitizeInput(input string) string` que remove tags HTML preservando texto (critica para seguranca/XSS). Garanta cobertura de edge cases desconhecidos. Siga as recomendacoes de fuzz da skill go-test-quality.",
+    "trap": "Modelo escreve apenas table-driven com casos conhecidos, sem fuzz test",
+    "assertions": [
+      { "id": "5.1", "text": "Inclui `FuzzSanitizeInput` com `f.Add` para seed corpus" },
+      { "id": "5.2", "text": "Fuzz inclui property assertion (ex.: output sem `<`/`>` ou double-sanitize idempotente)" }
+    ]
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "sql-parameterized-queries",
+    "description": "Todas as queries SQL usam placeholders parametrizados, nunca concatenacao",
+    "prompt": "Escreva uma funcao `GetByEmail(ctx context.Context, db *sql.DB, email string) (*User, error)` que busca usuario por email no Postgres. Siga as regras de prevencao de SQL injection da skill go-security-audit.",
+    "trap": "Modelo concatena string: `fmt.Sprintf(\"SELECT ... WHERE email = '%s'\", email)` ou `\"...\" + email`",
+    "assertions": [
+      { "id": "1.1", "text": "Query usa placeholder `$1` (ou named param) e passa `email` como argumento separado" },
+      { "id": "1.2", "text": "Nenhuma interpolacao de string do input na query" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "password-bcrypt",
+    "description": "Senhas com bcrypt (GenerateFromPassword + CompareHashAndPassword); nunca plaintext/MD5/SHA",
+    "prompt": "Escreva as funcoes `HashPassword(password string) (string, error)` e `VerifyPassword(hash, password string) error` para autenticacao de usuarios. Siga as regras de handling de senha da skill go-security-audit.",
+    "trap": "Modelo usa `crypto/sha256`, `md5`, ou armazena plaintext; ou compara com `==`",
+    "assertions": [
+      { "id": "2.1", "text": "Usa `golang.org/x/crypto/bcrypt` com `GenerateFromPassword` e `CompareHashAndPassword`" },
+      { "id": "2.2", "text": "Nao usa MD5/SHA/plaintext nem comparacao com `==`" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "never-hardcode-secrets",
+    "description": "Secrets via variavel de ambiente ou secrets manager; nunca hardcoded",
+    "prompt": "Escreva o carregamento de configuracao de um `AuthService` que precisa de `DATABASE_URL` e `JWT_SECRET`. Siga as regras de secrets management da skill go-security-audit.",
+    "trap": "Modelo define `const jwtSecret = \"sk-123456\"` ou `apiKey = \"hardcoded\"`",
+    "assertions": [
+      { "id": "3.1", "text": "Secrets lidos de `os.Getenv` ou equivalente (env/config), nao hardcoded" },
+      { "id": "3.2", "text": "Nenhuma string literal que parece secret/token/chave no codigo" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "jwt-validate-signature-reject-none",
+    "description": "JWT valida assinatura, expiracao e rejeita alg none",
+    "prompt": "Escreva a funcao `ValidateToken(tokenString string) (*Claims, error)` que valida um JWT HS256. Liste o que deve ser validado. Siga as regras de JWT da skill go-security-audit.",
+    "trap": "Modelo desabilita verificacao de assinatura, aceita `alg: none`, ou nao valida expiracao",
+    "assertions": [
+      { "id": "4.1", "text": "Valida assinatura e exige algoritmo esperado (rejeita `alg: none`)" },
+      { "id": "4.2", "text": "Valida claim `exp` (expiracao)" },
+      { "id": "4.3", "text": "Chave de assinatura nao esta hardcoded no codigo-fonte" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "no-log-sensitive-data",
+    "description": "Nunca loga senha, token ou body que pode conter secrets; redige campos sensiveis",
+    "prompt": "Escreva um trecho de log para o evento de login de usuario que registra o email mas deve evitar vazar dados sensiveis. Siga as regras de logging security da skill go-security-audit.",
+    "trap": "Modelo faz `log.Printf(\"login email=%s password=%s token=%s\", email, password, token)`",
+    "assertions": [
+      { "id": "5.1", "text": "Nao loga senha, token ou request body bruto" },
+      { "id": "5.2", "text": "Loga apenas campos nao sensiveis (ex.: email/user_id) ou usa redacao" }
+    ]
+  }
+]

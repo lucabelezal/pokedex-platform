@@ -1,0 +1,23 @@
+# Infraestrutura de teste da plataforma.
+# Usado por `make test-integration` para subir um Postgres isolado (porta 5433)
+# com o schema do mobile-bff (users/pokemons/favorites) aplicado via initdb.
+
+services:
+  postgres-test:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pokedex_test
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./bff/mobile-bff/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d pokedex_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_test_data:

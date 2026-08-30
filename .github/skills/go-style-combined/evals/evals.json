@@ -1,0 +1,118 @@
+[
+  {
+    "id": 1,
+    "name": "receiver-uma-duas-letras",
+    "description": "Receivers usam 1-2 letras da abreviacao do tipo, consistentes entre metodos; nunca this/self/me",
+    "prompt": "Escreva um service `PokemonService` (em Go) com dois metodos: `List(ctx context.Context) ([]Pokemon, error)` e `GetByID(ctx context.Context, id string) (*Pokemon, error)`. O struct guarda um repositorio. Siga as convencoes de estilo do projeto (receiver curto e consistente).",
+    "trap": "Modelo usa `this`, `self` ou o nome completo do tipo (`service`, `ps`, `pokemonService`) como receiver, ou troca o receiver entre metodos",
+    "assertions": [
+      { "id": "1.1", "text": "Receiver usa 1-2 letras abreviando o tipo (ex.: `s`), e nao `this`/`self`/`me`" },
+      { "id": "1.2", "text": "O mesmo receiver e usado em todos os metodos do tipo (consistencia)" },
+      { "id": "1.3", "text": "Receiver nao e o nome completo do tipo (ex.: `pokemonService`)" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "initialisms-id-url-http",
+    "description": "Initialisms em caixa completa: ID, URL, HTTP, JSON, DB, API; nunca Id/Url/Http",
+    "prompt": "Defina em Go um tipo `PokemonID`, uma funcao `GetByID(id PokemonID)`, uma variavel `baseURL` e uma struct `HTTPClient`. Depois escreva um metodo `ToJSON`. Siga as convencoes de initialisms do guia de estilo.",
+    "trap": "Modelo escreve `PokemonId`, `GetById`, `baseUrl`, `HttpClient`, `ToJson` (mistura de caixa)",
+    "assertions": [
+      { "id": "2.1", "text": "Usa `ID` (nao `Id`) em `PokemonID` e `GetByID`" },
+      { "id": "2.2", "text": "Usa `URL` (nao `Url`) em `baseURL`" },
+      { "id": "2.3", "text": "Usa `HTTP` (nao `Http`) em `HTTPClient`" },
+      { "id": "2.4", "text": "Usa `JSON` (nao `Json`) em `ToJSON`" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "sem-prefixo-get",
+    "description": "Getters nao usam prefixo Get; construtores usam New+Tipo; booleanos usam Is/Has/Can",
+    "prompt": "Escreva os metodos publicos de uma struct `PokemonRepository` que expoe: contagem de pokemons (`Count()`), nome do pokemon, e um predicado de favorito. Inclua tambem o construtor do repositorio. Siga as convencoes de nomenclatura do projeto.",
+    "trap": "Modelo nomeia `GetCount()`, `GetName()`, `GetIsFavorite()` e construtor sem o padrao `New...`",
+    "assertions": [
+      { "id": "3.1", "text": "Getter de contagem e `Count()` (ou `Name()`), sem prefixo `Get`" },
+      { "id": "3.2", "text": "Predicado booleano usa `Is`/`Has`/`Can`/`Should` (ex.: `IsFavorite`)" },
+      { "id": "3.3", "text": "Construtor segue `New` + nome do tipo (ex.: `NewPokemonRepository`)" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "erro-minusculo-e-wrap-percent-w",
+    "description": "Strings de erro em minusculo, sem ponto final; wrap com %w para preservar a cadeia",
+    "prompt": "Escreva a funcao `GetByID` de um repositorio que busca um pokemon no banco e retorna erro quando nao encontra. Ao propagar o erro do banco, adicione contexto e preserve a cadeia de erro para que o chamador consiga usar `errors.Is`. Siga as convencoes de erro do projeto.",
+    "trap": "Modelo retorna `fmt.Errorf(\"Pokemon not found: %v\", err)` — com maiuscula e `%v` (quebra a cadeia), ou `errors.New(\"Pokemon not found.\")` com ponto final",
+    "assertions": [
+      { "id": "4.1", "text": "Mensagem de erro em minusculo, sem ponto final" },
+      { "id": "4.2", "text": "Usa `%w` (nao `%v`) ao embrulhar erro para preservar `errors.Is`/`errors.As`" },
+      { "id": "4.3", "text": "Adiciona contexto a operacao (ex.: id do pokemon) ao embrulhar" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "slice-json-make-len-zero",
+    "description": "Slices retornados via API/JSON usam make([]T, 0) para serializar como [] e nao null",
+    "prompt": "Escreva um use case `ListPokemons` que monta uma lista de pokemons a partir do repositorio e retorna o slice via JSON na resposta HTTP. Siga a regra do projeto para slices serializados em JSON.",
+    "trap": "Modelo declara `var pokemons []Pokemon` (nil) e retorna direto — serializa como `null` em JSON",
+    "assertions": [
+      { "id": "5.1", "text": "Slice retornado via JSON e inicializado com `make([]Pokemon, 0)` (ou com capacidade conhecida `make([]Pokemon, 0, n)`)" },
+      { "id": "5.2", "text": "Nao retorna slice nil para resposta JSON (evita `null`)" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "interface-compliance-var-underscore",
+    "description": "Cada adapter/service declara var _ Interface = (*Impl)(nil) no fim do arquivo",
+    "prompt": "Escreva um adapter `PostgresPokemonRepository` que implementa a interface `outbound.PokemonRepository`. Inclua a assercao de conformidade de interface exigida pelo projeto.",
+    "trap": "Modelo omite a assercao de conformidade em tempo de compilacao, ou a coloca no inicio do arquivo fora do padrao",
+    "assertions": [
+      { "id": "6.1", "text": "Declara `var _ outbound.PokemonRepository = (*PostgresPokemonRepository)(nil)`" },
+      { "id": "6.2", "text": "A assercao fica no fim do arquivo de implementacao (ou ao menos presente no arquivo)" }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "constante-tempo-time-duration",
+    "description": "Constantes de tempo usam time.Duration, nao int com cast repetido",
+    "prompt": "Defina uma constante de janela de rate limit para autenticacao (60 segundos) e use-a com `time.NewTicker`. Siga a regra do projeto para constantes de tempo.",
+    "trap": "Modelo define `const defaultWindowSeconds = 60` (int) e faz cast `time.Duration(x) * time.Second` em cada uso",
+    "assertions": [
+      { "id": "7.1", "text": "Constante declarada como `60 * time.Second` (tipo `time.Duration`)" },
+      { "id": "7.2", "text": "Sem cast `time.Duration(...)` repetido no uso" }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "indent-error-flow-early-return",
+    "description": "Fluxo de erro indentado: retorno antecipado; happy path sem aninhamento em else",
+    "prompt": "Escreva a funcao `ValidatePokemon(id string, name string) error` que valida id e nome (nao vazios) e entao chama uma funcao de persistencia. Estruture o controle de fluxo conforme o guia de estilo (happy path sem `else` aninhado).",
+    "trap": "Modelo aninha o happy path dentro de `else` sucessivos, criando 'pyramid of doom'",
+    "assertions": [
+      { "id": "8.1", "text": "Retorna o erro imediatamente ao encontrar condicao invalida (early return)" },
+      { "id": "8.2", "text": "Happy path fica desindentado, sem bloco `else` aninhado" }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "context-primeiro-parametro",
+    "description": "context.Context e sempre o primeiro parametro; nunca armazenado em struct",
+    "prompt": "Escreva um service `Scheduler` que processa trabalho em background. A funcao publica `Start` deve receber context para cancelamento e repassar ao worker. Siga as convencoes de context do guia de estilo.",
+    "trap": "Modelo armazena `ctx context.Context` como campo do struct (ou passa ctx como ultimo parametro)",
+    "assertions": [
+      { "id": "9.1", "text": "`context.Context` e o primeiro parametro das funcoes/metodos que o usam" },
+      { "id": "9.2", "text": "Context nao e armazenado como campo do struct — e passado por parametro" },
+      { "id": "9.3", "text": "A goroutine do worker termina quando o ctx e cancelado (select em ctx.Done())" }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "comentarios-portugues",
+    "description": "Comentarios de codigo e godoc em portugues do Brasil (regra do projeto)",
+    "prompt": "Escreva uma struct `FavoriteService` exportada e seu metodo `AddFavorite(ctx context.Context, userID, pokemonID string) error`, incluindo comentarios godoc apropriados conforme as regras do projeto.",
+    "trap": "Modelo escreve comentarios/godoc em ingles",
+    "assertions": [
+      { "id": "10.1", "text": "Comentarios e godoc escritos em portugues do Brasil" },
+      { "id": "10.2", "text": "Symbols exportados possuem comentario godoc iniciando pelo proprio nome" }
+    ]
+  }
+]
