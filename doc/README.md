@@ -21,6 +21,7 @@ Este diretório centraliza a documentação arquitetural da Plataforma Pokedex.
 - [SOLID-AND-PATTERNS.md](SOLID-AND-PATTERNS.md): princípios SOLID conectados a patterns, com exemplos em Go.
 - [architecture/hexagonal.md](architecture/hexagonal.md): guia detalhado da arquitetura hexagonal aplicada ao `mobile-bff`.
 - [architecture/hexagonal-go-como-funciona.md](architecture/hexagonal-go-como-funciona.md): **teoria hexagonal conectada à mecânica de Go** — cada camada, onde mora no código real, e como interfaces/imports/composição materializam a arquitetura. Bom ponto de partida para quem está aprendendo Go + arquitetura.
+- [architecture/mecanica-go-ponteiros-context-concorrencia.md](architecture/mecanica-go-ponteiros-context-concorrencia.md): **mecanismos da linguagem na prática** — ponteiros, `context.Context`, goroutines/concorrência vs paralelismo, generics, slices/maps — todos com exemplos reais do `mobile-bff`.
 
 ### Guias temáticos
 
